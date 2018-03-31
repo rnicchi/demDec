@@ -1,0 +1,63 @@
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@page import="it.almavivaitalia.web.sh.utils.BaseSessionAttributes"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.WebConstants"%>
+
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<!-- PageName = creaPin.jsp -->
+<%-- 
+
+<demdec:useAttribute id="amministrazioniSelectedList"	name="<%=WebConstants.LIST_SELECTED_AMMS%>" />
+<demdec:useAttribute id="indexesSelected"	name="<%=WebConstants.ROW_INDEX_SELECTED_AMMS%>" />
+<demdec:useAttribute id="tipoDecList"	name="<%=WebConstants.LIST_TIPO_DEC%>" />
+<demdec:useAttribute id="annoDecList"	name="<%=WebConstants.LIST_ANNO_DEC%>" />
+<demdec:useAttribute id="tipologiaDecList"	name="<%=WebConstants.LIST_TIPOLOGIA_DEC%>" />
+<demdec:useAttribute id="cdrSelectedList"	name="<%=WebConstants.LIST_SELECTED_CDRS%>" />	
+<demdec:useAttribute id="ufficioList"	name="<%=WebConstants.LIST_ANAG_UFF%>" />	 --%>
+
+
+
+
+<div class="row">
+	<div class="large-12 columns">
+		<fieldset>
+
+
+			<div class="row">
+
+				<div class="small-5 columns">
+					<demdec:label path="codiceFiscale" labelKey="label.codice.fiscale" />
+					<form:input path="codiceFiscale" size="16"   />
+				</div>
+
+			</div>
+
+
+			<div class="row">
+
+				<div class="small-3 columns">
+					<demdec:label path="pin" labelKey="label.pin" />
+					<form:password path="pin"  size="6"    />
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="small-10 columns">
+					<demdec:submit keyValue="button.pin.crea"
+						controllerCode="creaPin"  titleKey="button.pin.crea" />
+				</div>
+			</div>
+
+
+
+		</fieldset>
+	</div>
+
+
+</div>

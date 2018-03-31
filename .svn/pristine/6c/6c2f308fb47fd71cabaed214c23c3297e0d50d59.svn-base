@@ -1,0 +1,923 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBOId;
+import it.almavivaitalia.bilancio.commons.bo.AnagCdrDemBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagRagionerieDemBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagRagionerieDemBOId;
+import it.almavivaitalia.bilancio.commons.bo.AnagTipologiaDecretoBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagUfficiBO;
+import it.almavivaitalia.bilancio.commons.bo.DocumentiBO;
+import it.almavivaitalia.bilancio.commons.bo.DocumentiBOId;
+import it.almavivaitalia.bilancio.commons.bo.DocumentiRedBO;
+import it.almavivaitalia.bilancio.commons.bo.DocumentiRedBOId;
+import it.almavivaitalia.bilancio.commons.bo.FascicoliBO;
+import it.almavivaitalia.bilancio.commons.bo.SottoFascicoliRedBO;
+import it.almavivaitalia.bilancio.commons.bo.SottoFascicoliRedBOId;
+import it.almavivaitalia.bilancio.commons.bo.TipoDocumentoBO;
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bilancio.commons.to.CodeDescriptionTO;
+import it.almavivaitalia.bilancio.commons.to.CroTransTO;
+import it.almavivaitalia.bilancio.commons.to.CronoValoriTO;
+import it.almavivaitalia.bilancio.commons.to.EmailUtenteTO;
+import it.almavivaitalia.bilancio.commons.web.security.Utente;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.EsitoOperazione_type;
+import it.mef.bilancio.demdec.dao.AnagAmminDemDao;
+import it.mef.bilancio.demdec.dao.AnagStatoFascicoloDao;
+import it.mef.bilancio.demdec.dao.DocumentiRedDao;
+import it.mef.bilancio.demdec.dao.FascicoloDao;
+import it.mef.bilancio.demdec.dao.SottoFascicoliRedDao;
+import it.mef.bilancio.demdec.manager.GestioneFadManager;
+import it.mef.bilancio.demdec.servizi.client.DEMBILConstants;
+import it.mef.bilancio.demdec.servizi.client.InterfacciaAttoDecretoDEMBILClient;
+import it.mef.bilancio.demdec.servizi.client.ParametriInput;
+import it.mef.bilancio.demdec.servizi.client.RequestDEMBILClient;
+import it.mef.bilancio.demdec.servizi.client.ResponseDEMBILClient;
+import it.mef.bilancio.demdec.servizi.client.UtilResponseClient;
+import it.mef.bilancio.demdec.servizi.to.DocumentContentTO;
+import it.mef.bilancio.demdec.servizi.to.DocumentTO;
+import it.mef.bilancio.demdec.servizi.to.EsitoTO;
+import it.mef.bilancio.demdec.servizi.to.FadDemBilTO;
+import it.mef.bilancio.demdec.servizi.to.FascicoloAttoDecretoTO;
+import it.mef.bilancio.demdec.servizi.to.FascicoloSipatrTO;
+import it.mef.bilancio.demdec.servizi.to.RaccoltaProvvisoriaRedTO;
+import it.mef.bilancio.demdec.to.AmminRagDemTO;
+import it.mef.bilancio.demdec.to.CroCodiciTO;
+import it.mef.bilancio.demdec.to.DocumentiRedTO;
+import it.mef.bilancio.demdec.to.DocumentiTO;
+import it.mef.bilancio.demdec.to.FascicoliFadSearhTO;
+import it.mef.bilancio.demdec.to.FascicoliTO;
+import it.mef.bilancio.demdec.to.GestioneFadTO;
+import it.mef.bilancio.demdec.to.SottoFascicoliRedTO;
+import it.mef.bilancio.demdec.utils.Constants;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class GestioneFadManagerImpl extends GestioneFadParentManagerImpl 	implements GestioneFadManager {
+	
+																	
+
+	
+	@Autowired
+	private AnagStatoFascicoloDao anagStatoFascicoloDao;
+	
+	@Autowired
+	private SottoFascicoliRedDao sottofascicoloRedDao;
+	
+	@Override
+	public void saveFascicolo( List<AmminRagDemTO> ragList ,GestioneFadTO to, ResponseDEMBILClient resp) throws Throwable {
+		List<AnagAmminDemBO> ammBoList=getDozerDriver().mapList(to.getAmmList(), AnagAmminDemBO.class, "AnagAmmin");
+		List<AnagCdrDemBO> cdrBoList= getDozerDriver().mapList(to.getCdrList(), AnagCdrDemBO.class, "AnagCdr");
+		List<AnagRagionerieDemBO> ragBoList= getDozerDriver().mapList(ragList/*to.getRagList()*/, AnagRagionerieDemBO.class, "AmminRagDem2AnagRagionerieDemBO");
+		
+//		List<AnagRagionerieDemBO> boList= getDozerDriver().mapList(to.getRagList(), AnagRagionerieDemBO.class, "AmminRagDemBO2AnagRagionerieDemBO");
+		
+		//non genero il guid al servizio per non avere differenti GUID sul documentale e sulla nostra base 
+//		to.setCodiGuid(UtilRequestClient.createGuid().toString());
+		
+		FascicoliBO fascicolo = new FascicoliBO();
+		fascicolo.setAnagAmminDemList(ammBoList);
+		fascicolo.setAnagCdrDemList(cdrBoList);
+		fascicolo.setAnagRagionerieDemList(ragBoList);
+		fascicolo.setCodiGuidFascicolo(to.getCodiGuid()); 
+		fascicolo.setStatStato(Constants.STATO_FASCICOLO_APERTO);
+		fascicolo.setNumeNumDecreto(to.getNumeroDec());
+//		fascicolo.setNumeTitolo(to.getTitolo().shortValue());
+		fascicolo.setNumeTitolo(Constants.CODI_TITOLO_DEFAULT.shortValue());
+		fascicolo.setNumePatrimonio(to.getNumPatr()==null?null:to.getNumPatr().shortValue());
+		fascicolo.setDescDecreto(to.getDescDec());
+		fascicolo.setFlagNormativo01(to.getFlagNormativo());
+		fascicolo.setDescUtenteCreatore(to.getCodiUtente());
+		fascicolo.setDataCreazioneFascicolo(new Date());
+		fascicolo.setFlagVisibilitaCdc01(Constants.VISIBILE_CDC_NON_VISIBILE);
+		FadDemBilTO demBilTO=(FadDemBilTO) resp.getOutputTO();
+		fascicolo.setCodiGuidFascicolo(demBilTO.getGuid());
+		
+
+		StringBuilder cronoAmmin=new StringBuilder();
+		/* STRINGA PER NUOVE AMMINISTRAZIONI */
+		if (ammBoList!=null){
+			for(AnagAmminDemBO ammin : ammBoList){
+				if(cronoAmmin.length()>0){
+					cronoAmmin.append(";");	
+				}
+				cronoAmmin.append(ammin.getId().getNumeStp().SIZE==2?
+						ammin.getId().getNumeStp()+ammin.getId().getNumeApp():
+							"0"+ammin.getId().getNumeStp()+ammin.getId().getNumeApp());
+			}
+		}
+
+		Set<CronoValoriTO> cronoValori = new HashSet<CronoValoriTO>();
+		getCronologicoManager().addCronoValoriToList(
+				cronoValori,
+				CroCodiciTO.CODI_CODICE_AMMINISTRAZIONE, 
+				Short.valueOf("8"),
+				null, 
+				cronoAmmin, 
+				false);		
+		List<CronoValoriTO> listCronoValori=new ArrayList<CronoValoriTO>(cronoValori);
+
+
+		copyAudit(to, fascicolo);
+		
+		getFascicoloDao().saveFascicolo(fascicolo, to);
+		
+		//cronologico
+		getCronologicoManager()
+						.salvaCronologico(
+								null,//old
+								fascicolo,//new
+								null,
+								listCronoValori,
+								CroTransTO.CRO_TRANS_INSERISCI_METADATI_FASCICOLO,
+								to.getRowCreatedForm(), 
+								to.getRowCreatedUser());
+		
+		
+	}
+
+	@Override
+	public List<FascicoliTO> getFascicoliFad(FascicoliFadSearhTO to)
+			throws Throwable {
+		List<FascicoliTO> ret = getDozerDriver().mapList(getFascicoloDao().findFascicoliFad(to), FascicoliTO.class, "FascicoliFad");
+		for (int i=0; i < ret.size(); i++){
+			ret.get(i).aggiornaEstremiStr();
+		}
+		return ret;
+		
+	}
+
+	@Override
+	public List<FascicoliTO> getFascicoliGestioneFad(FascicoliFadSearhTO to)
+			throws Throwable {
+		List<FascicoliTO> ret = getDozerDriver().mapList(getFascicoloDao().findFascicoliGestioneFad(to), FascicoliTO.class, "FascicoliFad");
+		for (int i=0; i < ret.size(); i++){
+			ret.get(i).aggiornaEstremiStr();
+		}
+		return ret;
+		
+	}
+
+	@Override
+	public FascicoliTO getFascicoloFad(Long idFad) throws Throwable {
+		FascicoliTO to = getDozerDriver().map(getFascicoloDao().loadById(idFad), FascicoliTO.class, "FascicoloFad");
+		to.aggiornaEstremiStr();
+		// AGGIORNA IL CAMPO DECODIFICA DELLO STATO DEL DOCUMENTO
+		for(int i = 0; to.getSottoFascicoliRedList().size()>i; i++){
+			to.getSottoFascicoliRedList().get(i).setDescStato(anagStatoFascicoloDao.loadDecStatiFascicoloFad(to.getSottoFascicoliRedList().get(i).getStatStato().toString()));
+			for(int x = 0; to.getSottoFascicoliRedList().get(i).getDocumentiRedList().size()>x; x++){
+				to.getSottoFascicoliRedList().get(i).getDocumentiRedList().get(x).setDescStatoDocumento(anagStatoFascicoloDao.loadDecStatiFascicoloFad(to.getSottoFascicoliRedList().get(i).getDocumentiRedList().get(x).getStatDocumento().toString()));
+			}
+		}
+		return to;
+	}
+
+	@Override
+	public ResponseDEMBILClient getFascicoliPatrimonio(String guidFascicolo)
+			throws Throwable {
+		ParametriInput parametri = leggiParametriInputDemBil();
+		RequestDEMBILClient requestClient = new RequestDEMBILClient(parametri);
+		requestClient.setIdFascicolo(guidFascicolo);
+		InterfacciaAttoDecretoDEMBILClient interfaccia=new InterfacciaAttoDecretoDEMBILClient();
+		return interfaccia.getFascicoloAttoAllFascicoliSipatr(requestClient);
+		
+	}
+	
+	@SuppressWarnings("static-access")
+	@Override
+	public EsitoTO modificaFAD(FascicoliTO to) throws Throwable {
+		
+		
+		InterfacciaAttoDecretoDEMBILClient interfaccia=new InterfacciaAttoDecretoDEMBILClient();
+		
+		FadDemBilTO fad=new FadDemBilTO();
+		fad.setGuid(to.getCodiGuidFascicolo()); 
+		fad.setDescDec(to.getDescDecreto());
+		//#########################################################################Tipologia Decreto
+		CodeDescriptionTO tipologiaDec = new CodeDescriptionTO(to.getAnagTipologiaDecreto().getId().toString(), to.getAnagTipologiaDecreto().getDescTipologia());
+		fad.setTipologiaDec(tipologiaDec);
+		//#########################################################################Tipologia Decreto
+		
+		//#########################################################################Amministrazione
+		CodeDescriptionTO amm= new CodeDescriptionTO();
+		
+		if (CollectionUtils.isEmpty(to.getAnagAmminDemList()) || to.getAnagAmminDemList().size()>1){
+			amm.setCode(Constants.CODI_MULTI_AMMIN);
+			amm.setDescription(Constants.DESC_MULTI_AMMIN);
+		}
+		else{
+			AnagAmminDemBOId ammId= new AnagAmminDemBOId();
+			ammId.setNumeApp((to.getAnagAmminDemList().get(0).getId().getNumeApp()));
+			ammId.setNumeStp((to.getAnagAmminDemList().get(0).getId().getNumeStp()));
+			ammId.setFkAnnoEse(to.getEserciziDem().getId());
+			
+			amm.setCode(to.getAnagAmminDemList().get(0).getId().getNumeStpFormatted()+""+to.getAnagAmminDemList().get(0).getId().getNumeApp());
+			amm.setDescription((getFascicoloDao().loadById(AnagAmminDemBO.class, ammId).getDescAmm()));
+		}
+		
+		fad.setAmm(amm);
+		//#########################################################################Amministrazione
+		
+		//#########################################################################Ufficio Capofila
+		CodeDescriptionTO ufficioCapofila= new CodeDescriptionTO();
+		ufficioCapofila.setCode(to.getUfficioCapofila().getId());
+		ufficioCapofila.setDescription(getFascicoloDao().loadById(AnagUfficiBO.class, to.getUfficioCapofila().getId()).getDescUfficio());
+		fad.setUfficioCapofila(ufficioCapofila);
+		//#########################################################################Ufficio Capofila
+		
+		//#########################################################################CDR TODO
+		
+		//#########################################################################CDR TODO
+		
+		//#########################################################################Numero Patrimonio
+		if(to.getNumePatrimonio()!=null){
+			fad.setNumPatr(to.getNumePatrimonio().intValue());
+			String guidPatr=getvBilDecretiDao().findGuidSiPatrBynumPatr(to.getNumePatrimonio().intValue(),to.getEserciziDem().getId().intValue());
+			fad.setGuidSiPatr(guidPatr);
+		} else{
+			fad.setNumPatr(null);
+			fad.setGuidSiPatr(null);
+		}
+		//#########################################################################Numero Patrimonio
+		
+		//#########################################################################Ragionerie
+		
+		List<AmminRagDemTO> ragList= new ArrayList<AmminRagDemTO>();
+		
+		if(to.getAnagAmminDemList()!=null){
+			for (AnagAmminDemTO anagAmminDemTO : to.getAnagAmminDemList()) {
+				AmminRagDemTO rag= getDozerDriver().map(getAmminRagDemDao().findAmminRagDemByAnagAmminDemTO(anagAmminDemTO), AmminRagDemTO.class, "AmmRag");
+				ragList.add(rag);
+			}		
+		}
+		
+		CodeDescriptionTO ucbRTS= new CodeDescriptionTO();
+		
+		if (ragList.size()==0||ragList.size()>1){
+			ucbRTS.setCode(Constants.CODI_MULTI_RAG);
+			ucbRTS.setDescription(Constants.DESC_MULTI_RAG);
+		}
+		else{
+			ucbRTS.setCode(ragList.get(0).getId().getNumeRag().toString());
+			ucbRTS.setDescription(ragList.get(0).getId().getNumeRag().toString());
+		}
+		fad.setUcbRts(ucbRTS);
+		//#########################################################################Ragionerie
+		fad.setChiamante("NsbfGestioneFascicoli".equalsIgnoreCase(to.getRowUpdatedForm())?Constants.CREAZIONE_GESTIONE_FAD_CHIAMANTE_NSBF:Constants.CREAZIONE_GESTIONE_FAD_CHIAMANTE_DEMDEC);
+		
+		RequestDEMBILClient requestDEMBILClient = new RequestDEMBILClient(leggiParametriInputDemBil());
+		requestDEMBILClient.setIdFascicolo(to.getCodiGuidFascicolo());
+		requestDEMBILClient.setInputTO(fad);
+		
+		
+		ResponseDEMBILClient resp= interfaccia.modifyMetadatiFascicoloAttoDecreto(requestDEMBILClient);
+	    
+		// PER FARLO ANDARE AVANTI 
+		//resp.getEsitoTo().setCodice("OK");
+		
+		if (resp.getEsitoTo().getCodice().equals(DEMBILConstants.ESITO_OK)){
+			
+			List<AnagAmminDemBO> ammBoList=null;
+			List<AnagCdrDemBO> cdrBoList=null;
+			List<AnagRagionerieDemBO> ragBoList=null;
+			if (to.getAnagAmminDemList()!=null){
+				ammBoList=getDozerDriver().mapList(to.getAnagAmminDemList(), AnagAmminDemBO.class, "AnagAmmin");
+				cdrBoList= getDozerDriver().mapList(to.getAnagCdrDemList(), AnagCdrDemBO.class, "AnagCdr");
+				ragBoList= getDozerDriver().mapList(ragList/*to.getRagList()*/, AnagRagionerieDemBO.class, "AmminRagDem2AnagRagionerieDemBO");
+			}
+			
+//			List<AnagRagionerieDemBO> boList= getDozerDriver().mapList(to.getRagList(), AnagRagionerieDemBO.class, "AmminRagDemBO2AnagRagionerieDemBO");
+			
+			//non genero il guid al servizio per non avere differenti GUID sul documentale e sulla nostra base 
+//			to.setCodiGuid(UtilRequestClient.createGuid().toString());
+			
+			FascicoliBO fascicolo = getFascicoloDao().loadById(FascicoliBO.class, to.getId());
+			
+			/* PER IL CRONOLOGICO */
+			StringBuilder cronoAmmin=new StringBuilder();
+			StringBuilder cronoAmminOld=new StringBuilder();
+			FascicoliBO old= getDozerDriver().map(fascicolo, FascicoliBO.class, "FascicoloFad");
+			
+			/* STRINGA PER VECCHIE AMMINISTRAZIONI */
+			if (old.getAnagAmminDemList()!=null){
+				for(AnagAmminDemBO amminOld : old.getAnagAmminDemList()){
+					if(cronoAmminOld.length()>0){
+						cronoAmminOld.append(";");	
+					}
+					cronoAmminOld.append(amminOld.getId().getNumeStp().SIZE==2?
+							amminOld.getId().getNumeStp()+amminOld.getId().getNumeApp():
+								"0"+amminOld.getId().getNumeStp()+amminOld.getId().getNumeApp());
+				}
+			}
+			
+			/* STRINGA PER NUOVE AMMINISTRAZIONI */
+			if (ammBoList!=null){
+				for(AnagAmminDemBO ammin : ammBoList){
+					if(cronoAmmin.length()>0){
+						cronoAmmin.append(";");	
+					}
+					cronoAmmin.append(ammin.getId().getNumeStp().SIZE==2?
+							ammin.getId().getNumeStp()+ammin.getId().getNumeApp():
+								"0"+ammin.getId().getNumeStp()+ammin.getId().getNumeApp());
+				}
+			}
+			
+			fascicolo.setDescDecreto(to.getDescDecreto());
+			fascicolo.setAnagAmminDemList(ammBoList);
+			fascicolo.setAnagCdrDemList(cdrBoList);
+			fascicolo.setAnagRagionerieDemList(ragBoList);
+			fascicolo.setNumePatrimonio(to.getNumePatrimonio());
+			fascicolo.setUfficioCapofila(getFascicoloDao().loadById(AnagUfficiBO.class, to.getUfficioCapofila().getId()));
+            fascicolo.setAnagTipologiaDecreto(getFascicoloDao().loadById(AnagTipologiaDecretoBO.class, to.getAnagTipologiaDecreto().getId()));
+			fascicolo.setDataModificaFascicolo(to.getDataModificaFascicolo());
+			fascicolo.setDescUtenteModifica(to.getDescUtenteModifica());
+            
+//			FadDemBilTO demBilTO=(FadDemBilTO) resp.getOutputTO();
+//			fascicolo.setCodiGuidFascicolo(demBilTO.getGuid());
+			copyAudit(to, fascicolo);
+			
+			getFascicoloDao().updateFascicolo(fascicolo);
+			
+			Set<CronoValoriTO> cronoValori = new HashSet<CronoValoriTO>();
+			getCronologicoManager().addCronoValoriToList(
+					cronoValori,
+					CroCodiciTO.CODI_CODICE_AMMINISTRAZIONE, 
+	                Short.valueOf("3"),
+	                cronoAmminOld, 
+	                cronoAmmin, 
+	                false);		
+			List<CronoValoriTO> listCronoValori=new ArrayList<CronoValoriTO>(cronoValori);
+			
+			// Richiamo cronologico
+			getCronologicoManager().salvaCronologico(
+									old,//old
+									fascicolo,//new
+									null,
+									listCronoValori,
+									CroTransTO.CRO_TRANS_MODIFICA_METADATI_FASCICOLO,
+									to.getRowUpdatedForm(), 
+									to.getRowUpdatedUser());
+			
+		}
+		
+		return resp.getEsitoTo();
+	}
+
+	@Override
+	public EsitoTO reinserisciAllegatoFAD(FascicoliTO to) throws Throwable {
+		ParametriInput parametri = leggiParametriInputDemBil();
+		InterfacciaAttoDecretoDEMBILClient interfaccia=new InterfacciaAttoDecretoDEMBILClient();
+		RequestDEMBILClient requestDEMBILClient = new RequestDEMBILClient(parametri);
+		requestDEMBILClient.setIdFascicolo(to.getCodiGuidFascicolo());
+		EsitoTO esitoTo=null;
+		
+		if(to.getSottoFascicoliRedList()!=null&&to.getSottoFascicoliRedList().size()>0){
+			for(SottoFascicoliRedTO doc:to.getSottoFascicoliRedList()){
+				
+				if(doc.getDocumentiRedList()!=null && doc.getDocumentiRedList().size()>0){
+					for(DocumentiRedTO docRed:doc.getDocumentiRedList()){
+						requestDEMBILClient.setIdDocumento(docRed.getCodiGuidDocumentoOrig());
+						ResponseDEMBILClient resp= interfaccia.removeDocumentoAllegatoDecretoIGB(requestDEMBILClient);
+						esitoTo=resp.getEsitoTo();
+						
+						if (esitoTo.getCodice().equals(DEMBILConstants.ESITO_OK)){
+							// CANCELLAZIONE D_DOCUMENTI_RED
+							DocumentiRedBOId boId = new DocumentiRedBOId();
+							boId.setFkNumeIdFascicolo(docRed.getId().getFkNumeIdFascicolo());
+							boId.setCodiGuidDocumento(docRed.getId().getCodiGuidDocumento());
+							DocumentiRedBO bo = getDocumentiRedDao().loadById(DocumentiRedBO.class, boId);
+							DocumentiRedBO old= getDozerDriver().map(bo, DocumentiRedBO.class, "DocumentiRedBOBO");
+							if (bo!=null){
+								getDocumentiRedDao().delete(bo);
+								// Modifico il BO mettendoci i valori passati nel TO
+								TipoDocumentoBO tipoBo = getTipoDocumentoDao().loadById(to.getSottoFascicoliRedList().get(0).getDocumentiRedList().get(0).getTipoDocumento().getId());
+								bo.setTipoDocumento(tipoBo);
+								bo.setFlagVisibilitaCdc01(to.getSottoFascicoliRedList().get(0).getDocumentiRedList().get(0).getFlagVisibilitaCdc01());
+								// IMPOSTO REQUEST SERVIZIO
+								requestDEMBILClient.setIdSottofascicolo(doc.getCodiGuidSFascicolo());
+								requestDEMBILClient.setIdDocumento(docRed.getCodiGuidDocOrigProv());
+								// RICHIAMO SERVIZIO ADD DOCUMENTO
+								resp= interfaccia.addDocumentoFascicoloAllegatoDecretoIGB(requestDEMBILClient);
+								esitoTo=resp.getEsitoTo();
+								
+								if (esitoTo.getCodice().equals(DEMBILConstants.ESITO_OK)){
+									// INSERIMENTO D_DOCUMENTI_RED
+									getDocumentiRedDao().saveOrUpdate(bo);
+									
+									// IMPOSTO LA DESCRIZIONE DEL NOME DEL SOTTOFASCICOLO CHE MI SERVE NEL CRONOLOGICO
+									bo.getSottoFascicoliRed().setDescOggettoRed(doc.getDescOggettoRed());
+									// Richiamo cronologico
+									getCronologicoManager().salvaCronologico(old,//old
+																bo,//new
+																null,
+																null,
+																CroTransTO.CRO_TRANS_MODIFICA_METADATI_DOCUMENTI_RED,
+																to.getRowUpdatedForm(), 
+																to.getRowUpdatedUser());
+
+								}
+							}
+						}
+					}
+				}
+				
+			}
+		}
+		
+		return esitoTo;
+	}
+	
+	@Override
+	public EsitoTO modificaAllegatoFAD(FascicoliTO to) throws Throwable {
+		ParametriInput parametri = leggiParametriInputDemBil();
+		InterfacciaAttoDecretoDEMBILClient interfaccia=new InterfacciaAttoDecretoDEMBILClient();
+		RequestDEMBILClient requestDEMBILClient = new RequestDEMBILClient(parametri);
+		requestDEMBILClient.setIdFascicolo(to.getCodiGuidFascicolo());
+		EsitoTO esitoTo=null;
+		
+		if(to.getSottoFascicoliRedList()!=null&&to.getSottoFascicoliRedList().size()>0){
+			SottoFascicoliRedTO sottoFascTO = to.getSottoFascicoliRedList().get(0);
+			if(sottoFascTO.getDocumentiRedList()!=null&&sottoFascTO.getDocumentiRedList().size()>0){
+				DocumentiRedTO documentoRedTO = sottoFascTO.getDocumentiRedList().get(0);
+				requestDEMBILClient.setInputTO(documentoRedTO);
+				ResponseDEMBILClient resp= interfaccia.modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB(requestDEMBILClient);
+				esitoTo=resp.getEsitoTo();
+				// PER TEST
+//				esitoTo.setCodice("OK");
+				
+				if (esitoTo.getCodice().equals(DEMBILConstants.ESITO_OK)){
+					// MODIFICA D_DOCUMENTI_RED
+					DocumentiRedBOId boId = new DocumentiRedBOId();
+					boId.setFkNumeIdFascicolo(documentoRedTO.getId().getFkNumeIdFascicolo());
+					boId.setCodiGuidDocumento(documentoRedTO.getId().getCodiGuidDocumento());
+					DocumentiRedBO bo = getDocumentiRedDao().loadById(DocumentiRedBO.class, boId);
+					DocumentiRedBO old= getDozerDriver().map(bo, DocumentiRedBO.class, "DocumentiRedBOBO");
+					// Modifico il BO mettendoci i valori passati nel TO
+					bo.setFlagVisibilitaCdc01(to.getSottoFascicoliRedList().get(0).getDocumentiRedList().get(0).getFlagVisibilitaCdc01());
+					TipoDocumentoBO tDocBo = getDozerDriver().map(to.getSottoFascicoliRedList().get(0).getDocumentiRedList().get(0).getTipoDocumento(), TipoDocumentoBO.class, "TipoDocumento");
+					bo.setTipoDocumento(tDocBo);
+					
+					if (bo!=null){
+						getDocumentiRedDao().saveOrUpdate(bo);
+						
+						// Richiamo cronologico
+						getCronologicoManager().salvaCronologico(old,//old
+													bo,//new
+													null,
+													null,
+													CroTransTO.CRO_TRANS_MODIFICA_METADATI_DOCUMENTI_RED,
+													to.getRowUpdatedForm(), 
+													to.getRowUpdatedUser());
+							
+					}
+					
+				}
+		
+			}
+		}
+		return esitoTo;
+	}
+	
+	@Override
+	public EsitoTO modificaDocumentoFAD(FascicoliTO to) throws Throwable {
+
+		ParametriInput parametri = leggiParametriInputDemBil();
+		InterfacciaAttoDecretoDEMBILClient interfaccia=new InterfacciaAttoDecretoDEMBILClient();
+		RequestDEMBILClient requestDEMBILClient = new RequestDEMBILClient(parametri);
+		requestDEMBILClient.setIdFascicolo(to.getCodiGuidFascicolo());
+		EsitoTO esitoTo=null;
+		
+		if(to.getDocumentiList()!=null&&to.getDocumentiList().size()>0){
+			DocumentiTO documentoTO = to.getDocumentiList().get(0);
+			documentoTO.setFlagVisibilitaCdc01(1);
+			
+			// TODO: amministrazione nulla ---> 999
+			
+			requestDEMBILClient.setInputTO(documentoTO);
+			ResponseDEMBILClient resp= interfaccia.modifyMetadatiDocumentoFascicoloAttoDecreto(requestDEMBILClient);
+			esitoTo=resp.getEsitoTo();
+			
+			// PER TEST
+//			esitoTo.setCodice(DEMBILConstants.ESITO_OK);
+			
+			if (esitoTo.getCodice().equals(DEMBILConstants.ESITO_OK)){
+				// MODIFICA D_DOCUMENTI
+				DocumentiBOId boId = new DocumentiBOId();
+				boId.setFkNumeIdFascicolo(documentoTO.getId().getFkNumeIdFascicolo());
+				boId.setNumeIdDocumento(documentoTO.getId().getNumeIdDocumento());
+				
+				DocumentiBO old = getDocumentiDao().loadById(DocumentiBO.class, boId);
+				DocumentiBO bo = getDocumentiDao().loadById(DocumentiBO.class, boId);
+				// Modifico il BO mettendoci i valori passati nel TO
+				bo.setFlagVisibilitaCdc01(1);
+
+				// CT - Controllo amministrazione selezionata
+				if(documentoTO.getAnagAmminDem() == null){
+					bo.setAnagAmminDem(null);
+					bo.setAnagRagionerieDem(null);
+				}
+				else{
+					AnagAmminDemBO ammBo = getDozerDriver().map(documentoTO.getAnagAmminDem(), AnagAmminDemBO.class, "AnagAmmin");
+					bo.setAnagAmminDem(ammBo);
+					AmminRagDemTO ragTo = getDozerDriver().map(getAmminRagDemDao().findAmminRagDemByAnagAmminDemTO(documentoTO.getAnagAmminDem()), AmminRagDemTO.class, "AmmRag");
+					
+					AnagRagionerieDemBOId ragBoId = new AnagRagionerieDemBOId();
+					ragBoId.setFkAnnoEse(ragTo.getId().getAnnoEse());
+					ragBoId.setNumeRag(Short.parseShort(ragTo.getId().getNumeRag()));
+					AnagRagionerieDemBO ragBo = getAnagRagionerieDemDao().loadById(AnagRagionerieDemBO.class, ragBoId);
+					bo.setAnagRagionerieDem(ragBo);
+				}
+				
+				
+				bo.setDescFilename(documentoTO.getDescFilename());				
+				bo.setTextDescrizione(documentoTO.getTextDescrizione());
+				
+				if (bo!=null){
+					getDocumentiDao().saveOrUpdate(bo);
+					
+					//*********************
+					/* PER IL CRONOLOGICO */
+								
+					List<CronoValoriTO> listCronoValori = new ArrayList<CronoValoriTO>();
+					
+					// Richiamo cronologico
+					getCronologicoManager().salvaCronologico(
+											old,//old
+											bo,//new
+											null,
+											listCronoValori,
+											CroTransTO.CRO_TRANS_MODIFICA_METADATI_DOCUMENTO_FAD,
+											to.getRowUpdatedForm(), 
+											to.getRowUpdatedUser());		
+					
+					//*********************
+				}
+			}
+			
+		}
+		
+		return esitoTo;
+	}
+		
+		
+
+//	@Override
+//	public DescDocumentoTO loadDescDocById(Integer id)	throws Throwable{
+//		return getDozerDriver().map(descDocumentoDao.loadById(id), DescDocumentoTO.class, "DescDocumento");
+//		
+//	}
+	
+	
+	@Override
+	public EsitoTO reinserisciDocumentoFAD(FascicoliTO to) throws Throwable {
+		ParametriInput parametri = leggiParametriInputDemBil();
+		InterfacciaAttoDecretoDEMBILClient interfaccia=new InterfacciaAttoDecretoDEMBILClient();
+		RequestDEMBILClient requestDEMBILClient = new RequestDEMBILClient(parametri);
+		requestDEMBILClient.setIdFascicolo(to.getCodiGuidFascicolo());
+		EsitoTO esito=null;
+		
+		if(to.getDocumentiList() != null && to.getDocumentiList().size() > 0){
+			
+			for(DocumentiTO doc : to.getDocumentiList()) {
+				requestDEMBILClient.setIdDocumento(doc.getCodiGuidDocumentoOrig());
+				ResponseDEMBILClient resp= interfaccia.getDocumentoFascicoloAttoDecreto(requestDEMBILClient);
+				esito=resp.getEsitoTo();
+				if (!esito.getCodice().equals(DEMBILConstants.ESITO_OK)){
+					//TODO verificare come rendere il messaggio più comprensibile
+					return esito;
+				}
+				DocumentTO doc1 = (DocumentTO)resp.getOutputTO();
+				resp = interfaccia.downloadDocumentoFascicoloAttoDecreto(requestDEMBILClient);
+				esito=resp.getEsitoTo();
+				if (!esito.getCodice().equals(DEMBILConstants.ESITO_OK)){
+					//TODO verificare come rendere il messaggio più comprensibile
+					return esito;
+				}
+				doc1.setDocumentoContent((DocumentContentTO)resp.getOutputTO());
+				resp= interfaccia.removeDocumentoFascicoloAttoDecreto(requestDEMBILClient);
+				esito=resp.getEsitoTo();
+				if (!esito.getCodice().equals(DEMBILConstants.ESITO_OK)){
+					//TODO verificare come rendere il messaggio più comprensibile
+					return esito;
+				}
+//				DocumentiTO documentoTO = to.getDocumentiList().get(0);
+//				documentoTO.setFlagVisibilitaCdc01(Constants.VISIBILE_CDC_NON_VISIBILE);
+				doc1.setDescrizione(doc.getTextDescrizione());
+				doc1.setTipoDocumento(UtilResponseClient.createCodiceDescrizione(doc.getTipoDocumento().getId(),doc.getTipoDocumento().getDescDescrizioneDoc()));
+
+				CodeDescriptionTO ammDescTo= new CodeDescriptionTO();
+				AnagAmminDemTO amm = doc.getAnagAmminDem();
+				
+				if(amm != null){
+					ammDescTo.setCode(amm.getId().getAmmin());
+					ammDescTo.setDescription(amm.getDescAmm());
+				}
+				else {
+					ammDescTo.setCode("999");
+					ammDescTo.setDescription("999");
+				}
+				doc1.setAmministrazione(ammDescTo);
+
+				requestDEMBILClient.setIdDocumentoOperazione(doc1.getDocumentoFileOperazione().getIdDocumento());
+				requestDEMBILClient.setTipoOperazioneDocumento(doc1.getTipoOperazione());
+				requestDEMBILClient.setInputTO(doc1);
+				requestDEMBILClient.setIdDocumento(doc1.getDocumentoFileOrigine().getIdDocumento());
+				
+				resp = interfaccia.addDocumentoFascicoloAttoDecreto(requestDEMBILClient);
+						
+				esito=resp.getEsitoTo();
+				
+				if (esito.getCodice().equals(DEMBILConstants.ESITO_OK)){
+					
+					DocumentTO outObj = (DocumentTO)resp.getOutputTO();
+						// Cancellazione documento
+						DocumentiBOId boId = new DocumentiBOId();
+						boId.setFkNumeIdFascicolo(doc.getFascicoli().getId());
+						boId.setNumeIdDocumento(doc.getId().getNumeIdDocumento());
+						
+						DocumentiBO bo = getDocumentiDao().loadById(boId);
+						if (bo!=null){
+							bo = new DocumentiBO();
+						}
+						
+					
+					
+					bo.setCodiGuidDocumentoOrig(outObj.getDocumentoContent().getIdDocumento());	
+					bo.setCodiGuidDocumento(outObj.getDocumentoFileOperazione()!=null?outObj.getDocumentoFileOperazione().getIdDocumento():outObj.getDocumentoContent().getIdDocumento());	
+					String codeAsString=outObj.getTipoDocumento().getCode();
+					TipoDocumentoBO tipo= getTipoDocumentoDao().loadbyTipoDocumento(codeAsString);//new TipoDocumentoBO();
+					bo.setTipoDocumento(tipo);
+					
+					bo.setStatDocumento(Constants.STATO_DOCUMENTO_INSERIMENTO);
+					bo.setStatConversione("0");// TODO non c'è sul servizio
+					bo.setStatEsitoConversione(outObj.getEsitoOperazione()!=null?outObj.getEsitoOperazione():EsitoOperazione_type.INSERITA.getValue());
+					bo.setCodiGuidFascicolo(doc.getCodiGuidFascicolo());
+					
+					bo.setDescFilename(doc.getDescFilename());
+					bo.setFlagVisibilitaCdc01(Constants.VISIBILE_CDC_NON_VISIBILE);
+					bo.setDataDocumento(Calendar.getInstance().getTime());
+					
+					// CT - Controllo amministrazione selezionata
+					if(doc.getAnagAmminDem() == null){
+						bo.setAnagAmminDem(null);
+						bo.setAnagRagionerieDem(null);
+					}
+					else{
+						AnagAmminDemBO ammBo=getDozerDriver().map(doc.getAnagAmminDem().getId(), AnagAmminDemBO.class, "AnagAmmin");
+						bo.setAnagAmminDem(ammBo);
+						AmminRagDemTO ragTo= getDozerDriver().map(getAmminRagDemDao().loadById(doc.getAnagAmminDem().getId()), AmminRagDemTO.class, "AmmRag");
+						AnagRagionerieDemBOId ragBoId= new AnagRagionerieDemBOId();
+						ragBoId.setFkAnnoEse(ragTo.getId().getAnnoEse());
+						ragBoId.setNumeRag(Short.parseShort(ragTo.getId().getNumeRag()));
+						AnagRagionerieDemBO ragBo= getAnagRagionerieDemDao().loadById(AnagRagionerieDemBO.class, ragBoId);
+						bo.setAnagRagionerieDem(ragBo );
+					}
+					
+					bo.setRowUpdatedDttm(to.getRowCreatedDttm());
+					bo.setRowUpdatedForm(to.getRowCreatedForm());
+					bo.setRowUpdatedUser(to.getRowCreatedUser());
+					getDocumentiDao().saveOrUpdate(bo);
+										
+				}else{
+					
+					// Cancellazione documento
+					DocumentiBOId boId = new DocumentiBOId();
+					boId.setFkNumeIdFascicolo(doc.getFascicoli().getId());
+					boId.setNumeIdDocumento(doc.getId().getNumeIdDocumento());
+					
+					DocumentiBO bo = getDocumentiDao().loadById(boId);
+					if (bo!=null){
+						getDocumentiDao().delete(bo);
+					}
+				}
+			}
+		}
+		
+		
+		return esito;
+	}
+
+	@Override
+	public EsitoTO trasportoVariazioniFascicolo(FascicoliTO src, FascicoliTO dest) throws Throwable {
+		ParametriInput parametri = leggiParametriInputDemBil();
+		InterfacciaAttoDecretoDEMBILClient interfaccia=new InterfacciaAttoDecretoDEMBILClient();
+		RequestDEMBILClient requestDEMBILClient = new RequestDEMBILClient(parametri);
+		requestDEMBILClient.setIdFascicolo(src.getCodiGuidFascicolo());
+		requestDEMBILClient.setIdFascicoloDestinazione(dest.getCodiGuidFascicolo());
+		//TODO scommentare sopra ed eliminare sotto
+//		requestDEMBILClient.setIdFascicolo("bd7068d8-6b07-411e-9df6-afe283e95e08");
+//		requestDEMBILClient.setIdFascicoloDestinazione("6d231553-13b6-4e6b-9572-ecb2ca21c7d6");
+		
+		ResponseDEMBILClient response = interfaccia.copyFascicoloAttoDecreto(requestDEMBILClient);
+		
+		if(response.getEsitoTo().getCodice().equals(DEMBILConstants.ESITO_OK)){
+			
+			FascicoloAttoDecretoTO fascicoloResponse = (FascicoloAttoDecretoTO)response.getOutputTO();
+			
+			FascicoliBO fascicoloOld = getFascicoloDao().loadById(src.getId());			
+			FascicoliBO fascicoloNew = getFascicoloDao().loadById(fascicoloResponse.getIdFascicoloAttoDecreto());
+					
+			for(DocumentTO document : fascicoloResponse.getAllegatiDecretoIGB()){
+				
+				SottoFascicoliRedBO sottofascicoloRed = new SottoFascicoliRedBO();
+				sottofascicoloRed.setRowCreatedDttm(Calendar.getInstance().getTime());
+				sottofascicoloRed.setRowCreatedUser(Constants.USER_NSBF_AMM);
+				sottofascicoloRed.setRowCreatedForm("TRASPORTO VARIAZIONI");
+				
+				SottoFascicoliRedBOId id = new SottoFascicoliRedBOId();
+				id.setCodiIdRed(document.getCodiIdRed());
+				sottofascicoloRed.setId(id);
+				
+				sottofascicoloRed.setFascicoli(fascicoloNew);
+				sottofascicoloRed.setCodiGuidFascicolo(fascicoloNew.getCodiGuidFascicolo());
+				sottofascicoloRed.setStatStato(0);
+
+				
+				// AMMINISTRAZIONE
+				AnagAmminDemBO anagAmminDem = new AnagAmminDemBO();
+				AnagAmminDemBOId idAmmin = new AnagAmminDemBOId(Short.parseShort(fascicoloResponse.getMetadati().getAnnoDec().toString()), 
+														        Integer.parseInt(fascicoloResponse.getMetadati().getAmm().getCode().substring(0,2)), 
+														        Integer.parseInt(fascicoloResponse.getMetadati().getAmm().getCode().substring(2)));
+				anagAmminDem.setId(idAmmin);
+				sottofascicoloRed.setAnagAmminDem(anagAmminDem);
+				
+				// RAGIONERIA
+				AnagRagionerieDemBO anagRagionerieDem = new AnagRagionerieDemBO();
+				AnagRagionerieDemBOId idRagioneria = new AnagRagionerieDemBOId(Short.parseShort(fascicoloResponse.getMetadati().getAnnoDec().toString()), 
+																			   Short.parseShort(fascicoloResponse.getMetadati().getUcbRts().getCode()));
+				anagRagionerieDem.setId(idRagioneria);
+				sottofascicoloRed.setAnagRagionerieDem(anagRagionerieDem);
+				
+				sottofascicoloRed.setDescUtenteAss(document.getUtenteCreatore().getDescription());
+				sottofascicoloRed.setDescUfficioAss(document.getUfficioCreatoreRed().getDescription());
+				
+				// TODO da controllare
+				sottofascicoloRed.setDescOggettoRed(document.getDescrizione());
+				sottofascicoloRed.setDataRed(fascicoloResponse.getDataCreazione());
+				
+				sottofascicoloRed.setDescTipoFlusso(document.getTipoFlusso());
+				sottofascicoloRed.setDataArrivo(fascicoloResponse.getDataCreazione());
+				
+				sottofascicoloRed.setNumeProtocollo(document.getProtocollo().getNumeroProtocollo());
+				
+				// Documento
+				DocumentiRedBO documentoRed = new DocumentiRedBO();
+				
+				documentoRed.setRowCreatedDttm(Calendar.getInstance().getTime());
+				documentoRed.setRowCreatedUser(Constants.USER_NSBF_AMM);
+				documentoRed.setRowCreatedForm("TRASPORTO VARIAZIONI");
+				
+				documentoRed.setCodiIdRed(document.getCodiIdRed());
+				
+				DocumentiRedBOId idDocRed = new DocumentiRedBOId();
+				idDocRed.setFkNumeIdFascicolo(fascicoloNew.getId());
+				idDocRed.setCodiGuidDocumento(document.getDocumentoFileOperazione().getIdDocumento());
+				documentoRed.setId(idDocRed);
+				
+				documentoRed.setCodiGuidDocumentoOrig(document.getIdDocumento());
+				// Da controllare
+				documentoRed.setCodiGuidDocOrigProv(document.getIdFascicolo());
+				
+				
+				TipoDocumentoBO tipoDoc = new TipoDocumentoBO();
+				tipoDoc.setId(document.getTipoDocumentoRed().getCode());
+				tipoDoc.setDescDescrizioneDoc(document.getTipoDocumentoRed().getDescription());
+				documentoRed.setTipoDocumento(tipoDoc);
+				
+				documentoRed.setStatDocumento(0);
+				
+				// AMMINISTRAZIONE
+				AnagAmminDemBO anagAmminDoc = new AnagAmminDemBO();
+				AnagAmminDemBOId idAmminDoc = new AnagAmminDemBOId(Short.parseShort(fascicoloResponse.getMetadati().getAnnoDec().toString()), 
+														           Integer.parseInt(document.getAmministrazione().getCode().substring(0,2)), 
+														           Integer.parseInt(document.getAmministrazione().getCode().substring(2)));
+				anagAmminDoc.setId(idAmminDoc);
+				documentoRed.setAnagAmminDem(anagAmminDoc);
+				
+				// RAGIONERIA
+				AnagRagionerieDemBO anagRagionerieDoc = new AnagRagionerieDemBO();
+				AnagRagionerieDemBOId idRagioneriaDoc = new AnagRagionerieDemBOId(Short.parseShort(fascicoloResponse.getMetadati().getAnnoDec().toString()), 
+																			      Short.parseShort(document.getUcbRts().getCode()));
+				anagRagionerieDoc.setId(idRagioneriaDoc);
+				
+				documentoRed.setAnagRagionerieDem(anagRagionerieDoc);
+				
+				documentoRed.setFlagVisibilitaCdc01(0);
+				documentoRed.setDescFilename(document.getDocumentoContent().getFileName());
+				documentoRed.setCodiHash("HASH");
+				documentoRed.setDescTipoFlusso(document.getTipoFlusso());
+				documentoRed.setCodiProtocollo(document.getProtocollo().getNumeroProtocollo());
+				documentoRed.setDataArrivo(fascicoloResponse.getDataCreazione());
+//				documentoRed.setDataDocumento(fascicoloResponse.getDataCreazione());
+				
+				documentoRed.setCodiMimeTypeOrig(document.getDocumentoContent().getMimeType());
+				
+				sottofascicoloRedDao.insertSottoFascDocumenti(sottofascicoloRed, documentoRed);
+				
+			}
+			
+			
+		}
+		
+		
+		return new EsitoTO(DEMBILConstants.ESITO_OK, DEMBILConstants.DESC_ESITO_OK) ;
+	}
+
+	@Override
+	public EsitoTO sospensioneFascicolo(FascicoliTO src) throws Throwable {
+		
+		EsitoTO esito = new EsitoTO();
+		FascicoliBO fascicoloBo = getFascicoloDao().loadById(src.getId());
+		
+		if(fascicoloBo != null){
+			// Set dello stato a chiuso/sospeso(5)
+			fascicoloBo.setStatStato(Constants.STATO_FASCICOLO_CHIUSO_SOSPESO);
+			fascicoloBo.setRowUpdatedDttm(new Date());
+			fascicoloBo.setRowUpdatedUser(Constants.USER_NSBF_AMM);
+			getFascicoloDao().saveOrUpdate(fascicoloBo);
+			
+			// ChangeStatoFascicolo
+			esito = changeStatoFascicoloAttoDecreto(src.getCodiGuidFascicolo(), Constants.STATO_FAD_CHIUSO);
+			
+			// Controllo esito
+			if(esito.equals(DEMBILConstants.ESITO_OK)){
+				
+				// Invio email PEC
+				List<EmailUtenteTO> addressEmailList = getUtenteDao().findEmailUserPecRichSospensioneByIdFascicolo(src.getId());
+				Utente utente = new Utente(Constants.USER_NSBF_AMM);
+				
+				for(EmailUtenteTO address : addressEmailList){
+					getMailManager().invioPecDaFunzione(Constants.FUNZIONE_SOSPENSIONE_DECRETO, utente, address.getEmailUtente());
+				}
+			}
+		}
+		else {			
+		}
+		
+		return esito;		
+//		return changeStatoFascicoloAttoDecreto(src.getCodiGuidFascicolo(), Constants.STATO_FAD_CHIUSO);
+	}
+
+	@Override
+	public List<DocumentTO> getDocumentiPatrimonio(String guidFascicoloFad,
+			String guidFascicoloSipatr) throws Throwable {
+		ParametriInput parametri = leggiParametriInputDemBil();
+		RequestDEMBILClient requestClient = new RequestDEMBILClient(parametri);
+		requestClient.setIdFascicolo(guidFascicoloFad);
+		requestClient.setIdSottofascicolo(guidFascicoloSipatr);
+		FascicoloSipatrTO to = new FascicoloSipatrTO();
+		to.setIdFascicoloFAD(guidFascicoloFad);
+		to.setIdFascicoloSipatr(guidFascicoloSipatr);
+		requestClient.setInputTO(to);
+		InterfacciaAttoDecretoDEMBILClient interfaccia=new InterfacciaAttoDecretoDEMBILClient();
+		return ((FascicoloSipatrTO)interfaccia.getFascicoloSipatr(requestClient).getOutputTO()).getDocumenti();
+	}
+
+	
+	@Override 
+	public List<FascicoliTO> findFascicoliFadByAnno(String anno) throws Throwable {
+		
+		
+		List<FascicoliBO>boList = getFascicoloDao().findFascicoliFadByAnno(anno);
+		
+		return getDozerDriver().mapList(boList, FascicoliTO.class, "FascicoliFad");
+		
+	}	
+	
+	@Override
+	public EsitoTO rielaborazioneFascicolo(FascicoliTO src, FascicoliTO dest, Integer tipoElaborazione) throws Throwable{
+		
+		EsitoTO esitoTO;
+		switch (tipoElaborazione) {
+			case 1 :
+				esitoTO = sospensioneFascicolo(src);
+				break;
+			
+			case 2 :
+				esitoTO = super.revocaSospensioneFascicolo(src);
+				break;
+	
+			case 3 :
+				esitoTO = super.riaperturaFascicolo(src);
+				break;
+				
+			case 4 :
+				esitoTO = trasportoVariazioniFascicolo(src, dest);
+				break;
+				
+			default:
+				esitoTO = new EsitoTO(DEMBILConstants.ESITO_KO, "Errore durante l'eleborazione, elaborazione non trovata");
+				break;
+		}
+		
+		return esitoTO;
+	}
+}

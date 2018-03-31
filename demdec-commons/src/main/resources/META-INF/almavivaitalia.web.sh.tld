@@ -1,0 +1,2945 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+
+	<description>
+        <![CDATA[Framework JSP Tag Library ]]>
+    </description>
+
+	<tlib-version>1.3</tlib-version>
+	<short-name>tags</short-name>
+	<uri>http://almavivaitalia.web.sh/tags</uri>
+	
+	<tag>
+		<name>horizontalMenuTag</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.HorizontalMenuTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>Nome con cui la classe MenuTO è salvata in sessione</description>
+			<name>menuAttrName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>foglio di stile del tag div contenitore del menu</description>
+			<name>styleClass</name>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>flagMenuPrincipale</name>
+			<required>false</required>
+		</attribute>			
+	</tag>
+	
+	<tag>
+		<name>verticalMenuTag</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.VerticalMenuTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>Nome con cui la classe MenuTO è salvata in sessione</description>
+			<name>menuAttrName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>foglio di stile del tag div contenitore del menu</description>
+			<name>styleClass</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<description>foglio di stile del tag UL contenitore del menu</description>
+			<name>listStyleClass</name>
+			<required>false</required>
+		</attribute>		
+		<attribute>
+			<description></description>
+			<name>flagMenuPrincipale</name>
+			<required>false</required>
+		</attribute>	
+		<attribute>
+			<description></description>
+			<name>codiProfilo</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>selectedItemId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>				
+	</tag>	
+	
+	<tag>
+		<description>
+	        <![CDATA[
+	            <p>
+		            <strong>
+		            	Render A Submit Button
+		        	</strong>
+	        	</p>
+	          
+	            Renders an HTML &lt;input&gt; element of type <code>submit</code>.
+	            <p>
+	             If a graphical button is needed (a button with an image), then the
+	             <code>&lt;html:image&gt;</code> tag is more appropriate.
+	            </p>
+	        ]]>
+        </description>
+		<name>refresh</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.RefreshTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>
+                <![CDATA[
+                auto refresh on or off
+            ]]>
+            </description>
+			<name>autoRefresh</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                refresh timeout in sec
+            ]]>
+            </description>
+			<name>refreshTimeout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>       
+                submit button or image button           
+            </description>
+			<name>image</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                Name used for formController binding
+            ]]>
+            </description>
+			<name>controllerCode</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<!-- new -->
+		<attribute>
+			<description>
+                <![CDATA[
+                Name of the code bundle used for value 
+                
+            ]]>
+            </description>
+			<name>keyValue</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                The keyboard character used to move focus immediately to this
+                element.
+            ]]>
+            </description>
+			<name>accesskey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                <p>The alternate text for this element.</p>
+                ]]>
+            </description>
+			<name>alt</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                <p>The message resources key of the alternate text for this
+                element.</p>
+                ]]>
+            </description>
+			<name>altKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+          Set to <code>true</code> if this input field should be
+          disabled.
+          ]]>
+            </description>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element loses input
+                focus.
+            ]]>
+            </description>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element loses input
+                focus and its value has changed.
+            ]]>
+            </description>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element receives a
+                mouse click.
+            ]]>
+            </description>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element receives a
+                mouse double click.
+            ]]>
+            </description>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element receives input
+                focus.
+            ]]>
+            </description>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element has focus and a
+                key is depressed.
+            ]]>
+            </description>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element has focus and a
+                key is depressed and released.
+            ]]>
+            </description>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element has focus and a
+                key is released.
+            ]]>
+            </description>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element is under the mouse
+                pointer and a mouse button is depressed.
+            ]]>
+            </description>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element is under the
+                mouse pointer and the pointer is moved.
+            ]]>
+            </description>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element was under the
+                mouse pointer but the pointer was moved outside the element.
+            ]]>
+            </description>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element was not under
+                the mouse pointer but the pointer is moved inside the element.
+            ]]>
+            </description>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element is under the
+                mouse pointer and a mouse button is released.
+            ]]>
+            </description>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                CSS styles to be applied to this HTML element.
+            ]]>
+            </description>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                CSS stylesheet class to be applied to this HTML element
+                (renders a "class" attribute).
+            ]]>
+            </description>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                Identifier to be assigned to this HTML element (renders
+                an "id" attribute).
+            ]]>
+            </description>
+			<name>styleId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                The tab order (ascending positive integers) for this element.
+            ]]>
+            </description>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                  <p>The advisory title for this element.</p>
+                  ]]>
+            </description>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                  <p>The message resources key for the advisory title
+                  for this element.</p>
+                  ]]>
+            </description>
+			<name>titleKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>itemSelector</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.ItemSelectorTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<description></description>
+			<name>dataType</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>it.almavivaitalia.web.sh.datatype.DataType</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>fieldFormatterFileName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>	
+		<attribute>
+			<description></description>
+			<name>backMethodName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>								
+		<attribute>
+			<description></description>
+			<name>beanAttributeName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>beanProperties</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>beanPropertiesFilter</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>		
+			<name>controllerCodeValidator</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>			
+		<attribute>
+			<description></description>		
+			<name>hide</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	
+	<tag>
+        <name>inputParameter</name>
+        <tag-class>it.almavivaitalia.web.sh.taglib.InputParameterTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>         
+        <attribute>
+        	<description>valore costante</description>
+            <name>value</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    
+	<tag>
+        <name>overrideInputParameter</name>
+        <tag-class>it.almavivaitalia.web.sh.taglib.OverrideInputParameterTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>expected</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>         
+        <attribute>
+            <name>provided</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>    
+	<tag>
+        <name>overrideOutputParameter</name>
+        <tag-class>it.almavivaitalia.web.sh.taglib.OverrideOutputParameterTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>expected</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>         
+        <attribute>
+            <name>provided</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+	<tag>
+		<name>abbr</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.AbbreviationTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>titleCode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>abbrCode</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>abbr</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<!-- Multi Header Table Tag -->
+
+	<tag>
+		<name>tableMH</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.displaytable.extraheader.TableMultiHeaderTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>clazz</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>headerMH</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.displaytable.extraheader.HeaderTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
+		<name>headerRowMH</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.displaytable.extraheader.HeaderRowTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
+		<name>headerCellMH</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.displaytable.extraheader.HeaderCellTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>labelKey</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>colspan</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rowspan</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>clazz</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<!-- Util Tags BEGIN -->
+
+	<tag>
+		<name>buttons</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.ButtonsTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
+		<name>infos</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.PageInfosTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+	<tag>
+		<name>errors</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.PageErrorsTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+	<tag>
+		<name>warnings</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.PageWarningsTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>label</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.LabelTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>path</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+		<attribute>
+			<name>labelKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>			
+		<attribute>
+			<name>labelParam</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+		<attribute>
+			<name>hidden</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>mandatoryLabelKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>linkButton</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.LinkButtonTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>imageKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>labelKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>action</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>parameter</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>parameterValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>target</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+	                <![CDATA[
+	                CSS stylesheet class to be applied to this HTML element
+	                (renders a "class" attribute).
+	            ]]>
+	            </description>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>makeURIFromCodiAction</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.URITag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>codiAction</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>className</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>useAttribute</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.UseAttributeTag</tag-class>
+		<tei-class>it.almavivaitalia.web.sh.taglib.UseAttributeTei</tei-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<!-- oggetto in qualunque context -->
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- id -->
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- property -->
+			<name>property</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- type: complete class name -->
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+
+	<tag>
+		<name>navigator</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.NavigatorTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Nome con cui la classe NTree è salvata in sessione</description>
+			<name>navigatorAttrName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Se true include in testa alle briciole di pane il percorso dell'applicazione chiamante</description>
+			<name>writeFullPath</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Attributo class da inserire nel tag div contenitore delle briciole di pane</description>
+			<name>styleClass</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+	</tag>
+
+
+	<tag>
+		<name>section</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.SectionTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<!-- oggetto in qualunque context -->
+			<name>titleKey</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- class html -->
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- testo aggiuntivo a quello fornito con titleKey -->
+			<name>freeText</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>panel</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.PanelTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<!-- class html -->
+			<name>maxCellsNum</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- class html -->
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- larghezza tabella -->
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- utilizzo div -->
+			<name>useDiv</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>panel-section</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.PanelSectionTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<!-- numero di righe -->
+			<name>maxRowNum</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- oggetto in qualunque context -->
+			<name>titleKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- class html -->
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- class html -->
+			<name>useSeparator</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>panel-row</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.PanelRowTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
+		<name>panel-cell</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.PanelCellTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<!-- colspan html -->
+			<name>colspan</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- oggetto in qualunque context -->
+			<name>titleKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- labelFor html -->
+			<name>labelFor</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- class html -->
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<!-- DISPLAY TAG EXTENSION START -->
+
+
+	<tag>
+		<description>
+      Displays a list in an html table, formatting each item in the list according to the Column tags nested inside of
+      this tag. Use the list attribute to indicate the Collection of data, in some scope, that the tag should operate
+      on. Supports the export of the list data to alternative formats such as CSV, Excel, and XML. The contents of the
+      list can be sorted, and the list can be broken into individual pages for display. If you use this tag in Struts,
+      or in some other framework where the page is included via a jsp:include, you should use the requestURI attribute
+      to indicate where tag generated links should point.
+    	</description>
+		<display-name>table</display-name>
+		<name>displaytag-table</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.displaytable.TableTag</tag-class>
+		<body-content>JSP</body-content>
+
+		<attribute>
+			<description>se true, la table tag scrive solo il body della table (solo tag tr)</description>
+			<name>writeOnlyDataRows</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+
+		<attribute>
+			<description>se true, il tag non inserir? il div</description>
+			<name>skipDiv</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+
+		<attribute>
+			<description>se valorizzato, la table tag visualizza soltanto la riga di quell'indice</description>
+			<name>numberRowToShow</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+
+		<attribute>
+			<name>divContainerClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>class</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>isExportFile</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<name>selectedRow</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        reference to the object used as source for the table. Can be an expression like requestScope.object.property. In
+        the EL version of the taglibrary this must be an EL expression which points to the source object.
+      </description>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>number of records to be shown</description>
+			<name>length</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>index of the first record to be shown</description>
+			<name>offset</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>number of records in a page</description>
+			<name>pagesize</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        Fully qualified class name for a TableDecorator. Use a TableDecorator to provide custom operations against the
+        whole list, such as computing totals. Must extend org.displaytag.decorator.TableDecorator.
+      </description>
+			<name>decorator</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        When the present, links for sorting, exports, and paging are formed by adding any tag generated parameters to
+        the value of requestURI attribute.
+      </description>
+			<name>requestURI</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        Enable/disable prepending of application context to generated links. Default is true, you can set it to false in
+        order to generate cross-context links.
+      </description>
+			<name>requestURIcontext</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        Whitespace separated list containg the name of parameters which should NOT be forwarded during paging or
+        sorting. You can use excludedParams="*" to match (exclude) any parameter.
+      </description>
+			<name>excludedParams</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+        Store a java.util.Map of the column totals in a pageContext variable by this name. The keys of the map are
+        "column" and the column number (first column is "column1", etc); values are the corresponding total for the
+        column; columns that are not marked as to total="true" will be omitted from the map. The variable will ONLY be
+        available within the footer tag and after the end of the table, it is not available with the body of the table
+        or columns.
+      </description>
+			<name>varTotals</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>html pass through attribute</description>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>html pass through attribute</description>
+			<name>class</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>html pass through attribute</description>
+			<name>cellspacing</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>html pass through attribute. Better using "padding" css attribute in style or class</description>
+			<name>cellpadding</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>html pass through attribute.</description>
+			<name>frame</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>html pass through attribute.</description>
+			<name>rules</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>html pass through attribute</description>
+			<name>summary</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>html "id" pass through attribute</description>
+			<name>htmlId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>enable/disable export. Valid values are true or false</description>
+			<name>export</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>See "uid".</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+        Unique id used to identify this table. The object representing the current row is also added to the pageContext
+        under this name, so that you can refer to it in column bodies using ${uid}. You can also use uid_rowNum to refer
+        to the current row number. Two tables in the same page can't have the same id (paging and sorting will affect
+        both). If no "htmlId" is specified the same value will be used for the html id of the generated table.
+      </description>
+			<name>uid</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        Use 'page' if you want to sort only visible records, or 'list' if you want to sort the full list, or 'external'
+        if the data is sorted outside displaytag.
+      </description>
+			<name>sort</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>The index of the column that will be used by default for sorting (starting from 1)</description>
+			<name>defaultsort</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<!--<type>int</type> -->
+
+		</attribute>
+		<attribute>
+			<description>
+        The default order for the sorted column. Valid values are "ascending" (default) or "descending"
+      </description>
+			<name>defaultorder</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>enable/disable partialLists. Valid values are true or false</description>
+			<name>partialList</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+
+		</attribute>
+		<attribute>
+			<description>
+	        Used only when partialList=true. Reference to the Integer object containing the size of the total dataset. Can
+	        be an expression like requestScope.object.property. In the EL version of the taglibrary this must be an EL
+	        expression which points to the source object.
+	      	</description>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+        Preserve the current paging/sort status across session. The default is false (do not use sessions). Note that
+        for this to work properly you need to assign to each table in your application a different id.
+      </description>
+			<name>keepStatus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Clears the current paging/sort status saved in session.</description>
+			<name>clearStatus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+
+		</attribute>
+		<example>
+      <![CDATA[
+<display:table name="someList" export="true" id="row" requestURI="MyAction.do">
+  <display:column sortable="true" title="ID"> <c:out value="${row.id}"/> </display:column>
+  <display:column property="email" autolink="true"/>
+  <display:column property="description" title="Comments"/>
+</display:table>
+]]>
+    </example>
+	</tag>
+
+
+
+
+	<tag>
+		<description>
+	      Displays a property of a row object inside a table. MUST be nested inside of a Table tag. The value displayed will
+	      be the results of a decorator (if any); else the property named by the 'property' attribute; or if the 'property'
+	      attribute is null, then the results of evaluating the JSP body of the tag.
+	    </description>
+		<display-name>column</display-name>
+		<name>displaytag-column</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.displaytable.ColumnTag</tag-class>
+		<body-content>JSP</body-content>
+		<!-- new -->
+		<attribute>
+			<name>indexedColumn</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+
+
+		<attribute>
+			<description>
+        Formatta il numero come importo 
+      </description>
+			<name>isImporto</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+
+		<attribute>
+			<description>
+        Formatta il numero come importo intero
+      </description>
+			<name>isImportoIntero</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+
+		<!-- new -->
+		<attribute>
+			<description>
+        bundle key for abbr tag arount column value
+      </description>
+			<name>labelTitleKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+
+		<attribute>
+			<description>
+        name of the property in the bean specified in the parent table tag (via the "name" attribute) mapped to this
+        column
+      </description>
+			<name>property</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        name of the property in the bean specified in the parent table tag (via the "name" attribute) which will be used
+        to sort values in the column. This can be used when the column body is filled or a decorator is used and column
+        should sort on undecorated values.
+      </description>
+			<name>sortProperty</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>title of the column (text for the th cell)</description>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        The classname of comparator to use when sorting this column, or the comparator itself. Defaults to the
+        DefaultComparator.
+      </description>
+			<name>comparator</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        Resource key used to lookup the title value. Only works if "title" is not defined. Works together with a
+        configured I18nResourceProvider, specified via the displaytag.properties file. By default, if JSTL is available,
+        the JSTL provider is used, which makes this attribute work the same as fmt:message's key property.
+      </description>
+			<name>titleKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        By default, null values don't appear in the list. By setting 'nulls' to 'true', then null values will appear as
+        "null" in the list (mostly useful for debugging). Defaults to 'false'.
+      </description>
+			<name>nulls</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        If true, will total the contents of this column. This value is available via the Map named in varTotals for the
+        table. Column values need to Numbers.
+      </description>
+			<name>total</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+
+		</attribute>
+		<attribute>
+			<description>Set to 'true' to make the column sortable. Defaults to 'false'.</description>
+			<name>sortable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        The default sort order for this column. Valid values are "ascending" (default) or "descending"
+      </description>
+			<name>defaultorder</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+
+		</attribute>
+		<attribute>
+			<description>
+        Automatically hyperlink URLs and email addresses that appear in the column. Defaults to 'false'.
+      </description>
+			<name>autolink</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        A MessageFormat patter that will be used to decorate objects in the column. Can be used as a "shortcut" for
+        simple column decorations. @since 1.1
+      </description>
+			<name>format</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+
+		</attribute>
+		<attribute>
+			<description>
+        Set it to true to escape special characters in html and xml output. Defaults to 'false'. @since 1.1
+      </description>
+			<name>escapeXml</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+
+		</attribute>
+		<attribute>
+			<description>
+        Render the column for the media type(s). The column won't be added to the table if the current request media is
+        not supported. Can be any space separated combination of 'html', 'csv', 'xml', 'all', or 'excel'. Defaults to
+        'all'.
+      </description>
+			<name>media</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        <![CDATA[
+        The base URL used to construct the dynamic link. If this attribute is provided, then the data that is shown for
+        this column is wrapped inside a <a href=""> tag with the url provided through this attribute. Typically you
+        would use this attribute along with one of the struts-like param attributes (param*) to create a dynamic link so
+        that each row creates a different URL based on the data that is being viewed. An empty href value will generate
+        a link to the current page, preserving parameters just like for paging links.]]>
+      </description>
+			<name>href</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        The base URL used to construct the dynamic link. This attribute has the same functionality as the href
+        attribute, but it pre-pends the contextPath.
+      </description>
+			<name>url</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        The name of the request parameter that will be dynamically added to the generated href URL. The corresponding
+        value is defined by the perty and (optional) paramName attributes, optionally scoped by the paramScope
+        attribute.
+      </description>
+			<name>paramId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        The name of a JSP bean that is a String containing the value for the request parameter named by paramId (if
+        paramProperty is not specified), or a JSP bean whose property getter is called to return a String (if
+        paramProperty is specified). The JSP bean is constrained to the bean scope specified by the paramScope property,
+        if it is specified. If paramName is omitted, then it is assumed that the current object being iterated on is the
+        target bean.
+      </description>
+			<name>paramName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        The name of a property of the current object being iterated on, whose return value will be used as the value of
+        the parameter (named by the paramId attribute) that will be dynamically added to this href URL. If paramName is
+        also specified the property will not be fetched from the object being iterated on, but from the bean specified
+        by paramName. The support of paramProperty in conjunction with paramName will be probably removed in future: use
+        paramProperty only if you need a property in the iterated object, elsewhere use only paramName (you can select a
+        property using an expression name.property).
+      </description>
+			<name>paramProperty</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        @deprecated - use Expressions in paramName. The scope within which to search for the bean specified by the
+        paramName attribute. If not specified, all scopes are searched. If paramName is not provided, then the current
+        object being iterated on is assumed to be the target bean.
+      </description>
+			<name>paramScope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        If this attribute is provided, then the column's displayed is limited to this number of characters. An elipse
+        (...) is appended to the end if this column is linked, and the user can mouseover the elipse to get the full
+        text. Be careful on using this attribute for String which can contain html tags or entities, or together with
+        the autolink attribute turned on: displaytag will do its best trying to avoid leaving unclosed tags or broken
+        entities in the output, but a complex or bad input could lead to unattended results.
+      </description>
+			<name>maxLength</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        If this attribute is provided, then the column's displayed is limited to this number of words. An elipse (...)
+        is appended to the end if this column is linked, and the user can mouseover the elipse to get the full text. Be
+        careful on using this attribute for String which can contain html tags or entities, or together with the
+        autolink attribute turned on: displaytag will do its best trying to avoid leaving unclosed tags or broken
+        entities in the output, but a complex or bad input could lead to unattended results.
+      </description>
+			<name>maxWords</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        html pass through attribute; use this instead of directly coding presentational atttributes.
+      </description>
+			<name>class</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>"class" html attribute added only for header cells.</description>
+			<name>headerClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>html pass through attribute.</description>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+	        The grouping level (starting at 1 and incrementing) of this column (indicates if successive contain the same
+	        values, then they should not be displayed). The level indicates that if a lower level no longer matches, then
+	        the matching for this higher level should start over as well. If this attribute is not included, then no
+	        grouping is performed.
+	      </description>
+			<name>group</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+        Whitespace separated list of column decorators to apply to the current column. A table decorator name can be the
+        name of an object in page, request, session or application scope or a fully qualified class name of a class
+        implementing the org.displaytag.decorator.DisplaytagColumnDecorator interface. If a decorator is specified for
+        the entire table, then this decorator will decorate that decorator.
+      </description>
+			<name>decorator</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        Used with sort="external", the name that should be given to the server to sort this column. IE if
+        sortName="buzz", then the href for this column to sort will have a parameter d-(encodedId)-s=buzz. If sortName
+        is ommitted the value for the sort param will default to the column number.
+      </description>
+			<name>sortName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+
+		</attribute>
+		<attribute>
+			<description>"scope" html attribute added only for header cells.</description>
+			<name>headerScope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>"scope" html attribute.</description>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        Static value to be used for the column. It has the same meaning of setting a value in the tag body, but values
+        set using this attribute will not be coerced to Strings. You may need to use the value attribute instead of a
+        scriptlet in the tag body if you need to calculate totals on numeric values.
+      </description>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>
+            Displays a property of a row object inside a table. MUST be nested inside of a Table tag. The value
+            displayed will be the results of a decorator (if any); else the property named by the 'property' attribute;
+            or if the 'property' attribute is null, then the results of evaluating the JSP body of the tag.
+        </description>
+		<name>displaytag-column-button</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.displaytable.ColumnButtonTag</tag-class>
+		<body-content>JSP</body-content>
+
+
+
+
+		<attribute>
+			<!-- new -->
+			<name>imageKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<!-- new -->
+			<name>condition</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<!-- new -->
+			<name>labelKey</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- new -->
+			<name>action</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<!-- new -->
+			<name>parameter</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<!-- new -->
+			<description>stringa nel formato [paramName1,value,paramName2,value].tali parametri vengono aggiunti in coda alla url costruita dal tag</description>
+			<name>parameters</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+
+		<attribute>
+			<!-- new -->
+			<name>titleKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<!-- new -->
+			<name>paramAlt</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+
+		<attribute>
+			<description>
+        name of the property in the bean specified in the parent table tag (via the "name" attribute) mapped to this
+        column
+      </description>
+			<name>property</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        name of the property in the bean specified in the parent table tag (via the "name" attribute) which will be used
+        to sort values in the column. This can be used when the column body is filled or a decorator is used and column
+        should sort on undecorated values.
+      </description>
+			<name>sortProperty</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>title of the column (text for the th cell)</description>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+        The classname of comparator to use when sorting this column, or the comparator itself. Defaults to the
+        DefaultComparator.
+      </description>
+			<name>comparator</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+        Resource key used to lookup the title value. Only works if "title" is not defined. Works together with a
+        configured I18nResourceProvider, specified via the displaytag.properties file. By default, if JSTL is available,
+        the JSTL provider is used, which makes this attribute work the same as fmt:message's key property.
+      </description>
+			<name>titleKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        By default, null values don't appear in the list. By setting 'nulls' to 'true', then null values will appear as
+        "null" in the list (mostly useful for debugging). Defaults to 'false'.
+      </description>
+			<name>nulls</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        If true, will total the contents of this column. This value is available via the Map named in varTotals for the
+        table. Column values need to Numbers.
+      </description>
+			<name>total</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+
+		</attribute>
+		<attribute>
+			<description>Set to 'true' to make the column sortable. Defaults to 'false'.</description>
+			<name>sortable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        The default sort order for this column. Valid values are "ascending" (default) or "descending"
+      </description>
+			<name>defaultorder</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+
+		</attribute>
+		<attribute>
+			<description>
+        Automatically hyperlink URLs and email addresses that appear in the column. Defaults to 'false'.
+      </description>
+			<name>autolink</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        A MessageFormat patter that will be used to decorate objects in the column. Can be used as a "shortcut" for
+        simple column decorations. @since 1.1
+      </description>
+			<name>format</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+
+		</attribute>
+		<attribute>
+			<description>
+        Set it to true to escape special characters in html and xml output. Defaults to 'false'. @since 1.1
+      </description>
+			<name>escapeXml</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+
+		</attribute>
+		<attribute>
+			<description>
+        Render the column for the media type(s). The column won't be added to the table if the current request media is
+        not supported. Can be any space separated combination of 'html', 'csv', 'xml', 'all', or 'excel'. Defaults to
+        'all'.
+      </description>
+			<name>media</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        <![CDATA[
+        The base URL used to construct the dynamic link. If this attribute is provided, then the data that is shown for
+        this column is wrapped inside a <a href=""> tag with the url provided through this attribute. Typically you
+        would use this attribute along with one of the struts-like param attributes (param*) to create a dynamic link so
+        that each row creates a different URL based on the data that is being viewed. An empty href value will generate
+        a link to the current page, preserving parameters just like for paging links.]]>
+      </description>
+			<name>href</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        The base URL used to construct the dynamic link. This attribute has the same functionality as the href
+        attribute, but it pre-pends the contextPath.
+      </description>
+			<name>url</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        The name of the request parameter that will be dynamically added to the generated href URL. The corresponding
+        value is defined by the perty and (optional) paramName attributes, optionally scoped by the paramScope
+        attribute.
+      </description>
+			<name>paramId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+	        The name of a JSP bean that is a String containing the value for the request parameter named by paramId (if
+	        paramProperty is not specified), or a JSP bean whose property getter is called to return a String (if
+	        paramProperty is specified). The JSP bean is constrained to the bean scope specified by the paramScope property,
+	        if it is specified. If paramName is omitted, then it is assumed that the current object being iterated on is the
+	        target bean.
+	      </description>
+			<name>paramName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+        The name of a property of the current object being iterated on, whose return value will be used as the value of
+        the parameter (named by the paramId attribute) that will be dynamically added to this href URL. If paramName is
+        also specified the property will not be fetched from the object being iterated on, but from the bean specified
+        by paramName. The support of paramProperty in conjunction with paramName will be probably removed in future: use
+        paramProperty only if you need a property in the iterated object, elsewhere use only paramName (you can select a
+        property using an expression name.property).
+      </description>
+			<name>paramProperty</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        @deprecated - use Expressions in paramName. The scope within which to search for the bean specified by the
+        paramName attribute. If not specified, all scopes are searched. If paramName is not provided, then the current
+        object being iterated on is assumed to be the target bean.
+      </description>
+			<name>paramScope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        If this attribute is provided, then the column's displayed is limited to this number of characters. An elipse
+        (...) is appended to the end if this column is linked, and the user can mouseover the elipse to get the full
+        text. Be careful on using this attribute for String which can contain html tags or entities, or together with
+        the autolink attribute turned on: displaytag will do its best trying to avoid leaving unclosed tags or broken
+        entities in the output, but a complex or bad input could lead to unattended results.
+      </description>
+			<name>maxLength</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        If this attribute is provided, then the column's displayed is limited to this number of words. An elipse (...)
+        is appended to the end if this column is linked, and the user can mouseover the elipse to get the full text. Be
+        careful on using this attribute for String which can contain html tags or entities, or together with the
+        autolink attribute turned on: displaytag will do its best trying to avoid leaving unclosed tags or broken
+        entities in the output, but a complex or bad input could lead to unattended results.
+      </description>
+			<name>maxWords</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        html pass through attribute; use this instead of directly coding presentational atttributes.
+      </description>
+			<name>class</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>"class" html attribute added only for header cells.</description>
+			<name>headerClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>html pass through attribute.</description>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+        The grouping level (starting at 1 and incrementing) of this column (indicates if successive contain the same
+        values, then they should not be displayed). The level indicates that if a lower level no longer matches, then
+        the matching for this higher level should start over as well. If this attribute is not included, then no
+        grouping is performed.
+      </description>
+			<name>group</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+		        Whitespace separated list of column decorators to apply to the current column. A table decorator name can be the
+		        name of an object in page, request, session or application scope or a fully qualified class name of a class
+		        implementing the org.displaytag.decorator.DisplaytagColumnDecorator interface. If a decorator is specified for
+		        the entire table, then this decorator will decorate that decorator.
+		      </description>
+			<name>decorator</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+		        Used with sort="external", the name that should be given to the server to sort this column. IE if
+		        sortName="buzz", then the href for this column to sort will have a parameter d-(encodedId)-s=buzz. If sortName
+		        is ommitted the value for the sort param will default to the column number.
+		    </description>
+			<name>sortName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>"scope" html attribute added only for header cells.</description>
+			<name>headerScope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>"scope" html attribute.</description>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+        Static value to be used for the column. It has the same meaning of setting a value in the tag body, but values
+        set using this attribute will not be coerced to Strings. You may need to use the value attribute instead of a
+        scriptlet in the tag body if you need to calculate totals on numeric values.
+      </description>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+
+		</attribute>
+	</tag>
+
+	<!-- DISPLAY TAG EXTENSION END -->
+
+
+
+	<tag>
+		<name>selector-button</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.SelectorTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>
+                <![CDATA[
+                Name used for formController binding
+            ]]>
+            </description>
+			<name>controllerCode</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>keyValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+                <![CDATA[
+                <p>The alternate text for this element.</p>
+                ]]>
+            </description>
+			<name>alt</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+
+		<attribute>
+			<description>
+                <![CDATA[
+                <p>The message resources key of the alternate text prefix for this
+                element.</p>
+                ]]>
+            </description>
+			<name>altPrefix</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+
+		<attribute>
+			<description>
+                <![CDATA[
+                <p>The message resources key of the alternate text suffix for this
+                element.</p>
+                ]]>
+            </description>
+			<name>altSuffix</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		
+		<attribute>
+			<description>
+                <![CDATA[
+                <p>Se valorizzato a true il tag non viene inserito in pagina</p>
+                ]]>
+            </description>
+			<name>hide</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+	</tag>
+
+
+
+	<tag>
+		<description>
+            <![CDATA[
+            <p><strong>
+            Render A Submit Button
+        </strong></p>
+          
+            Renders an HTML &lt;input&gt; element of type <code>submit</code>.
+            <p>
+             If a graphical button is needed (a button with an image), then the
+             <code>&lt;html:image&gt;</code> tag is more appropriate.
+            </p>
+        ]]>
+        </description>
+		<name>submit</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.SubmitTag</tag-class>
+		<body-content>empty</body-content>
+		<!-- new -->
+		<attribute>
+			<description>       
+                submit button or image button           
+            </description>
+			<name>image</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<!-- new -->
+		<attribute>
+			<description>
+                <![CDATA[
+                Name used for formController binding
+            ]]>
+            </description>
+			<name>controllerCode</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<!-- new -->
+		<attribute>
+			<description>
+                <![CDATA[
+                Name of the code bundle used for value 
+                
+            ]]>
+            </description>
+			<name>keyValue</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                The keyboard character used to move focus immediately to this
+                element.
+            ]]>
+            </description>
+			<name>accesskey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                <p>The alternate text for this element.</p>
+                ]]>
+            </description>
+			<name>alt</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                <p>The message resources key of the alternate text for this
+                element.</p>
+                ]]>
+            </description>
+			<name>altKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+          Set to <code>true</code> if this input field should be
+          disabled.
+          ]]>
+            </description>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element loses input
+                focus.
+            ]]>
+            </description>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element loses input
+                focus and its value has changed.
+            ]]>
+            </description>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element receives a
+                mouse click.
+            ]]>
+            </description>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element receives a
+                mouse double click.
+            ]]>
+            </description>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element receives input
+                focus.
+            ]]>
+            </description>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element has focus and a
+                key is depressed.
+            ]]>
+            </description>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element has focus and a
+                key is depressed and released.
+            ]]>
+            </description>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element has focus and a
+                key is released.
+            ]]>
+            </description>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element is under the mouse
+                pointer and a mouse button is depressed.
+            ]]>
+            </description>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element is under the
+                mouse pointer and the pointer is moved.
+            ]]>
+            </description>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element was under the
+                mouse pointer but the pointer was moved outside the element.
+            ]]>
+            </description>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element was not under
+                the mouse pointer but the pointer is moved inside the element.
+            ]]>
+            </description>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                JavaScript event handler executed when this element is under the
+                mouse pointer and a mouse button is released.
+            ]]>
+            </description>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                CSS styles to be applied to this HTML element.
+            ]]>
+            </description>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                CSS stylesheet class to be applied to this HTML element
+                (renders a "class" attribute).
+            ]]>
+            </description>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                Identifier to be assigned to this HTML element (renders
+                an "id" attribute).
+            ]]>
+            </description>
+			<name>styleId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                The tab order (ascending positive integers) for this element.
+            ]]>
+            </description>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                  <p>The advisory title for this element.</p>
+                  ]]>
+            </description>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+                  <p>The message resources key for the advisory title
+                  for this element.</p>
+                  ]]>
+            </description>
+			<name>titleKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+	</tag>
+
+
+	<!-- SPRING EXTENSION TAGS -->
+	<tag>
+		<description>Renders an HTML 'input' tag with type 'text' using the bound value.</description>
+		<name>input-text</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.InputTextTag</tag-class>
+		<body-content>empty</body-content>
+
+		<attribute>
+			<description>Path to property for data binding</description>
+			<name>path</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>Enable/disable HTML escaping of rendered values.</description>
+			<name>htmlEscape</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+
+		</attribute>
+		<attribute>
+			<description>Equivalent to "class" - HTML Optional Attribute</description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+
+		</attribute>
+		<attribute>
+			<description>Equivalent to "class" - HTML Optional Attribute. Used when the bound field has errors.</description>
+			<name>cssErrorClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+
+		</attribute>
+		<attribute>
+
+			<description>Equivalent to "style" - HTML Optional Attribute</description>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>lang</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>dir</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute. Setting the value of this attribute to 'true' (without the quotes) will disable the HTML element.</description>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>accesskey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute</description>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute</description>
+			<name>maxlength</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute</description>
+			<name>alt</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onselect</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute. Setting the value of this attribute to 'true' (without the quotes) will make the HTML element readonly.</description>
+			<name>readonly</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>Common Optional Attribute</description>
+			<name>autocomplete</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+
+
+
+
+
+	<tag>
+		<description>Renders an HTML 'form' tag and exposes a binding path to inner tags for binding.</description>
+		<name>form</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.FormTag</tag-class>
+		<body-content>JSP</body-content>
+
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute - added for backwards compatibility cases</description>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+		</attribute>
+		<attribute>
+			<description>Name of the model attribute under which the form object is exposed.
+				Defaults to 'command'.</description>
+			<name>modelAttribute</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+
+
+		</attribute>
+		<attribute>
+			<description>HTML Required Attribute</description>
+			<name>action</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<!-- <attribute> <description>Enable/disable HTML escaping of rendered 
+			values.</description> <name>htmlEscape</name> <required>false</required> 
+			<rtexprvalue>true</rtexprvalue> </attribute> <attribute> <description>Equivalent 
+			to "class" - HTML Optional Attribute</description> <name>cssClass</name> 
+			<required>false</required> <rtexprvalue>true</rtexprvalue> </attribute> <attribute> 
+			<description>Equivalent to "style" - HTML Optional Attribute</description> 
+			<name>cssStyle</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>HTML Standard Attribute</description> 
+			<name>lang</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>HTML Standard Attribute</description> 
+			<name>title</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>HTML Standard Attribute</description> 
+			<name>dir</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>HTML Event Attribute</description> 
+			<name>onclick</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>HTML Event Attribute</description> 
+			<name>ondblclick</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>HTML Event Attribute</description> 
+			<name>onmousedown</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>HTML Event Attribute</description> 
+			<name>onmouseup</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>HTML Event Attribute</description> 
+			<name>onmouseover</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>HTML Event Attribute</description> 
+			<name>onmousemove</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>HTML Event Attribute</description> 
+			<name>onmouseout</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>HTML Event Attribute</description> 
+			<name>onkeypress</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>HTML Event Attribute</description> 
+			<name>onkeyup</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>HTML Event Attribute</description> 
+			<name>onkeydown</name> <required>false</required> <rtexprvalue>true</rtexprvalue> 
+			</attribute> <attribute> <description>Name of the model attribute under which 
+			the form object is exposed. Defaults to 'command'.</description> <name>commandName</name> 
+			<required>false</required> <rtexprvalue>true</rtexprvalue> </attribute> <attribute> 
+			<description>HTML Optional Attribute</description> <name>method</name> <required>false</required> 
+			<rtexprvalue>true</rtexprvalue> </attribute> <attribute> <description>HTML 
+			Optional Attribute</description> <name>target</name> <required>false</required> 
+			<rtexprvalue>true</rtexprvalue> </attribute> <attribute> <description>HTML 
+			Optional Attribute</description> <name>enctype</name> <required>false</required> 
+			<rtexprvalue>true</rtexprvalue> </attribute> <attribute> <description>Specifies 
+			the list of character encodings for input data that is accepted by the server 
+			processing this form. The value is a space- and/or comma-delimited list of 
+			charset values. The client must interpret this list as an exclusive-or list, 
+			i.e., the server is able to accept any single character encoding per entity 
+			received.</description> <name>acceptCharset</name> <required>false</required> 
+			<rtexprvalue>true</rtexprvalue> </attribute> <attribute> <description>HTML 
+			Event Attribute</description> <name>onsubmit</name> <required>false</required> 
+			<rtexprvalue>true</rtexprvalue> </attribute> <attribute> <description>HTML 
+			Event Attribute</description> <name>onreset</name> <required>false</required> 
+			<rtexprvalue>true</rtexprvalue> </attribute> <attribute> <description>Common 
+			Optional Attribute</description> <name>autocomplete</name> <required>false</required> 
+			<rtexprvalue>true</rtexprvalue> </attribute> <attribute> <description>The 
+			parameter name used for HTTP methods other then GET and POST. Default is 
+			'_method'</description> <name>methodParam</name> <required>false</required> 
+			<rtexprvalue>true</rtexprvalue> </attribute> <dynamic-attributes>true</dynamic-attributes> -->
+	</tag>
+
+
+	<tag>
+		<description>Renderizza la barra del paginatore</description>
+		<name>paginator</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.paginator.PaginatorTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>
+                <![CDATA[
+						controller code del metodo paginazione
+            	]]>
+            </description>
+			<name>controllerCode</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+						nome oggetto paginatore in page scope
+            	]]>
+            </description>
+			<name>paginatorName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+						classe di stile pulsanti paginatore
+            	]]>
+            </description>
+			<name>cssPageClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+						classe di stile pagina corrente
+            	]]>
+            </description>
+			<name>cssCurrentPageClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+						chiave resources per la label pulsante back page. 
+						Se non inizializzato si prende il valore della corrispondente
+						chiave che dovrebbe esser presente nel file resources di riferimento
+            	]]>
+            </description>
+			<name>keyBackLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+						chiave resources per la label pulsante next page.
+						Se non inizializzato si prende il valore della corrispondente
+						chiave che dovrebbe esser presente nel file resources di riferimento
+            	]]>
+            </description>
+			<name>keyNextLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+						chiave resources per la label prefisso pulsante page.
+						Se non inizializzato si prende il valore della corrispondente
+						chiave che dovrebbe esser presente nel file resources di riferimento
+            	]]>
+            </description>
+			<name>keyPagePrefixLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+						chiave resources per il valore pulsante back page.
+						Se non inizializzato si prende il valore della corrispondente
+						chiave che dovrebbe esser presente nel file resources di riferimento
+            	]]>
+            </description>
+			<name>keyBackValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+						chiave resources per il valore pulsante next page.
+						Se non inizializzato si prende il valore della corrispondente
+						chiave che dovrebbe esser presente nel file resources di riferimento
+            	]]>
+            </description>
+			<name>keyNextValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+						 controllerCode del metodo che gestisce l'abilitazione/disabilitazione
+						 della paginazione. Senza l'indicazione di tale attributo non verra'
+						 inserito il pulsante che permette di abilitare/disabilitare la paginazione.
+						 Indicandolo al contrario, la presenza del tasto e la relativa funzione
+						 di abilitazione o disabilitazione, sara' regolata dal valore del campo
+						 Boolean paginationEnabled presente sull'oggetto Paginator, dalla dimensione
+						 della pagina e dal numero di elementi tot della lista.
+						 NB: 
+						 1) Abilitare/Disabilitare la paginazione significa rispettivamente
+						   presentare il risultato su piu' pagine (nel caso il numero degli
+						   elementi superi il num max ammesso per singola pagina) o visualizzare
+						   tutti gli elementi su una singola pagina, indipendentemente da quanti
+						   essi siano.
+            	]]>
+            </description>
+			<name>controllerCodeEnableDisablePagin</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+						chiave resources per il valore del pulsante abilita paginazione.
+						Se non inizializzato si prende il valore della corrispondente
+						chiave che dovrebbe esser presente nel file resources di riferimento
+            	]]>
+            </description>
+			<name>keyEnablePaginValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+						chiave resources per la label del pulsante abilita paginazione.
+						Se non inizializzato si prende il valore della corrispondente
+						chiave che dovrebbe esser presente nel file resources di riferimento
+            	]]>
+            </description>
+			<name>keyEnablePaginLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+						Chiave resources per il valore del pulsante disabilita paginazione.
+						Se non inizializzato si prende il valore della corrispondente
+						chiave che dovrebbe esser presente nel file resources di riferimento
+            	]]>
+            </description>
+			<name>keyDisablePaginValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+                <![CDATA[
+						chiave resources per la label del pulsante disabilita paginazione.
+						Se non inizializzato si prende il valore della corrispondente
+						chiave che dovrebbe esser presente nel file resources di riferimento
+            	]]>
+            </description>
+			<name>keyDisablePaginLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+
+	<tag>
+		<name>redirectTag</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.RedirectTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<description></description>
+			<name>controllerCode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>applicationCode</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>skipAuthentication</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>codeMessageKey</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>parameterRedirectTag</name>
+		<tag-class>it.almavivaitalia.web.sh.taglib.ParameterRedirectTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description></description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+</taglib>
+
+
+

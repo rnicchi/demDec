@@ -1,0 +1,303 @@
+package it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio;
+
+import it.almavivaitalia.bilancio.commons.to.ActionTO;
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTOId;
+import it.almavivaitalia.bilancio.commons.to.AnagUfficiTO;
+import it.almavivaitalia.bilancio.commons.to.EserciziTO;
+import it.almavivaitalia.bilancio.commons.to.ProfiloActionTO;
+import it.almavivaitalia.bilancio.commons.to.ProfiloTO;
+import it.almavivaitalia.bilancio.commons.to.UtenteProfiloTO;
+import it.almavivaitalia.bilancio.commons.to.UtenteProfiloTOId;
+import it.almavivaitalia.bilancio.commons.to.UtenteTO;
+import it.almavivaitalia.bsn.sh.paginator.Paginator;
+import it.almavivaitalia.bsn.sh.utils.PaginatorUtil;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.enums.TipoResponse;
+import it.mef.bilancio.demdec.manager.GestioneProfiliManager;
+import it.mef.bilancio.demdec.manager.GestioneUtentiManager;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.to.ManagerResponseTO;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.GestioneProfiliForm;
+import it.mef.bilancio.demdec.web.spring.form.GestioneUtentiForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.NomeFunzioneConstants;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(value = ConstantsRequestMapping.GESTIONE_PROFILI)
+public class GestioneProfiliController extends AbstractDemFormController implements WebConstants, SessionAttributes {
+
+	private String startView;
+	@SuppressWarnings("unused")
+	private String utenteView;
+	private String profiloView;
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+	public void setUtenteView(String utenteView) {
+		this.utenteView = utenteView;
+	}
+
+	public String getProfiloView() {
+		return profiloView;
+	}
+	public void setProfiloView(String profiloView) {
+		this.profiloView = profiloView;
+	}
+
+	@Autowired
+	private ListManager listManager;
+/*	@Autowired
+	private GestioneUtentiManager gestioneUtentiManager;*/
+	@Autowired
+	private GestioneProfiliManager gestioneProfiliManager;
+
+	@Override
+	public String startController(Context context) throws Throwable {
+
+		List<ProfiloTO> listProfili = gestioneProfiliManager.caricaTuttiProfili();
+		context.setDataModel(SessionAttributes.LIST_PROFILI, listProfili);
+		
+		if (listProfili.size()>0)
+			PaginatorUtil.addPaginator(context, listProfili, SessionAttributes.LIST_PROFILI, Paginator.PAGE_RANGE_5, SessionAttributes.OBJECT_PAGINATOR);
+		else
+			PaginatorUtil.removePaginator(context, SessionAttributes.LIST_PROFILI, SessionAttributes.OBJECT_PAGINATOR);
+		
+		return startView;
+	}
+
+	public String onGestioneNuovoProfilo(Context context) throws Throwable {
+		
+		loadElenchiRicerca(context); 
+		return profiloView;
+	}
+
+	public String onCreaProfilo(Context context) throws Throwable {
+		
+		GestioneProfiliForm form = (GestioneProfiliForm) context.getForm();
+		if (!form.isValid()) return startView;
+		
+		ProfiloTO profiloTO = form.getTransferObject();
+		
+		String [] idAss = profiloTO.getActionAssociate();
+		
+		List<ActionTO> listAction = new ArrayList<ActionTO>();
+		
+		for(int i=0; i < idAss.length; i++)
+		{
+			ActionTO actDaInserire = gestioneProfiliManager.findActionById(idAss[i]);
+			
+			listAction.add(actDaInserire);
+			
+		}
+		
+		profiloTO.setActionList(listAction);
+		
+		context.valorizeAuditCreated(profiloTO, NomeFunzioneConstants.GESTIONE_PROFILI);
+		
+		ManagerResponseTO<ProfiloTO> risposta = gestioneProfiliManager.creaNuovoProfilo(profiloTO);
+		responseManager.predisponiStartView(context, risposta);
+		
+		
+		return startView;
+		
+	}
+	
+	
+	@SuppressWarnings("unused")
+	public String onGestioneModificaProfilo(Context context) throws Throwable {
+
+		GestioneProfiliForm form = (GestioneProfiliForm) context.getForm();
+		if(!form.isValid()) return startView;
+
+		String selectedCodiProfilo = form.getSelectedProfilo();
+
+		ManagerResponseTO<ProfiloTO> risposta = gestioneProfiliManager.caricaProfiloByIdSelezionato(selectedCodiProfilo);
+		
+		if (risposta.getCodice() == TipoResponse.INFO) {
+			ProfiloTO profiloTO = (ProfiloTO) risposta.getListaTo().get(0);
+			fillFormByTo(form, profiloTO);
+			
+			context.setDataModel(WebConstants.LIST_ACT, profiloTO.getActionList());
+		}
+		
+		
+		List<ActionTO> listAction = context.getModel(WebConstants.LIST_ACT);//profiloTO.getActionList();
+		
+						
+		int numActionAssociate = 0;
+		
+		
+		for(int i = 0; i<listAction.size();i++)
+		{
+			numActionAssociate = i;			
+		}
+		
+		int n = numActionAssociate + 1;
+		//+ 1 perchè mi serve per la dimensione dell'array di String 
+		//che utilizzarò per gli id delle Action già associate ad un profilo
+		
+		String[] idActionAssociate = new String[n];	
+		
+		
+		for(int i = 0; i<listAction.size();i++)
+		{
+			String id = Long.toString(listAction.get(i).getId());
+			idActionAssociate[i] = id;
+		}
+		
+	
+		//se non c'è alcuna associazione del db tra profilo ed action
+		//la lista tornerà vuota, ovvero, in questo caso, 
+		//sarà popolata di un solo elemento inizializzato a "null"
+		//per evitare che questo accada (altrimento mi da errore NullPointerException nella .JSP)
+		//controllo sempre che se il valore del primo elemento dell'array
+		//è null questo venga inizializzato in qualsiasi maniera
+		
+		int y = 0;
+		if(idActionAssociate[y] == null)
+		{
+			idActionAssociate = new String[]{};
+		}
+		
+			form.setIdActionProfilo(idActionAssociate);
+		
+		loadElenchiRicerca(context);
+		return profiloView;
+	}
+	
+
+	
+	public String onModificaProfilo(Context context) throws Throwable {
+
+		GestioneProfiliForm form = (GestioneProfiliForm) context.getForm();
+		if (!form.isValid()) return profiloView;
+		
+		String[] idActionAssociate = form.getIdActionProfilo();
+		
+		gestioneProfiliManager.deleteProfiloAssociatoByID(form.getSelectedProfilo());
+		
+		for(int i=0; i < idActionAssociate.length;i++)
+		{
+			gestioneProfiliManager.salvaAssociazioniActionProfilo(idActionAssociate[i],form.getSelectedProfilo());
+		}
+		
+		return startView;
+	}
+	
+	public String onEliminaProfilo(Context context) throws Throwable {
+		
+		GestioneProfiliForm form = (GestioneProfiliForm) context.getForm();
+		if(!form.isValid()) return startView;
+			
+		String selectedProfilo = form.getSelectedProfilo();
+			
+		ManagerResponseTO<UtenteProfiloTO> risp = gestioneProfiliManager.findUtenteProfiloByProfiloId(selectedProfilo);
+		
+		//se risp ritorna TipoResponse.ERROR bisogna mandare segnalazione di presenza associazione tra utenti e profilo
+		//e bloccare il tutto
+		if(risp.getCodice().equals(TipoResponse.ERROR))
+		{
+			responseManager.predisponiStartViewUtenteProfilo(context, risp);
+			return startView;
+		}
+		
+		ManagerResponseTO<ProfiloTO> risposta = gestioneProfiliManager.eliminaProfilo(selectedProfilo);
+		
+		//se la cancellazione del profilo è andata a buon fine 
+		//cancello anche le sue associazioni con le action a lui legate
+		if(risp.getCodice().equals(TipoResponse.INFO))
+		{
+			gestioneProfiliManager.deleteProfiloAssociatoByID(selectedProfilo);
+		}
+		
+		responseManager.predisponiStartView(context, risposta);
+		
+		
+		return startView;
+	}
+	
+
+	public String onPulisci(Context context) throws Throwable {
+
+		GestioneProfiliForm form = (GestioneProfiliForm) context.getForm();
+		form.clean();
+
+		return profiloView;
+	}
+
+
+	//
+	//Metodi private
+	//
+
+	private void loadElenchiRicerca(Context context) throws Throwable {
+		
+		List<ActionTO> listAllAction = listManager.findAllAction();
+		context.setDataModel(WebConstants.LIST_ALL_ACT, listAllAction);
+		
+		List<ProfiloTO> listProfili = gestioneProfiliManager.caricaTuttiProfili();
+		context.setDataModel(SessionAttributes.LIST_PROFILI, listProfili);
+		
+	}
+
+	//
+	//gestione della response
+	//
+	private ResponseManager responseManager = new ResponseManager();
+	
+	private ResponseManager responseManagerUtenteProfilo = new ResponseManager();
+
+	
+	private class ResponseManager {
+		//set dati per la pagina startView
+		private void predisponiStartView(Context context, ManagerResponseTO<ProfiloTO> risposta) throws Throwable {
+
+			loadElenchiRicerca(context);
+			addMessage(context, risposta.getCodice(), risposta.getDescrizione());
+		}
+		private void addMessage(Context context, TipoResponse tipoMessaggio, String info) {
+			if (info != null && !info.equals(""))
+				switch (tipoMessaggio) {
+					case INFO: context.addInfo(info); break;
+					case WARN: context.addWarning(info); break;
+					case ERROR: context.addError(info); break;
+				}
+		}
+		
+		
+		private void predisponiStartViewUtenteProfilo(Context context, ManagerResponseTO<UtenteProfiloTO> risposta) throws Throwable {
+
+			loadElenchiRicerca(context);
+			addMessageUtenteProfilo(context, risposta.getCodice(), risposta.getDescrizione());
+		}
+		private void addMessageUtenteProfilo(Context context, TipoResponse tipoMessaggio, String info) {
+			if (info != null && !info.equals(""))
+				switch (tipoMessaggio) {
+					case INFO: context.addInfo(info); break;
+					case WARN: context.addWarning(info); break;
+					case ERROR: context.addError(info); break;
+				}
+		}
+		
+		
+	}
+	
+
+	
+	private void fillFormByTo(GestioneProfiliForm form, ProfiloTO profiloTO){
+
+		form.setCodiProfilo(profiloTO.getCodiProfilo());
+		form.setDescProfilo(profiloTO.getDescProfilo());
+	}
+}

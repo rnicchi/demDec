@@ -1,0 +1,9 @@
+package it.mef.bilancio.demdec.dao.impl;
+
+import it.almavivaitalia.bilancio.commons.bo.AnagRagionerieDemBO;
+import it.mef.bilancio.demdec.dao.AnagRagionerieDemDao;
+
+public class AnagRagionerieDemDaoImpl extends AbstractDemDaoImpl<AnagRagionerieDemBO> implements AnagRagionerieDemDao {
+
+
+}

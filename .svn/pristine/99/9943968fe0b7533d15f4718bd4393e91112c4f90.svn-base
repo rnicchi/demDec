@@ -1,0 +1,76 @@
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@page import="it.almavivaitalia.web.sh.utils.BaseSessionAttributes"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.WebConstants"%>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<!-- PageName = selezionaAmm.jsp -->
+<demdec:useAttribute id="firmatariList"	name="<%=SessionAttributes.LIST_ANAG_FIRMATARI%>" />
+<%-- <demdec:useAttribute id="rowsMap"	name="<%=WebConstants.LIST_ROWS%>" /> --%>
+
+ 
+ 
+ <h2 class="nascosto">Tabella</h2>
+
+ <div class="spacer_sm">&nbsp;</div>
+
+<div class="title_doc">Abilita invio mail</div>
+
+
+ <div class="spacer_sm">&nbsp;</div>
+
+
+
+
+<%-- 
+<form:hidden path="annoDec"/>
+<form:hidden path="tipoDec"/>
+<form:hidden path="numDec"/>
+<form:hidden path="descDec"/>
+<form:hidden path="tipologiaDec"/>
+<form:hidden path="numPatr"/>
+<form:hidden path="cdrRows"/>
+<form:hidden path="ufficio"/> --%>
+
+
+
+flag_abilita_mail_01
+flag_pec_01
+desc_firmatario desc_tipo_firma
+			
+		<demdec:displaytag-table name="pageScope.firmatariList" id="amministrazioneList" class="lux width100">	
+			<display:caption>
+											<span class="nascosto">Lista Destinatari Mail</span>
+										</display:caption>
+				<demdec:displaytag-column titleKey="label.selection"  class="center">
+						 <form:checkbox   path="destinatariMail"	 value="${firmatariList_rowNum}"    />  
+				</demdec:displaytag-column>
+				<demdec:displaytag-column property="descFirmatario" titleKey="label.abilitaInvioMail.descFirmatario" class="center" />
+				<demdec:displaytag-column property="descTipoFirma" titleKey="label.descrizione"   />
+				
+				<demdec:displaytag-column property="descTipoFirma" titleKey="label.abilitaInvioMail.descTipoFirma"   />
+				<demdec:displaytag-column property="descTipoFirma" titleKey="label.abilitaInvioMail.tipoMail"   />
+	
+		</demdec:displaytag-table> 
+		
+		
+<br />
+
+<div class="center">
+
+      	 <demdec:submit keyValue="label.confirm" controllerCode="backFromAmm" titleKey="label.conferma.amm"/>
+      	 <demdec:submit keyValue="label.back" controllerCode="cancelFromAmm" titleKey="label.back" />
+      	<%--  <a href="<%=request.getContextPath() %>/public/ricercaRed.do?cmdGET___recuperaDatiModale=recuperaDatiModale">lnk</a> --%>
+      <%-- 	 <demdec:linkButton labelKey="label.exportExcel" imageKey="ico.exportExcel" action="/public/ricercaRed.do" parameter="recuperaDatiModale" parameterValue="__EXPORT_GENERIC_EXCEL__" /> --%>
+		<%--<demdec:submit keyValue="button.back" controllerCode="back" /> --%>
+        
+          <!--  button type="submit">Cerca</button> -->
+      </div>
+
+	
+
+

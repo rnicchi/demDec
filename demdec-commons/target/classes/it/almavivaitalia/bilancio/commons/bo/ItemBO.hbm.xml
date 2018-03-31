@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 5-giu-2015 12.17.04 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="it.almavivaitalia.bilancio.commons.bo.ItemBO" table="D_J_ITEM">
+        <meta attribute="extends" inherit="false">AbstractBO</meta>
+        <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+        <comment>Voci di menu previste nel sistema simulazione</comment>
+    <id name="id" type="java.lang.Long">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="SEQU_ID_ITEM" precision="22" scale="0"/>
+    <generator class="sequence">
+     <param name="sequence">S_J_ITEM</param>
+    </generator>
+   </id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.ActionBO" fetch="select" name="action">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_SEQU_ID_TARGET_ACTION" precision="22" scale="0">
+     <comment>Identificativo numerico della funzione da richiamare alla selezione dell'item</comment>
+    </column>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.ItemBO" fetch="select" name="item">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="SEQU_ID_ITEM_ROOT" precision="22" scale="0">
+     <comment>Identificativo numerico dell' item padre</comment>
+    </column>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.MenuBO" fetch="select" name="menu">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_SEQU_ID_TARGET_MENU" precision="22" scale="0">
+     <comment>Identificativo numerico del menu da richiamare alla selezione dell'item</comment>
+    </column>
+   </many-to-one>
+   <property name="codiItem" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="CODI_ITEM" unique="true">
+     <comment>Codice indentificativo della voce di menu</comment>
+    </column>
+   </property>
+   <property name="numeSequence" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_SEQUENCE" precision="6" scale="0"/>
+   </property>
+   <property name="descItem" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="50" name="DESC_ITEM">
+     <comment>Descrizione della voce di menu</comment>
+    </column>
+   </property>
+    <property name="descItemEstesa" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="1020" name="DESC_ITEM_ESTESA">
+     <comment>Descrizione estesa della  voce di menu</comment>
+    </column>
+   </property>
+    <!-- NOTA: l'attributo cascade fa propagare la persistenza sugli item figli -->        
+    <bag fetch="subselect" cascade="save-update, persist, merge" inverse="false" lazy="true" name="itemList" order-by="NUME_SEQUENCE" table="D_J_ITEM">
+    <key>
+     <column name="SEQU_ID_ITEM_ROOT" precision="22" scale="0"/>
+    </key>
+    <one-to-many class="it.almavivaitalia.bilancio.commons.bo.ItemBO"/>
+   </bag>
+<!-- 
+   <bag fetch="subselect" inverse="false" lazy="true" name="menuList" table="D_J_MM_ITEM_MENU">
+    <key>
+     <column name="SEQU_ID_ITEM" not-null="true" precision="22" scale="0">
+      <comment>Identificativo numerico della voce di menu</comment>
+     </column>
+    </key>
+    <many-to-many entity-name="it.almavivaitalia.bilancio.commons.bo.MenuBO">
+     <column name="SEQU_ID_MENU" not-null="true" precision="22" scale="0">
+      <comment>Identificativo numerico del menu</comment>
+     </column>
+    </many-to-many>
+   </bag>
+   <bag fetch="subselect" inverse="false" lazy="true" name="itemList" table="D_J_ITEM">
+    <key>
+     <column name="SEQU_ID_ITEM_ROOT" precision="22" scale="0">
+      <comment>Identificativo numerico dell' item padre</comment>
+     </column>
+    </key>
+    <one-to-many class="it.almavivaitalia.bilancio.commons.bo.ItemBO"/>
+   </bag>
+   -->
+  </class>
+ </hibernate-mapping>

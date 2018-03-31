@@ -1,0 +1,39 @@
+package it.almavivaitalia.bilancio.commons.dao.impl;
+
+import java.util.List;
+
+import org.hibernate.Query;
+
+import it.almavivaitalia.bilancio.commons.bo.ProfiloBO;
+import it.almavivaitalia.bilancio.commons.bo.UtenteBO;
+import it.almavivaitalia.bilancio.commons.dao.ProfiloDao;
+
+
+
+public class ProfiloDaoImpl extends AbstractCommonDaoImpl implements ProfiloDao{
+
+
+	@Override
+	public ProfiloBO loadByPrimaryKey(Long id) {
+		return (ProfiloBO)getHibernateTemplate().load(ProfiloBO.class, id);
+	}
+
+	@Override
+	public ProfiloBO saveOrUpdate(ProfiloBO o) {
+		getHibernateTemplate().saveOrUpdate(o);
+		return o;
+	}
+
+	public ProfiloBO loadByCodiProfilo(String codi) {
+		return (ProfiloBO)findUniqueByNamedParam("select o from ProfiloBO o where o.codiProfilo=:codi", "codi", codi);
+	}
+
+	@Override
+	public List<ProfiloBO> findAll() {
+		
+		Query query=createQuery("from ProfiloBO order by id");
+		
+		List<ProfiloBO> list=query.list(); 
+		return list;
+	}
+}

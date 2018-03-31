@@ -1,0 +1,56 @@
+<%@page import="it.almavivaitalia.web.sh.utils.ContextHelper"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="nssb"%>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%> 
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%> 
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+
+<!-- PageName = dettaglioWorkflowFirme -->
+<nssb:useAttribute id="listaIterFirma" name="<%=SessionAttributes.LIST_ITER_FIRMA%>"></nssb:useAttribute>
+<nssb:useAttribute id="form" name="<%=SessionAttributes.FORM%>"></nssb:useAttribute>
+<nssb:useAttribute id="iterInviato" name="<%=SessionAttributes.ITER_INVIATO_A_FIRME%>"></nssb:useAttribute>
+
+<div class="spacer_sm">&nbsp;</div>
+<div class="spacer_sm">&nbsp;</div>
+
+<div>
+	<spring:message code="label.modello.iter"/>: 
+	<span class="col_char_user">
+		<strong>${form.descIter}</strong>
+	</span>
+	<form:hidden path="selectedModello"/>
+	<form:hidden path="descIter"/>
+</div>
+
+<div class="scroll_table_gen">
+	<c:if test="${not empty listaIterFirma}">
+
+		<div class="title_doc"><spring:message code="label.title.lista.iter.firma"></spring:message></div>
+		<div class="spacer_sm_10">&nbsp;</div>
+		<div class="spacer_sm_10">&nbsp;</div>
+
+		<nssb:displaytag-table name="pageScope.listaIterFirma" id="listaIterFirma" class="lux width100" >
+			<display:caption>
+				<span class="nascosto"><strong> <spring:message code="label.title.lista.iter.firma"></spring:message></strong></span>
+			</display:caption>
+
+			<nssb:displaytag-column property="id.numeOrdine" titleKey="label.workflow.firme.numero.ordine" title="label.workflow.firme.numero.ordine" class="center"/>
+			<nssb:displaytag-column property="anagFirmatari.descFirmatario" titleKey="label.workflow.firme.firmatario" title="label.workflow.firme.firmatario"/>
+			<nssb:displaytag-column property="anagFirmatari.descTipoFirma" titleKey="label.workflow.firme.tipofirma" title="label.workflow.firme.tipofirma"/>
+
+		</nssb:displaytag-table>
+		<br>
+
+		<div class="center small">
+			<c:if test="${iterInviato ne 'ok'}">
+		   	 <demdec:submit keyValue="label.modify" controllerCode="modificaModelloIter" />
+		   	</c:if>
+		   	 <demdec:submit keyValue="label.back" controllerCode="back" />
+		</div>
+
+	</c:if>
+
+</div>

@@ -1,0 +1,68 @@
+##############################################################################################
+##############################################################################################
+## Il file gestisce l'help contestuale, permettendo di referenziare la vista della pagina   ##
+## di Help da richiamare dipendentemente dalla pagina chiamante. Come ogni file di 			##	
+## properties esso si caratterizza di coppie Chiave/Valore. 								##
+## Tale file viene sfruttato sia nella VECCHIA versione della gestione dell'help che nella 	##
+## NUOVA. In particolare esso permette di indicare quale versione dell'help sfruttare 		##
+## mediante la chiave 'manageHelpWithVersion', che dovra' assumere il valore 'OLD' per la 	##
+## vecchia gestione e 'NEW' per la nuova. Le altre coppie Chiave/Valore invece avranno 		##	
+## significato diverso per le due versioni. Nello specifico,								##
+## -- nella VECCHIA gestione:																##
+## 	  -	"Chiave" corrisponde al path completo del Controller che gestisce la 				##
+##		pagina chiamante;																	##
+## 	  -	"Valore" invece indica l'identificativo della view associata alla pagina di help	##
+##	 	per quel particolare controller. 													##
+##																							##
+## -- nella NUOVA gestione invece															##
+## 	  -	"Chiave", come nella versione precedente, corrisponde al path completo del 			##
+##		Controller che gestisce la pagina chiamante;										##
+##	  - "Valore" al contrario indica il codiHelpPage presente nella tabella D_HELP_PAGE		## 
+##		della pagina di help di interesse;													##
+##############################################################################################
+##############################################################################################
+
+
+###############################################################
+##	CHIAVE INDICANTE LA VERSIONE DELL'HELP DA USARE: INIZIO	 ##
+##	puo' valere												 ##	
+##	-- 'NEW' per Nuova Versione;							 ##
+##	-- 'OLD' per Vecchia Versione							 ##	
+###############################################################
+manageHelpWithVersion=NEW
+
+###############################################################
+##	CHIAVE INDICANTE LA VERSIONE DELL'HELP DA USARE: FINE	 ##
+###############################################################
+
+
+
+it.mef.bilancio.demdec.web.spring.controller.raccolteprovvisorie.AssociazioneAFadController=associazioneRedAFAD
+##############################################################
+## VARIAZIONI CONTABILI: INIZIO								##
+##############################################################
+#it.mef.bilancio.sbfj.form.varplbcap.web.spring.controller.InterrogazRimodulazFLFBController=ForRimInterrFL
+it.mef.bilancio.sbfj.pass.varcont.web.spring.controller.RimodulazVertPassComStanzController=passRimVert
+it.mef.bilancio.sbfj.pass.varcont.web.spring.controller.RimodulazVertPassController=passRimVert
+it.mef.bilancio.sbfj.pass.varcont.web.spring.controller.RimodulazOrizPassComStanzController=passRimOriz
+it.mef.bilancio.sbfj.pass.varcont.web.spring.controller.RimodulazOrizPassController=passRimOriz
+it.mef.bilancio.sbfj.pass.interrogaz.web.spring.controller.InterrogazRimodulazPassController=passIntRim
+
+##############################################################
+## VARIAZIONI CONTABILI: FINE 							    ##
+##############################################################
+
+
+##############################################################
+## INTERROGAZIONI: INIZIO								    ##
+##############################################################
+#it.mef.bilancio.sbfj.form.fondi.web.spring.controller.AperturaNuovoFondoController=fondiSpecialiFormazioneNuovoFondo
+##############################################################
+## INTERROGAZIONI: FINE									    ##
+##############################################################
+
+
+##############################################################
+## ACCANTONAMENTI IGB: INIZIO						        ##
+##############################################################
+it.mef.bilancio.sbfj.pass.accantonamentiIGB.web.spring.controller.TrasformazioneAccantonamentiController=passAccTrasformazioneAccant

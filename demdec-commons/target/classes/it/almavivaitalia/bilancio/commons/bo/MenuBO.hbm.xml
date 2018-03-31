@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 5-giu-2015 12.17.04 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="it.almavivaitalia.bilancio.commons.bo.MenuBO" table="D_J_MENU">
+        <meta attribute="extends" inherit="false">AbstractBO</meta>
+        <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+        <comment>Menu previsti nel sistema simulazione</comment>
+   <id name="id" type="java.lang.Long">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="SEQU_ID_MENU" precision="6" scale="0"/>
+    <generator class="sequence">
+     <param name="sequence">S_J_MENU</param>
+    </generator>
+   </id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <property name="codiMenu" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="CODI_MENU" not-null="true" unique="true">
+     <comment>Codice indentificativo del menu</comment>
+    </column>
+   </property>
+   <property name="descCodiMenu" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="50" name="DESC_CODI_MENU"/>
+   </property>
+   <bag fetch="subselect" inverse="false" lazy="true" name="itemList" table="D_J_MM_ITEM_MENU">
+    <key>
+     <column name="SEQU_ID_MENU" not-null="true" precision="22" scale="0">
+      <comment>Identificativo numerico del menu</comment>
+     </column>
+    </key>
+    <many-to-many entity-name="it.almavivaitalia.bilancio.commons.bo.ItemBO" order-by="NUME_SEQUENCE">
+     <column name="SEQU_ID_ITEM" not-null="true" precision="22" scale="0">
+      <comment>Identificativo numerico della voce di menu</comment>
+     </column>
+    </many-to-many>
+   </bag>
+   <!-- 
+   <bag fetch="subselect" inverse="false" lazy="true" name="profiloList" table="D_J_MM_MENU_PROFILO">
+    <key>
+     <column name="SEQU_ID_MENU" not-null="true" precision="22" scale="0">
+      <comment>Identificativo numerico del men  abilitato</comment>
+     </column>
+    </key>
+    <many-to-many entity-name="it.almavivaitalia.bilancio.commons.bo.ProfiloBO">
+     <column name="SEQU_ID_PROFILO" not-null="true" precision="22" scale="0">
+      <comment>Identificativo numerico del profilo di abilitazione</comment>
+     </column>
+    </many-to-many>
+   </bag>
+   <bag fetch="subselect" inverse="false" lazy="true" name="itemList_1" table="D_J_ITEM">
+    <key>
+     <column name="FK_SEQU_ID_TARGET_MENU" precision="22" scale="0">
+      <comment>Identificativo numerico del menu da richiamare alla selezione dell'item</comment>
+     </column>
+    </key>
+    <one-to-many class="it.almavivaitalia.bilancio.commons.bo.ItemBO"/>
+   </bag>
+ -->
+  </class>
+ </hibernate-mapping>

@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class name="it.almavivaitalia.bilancio.commons.bo.DocumentiRedBO" table="D_DOCUMENTI_RED">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <composite-id class="it.almavivaitalia.bilancio.commons.bo.DocumentiRedBOId" name="id">
+    <key-property name="fkNumeIdFascicolo" type="java.lang.Long">
+     <column name="FK_NUME_ID_FASCICOLO" precision="10" scale="0"/>
+    </key-property>
+    <key-property name="codiGuidDocumento" type="string">
+     <column length="160" name="CODI_GUID_DOCUMENTO"/>
+    </key-property>
+   </composite-id>
+   <many-to-one name="descDocumento" class="it.almavivaitalia.bilancio.commons.bo.DescDocumentoBO" fetch="select">
+       <meta attribute="use-in-equals" inherit="false">true</meta>
+       <meta attribute="use-in-tostring" inherit="false">true</meta>
+       <column name="FK_CODI_DESC_DOCUMENTO" length="16">
+           <comment>Codice identificativo della descrizione documento</comment>
+       </column>
+   </many-to-one>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO" fetch="select" name="anagAmminDem">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_ANNO_ESE" precision="4" scale="0"/>
+    <column name="FK_NUME_STP" precision="2" scale="0"/>
+    <column name="FK_NUME_APP" precision="1" scale="0"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagRagionerieDemBO" fetch="select" insert="false" name="anagRagionerieDem" update="false">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_ANNO_ESE" precision="4" scale="0"/>
+    <column name="FK_NUME_RAG" precision="4" scale="0"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.TipoDocumentoBO" fetch="select" name="tipoDocumento">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="16" name="FK_CODI_TIPO_DOCUMENTO" not-null="true"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.SottoFascicoliRedBO" fetch="select" insert="false" name="sottoFascicoliRed" update="false">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="CODI_ID_RED" length="255" />
+    <column name="FK_NUME_ID_FASCICOLO" not-null="true" precision="10" scale="0"/>
+   </many-to-one>
+   <property name="numeVersion" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_VERSION" precision="6" scale="0"/>
+   </property>
+   <property name="codiIdRed" update="false">
+    <meta attribute="use-in-equals" inherit="false">false</meta>
+    <meta attribute="use-in-tostring" inherit="false">false</meta>
+    <column name="CODI_ID_RED" length="255" />
+   </property>
+   <property name="numeRag" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">false</meta>
+    <meta attribute="use-in-tostring" inherit="false">false</meta>
+    <column name="FK_NUME_RAG" precision="4" scale="0" />
+   </property>
+   <property name="codiGuidDocumentoTrasf" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="160" name="CODI_GUID_DOCUMENTO_TRASF"/>
+   </property>
+   <property name="codiGuidDocProv" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="160" name="CODI_GUID_DOC_PROV" not-null="true"/>
+   </property>
+   <property name="codiGuidDocOrigProv" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="160" name="CODI_GUID_DOC_ORIG_PROV"/>
+   </property>
+   <property name="descTipoFlusso" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="80" name="DESC_TIPO_FLUSSO"/>
+   </property>
+   <property name="statDocumento" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="STAT_DOCUMENTO" not-null="true" precision="2" scale="0"/>
+   </property>
+   <property name="codiProtocollo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="CODI_PROTOCOLLO"/>
+   </property>
+   <property name="flagVisibilitaCdc01" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FLAG_VISIBILITA_CDC_01" not-null="true" precision="1" scale="0"/>
+   </property>
+   <property name="dataDocumento" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_DOCUMENTO"/>
+   </property>
+   <property name="dataArrivo" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_ARRIVO"/>
+   </property>
+   <property name="dataChiusura" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_CHIUSURA"/>
+   </property>
+   <property name="dataAggiornamento" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_AGGIORNAMENTO"/>
+   </property>
+   <property name="dataAnnullamento" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_ANNULLAMENTO"/>
+   </property>
+   <property name="descFilename" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="DESC_FILENAME"/>
+   </property>
+   <property name="codiMimeTypeOrig" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="CODI_MIME_TYPE_ORIG"/>
+   </property>
+   <property name="codiHash" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="CODI_HASH"/>
+   </property>
+  </class>
+ </hibernate-mapping>

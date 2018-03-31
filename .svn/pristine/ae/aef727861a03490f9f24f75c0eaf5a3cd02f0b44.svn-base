@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fieldFormatterMap >
+<FieldFormatterMap>
+  <entry>
+    <Property value="annoEse"/>
+    <FieldFormatter width="10.0" cssClass="w10" type="0" label="label.anno"/>
+  </entry>  	
+</FieldFormatterMap>

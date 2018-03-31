@@ -1,0 +1,86 @@
+package it.mef.bilancio.demdec.web.spring.controller.modali;
+
+import it.almavivaitalia.bsn.sh.paginator.Paginator;
+import it.almavivaitalia.bsn.sh.utils.PaginatorUtil;
+import it.almavivaitalia.bsn.sh.utils.StringUtil;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.manager.RicercaRedManager;
+import it.mef.bilancio.demdec.to.DocumentiRedTO;
+import it.mef.bilancio.demdec.to.FascicoliTO;
+import it.mef.bilancio.demdec.to.TipoDocumentoTO;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.GestioneFascicoloFadForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+//import it.mef.bilancio.intgen.web.util.editor.TabellaEditor;
+
+
+@RequestMapping(value = ConstantsRequestMapping.MODALI_DOCUMENTI_RED)
+public class DocumentiRedModaliController  extends AbstractDemFormController implements WebConstants, SessionAttributes {
+	
+	private String startView;	
+	
+	@Autowired
+	private RicercaRedManager ricercaRedManager;
+	
+	@Autowired
+	private ServletContext servletContext;
+	
+	@Autowired
+	private ListManager listManager;
+	
+	public ServletContext getServletContext() {
+		return servletContext;
+	}
+	
+
+	@Override
+	public String startController(Context context) throws Throwable {
+		context.setCurrentNode("DemDec.menu.GestFAD");
+		return startView;
+		
+	}
+	
+	/******metodo per modificare i metadati di un documento RED *****/
+
+	//public ResponseEntity<List<RaccoltaProvvisoriaRedTO>> modaleDettaglioFascicolo(Context context) throws IOException {
+	public void modaleMetadatiDocumentiRed(Context context) throws Throwable {
+		//SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+				
+		List<DocumentiRedTO> toList = context.getModel(SessionAttributes.LIST_DOCUMENTI_RED);
+		List<DocumentiRedTO> toListNew = new ArrayList<DocumentiRedTO>();
+		
+		String idRed = context.getRequest().getParameter("idRed");		//idRed
+		
+		if (toList!=null){
+			context.setDataModel(SessionAttributes.DOCUMENTO_RED, (DocumentiRedTO)toList.get(Integer.valueOf(idRed)));
+			toListNew.add((DocumentiRedTO)toList.get(Integer.valueOf(idRed)));
+		}
+		
+		context.getResponse().setContentType("application/json");  
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.writeValue(context.getResponse().getOutputStream(), toListNew);
+		
+		context.getResponse().getOutputStream().flush();
+		context.getResponse().getOutputStream().close();
+
+	}
+	
+	
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+	
+}

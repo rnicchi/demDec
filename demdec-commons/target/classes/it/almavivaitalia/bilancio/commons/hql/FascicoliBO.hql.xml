@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <sql-query name="Fascicoli.getFascicoliFAD">
+ select distinct fasc.nume_id_fascicolo as id from d_fascicoli fasc  
+  left outer join d_fascicoli_amm amm on fasc.fk_anno_ese = amm.fk_anno_ese and fasc.nume_id_fascicolo = amm.fk_nume_id_fascicolo
+  left outer join d_fascicoli_cdr cdr on fasc.fk_anno_ese = cdr.fk_anno_ese 
+                      and fasc.nume_id_fascicolo = cdr.fk_nume_id_fascicolo
+                      and cdr.fk_anno_ese = amm.fk_anno_ese
+                      and cdr.fk_nume_app = amm.fk_nume_app 
+                      AND cdr.fk_nume_stp = amm.fk_nume_stp
+where fasc.fk_anno_ese = :annoEse
+  and (:numeStp is null or amm.fk_nume_stp = :numeStp)
+  and (:numeApp is null or amm.fk_nume_app = :numeApp)
+  and (:cdr is null or cdr.fk_nume_cdr = :cdr)
+  and (:uff is null or fasc.fk_nume_ufficio_capofila = :uff)
+  and (:numeDec is null or fasc.nume_num_decreto = :numeDec)
+  and (:numeTipoDec is null or fasc.fk_nume_tipo_decreto = :numeTipoDec)
+  and (:numeTipoloDec is null or fasc.fk_nume_tipologia_decreto = :numeTipoloDec)
+  and (:stato is null or fasc.stat_stato = :stato)
+  and (:numePat is null or fasc.nume_patrimonio = :numePat)
+  and (:dataDa is null or fasc.data_creazione_fascicolo &gt;= :dataDa)
+  and (:dataA is null or fasc.data_creazione_fascicolo &lt;= :dataA)
+  <return-scalar column="id" type="long"/>
+  <query-param name="annoEse" type="short"/>
+  <query-param name="numeStp" type="integer"/>
+  <query-param name="numeApp" type="integer"/>
+  <query-param name="cdr" type="integer"/>
+  <query-param name="uff" type="integer"/>
+  <query-param name="numeDec" type="integer"/>
+  <query-param name="numeTipoDec" type="integer"/>
+  <query-param name="numeTipoloDec" type="integer"/>
+  <query-param name="stato" type="integer"/>
+  <query-param name="numePat" type="integer"/>
+  <query-param name="dataDa" type="date"/>
+  <query-param name="dataA" type="date"/>
+ </sql-query>
+</hibernate-mapping>

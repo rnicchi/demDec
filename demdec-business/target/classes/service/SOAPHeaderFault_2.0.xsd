@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://mef.gov.it.v1.demdec.internal/servizi/Common/HeaderFault" xmlns:fepaTypes="urn:fault:types:v1" targetNamespace="http://mef.gov.it.v1.demdec.internal/servizi/Common/HeaderFault" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:simpleType name="ServiceStatusType">
+		<xsd:annotation>
+			<xsd:documentation>Common enumeration to show result status of any operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Success"/>
+			<xsd:enumeration value="Failure"/>
+			<xsd:enumeration value="Warning"/>
+			<!-- The operation succeeded with no errors or warnings -->
+			<!-- The operation failed; processing must stop -->
+			<!-- The operation succeeded with warnings present -->
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ServiceErrorType">
+		<xsd:annotation>
+			<xsd:documentation>Common type to carry error details </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ErrorMessageString" type="xsd:string"/>
+			<xsd:element name="ErrorCode" type="xsd:int"/>
+			<xsd:element name="Severity" type="ns1:SeverityType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="SeverityType">
+		<xsd:annotation>
+			<xsd:documentation> Common enumeration to distinguish errors from warnings </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="Critical"/>
+			<xsd:enumeration value="Warning"/>
+			<!-- Critical: requestor must terminate execution -->
+			<!-- Warning: processing can continue -->
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="GenericFault">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="ns1:BaseServiceFaultType">
+					<xsd:sequence>
+						<!-- specific fault data here -->
+						<xsd:element name="FAULTCODE" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="SecurityFault">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="ns1:BaseServiceFaultType">
+					<xsd:sequence>
+						<!-- specific fault data here -->
+						<xsd:element name="APPLICAZIONE" type="xsd:string"/>
+						<xsd:element name="SERVICE" type="xsd:string"/>
+						<xsd:element name="OPERATION" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="BaseServiceFaultType">
+		<xsd:annotation>
+			<xsd:documentation> Base fault to be used across a series of faults </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ErrorDetails" type="ns1:ServiceErrorType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

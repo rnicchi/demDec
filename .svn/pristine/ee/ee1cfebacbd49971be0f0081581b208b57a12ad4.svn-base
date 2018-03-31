@@ -1,0 +1,161 @@
+
+  <!-- INIZIO MODALE Metadati Documento Red -->
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.WebConstants"%>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+
+<demdec:useAttribute id="tipoDocRedList"         name="<%=WebConstants.LIST_TIPO_DOC_RED%>" /> 
+<demdec:useAttribute id="visibilitaCdc"         name="<%=WebConstants.LIST_VISIBILITA_CDC%>" /> 
+<demdec:useAttribute id="modVisibilita"	    name="<%=WebConstants.CHK_MODIFICA_VISIBILITA%>" />
+
+ <script type="application/javascript">
+
+
+function modificaModaleMetadatiDocRed(toOpenDett, idRed){
+/* 	size=$("#metadatiFascicoloFad").length ;	
+	if( size>0  ) {	
+		$("#metadatiFascicoloFad").empty();
+	}
+ */
+
+
+	$("#divErrore").empty();	
+	
+	$.ajax({
+		
+		url: "<%=request.getContextPath()%><%=ConstantsRequestMapping.MODALI_DOCUMENTI_RED%>?cmdPOST___modaleMetadatiDocumentiRed=modaleMetadatiDocumentiRed&idRed="+idRed ,
+		
+	    type: 'POST',
+	    data: {
+	        json: jsonData
+	    },
+	    success: function (response) { 
+	        var trHTMLdett = '';
+	        var trHTMLdettTit = '';
+	    	 
+
+	    	   
+	  	  $.each(response, function (i, articleDett) {
+	  		if(articleDett.title=='ERRORE'){
+		  	
+	  			 trHTMLdett='';
+	  			 trHTMLdettTit = '';
+				$("#metadatiFascicoloFad").append("<div class=rowD  align=center><strong>Errore nel recupero dei dati  </strong></div>");
+			}else {
+
+				size2=$("#title_modal_0").length;
+				if( size2>0  ) {	
+					$("#title_modal_0").empty();
+				}
+				
+ 		  	    trHTMLdettTit='<div id=title_modal_1 class=bg-tono0><strong>Documento Red: '+ articleDett.descFilename + '</strong></div>';
+		  		
+  				$("#title_modal_0").append(trHTMLdettTit);
+  				$("#modaleUpdRedTipoDocOrig").val(articleDett.tipoDocumento.id);
+				$("#modaleUpdRedTipoDoc").val(articleDett.tipoDocumento.id);
+				$("#modaleUpdRedVisibilitaCdc").val(articleDett.flagVisibilitaCdc01);
+				$("#modaleUpdRedVisibilitaCdcOrig").val(articleDett.flagVisibilitaCdc01);
+
+			}
+	  		
+	 
+	  	});
+
+
+	  	apriPopUpModale(toOpenDett);
+		
+	},
+
+	
+    error: function(){
+    	
+ 			$("#metadatiFascicoloFad").append("<div class=rowD align=center><strong>Errore nel recuperare i dati</strong></div>");
+			 
+			apriPopUpModale(toOpenDett);
+    } 
+
+	});
+
+
+}
+
+
+
+function confermaModaleDett() {
+
+	$('.overlay').fadeOut('fast');
+    $('.box').hide();
+	$('.box_meta').hide();
+}
+
+
+
+</script>
+
+ 
+ <%--**INIZIO MODALE--%>
+ <div>
+	<div id="contModal_0" class="box_meta">
+		<div  id="title_modal_0" > </div>
+		
+		<div>
+			<!-- MODAL TABLE-->
+			<div id="contentD">
+				<div class="portletContentD" id="metadatiFascicoloFad">
+					
+					<div class="rowD">
+		  				<strong>Tipo: </strong> Metadati Documento RED 
+		  			</div>
+		  		    
+		  		    <form:hidden path="modaleUpdRedTipoDocOrig"/>
+		  		    <div class="rowD">
+		  		    	<strong>Tipo Documento: </strong>
+		  		    	<form:select path="modaleUpdRedTipoDoc">
+		  					<c:forEach var="item" items="${tipoDocRedList}" >
+								<form:option value="${item.id}">${item.id} - ${item.descDescrizioneDoc}</form:option>
+							</c:forEach>
+						</form:select>
+					</div>
+				    
+				    <form:hidden path="modaleUpdRedVisibilitaCdcOrig"/>
+					<c:if test="${modVisibilita}">
+						<div class="rowD">
+							<strong>Visibilità Corte: </strong>
+							<form:select path="modaleUpdRedVisibilitaCdc">
+			  					<c:forEach var="vis" items="${visibilitaCdc}" >
+									<form:option value="${vis.code}">${vis.description}</form:option>
+								</c:forEach>
+							</form:select>
+							<%-- <select path="modaleUpdRedVisibilitaCdc">
+								<option value="0">Non Visibile</option>
+								<option value="1">Visibile</option>
+							</select> --%>
+						</div>
+						
+					</c:if>					
+                    <c:if test="${!modVisibilita}">
+						<form:hidden path="modaleUpdRedVisibilitaCdc"/>
+					</c:if>	
+				</div>
+			</div>
+			
+			<div class="spacer_sm">&nbsp;</div>
+		</div>
+		
+		<div class="text-center">
+			<demdec:submit 
+					keyValue="button.fad.modificaMetadati"
+					controllerCode="modificaMetadatiDocRed" 
+					titleKey="button.fad.modificaMetadati" />
+			<button type="button" class="button small " onClick="javascript:confermaModaleDett();">Torna alla lista</button>
+		</div>
+		
+		<p class="chiudi">Chiudi X</p>
+	</div>
+</div>
+    
+<!-- END MODALE Metadati Fascicolo Fad-->  
+      
+

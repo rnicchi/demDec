@@ -1,0 +1,866 @@
+<%@page
+	import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@page import="it.almavivaitalia.bsn.sh.paginator.Paginator"%>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<demdec:useAttribute id="pagFascicoliRed"
+	name="<%=SessionAttributes.SOTTO_FASCICOLI_RED_PAGINATOR%>" />
+<demdec:useAttribute id="listFascicoliRed"
+	name="<%=SessionAttributes.LIST_SOTTO_FASCICOLI_RED%>" />
+<demdec:useAttribute id="pagFascicoliPat"
+	name="<%=SessionAttributes.SOTTO_FASCICOLI_PAT_PAGINATOR%>" />
+<demdec:useAttribute id="listFascicoliPat"
+	name="<%=SessionAttributes.LIST_SOTTO_FASCICOLI_PAT%>" />
+<demdec:useAttribute id="fascicoloFad"
+	name="<%=SessionAttributes.FASCICOLO_SELEZIONATO%>" />
+<demdec:useAttribute id="listFascicoliFad"
+	name="<%=SessionAttributes.LIST_SOTTO_FASCICOLI_FAD%>" />
+<demdec:useAttribute id="pagFascicoliFad"
+	name="<%=SessionAttributes.SOTTO_FASCICOLI_FAD_PAGINATOR%>" />
+<demdec:useAttribute id="tipologiaDecretoLis"
+	name="<%=SessionAttributes.LIST_TIPOLOGIA_DECRETO%>" />
+<demdec:useAttribute id="amministrazioneList"
+	name="<%=SessionAttributes.LIST_AMMIN_DEM%>" />
+<demdec:useAttribute id="currentAmmList"
+	name="<%=SessionAttributes.CURRENT_LIST_AMMIN_DEM%>" />
+<demdec:useAttribute id="ufficioCapofilaListList"
+	name="<%=SessionAttributes.LIST_ANAG_UFF%>" />
+<!--  per riaprire i nodi giusti  -->
+<demdec:useAttribute id="openDettFad" name="<%=SessionAttributes.OPEN_DETT_FAD%>"/> 
+<demdec:useAttribute id="openDettRed" name="<%=SessionAttributes.OPEN_DETT_RED%>"/> 
+<demdec:useAttribute id="openDettPatr" name="<%=SessionAttributes.OPEN_DETT_PATR%>"/> 
+
+<script type="application/javascript">
+var jsonData;
+</script>
+
+<tiles:insertAttribute name="modalFascFad" flush="false" />
+<tiles:insertAttribute name="modalFascRed" flush="false" />
+<tiles:insertAttribute name="modalFascPat" flush="false" />
+<div class="overlay"></div>
+
+<!-- PageName = fascicoloFAD.jsp -->
+<!-- Controller  ConsultaFascicoloFadController-->
+<form:hidden path="tipoDecreto" />
+<form:hidden path="stato" />
+
+<div class="spacer_sm">&nbsp;</div>
+
+<%-- <div class="row">
+	<input type="text" maxlength="50" value="${fascicoloFad.estremiStr}"
+		class="label" readonly="true" />
+</div> --%>
+
+<%-- <div class="center padd-bott_5 font_size_riep">
+	    <span>&#8226; </span>
+	    <span class="col_char_user"><strong>${fascicoloFad.estremiStr}</strong></span> 
+</div> --%>
+ <div class="center padd-bott_5 font_size_riep">
+    <span>&#8226; Tipo: </span>
+    <span class="col_char_user"><strong>${fascicoloFad.anagTipologiaDecreto.anagTipoDecreto.descSigla}</strong></span> 
+  
+    <span>&#8226; Numero:</span>
+    <span class="col_char_user"><strong>${fascicoloFad.numeNumDecreto}</strong></span> 
+   
+    <span>&#8226; Anno:</span>
+    <span class="col_char_user"><strong>${fascicoloFad.eserciziDem.id}</strong></span>    
+  </div>
+<div class="spacer_sm">&nbsp;</div>
+
+<div class="titoloST" onclick="initAll('det0','imgDet0');"
+	style="cursor: pointer;">
+	<img id="imgDet0" class="left"
+		src="<c:url value="/public/img/piu.png"/>" alt="Visualizza Dettaglio"
+		title="Visualizza Dettaglio">
+</div>
+&nbsp;
+<strong class="color_blu"><spring:message
+		code="label.show.metadati" /></strong>
+<div class="dettaglioST" style="display: none;" id="det0">
+
+	        <fieldset>
+	        <div class="row"> 
+				<div class="small-4 columns">
+					<demdec:label labelKey="label.metadatiFascicolo"/>
+				</div>      	
+	      	</div>
+        	<div class="spacer_sm">&nbsp;</div>
+        
+			<div class="container_field">				
+	        	
+	        	<div class="row">
+	        		<div class="small-4 columns">
+	        			<demdec:label path="decTipoDecreto" labelKey="label.tipoDecreto"/>
+						<form:input path="decTipoDecreto" maxlength="5" readonly="true"/>
+	        		</div>
+	        		<div class="small-4 columns">
+	        			<demdec:label path="numeDecreto" labelKey="label.numeroDecreto"/>
+						<form:input path="numeDecreto" maxlength="5" readonly="true"/>
+					</div>
+					<div class="small-4 columns">
+						<demdec:label path="annoDecreto" labelKey="label.anno.dec"/>
+			       		<form:input path="annoDecreto" maxlength="4" readonly="true"/>
+			       	</div> 
+	        	</div>
+	        </div>
+	        
+	        <div class="row">
+	        	<div class="small-10 columns">
+					<demdec:label path="descDecreto" labelKey="label.raccolteProvvisorie.nome"/>
+		       		<form:input path="descDecreto" maxlength="180" readonly="true"/> 
+				</div>
+	        </div>
+	        
+	        <div class="row">
+	        	<div class="small-10 columns">
+	        		<demdec:label path="amministrazione" labelKey="label.raccolteProvvisorie.amministrazione" />
+					<form:input path="amministrazione" maxlength="50" readonly="true"/>
+	        	</div>
+	        </div>
+	        
+	        <div class="row">
+	        	<div class="small-4 columns">
+					<demdec:label path="tipologiaDecreto" labelKey="label.tipologiaDecreto" />
+					<input type="text" maxlength="50" value="${tipologiaDecretoLis[0].descTipologia}" readonly="true"/>
+				</div>
+	        </div>
+	        
+	         <div class="row">
+	        	<div class="small-4 columns">
+	        		<demdec:label path="numePat" labelKey="label.numeroPatrimonio"/>
+					<form:input path="numePat" maxlength="3" readonly="true"/>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="small-4 columns">
+					<demdec:label path="ufficio" labelKey="label.ufficioCapofila"/>
+				    <input type="text" maxlength="50" value="${ufficioCapofilaListList[0].descUfficio}" readonly="true"/>
+				</div>
+				<div class="small-4 columns">
+					<demdec:label path="descStato" labelKey="label.stato"/>
+					<form:input path="descStato" maxlength="50" readonly="true"/>
+				</div>
+				<div class="small-4 columns">
+				</div>
+			</div>
+			
+			<div class="row">
+	        	<div class="small-4 columns">
+	        		<demdec:label path="ufficioCreatore" labelKey="label.ufficioCreatore" />
+					<form:input path="ufficioCreatore" maxlength="50" readonly="true"/>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="small-4 columns">
+					<demdec:label path="dataCreazione" labelKey="label.raccolteProvvisorie.dataCreazione" />
+					<form:input path="dataCreazione" maxlength="50" readonly="true"/>
+				</div>
+				<div class="small-4 columns">
+					<demdec:label path="creatoDa" labelKey="label.creatoDa" />
+					<form:input path="creatoDa" maxlength="50" readonly="true"/>
+				</div>
+				<div class="small-4 columns">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="small-4 columns">
+					<demdec:label path="dataModifica" labelKey="label.raccolteProvvisorie.dataModifica" />
+					<form:input path="dataModifica" maxlength="50" readonly="true"/>
+				</div>
+				<div class="small-4 columns">
+					<demdec:label path="modificatoDa" labelKey="label.raccolteProvvisorie.modificatoDa" />
+					<form:input path="modificatoDa" maxlength="50" readonly="true"/>
+				</div>
+				<div class="small-4 columns">
+				</div>
+			</div>
+			
+			
+        </fieldset>
+
+
+	<%-- <div class="row">
+		<div class="large-12 columns">
+			<fieldset>
+				<div class="row">
+					<div class="small-3 columns">
+						<demdec:label labelKey="label.metadatiFascicolo" />
+					</div>
+				</div>
+				<div class="spacer_sm">&nbsp;</div>
+				<div class="row">
+					<div class="small-3 columns">
+						<demdec:label path="decTipoDecreto" labelKey="label.tipoDecreto" />
+						<form:input path="decTipoDecreto" maxlength="5" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-3 columns">
+						<demdec:label path="numeDecreto" labelKey="label.numeroDecreto" />
+						<form:input path="numeDecreto" maxlength="5" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-3 columns">
+						<demdec:label path="annoDecreto" labelKey="label.anno.dec" />
+						<form:input path="annoDecreto" maxlength="4" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-10 columns">
+						<demdec:label path="descDecreto"
+							labelKey="label.raccolteProvvisorie.nome" />
+						<form:input path="descDecreto" maxlength="80" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-3 columns">
+						<demdec:label path="numePat" labelKey="label.numeroPatrimonio" />
+						<form:input path="numePat" maxlength="5" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-5 columns">
+						<demdec:label path="descStato" labelKey="label.stato" />
+						<form:input path="descStato" maxlength="50" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-10 columns">
+						<demdec:label path="amministrazione"
+							labelKey="label.raccolteProvvisorie.amministrazione" />
+						<form:input path="amministrazione" maxlength="50" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-5 columns">
+						<demdec:label path="tipologiaDecreto"
+							labelKey="label.tipologiaDecreto" />
+						<input type="text" maxlength="50"
+							value="${tipologiaDecretoLis[0].descTipologia}" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-4 columns">
+						<demdec:label path="ufficio" labelKey="label.ufficioCapofila" />
+						<input type="text" maxlength="50"
+							value="${ufficioCapofilaListList[0].descUfficio}" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-4 columns">
+						<demdec:label path="ufficioCreatore"
+							labelKey="label.ufficioCreatore" />
+						<form:input path="ufficioCreatore" maxlength="50" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-3 columns">
+						<demdec:label path="dataCreazione"
+							labelKey="label.raccolteProvvisorie.dataCreazione" />
+						<form:input path="dataCreazione" maxlength="50" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-5 columns">
+						<demdec:label path="creatoDa" labelKey="label.creatoDa" />
+						<form:input path="creatoDa" maxlength="50" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-3 columns">
+						<demdec:label path="dataModifica"
+							labelKey="label.raccolteProvvisorie.dataModifica" />
+						<form:input path="dataModifica" maxlength="50" readonly="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-5 columns">
+						<demdec:label path="modificatoDa"
+							labelKey="label.raccolteProvvisorie.modificatoDa" />
+						<form:input path="modificatoDa" maxlength="50" readonly="true" />
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div> --%>
+</div>
+
+<div class="spacer_sm">&nbsp;</div>
+<div class="spacer_sm">&nbsp;</div>
+<div class="spacer_sm">&nbsp;</div>
+
+<div class="titoloST" onclick="initAll_2('det1','imgDet1');"
+	style="cursor: pointer;">
+	<c:if test="${empty openDettFad}">
+		<img id="imgDet1"  class="left" src="<c:url value="/public/img/piu_3.png"/>" alt="Visualizza Dettaglio" title="Visualizza Dettaglio"/>
+	</c:if>
+	<c:if test="${not empty openDettFad}">
+		<img id="imgDet1"  class="left" src="<c:url value="/public/img/meno_3.png"/>" alt="Nascondi Dettaglio" title="Nascondi Dettaglio"/>
+	</c:if>
+</div>
+&nbsp;
+<strong class="color_blu"><spring:message
+		code="label.sottofascicoli.fad" /></strong>
+
+<c:if test="${empty openDettFad}">
+	<div class="dettaglioST" style="display: none" id="det1">
+	
+		<c:if test="${not empty listFascicoliFad}">
+	
+			<demdec:displaytag-table class="lux tableDati"
+				name="pageScope.listFascicoliFad" id="listFascicoliFad">
+				<display:caption>
+					<span class="nascosto"><spring:message
+							code="label.caption.table.fad" /></span>
+				</display:caption>
+				
+				<demdec:displaytag-column title="">
+					<demdec:submit styleClass="subm_folder" keyValue="label.empty"
+						titleKey="alt.apri.fascicoloFad"
+						controllerCode="apriDocumentiFad?idFad=${listFascicoliFad.id}" />
+				</demdec:displaytag-column>
+				
+					
+				<demdec:displaytag-column titleKey="label.raccolteProvvisorie.estremiStr">
+					<demdec:submit styleClass="nascosto"
+						styleId="apri${listFascicoliFad.id}" keyValue="label.empty"
+						controllerCode="apriDocumentiFad?idFad=${listFascicoliFad.id}" />
+					<a
+						href="javascript:this.document.getElementById('apri${listFascicoliFad.id}').click();">
+						${listFascicoliFad.estremiStr} </a>
+				</demdec:displaytag-column>
+				
+				<demdec:displaytag-column property="descDecreto"
+					titleKey="label.raccolteProvvisorie.nome" />
+				
+				
+				
+				<demdec:displaytag-column sortName="amministrazione"
+					property="amministrazione"
+					titleKey="label.raccolteProvvisorie.amministrazione" />
+				<demdec:displaytag-column property="dataCreazioneFascicoloFormatted"
+					titleKey="label.raccolteProvvisorie.dataModifica" />
+				<demdec:displaytag-column property="ufficioCapofila.descUfficio"
+					titleKey="label.raccolteProvvisorie.origineCreazione" />
+				<demdec:displaytag-column
+					titleKey="label.raccolteProvvisorie.visualizzaMetadati" style="text-align:center">
+					<a
+						href="javascript:caricaModaleDettFascFad('contModal_01', '${listFascicoliFad_rowNum}');">
+						<img class="padd_sx_logo"
+						src="<c:url value="/public/img/ico_view_det.png"/>" alt="vai">
+					</a>
+				</demdec:displaytag-column>
+			</demdec:displaytag-table>
+		</c:if>
+	
+		<c:if test="${empty listFascicoliFad}">
+			<div class="scroll_table_gen">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nessun Fascicolo Atto Decreto</div>
+		</c:if>
+	
+	
+	</div>
+</c:if>
+<c:if test="${not empty openDettFad}">
+	<div class="dettaglioST" style="display: block" id="det1">
+	
+		<c:if test="${not empty listFascicoliFad}">
+	
+			<demdec:displaytag-table class="lux tableDati"
+				name="pageScope.listFascicoliFad" id="listFascicoliFad">
+				<display:caption>
+					<span class="nascosto"><spring:message
+							code="label.caption.table.fad" /></span>
+				</display:caption>
+				
+				<demdec:displaytag-column title="">
+					<demdec:submit styleClass="subm_folder" keyValue="label.empty"
+						titleKey="alt.apri.fascicoloFad"
+						controllerCode="apriDocumentiFad?idFad=${listFascicoliFad.id}" />
+				</demdec:displaytag-column>
+				
+					
+				<demdec:displaytag-column titleKey="label.raccolteProvvisorie.estremiStr">
+					<demdec:submit styleClass="nascosto"
+						styleId="apri${listFascicoliFad.id}" keyValue="label.empty"
+						controllerCode="apriDocumentiFad?idFad=${listFascicoliFad.id}" />
+					<a
+						href="javascript:this.document.getElementById('apri${listFascicoliFad.id}').click();">
+						${listFascicoliFad.estremiStr} </a>
+				</demdec:displaytag-column>
+				
+				<demdec:displaytag-column property="descDecreto"
+					titleKey="label.raccolteProvvisorie.nome" />
+				
+				
+				
+				<demdec:displaytag-column sortName="amministrazione"
+					property="amministrazione"
+					titleKey="label.raccolteProvvisorie.amministrazione" />
+				<demdec:displaytag-column property="dataCreazioneFascicoloFormatted"
+					titleKey="label.raccolteProvvisorie.dataModifica" />
+				<demdec:displaytag-column property="ufficioCapofila.descUfficio"
+					titleKey="label.raccolteProvvisorie.origineCreazione" />
+				<demdec:displaytag-column
+					titleKey="label.raccolteProvvisorie.visualizzaMetadati">
+					<a
+						href="javascript:caricaModaleDettFascFad('contModal_01', '${listFascicoliFad_rowNum}');">
+						<img class="padd_sx_logo"
+						src="<c:url value="/public/img/ico_view_det.png"/>" alt="vai">
+					</a>
+				</demdec:displaytag-column>
+			</demdec:displaytag-table>
+		</c:if>
+	
+		<c:if test="${empty listFascicoliFad}">
+			<div class="scroll_table_gen">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nessun Fascicolo Atto Decreto</div>
+		</c:if>
+	
+	
+	</div>
+</c:if>
+<div class="spacer_sm">&nbsp;</div>
+<div class="spacer_sm">&nbsp;</div>
+<div class="spacer_sm">&nbsp;</div>
+
+
+<div class="titoloST" onclick="initAll_2('det2','imgDet2');"
+	style="cursor: pointer;">
+	<c:if test="${empty openDettRed}">
+		<img id="imgDet2"  class="left" src="<c:url value="/public/img/piu_3.png"/>" alt="Visualizza Dettaglio" title="Visualizza Dettaglio"/>
+	</c:if>
+	<c:if test="${not empty openDettRed}">
+		<img id="imgDet2"  class="left" src="<c:url value="/public/img/meno_3.png"/>" alt="Nascondi Dettaglio" title="Nascondi Dettaglio"/>
+	</c:if>
+</div>
+
+
+		
+		
+<c:choose>
+	<c:when test="${not empty listFascicoliRed}">
+		&nbsp;<strong class="color_blu"><spring:message code="label.sottofascicoli.red"/></strong>
+	</c:when>
+	<c:otherwise>
+		&nbsp;<strong class="color_grey_2"><spring:message code="label.sottofascicoli.red"/></strong>
+	</c:otherwise>
+</c:choose>
+
+<c:if test="${empty openDettRed}">
+	<div class="dettaglioST" style="display:none" id="det2">
+	
+	
+		<c:if test="${not empty listFascicoliRed}">
+	
+			<demdec:displaytag-table name="pageScope.listFascicoliRed"
+				id="listFascicoliRed" class="lux tableDati">
+	
+				<display:caption>
+					<span class="nascosto">Tabella fascicoli raccolte provvisorie</span>
+				</display:caption>
+				<demdec:displaytag-column title="">
+	
+					<demdec:submit styleClass="subm_folder" keyValue="label.empty"
+						titleKey="alt.apri.fascicoloFad"
+						controllerCode="apriDocumentiFascicoloRed?rowNum=${listFascicoliRed_rowNum -1}" />
+	
+				</demdec:displaytag-column>
+	
+				<demdec:displaytag-column
+					titleKey="label.raccolteProvvisorie.protocollo">
+					<demdec:submit styleClass="nascosto"
+						styleId="apri${listFascicoliRed.id.codiIdRed}"
+						keyValue="label.empty"
+						controllerCode="apriDocumentiFascicoloRed?rowNum=${listFascicoliRed_rowNum -1}" />
+					<a
+						href="javascript:this.document.getElementById('apri${listFascicoliRed.id.codiIdRed}').click();">
+						${listFascicoliRed.numeProtocollo}/<fmt:formatDate pattern="yyyy"
+							value="${listFascicoliRed.dataProtocollo}" />
+					</a>
+				</demdec:displaytag-column>
+				<demdec:displaytag-column property="descOggettoRed"
+					titleKey="label.raccolteProvvisorie.oggettoRed" />
+				<%--
+					<demdec:displaytag-column   titleKey="label.raccolteProvvisorie.nome" >
+						<demdec:submit styleClass="nascosto" styleId="apri${listFascicoliRed.id.codiIdRed}" keyValue="label.empty" controllerCode="apriDocumentiFascicoloRed?rowNum=${listFascicoliRed_rowNum-1}"/>
+						<a href="javascript:this.document.getElementById('apri${listFascicoliRed.id.codiIdRed}').click();">
+								${listFascicoliRed.descOggettoRed}
+							</a>
+					</demdec:displaytag-column>
+					--%>
+				<demdec:displaytag-column sortName="amministrazione.descAmm"
+					property="anagAmminDem.descAmm"
+					titleKey="label.raccolteProvvisorie.amministrazione" />
+				<demdec:displaytag-column property="statStato"
+					titleKey="label.raccolteProvvisorie.statoLavorazione" />
+				<demdec:displaytag-column property="dataArrivoFormatted"
+					titleKey="label.raccolteProvvisorie.dataCreazione" />
+				<demdec:displaytag-column property="descUfficioAss"
+					titleKey="label.raccolteProvvisorie.origineCreazione" />
+				<demdec:displaytag-column property="dataAggiornamentoFormatted"
+					titleKey="label.raccolteProvvisorie.dataModifica" />
+				<%-- 				<demdec:displaytag-column property="sistemaProduttore" titleKey="label.raccolteProvvisorie.modificatoDa"  /> --%>
+				<demdec:displaytag-column
+					titleKey="label.raccolteProvvisorie.visualizzaMetadati"
+					style="text-align:center">
+	
+	
+					<a
+						href="javascript: caricaModaleDettFascRed('contModal_7', '${listFascicoliRed_rowNum-1}'); ">
+						<img class="padd_sx_logo"
+						src="<c:url value="/public/img/ico_view_det.png"/>" alt="vai">
+					</a>
+	
+				</demdec:displaytag-column>
+			</demdec:displaytag-table>
+			<c:if test="${pagFascicoliRed ne null}">
+				<div>&nbsp;</div>
+				<div class="center color_grey">
+					<demdec:paginator
+						controllerCode="<%=Paginator.PARAMETER_PAGINATOR%>"
+						paginatorName="pagFascicoliRed"
+						paginatorSessionName="<%=SessionAttributes.SOTTO_FASCICOLI_RED_PAGINATOR%>"
+						controllerCodeEnableDisablePagin="<%=Paginator.PARAMETER_ENABLE_DISABLE_PAGIN%>" />
+				</div>
+			</c:if>
+		</c:if>
+	
+		<c:if test="${empty listFascicoliRed}">
+			<div class="scroll_table_gen">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nessun fascicolo IGB/RED &egrave;
+				stato associato al fascicolo Atto Decreto</div>
+		</c:if>
+	
+	
+	</div>
+</c:if>
+<c:if test="${not empty openDettRed}">
+	<div class="dettaglioST" style="display:block" id="det2">
+	
+	
+		<c:if test="${not empty listFascicoliRed}">
+	
+			<demdec:displaytag-table name="pageScope.listFascicoliRed"
+				id="listFascicoliRed" class="lux tableDati">
+	
+				<display:caption>
+					<span class="nascosto">Tabella fascicoli raccolte provvisorie</span>
+				</display:caption>
+				<demdec:displaytag-column title="">
+	
+					<demdec:submit styleClass="subm_folder" keyValue="label.empty"
+						titleKey="alt.apri.fascicoloFad"
+						controllerCode="apriDocumentiFascicoloRed?rowNum=${listFascicoliRed_rowNum -1}" />
+	
+				</demdec:displaytag-column>
+	
+				<demdec:displaytag-column
+					titleKey="label.raccolteProvvisorie.protocollo">
+					<demdec:submit styleClass="nascosto"
+						styleId="apri${listFascicoliRed.id.codiIdRed}"
+						keyValue="label.empty"
+						controllerCode="apriDocumentiFascicoloRed?rowNum=${listFascicoliRed_rowNum -1}" />
+					<a
+						href="javascript:this.document.getElementById('apri${listFascicoliRed.id.codiIdRed}').click();">
+						${listFascicoliRed.numeProtocollo}/<fmt:formatDate pattern="yyyy"
+							value="${listFascicoliRed.dataProtocollo}" />
+					</a>
+				</demdec:displaytag-column>
+				<demdec:displaytag-column property="descOggettoRed"
+					titleKey="label.raccolteProvvisorie.oggettoRed" />
+				<%--
+					<demdec:displaytag-column   titleKey="label.raccolteProvvisorie.nome" >
+						<demdec:submit styleClass="nascosto" styleId="apri${listFascicoliRed.id.codiIdRed}" keyValue="label.empty" controllerCode="apriDocumentiFascicoloRed?rowNum=${listFascicoliRed_rowNum-1}"/>
+						<a href="javascript:this.document.getElementById('apri${listFascicoliRed.id.codiIdRed}').click();">
+								${listFascicoliRed.descOggettoRed}
+							</a>
+					</demdec:displaytag-column>
+					--%>
+				<demdec:displaytag-column sortName="amministrazione.descAmm"
+					property="anagAmminDem.descAmm"
+					titleKey="label.raccolteProvvisorie.amministrazione" />
+				<demdec:displaytag-column property="statStato"
+					titleKey="label.raccolteProvvisorie.statoLavorazione" />
+				<demdec:displaytag-column property="dataArrivoFormatted"
+					titleKey="label.raccolteProvvisorie.dataCreazione" />
+				<demdec:displaytag-column property="descUfficioAss"
+					titleKey="label.raccolteProvvisorie.origineCreazione" />
+				<demdec:displaytag-column property="dataAggiornamentoFormatted"
+					titleKey="label.raccolteProvvisorie.dataModifica" />
+				<%-- 				<demdec:displaytag-column property="sistemaProduttore" titleKey="label.raccolteProvvisorie.modificatoDa"  /> --%>
+				<demdec:displaytag-column
+					titleKey="label.raccolteProvvisorie.visualizzaMetadati"
+					style="text-align:center">
+	
+	
+					<a
+						href="javascript: caricaModaleDettFascRed('contModal_7', '${listFascicoliRed_rowNum-1}'); ">
+						<img class="padd_sx_logo"
+						src="<c:url value="/public/img/ico_view_det.png"/>" alt="vai">
+					</a>
+	
+				</demdec:displaytag-column>
+			</demdec:displaytag-table>
+			<c:if test="${pagFascicoliRed ne null}">
+				<div>&nbsp;</div>
+				<div class="center color_grey">
+					<demdec:paginator
+						controllerCode="<%=Paginator.PARAMETER_PAGINATOR%>"
+						paginatorName="pagFascicoliRed"
+						paginatorSessionName="<%=SessionAttributes.SOTTO_FASCICOLI_RED_PAGINATOR%>"
+						controllerCodeEnableDisablePagin="<%=Paginator.PARAMETER_ENABLE_DISABLE_PAGIN%>" />
+				</div>
+			</c:if>
+		</c:if>
+	
+		<c:if test="${empty listFascicoliRed}">
+			<div class="scroll_table_gen">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nessun fascicolo IGB/RED &egrave;
+				stato associato al fascicolo Atto Decreto</div>
+		</c:if>
+	
+	
+	</div>
+</c:if>
+<div class="spacer_sm">&nbsp;</div>
+<div class="spacer_sm">&nbsp;</div>
+<div class="spacer_sm">&nbsp;</div>
+
+<div class="titoloST" onclick="initAll_2('det3','imgDet3');"
+	style="cursor: pointer;">
+	<c:if test="${empty openDettPatr}">
+		<img id="imgDet3" class="left" src="<c:url value="/public/img/piu_3.png"/>" alt="Visualizza Dettaglio" title="Visualizza Dettaglio">
+	</c:if>
+	<c:if test="${not empty openDettPatr}">
+		<img id="imgDet3"  class="left" src="<c:url value="/public/img/meno_3.png"/>" alt="Nascondi Dettaglio" title="Nascondi Dettaglio"/>
+	</c:if>
+</div>
+<c:choose>
+	<c:when test="${not empty listFascicoliPat}">
+		&nbsp;<strong class="color_blu">Sottofascicoli Patrimonio</strong>
+	</c:when>
+	<c:otherwise>
+		&nbsp;<strong class="color_grey_2">Sottofascicoli Patrimonio</strong>
+	</c:otherwise>
+</c:choose>
+
+<c:if test="${empty openDettPatr}">
+	<div class="dettaglioST" style="display: none" id="det3">
+		<div class="scroll_table_gen">
+	
+	
+			<c:if test="${not empty listFascicoliPat}">
+	
+				<demdec:displaytag-table name="pageScope.listFascicoliPat"
+					id="listFascicoliPat" class="lux tableDati">
+	
+					<display:caption>
+						<span class="nascosto">Tabella fascicoli raccolte
+							provvisorie</span>
+					</display:caption>
+					<demdec:displaytag-column title="">
+	
+						<demdec:submit styleClass="subm_folder" keyValue="label.empty"
+							titleKey="alt.apri.fascicoloFad"
+							controllerCode="apriDocumentiFascicoloPat?rowNum=${listFascicoliPat_rowNum-1}" />
+	
+					</demdec:displaytag-column>
+					<demdec:displaytag-column titleKey="label.raccolteProvvisorie.nome">
+						<demdec:submit styleClass="nascosto"
+							styleId="apri${listFascicoliPat.idFascicoloSipatr}"
+							keyValue="label.empty"
+							controllerCode="apriDocumentiFascicoloPat?rowNum=${listFascicoliPat_rowNum-1}" />
+						<a
+							href="javascript:this.document.getElementById('apri${listFascicoliPat.idFascicoloSipatr}').click();">
+							${listFascicoliPat.descrizione} </a>
+					</demdec:displaytag-column>
+	
+					<demdec:displaytag-column sortName="amministrazione.description"
+						property="amministrazione.description"
+						titleKey="label.raccolteProvvisorie.amministrazione" />
+					<demdec:displaytag-column property="statoFascicoloDocumentale"
+						titleKey="label.raccolteProvvisorie.statoLavorazione" />
+					<demdec:displaytag-column property="dataCreazione"
+						titleKey="label.raccolteProvvisorie.dataCreazione" />
+					<%-- 				<demdec:displaytag-column property="ufficioCreatoreRED.description" titleKey="label.raccolteProvvisorie.origineCreazione"  /> --%>
+				<%-- 	<demdec:displaytag-column property="dataAggiornamento"
+						titleKey="label.raccolteProvvisorie.dataModifica" />
+					<demdec:displaytag-column property="sistemaProduttore"
+						titleKey="label.raccolteProvvisorie.modificatoDa" /> --%>
+					<demdec:displaytag-column
+						titleKey="label.raccolteProvvisorie.visualizzaMetadati"
+						style="text-align:center">
+						<a
+							href="javascript: caricaModaleDettFascPat('contModal_8', '${listFascicoliPat_rowNum-1}'); ">
+							<img class="padd_sx_logo"
+							src="<c:url value="/public/img/ico_view_det.png"/>" alt="vai">
+						</a>
+					</demdec:displaytag-column>
+				</demdec:displaytag-table>
+				<c:if test="${pagFascicoliPat ne null}">
+					<div>&nbsp;</div>
+					<div class="center color_grey">
+						<demdec:paginator
+							controllerCode="<%=Paginator.PARAMETER_PAGINATOR%>"
+							paginatorName="pagFascicoliPat"
+							paginatorSessionName="<%=SessionAttributes.SOTTO_FASCICOLI_PAT_PAGINATOR%>"
+							controllerCodeEnableDisablePagin="<%=Paginator.PARAMETER_ENABLE_DISABLE_PAGIN%>" />
+					</div>
+				</c:if>
+			</c:if>
+	
+			<c:if test="${empty listFascicoliPat}">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nessun fascicolo Patrimonio &egrave; stato associato al fascicolo Atto Decreto 
+		</c:if>
+	
+	
+		</div>
+	</div>
+</c:if>
+<c:if test="${not empty openDettPatr}">
+	<div class="dettaglioST" style="display:block" id="det3">
+		<div class="scroll_table_gen">
+	
+	
+			<c:if test="${not empty listFascicoliPat}">
+	
+				<demdec:displaytag-table name="pageScope.listFascicoliPat"
+					id="listFascicoliPat" class="lux tableDati">
+	
+					<display:caption>
+						<span class="nascosto">Tabella fascicoli raccolte
+							provvisorie</span>
+					</display:caption>
+					<demdec:displaytag-column title="">
+	
+						<demdec:submit styleClass="subm_folder" keyValue="label.empty"
+							titleKey="alt.apri.fascicoloFad"
+							controllerCode="apriDocumentiFascicoloPat?rowNum=${listFascicoliPat_rowNum-1}" />
+	
+					</demdec:displaytag-column>
+					<demdec:displaytag-column titleKey="label.raccolteProvvisorie.nome">
+						<demdec:submit styleClass="nascosto"
+							styleId="apri${listFascicoliPat.idFascicoloSipatr}"
+							keyValue="label.empty"
+							controllerCode="apriDocumentiFascicoloPat?rowNum=${listFascicoliPat_rowNum-1}" />
+						<a
+							href="javascript:this.document.getElementById('apri${listFascicoliPat.idFascicoloSipatr}').click();">
+							${listFascicoliPat.descrizione} </a>
+					</demdec:displaytag-column>
+	
+					<demdec:displaytag-column sortName="amministrazione.description"
+						property="amministrazione.description"
+						titleKey="label.raccolteProvvisorie.amministrazione" />
+					<demdec:displaytag-column property="statoFascicoloDocumentale"
+						titleKey="label.raccolteProvvisorie.statoLavorazione" />
+					<demdec:displaytag-column property="dataCreazione"
+						titleKey="label.raccolteProvvisorie.dataCreazione" />
+					<%-- 				<demdec:displaytag-column property="ufficioCreatoreRED.description" titleKey="label.raccolteProvvisorie.origineCreazione"  /> --%>
+					<%-- <demdec:displaytag-column property="dataAggiornamento"
+						titleKey="label.raccolteProvvisorie.dataModifica" />
+					<demdec:displaytag-column property="sistemaProduttore"
+						titleKey="label.raccolteProvvisorie.modificatoDa" /> --%>
+					<demdec:displaytag-column
+						titleKey="label.raccolteProvvisorie.visualizzaMetadati"
+						style="text-align:center">
+						<a
+							href="javascript: caricaModaleDettFascPat('contModal_8', '${listFascicoliPat_rowNum-1}'); ">
+							<img class="padd_sx_logo"
+							src="<c:url value="/public/img/ico_view_det.png"/>" alt="vai">
+						</a>
+					</demdec:displaytag-column>
+				</demdec:displaytag-table>
+				<c:if test="${pagFascicoliPat ne null}">
+					<div>&nbsp;</div>
+					<div class="center color_grey">
+						<demdec:paginator
+							controllerCode="<%=Paginator.PARAMETER_PAGINATOR%>"
+							paginatorName="pagFascicoliPat"
+							paginatorSessionName="<%=SessionAttributes.SOTTO_FASCICOLI_PAT_PAGINATOR%>"
+							controllerCodeEnableDisablePagin="<%=Paginator.PARAMETER_ENABLE_DISABLE_PAGIN%>" />
+					</div>
+				</c:if>
+			</c:if>
+	
+			<c:if test="${empty listFascicoliPat}">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nessun fascicolo Patrimonio &egrave; stato associato al fascicolo Atto Decreto 
+		</c:if>
+	
+	
+		</div>
+	</div>
+</c:if>
+<div class="spacer">&nbsp;</div>
+
+<div class="row center">
+	<demdec:submit keyValue="button.ritornoLista"
+		controllerCode="backToFadSearch" />
+</div>
+
+<script>
+	function initAll(idTogle, idImg) {
+		$('.dettaglioST').each(function(index) {
+			if ($(this).attr("id") == idTogle) {
+				$(this).toggle();
+				if ($(this).is(":hidden")) {
+					$('#' + idImg).attr({
+						src : "../public/img/piu.png",
+						title : "Visualizza dettaglio",
+						alt : "Visualizza dettaglio"
+					});
+				} else {
+					$('#' + idImg).attr({
+						src : "../public/img/meno.png",
+						title : "Nascondi dettaglio",
+						alt : "Nascondi dettaglio"
+					});
+				}
+			}
+		});
+
+	}
+	function initAll_2(idTogle,idImg){
+		$('.dettaglioST').each(function(index) {
+			if ($(this).attr("id") == idTogle) {
+				$(this).toggle();
+				if ($(this).is(":hidden")) {
+					$('#' + idImg).attr({
+						src : "../public/img/piu_3.png",
+						title : "Visualizza dettaglio",
+						alt : "Visualizza dettaglio"
+					});
+				} else {
+					$('#' + idImg).attr({
+						src : "../public/img/meno_3.png",
+						title : "Nascondi dettaglio",
+						alt : "Nascondi dettaglio"
+					});
+				}
+			}
+		});
+<%--
+ 	     $('.titoloST').find('img').attr( {src:"../public/img/piu.png", title:"Visualizza dettaglio", alt:"Visualizza dettaglio" });
+ 	     $('.dettaglioST').each(function(index) {
+	          if ($(this).attr("id") == idTogle) {
+	               $(this).toggle();
+	               if ($(this).is(":hidden")){
+	            	   $('#'+idImg).attr( {src:"../public/img/piu.png", title:"Visualizza dettaglio", alt:"Visualizza dettaglio" });
+	               }else {
+	            	   $('#'+idImg).attr( {src:"../public/img/meno.png", title:"Visualizza dettaglio", alt:"Visualizza dettaglio" });
+	               }
+	          }
+	          else {
+	               $(this).hide();
+	          }
+	     });
+	     --%>
+	}
+</script>

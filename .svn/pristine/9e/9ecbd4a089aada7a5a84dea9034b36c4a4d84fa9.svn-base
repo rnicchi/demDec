@@ -1,0 +1,42 @@
+package it.mef.bilancio.demdec.to;
+
+
+public class LettereTestiPersTOId extends AbstractDemTO implements java.io.Serializable {
+
+    private String fkNumeIdFascicolo;
+    private String codiTipoLettera;
+    private String codiSezione;
+    private String numeRiga;
+     
+     
+	public String getFkNumeIdFascicolo() {
+		return fkNumeIdFascicolo;
+	}
+	public void setFkNumeIdFascicolo(String fkNumeIdFascicolo) {
+		this.fkNumeIdFascicolo = fkNumeIdFascicolo;
+	}
+	public String getCodiTipoLettera() {
+		return codiTipoLettera;
+	}
+	public void setCodiTipoLettera(String codiTipoLettera) {
+		this.codiTipoLettera = codiTipoLettera;
+	}
+	public String getCodiSezione() {
+		return codiSezione;
+	}
+	public void setCodiSezione(String codiSezione) {
+		this.codiSezione = codiSezione;
+	}
+	public String getNumeRiga() {
+		return numeRiga;
+	}
+	public void setNumeRiga(String numeRiga) {
+		this.numeRiga = numeRiga;
+	}
+
+    
+
+
+}
+
+

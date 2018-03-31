@@ -1,0 +1,152 @@
+
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@page import="it.almavivaitalia.web.sh.utils.BaseSessionAttributes"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.WebConstants"%>
+<%@page import="it.almavivaitalia.bsn.sh.paginator.Paginator"%>
+
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://displaytag.sf.net" prefix="display"%>
+
+<!-- PageName = documentiRed.jsp -->
+<demdec:useAttribute id="paginator"     			name="<%=SessionAttributes.DOCUMENTI_RED_PAGINATOR%>"/>
+<demdec:useAttribute id="listDocumentiFascicolo" 	name="<%=SessionAttributes.LIST_DOCUMENTI_RED%>" /> 
+<demdec:useAttribute id="tipoDocumentoList" 		name="<%=WebConstants.LIST_TIPO_ALLEGATI%>" /> 
+<demdec:useAttribute id="visibilitaCdc"         name="<%=WebConstants.LIST_VISIBILITA_CDC%>" /> 
+<demdec:useAttribute id="documentoRed"     			name="<%=SessionAttributes.DOCUMENTO_RED%>"/>
+<demdec:useAttribute id="modVisibilita"	    name="<%=WebConstants.CHK_MODIFICA_VISIBILITA%>" />
+<demdec:useAttribute id="idFadAperto"	name="<%=WebConstants.ID_FAD_APERTO%>" />
+<demdec:useAttribute id="fascicoloFad" name="<%=SessionAttributes.FASCICOLO_SELEZIONATO%>"/>
+<demdec:useAttribute id="sottoFascicoloRed" name="<%=SessionAttributes.SOTTO_FASCICOLO_RED%>"/>
+
+<tiles:useAttribute name="action"/>
+
+<script type="application/javascript">
+var jsonData;
+</script>
+
+<tiles:insertAttribute name="modalVisualizzaDocumentiRed" flush="false"/>
+<tiles:insertAttribute name="modalModificaDocumentiRed" flush="false"/>
+ 
+<div class="overlay"></div>
+
+<div class="spacer_sm">&nbsp;</div>
+
+<%-- <div class="row"> 
+	<input type="text" maxlength="50" value="Estremi Decreto: ${fascicoloFad.estremiStr}		-	Numero Protocollo: ${sottoFascicoloRed.estremiProtocollo}" class="label" readonly="true"/>
+</div> --%>
+ <div class="center padd-bott_5 font_size_riep">
+    <span>&#8226; Tipo: </span>
+    <span class="col_char_user"><strong>${fascicoloFad.anagTipologiaDecreto.anagTipoDecreto.descSigla}</strong></span> 
+  
+    <span>&#8226; Numero:</span>
+    <span class="col_char_user"><strong>${fascicoloFad.numeNumDecreto}</strong></span> 
+   
+    <span>&#8226; Anno:</span>
+    <span class="col_char_user"><strong>${fascicoloFad.eserciziDem.id}</strong></span>    
+    
+     <span><strong>&nbsp;&nbsp;&nbsp; &#8226; Protocollo:</strong></span>
+    	<span class="col_char_user"><strong>${sottoFascicoloRed.estremiProtocollo}</strong></span> 
+  </div>
+<%-- <div class="center padd-bott_5 font_size_riep">
+	    <span><strong>&#8226;</strong> </span>
+	    <span class="col_char_user"><strong>${fascicoloFad.estremiStr}</strong></span> 
+	    <span><strong>&nbsp;&nbsp; &#8226; Prot:</strong></span>
+    	<span class="col_char_user"><strong>${sottoFascicoloRed.estremiProtocollo}</strong></span> 
+	</div> --%>
+
+<div class="spacer_sm">&nbsp;</div>
+
+<div >
+	<c:if test="${not empty listDocumentiFascicolo}">
+		<demdec:displaytag-table skipDiv="true"  name="pageScope.listDocumentiFascicolo" id="listDocumentiFascicolo" >
+			<display:caption>
+				<span class="nascosto"><demdec:label  labelKey="label.raccolteProvvisorie.documentiFascicolo"/></span>
+			</display:caption>
+			<demdec:displaytag-column  titleKey="label.raccolteProvvisorie.pdf" style="text-align:center" >
+				<demdec:linkButton styleClass="padd_sx_logo" action="${action}" imageKey="ico.download.pdf" parameter="scaricaPdfRed" parameterValue="${listDocumentiFascicolo_rowNum -1}"/>
+<%-- 					<a href="<%=request.getContextPath()%>/private/ricercaRed.do?cmdGET___download=download&amp;tipoDownl=1&amp;rigaDoc=${listDocumentiFascicolo_rowNum} " >
+						<img class="padd_sx_logo" src="<%=request.getContextPath()%>/public/img/ico_pdf.png" alt="vai">
+					</a> 
+--%>
+			</demdec:displaytag-column>
+			<demdec:displaytag-column  titleKey="label.raccolteProvvisorie.originale" style="text-align:center" >
+				<demdec:linkButton styleClass="padd_sx_logo" action="${action}" imageKey="ico.download.originale" parameter="scaricaOrigRed" parameterValue="${listDocumentiFascicolo_rowNum -1}"/>
+
+<%-- 					<a href="<%=request.getContextPath()%>/private/ricercaRed.do?cmdGET___download=download&amp;tipoDownl=2&amp;rigaDoc=${listDocumentiFascicolo_rowNum}  " >
+						<img class="padd_sx_logo" src="<%=request.getContextPath()%>/public/img/ico_download.png" alt="vai">
+					</a> 
+--%>
+			</demdec:displaytag-column>
+			
+			<demdec:displaytag-column property="descFilename"  titleKey="label.raccolteProvvisorie.nome" />
+			<demdec:displaytag-column sortName="anagAmminDem.descAmm"  property="anagAmminDem.descAmm" titleKey="label.raccolteProvvisorie.amministrazione" />
+			<demdec:displaytag-column property="descStatoDocumento" titleKey="label.raccolteProvvisorie.statoLavorazione" />
+			<demdec:displaytag-column property="dataDocumento" format="{0,date,dd/MM/yyyy}" titleKey="label.raccolteProvvisorie.dataCreazione"  />
+			<demdec:displaytag-column property="dataAggiornamento" format="{0,date,dd/MM/yyyy}" titleKey="label.raccolteProvvisorie.dataModifica" />
+<%-- 			<demdec:displaytag-column property="" titleKey="label.raccolteProvvisorie.modificatoDa"  /> --%>
+			<demdec:displaytag-column titleKey="label.raccolteProvvisorie.visualizzaMetadati" style="text-align:center">
+				<%-- <demdec:linkButton styleClass="padd_sx_logo" action="${action}" imageKey="ico.document.modify" parameter="updateDocRed" parameterValue="${listDocumentiFascicolo_rowNum }" /> --%>
+				<a href="javascript: visualizzaModaleMetadatiDocRed('contModalVis_0', '${listDocumentiFascicolo_rowNum -1}'); " >
+					<img class="padd_sx_logo" src="<c:url value="/public/img/ico_view_det.png"/>" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</demdec:displaytag-column>
+			<demdec:displaytag-column titleKey="label.modify" style="text-align:center">
+				<%-- <demdec:linkButton styleClass="padd_sx_logo" action="${action}" imageKey="ico.document.modify" parameter="updateDocRed" parameterValue="${listDocumentiFascicolo_rowNum }" /> --%>
+				<a href="javascript: modificaModaleMetadatiDocRed('contModal_0', '${listDocumentiFascicolo_rowNum -1}'); " >
+					<img class="padd_sx_logo" src="<c:url value="/public/img/upd.png"/>" alt="vai" title="Modifica">
+				</a>
+			</demdec:displaytag-column>
+			<demdec:displaytag-column titleKey="label.delete" style="text-align:center">
+				<demdec:submit styleClass="subm_none_del" keyValue="label.empty" titleKey="label.delete" controllerCode="deleteDocRed?deleteDocRedRiga=${listDocumentiFascicolo_rowNum -1}" onclick="return confermaElimina();"/>
+				<%-- 
+				<demdec:linkButton styleClass="padd_sx_logo" action="${action}" imageKey="ico.document.delete" parameter="deleteDocRed" parameterValue="${listDocumentiFascicolo_rowNum -1}" labelKey="label.delete" /> 
+				--%>
+			</demdec:displaytag-column>
+		</demdec:displaytag-table>
+	</c:if>
+
+	<c:if test="${paginator ne null}">
+		<div>&nbsp;</div>
+		<div class="center color_grey">
+			<demdec:paginator controllerCode="<%=Paginator.PARAMETER_PAGINATOR%>"
+	                         paginatorName="<%=Paginator.PAGINATOR_NAME%>"
+	                         paginatorSessionName="<%=SessionAttributes.DOCUMENTI_RED_PAGINATOR%>"
+	                         controllerCodeEnableDisablePagin="<%=Paginator.PARAMETER_ENABLE_DISABLE_PAGIN%>" />
+		</div>
+	</c:if>  
+<%--
+	<div id="emptyList">
+		<c:if test="${empty listDocumentiFascicolo}">
+			<spring:message code="info.noDataFound"></spring:message>
+		</c:if>
+	</div> 
+--%>	
+</div>
+
+<div class="spacer_sm">&nbsp;</div>
+
+<div class="row center" >
+	<demdec:submit keyValue="button.back" controllerCode="backToFadInitialPageFromRed?idFad=${idFadAperto}"/>
+</div>	
+
+<script type="text/javascript">
+	function confermaElimina(){
+		
+		var r = confirm('Confermi la cancellazione del documento Red?');
+		
+		if ( r == false ){
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+</script>
+

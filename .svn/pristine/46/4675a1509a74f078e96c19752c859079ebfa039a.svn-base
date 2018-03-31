@@ -1,0 +1,34 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import it.almavivaitalia.bilancio.commons.bo.EserciziDemBO;
+import it.almavivaitalia.bilancio.commons.dao.EserciziDao;
+import it.almavivaitalia.bilancio.commons.to.EserciziTO;
+import it.mef.bilancio.demdec.manager.InitManager;
+import java.util.List;
+
+
+
+public class InitManagerImpl extends AbstractDemManagerImpl implements InitManager {
+     
+	private EserciziDao eserciziDao;
+
+	public void setEserciziDao(EserciziDao eserciziDao) {
+		this.eserciziDao = eserciziDao;
+	}
+
+	@Override
+	public List<EserciziTO> loadEsercizi() throws Throwable {
+		
+		List<EserciziDemBO> lista= eserciziDao.loadEsercizi();
+		List<EserciziTO> listaTO=null;
+
+		if(lista!=null){
+			listaTO=getDozerDriver().mapList(lista, EserciziTO.class, "Esercizi");
+		}		
+		
+		return listaTO;
+	}
+	
+
+	
+}

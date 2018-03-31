@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class name="it.almavivaitalia.bilancio.commons.bo.TabServDemBO" table="D_TAB_SERV_DEM">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <composite-id class="it.almavivaitalia.bilancio.commons.bo.TabServDemBOId" name="id">
+    <key-property name="numeAggr" type="java.lang.Short">
+     <column name="NUME_AGGR" precision="4" scale="0"/>
+    </key-property>
+    <key-property name="codiParametro" type="string">
+     <column length="80" name="CODI_PARAMETRO"/>
+    </key-property>
+    <key-property name="codiValore" type="string">
+     <column length="1020" name="CODI_VALORE"/>
+    </key-property>
+   </composite-id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+  </class>
+ </hibernate-mapping>

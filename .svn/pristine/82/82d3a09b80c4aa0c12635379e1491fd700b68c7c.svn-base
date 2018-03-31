@@ -1,0 +1,356 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.URLName;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+
+import it.almavivaitalia.bilancio.commons.dao.TabServDao;
+import it.almavivaitalia.bilancio.commons.web.security.Utente;
+import it.almavivaitalia.bilancio.commons.bo.MailTestiBO;
+import it.almavivaitalia.bilancio.commons.bo.PecMessaggiInviatiBO;
+import it.almavivaitalia.bsn.sh.manager.exception.ObjectNotFoundException;
+import it.mef.bilancio.demdec.dao.MailTestiDao;
+import it.mef.bilancio.demdec.dao.PecMessaggiInviatiDao;
+import it.mef.bilancio.demdec.manager.MailManager;
+import it.mef.bilancio.demdec.to.DocumentiViewTO;
+import it.mef.bilancio.demdec.to.MailTestiTO;
+import it.mef.bilancio.demdec.to.PecMessaggiInviatiTO;
+import it.mef.bilancio.demdec.utils.Constants;
+
+public class MailManagerImpl extends AbstractDemManagerImpl implements MailManager {
+	
+	@Autowired
+	private PecMessaggiInviatiDao pecMessaggiInviatiDao;
+	@Autowired
+	private MailTestiDao mailTestiDao;
+	@Autowired
+	private TabServDao tabServDaoImpl;
+
+	@Autowired
+	private JavaMailSenderImpl pec;
+	
+	@Autowired
+	private JavaMailSenderImpl peo;
+	
+	@Override
+	public void salvaMessaggioInviato(PecMessaggiInviatiTO messaggioInviato, Utente utenteInSessione) throws Throwable {
+		
+		PecMessaggiInviatiBO messaggioBO = pecMessaggiInviatiDao.findMessaggioInviatoByMessageId(messaggioInviato.getId());
+		if(messaggioBO == null){
+			
+			messaggioBO = new PecMessaggiInviatiBO();
+			messaggioBO.setCodiFunzione(messaggioInviato.getCodiFunzione());
+			messaggioBO.setDataInvio(messaggioInviato.getDataInvio());
+			messaggioBO.setId(messaggioInviato.getId());
+			messaggioBO.setTextMessaggio(messaggioInviato.getTextMessaggio());
+			messaggioBO.setStatInvio(messaggioInviato.getStatInvio());
+		}
+		copyAudit(messaggioInviato, messaggioBO);
+		pecMessaggiInviatiDao.saveOrUpdate(messaggioBO);
+	}
+
+
+	/**
+	 * Il metodo restituisce la lista di messaggi inviati nella data odierna 
+	 */
+	@Override
+	public List<PecMessaggiInviatiTO> listaMessaggiInviati()
+			throws Throwable {
+		return getDozerDriver().mapList((List<PecMessaggiInviatiBO>) pecMessaggiInviatiDao.listaMessaggiInviati(), PecMessaggiInviatiTO.class, "Mail");
+		
+	}
+
+
+	@Override
+	public List<PecMessaggiInviatiTO> listSentMessageByDate(Date dataInvio) throws Throwable {
+		return getDozerDriver().mapList((List<PecMessaggiInviatiBO>) pecMessaggiInviatiDao.listSentMessageBydate(dataInvio), PecMessaggiInviatiTO.class, "Mail");
+	}
+	
+	
+	/**
+	 * A monte di tutto viene eseguito un controllo se la funzione che sta chiamando il metodo è abilitata all'invio della PEC
+	 * Il metodo viene chiamato dalla relativa funzione che necessita dell'invio di PEC, in base al codiFunzine viene caricato il messaggio standard da inviare e 
+	 * successivamente viene eseguito l'invio del messaggio attualmente è impostata in modo statico la fnzione TESTPEC. Dopo essere stato inviato alcuni dati del messaggio 
+	 * vengono salvati sulla tabella D_PEC_MESSAGGI_INVIATI
+	 * 
+	 *  Nella versione definitiva il metodo probabilmente sarà void (da definire più avanti qunado ci saranno le funzioni sviluppate)
+	 *  
+	 *  NOTE: i parametri di connessione sono impostati nel bean pec e vengono presi dalla tabella D_TAB_SERV_DEM
+	 */
+	@Override
+	public MimeMessage invioPecDaFunzione(String codiFunzione, Utente utenteInSessione, String address) throws Throwable{
+		
+		MailTestiBO bo = mailTestiDao.findMailTestiByCodiFunzione(codiFunzione);
+		if (bo==null){
+			return null;
+		}
+		MailTestiTO mailTesti = getDozerDriver().map(bo, MailTestiTO.class, "Mail");
+		
+		if(mailTesti.getFlagInvioSn().equalsIgnoreCase(Constants.FUNZIONE_ABILITATA_INVIO_EMAIL) && mailTesti.getFlagPecSn().equalsIgnoreCase(Constants.FUNZIONE_ABILITATA_INVIO_PEC)){
+			popolaMailSender(Constants.FLAG_PEC);
+			MimeMessage message = creaMessaggioStandard(mailTesti, pec, address);
+			this.pec.send(message);
+			return message;
+		}
+		return null;
+	}
+	
+	/**
+	 * A monte di tutto viene eseguito un controllo se la funzione che sta chiamando il metodo è abilitata all'invio di email standard
+	 * Il metodo viene chiamato dalla relativa funzione che necessita dell'invio di e-mail standard, in base al codiFunzine viene caricato il messaggio standard da inviare e 
+	 * successivamente viene eseguito l'invio del messaggio attualmente è impostata in modo statico la fnzione TESTNOPEC. Dopo essere stato inviato alcuni dati del messaggio 
+	 * vengono salvati sulla tabella D_PEC_MESSAGGI_INVIATI
+	 * 
+	 *  Nella versione definitiva il metodo probabilmente sarà void (da definire più avanti qunado ci saranno le funzioni sviluppate)
+	 *  
+	 *  NOTE: i parametri di connessione sono impostati nel bean standardMail e vengono presi dalla tabella D_TAB_SERV_DEM
+	 */
+	@Override
+	public MimeMessage invioPeoDaFunzione(String codiFunzione, Utente utenteInSessione, String address) throws Throwable{
+		
+		
+		MailTestiTO mailTesti = getDozerDriver().map(mailTestiDao.findMailTestiByCodiFunzione(codiFunzione), MailTestiTO.class, "Mail");
+		
+		if(mailTesti.getFlagInvioSn().equalsIgnoreCase(Constants.FUNZIONE_ABILITATA_INVIO_EMAIL) && mailTesti.getFlagPecSn().equalsIgnoreCase(Constants.FUNZIONE_DISABILITATA_INVIO_PEC)){
+			popolaMailSender(Constants.FLAG_NO_PEC);
+			MimeMessage message = creaMessaggioStandard(mailTesti, peo, address);
+			this.peo.send(message);
+			return message;
+		}
+
+		return null;
+		
+	}
+	
+	
+	
+	
+	
+	/**
+	 * A monte di tutto viene eseguito un controllo se la funzione che sta chiamando il metodo è abilitata all'invio della PEC
+	 * Il metodo viene chiamato dalla relativa funzione che necessita dell'invio di PEC, in base al codiFunzine viene caricato il messaggio standard da inviare a cui viene
+	 * concatenato il valore contenuto nella variabile textMailPlus e successivamente viene eseguito l'invio del messaggio. Attualmente è impostata in modo statico la 
+	 * funzione TESTPEC. Dopo essere stato inviato alcuni dati del messaggio vengono salvati sulla tabella D_PEC_MESSAGGI_INVIATI
+	 * 
+	 *  Nella versione definitiva il metodo probabilmente sarà void (da definire più avanti qunado ci saranno le funzioni sviluppate)
+	 *  
+	 *  NOTE: i parametri di connessione sono impostati nel bean pec e vengono presi dalla tabella D_TAB_SERV_DEM
+	 */
+	@Override
+	public MimeMessage invioPecDaFunzione(String codiFunzione, Utente utenteInSessione, String address, String textMailPlus) throws Throwable{
+		
+		MailTestiTO mailTesti = getDozerDriver().map(mailTestiDao.findMailTestiByCodiFunzione(codiFunzione), MailTestiTO.class, "Mail");
+		mailTesti.setTextEmail(mailTesti.getTextEmail()+" "+textMailPlus);
+		
+		if(mailTesti.getFlagInvioSn().equalsIgnoreCase(Constants.FUNZIONE_ABILITATA_INVIO_EMAIL) && mailTesti.getFlagPecSn().equalsIgnoreCase(Constants.FUNZIONE_ABILITATA_INVIO_PEC)){
+			popolaMailSender(Constants.FLAG_PEC);
+			MimeMessage message = creaMessaggioStandard(mailTesti, pec, address);
+			this.pec.send(message);
+			return message;
+		}
+		return null;
+	}
+	
+	/**
+	 * A monte di tutto viene eseguito un controllo se la funzione che sta chiamando il metodo è abilitata all'invio di email standard
+	 * Il metodo viene chiamato dalla relativa funzione che necessita dell'invio di e-mail standard, in base al codiFunzine viene caricato il messaggio standard da inviare a cui viene
+	 * concatenato il valore contenuto nella variabile textMailPlus e successivamente viene eseguito l'invio del messaggio. Attualmente è impostata in modo statico la 
+	 * funzione TESTNOPEC. Dopo essere stato inviato alcuni dati del messaggio vengono salvati sulla tabella D_PEC_MESSAGGI_INVIATI
+	 * 
+	 *  Nella versione definitiva il metodo probabilmente sarà void (da definire più avanti qunado ci saranno le funzioni sviluppate)
+	 *  
+	 *  NOTE: i parametri di connessione sono impostati nel bean standardMail e vengono presi dalla tabella D_TAB_SERV_DEM
+	 */
+	@Override
+	public MimeMessage invioPeoDaFunzione(String codiFunzione, Utente utenteInSessione, String address, String textMailPlus) throws Throwable{
+		
+		MailTestiTO mailTesti = getDozerDriver().map(mailTestiDao.findMailTestiByCodiFunzione(codiFunzione), MailTestiTO.class, "Mail");
+		mailTesti.setTextEmail(mailTesti.getTextEmail()+" "+textMailPlus);
+		
+		if(mailTesti.getFlagInvioSn().equalsIgnoreCase(Constants.FUNZIONE_ABILITATA_INVIO_EMAIL) && mailTesti.getFlagPecSn().equalsIgnoreCase(Constants.FUNZIONE_DISABILITATA_INVIO_PEC)){
+			popolaMailSender(Constants.FLAG_NO_PEC);
+			MimeMessage message = creaMessaggioStandard(mailTesti, peo, address);
+			this.peo.send(message);
+			return message;
+		}
+
+		return null;
+		
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Il metodo prende i campi per polpolare il bean mailSernderImpl dalla tabella D_TAB_SERV_DEM se l'intero
+	 * in ingresso pecFlag è settato a 1 il bean verrà popolato con i parametri di connessione per invio PEC altrimenti con quelli
+	 * per invio standard.
+	 * @throws Throwable 
+	 * @throws NumberFormatException 
+	 */
+	public void popolaMailSender(int pecFlag) throws Throwable {
+		switch (pecFlag) {
+		case Constants.FLAG_PEC:
+			this.pec.setUsername(tabServDaoImpl.searchPropertyValueFromTabServ(Constants.TAB_SERV_PEC_USERNAME));
+			this.pec.setPassword(tabServDaoImpl.searchPropertyValueFromTabServ(Constants.TAB_SERV_PEC_PWD));
+			this.pec.setHost(tabServDaoImpl.searchPropertyValueFromTabServ(Constants.TAB_SERV_PEC_HOST_OUT));
+			this.pec.setPort(Integer.parseInt(tabServDaoImpl.searchPropertyValueFromTabServ(Constants.TAB_SERV_PEC_PORT)));
+			this.pec.getSession().setDebug(true); //TODO Da eliminare in produzione o salvare nei log
+			this.pec.getSession().setPasswordAuthentication(new URLName(this.pec.getUsername()), new PasswordAuthentication(this.pec.getUsername(), this.pec.getPassword()));
+			break;
+
+		default:
+			this.peo.setUsername(tabServDaoImpl.searchPropertyValueFromTabServ(Constants.TAB_SERV_MAIL_USERNAME));
+			this.peo.setPassword(tabServDaoImpl.searchPropertyValueFromTabServ(Constants.TAB_SERV_MAIL_PWD));
+			this.peo.setHost(tabServDaoImpl.searchPropertyValueFromTabServ(Constants.TAB_SERV_MAIL_HOST_OUT));
+			this.peo.setPort(Integer.parseInt(tabServDaoImpl.searchPropertyValueFromTabServ(Constants.TAB_SERV_MAIL_PORT)));
+			this.peo.getSession().setDebug(true); //TODO Da eliminare in produzione o salvare nei log
+			this.peo.getSession().setPasswordAuthentication(new URLName(this.peo.getUsername()), new PasswordAuthentication(this.peo.getUsername(), this.peo.getPassword()));
+			break;
+		}
+		
+	}
+	
+	/**
+	 * Il metodo crea un messaggio standard prendendo i dati dalla tabella D_MAIL_TESTI 
+	 * Testo messaggio, To, Cc, Oggetto.  
+	 * Il metodo viene utilizzato per i messaggi che dovranno essere
+	 * inviati in automatico dalle funzioni scatenanti di DEMDEC
+	 * @return MimeMessage 
+	 * @throws MessagingException
+	 * @throws Exception
+	 */
+	@Override
+	public MimeMessage creaMessaggioStandard(MailTestiTO mailTestiTO, JavaMailSenderImpl mailSender, String address) throws Throwable {
+		
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
+		
+		if(address != null && address != ""){
+			if(mailTestiTO.getTextIndEmailA() != null && mailTestiTO.getTextIndEmailA() != ""){
+				helper.getMimeMessage().addRecipients(Message.RecipientType.TO, InternetAddress.parse(mailTestiTO.getTextIndEmailA()+","+address));
+			}else{
+				helper.getMimeMessage().addRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
+			}
+		}else if(mailTestiTO.getTextIndEmailA() != null && mailTestiTO.getTextIndEmailA() != ""){
+			helper.getMimeMessage().addRecipients(Message.RecipientType.TO, InternetAddress.parse(mailTestiTO.getTextIndEmailA()));
+		}else{
+			throw new ObjectNotFoundException("", Constants.ERROR_EMPTY_RECIPIENT_TYPE_TO);
+		}
+		
+		if(mailTestiTO.getTextIndEmailCc() != null && mailTestiTO.getTextIndEmailCc() != ""){
+			helper.getMimeMessage().addRecipients(Message.RecipientType.CC, InternetAddress.parse(mailTestiTO.getTextIndEmailCc()));
+		}
+		
+		helper.setText(mailTestiTO.getTextEmail());
+		helper.setSubject(mailTestiTO.getTextOggettoEmail()); 
+		helper.setFrom(new InternetAddress(mailSender.getUsername()));
+		return message;
+		
+	}
+	
+	
+	
+	
+	/**
+	 * Il metodo salva il messaggio inviato nella tabella  D_PEC_MESSAGGI_INVIATI, viene utilizzato sia per le PEC inviate da form che per quelle inviate
+	 * da funzione
+	 * @param messaggio
+	 * @param codiFunzione
+	 * @throws Throwable
+	 */
+	@Override
+	public PecMessaggiInviatiTO createMessageToSave(MimeMessage messaggio, String codiFunzione) throws Throwable {
+		
+		PecMessaggiInviatiTO messaggioTO = new PecMessaggiInviatiTO();
+		messaggioTO.setId((messaggio.getMessageID()));
+		messaggioTO.setDataInvio(messaggio.getSentDate());
+		if(codiFunzione != null && codiFunzione != ""){
+			messaggioTO.setCodiFunzione(codiFunzione);
+		}else{
+			messaggioTO.setCodiFunzione(Constants.MAIL_FORM);
+		}
+		
+		if(messaggio.getContent() instanceof String) {
+			messaggioTO.setTextMessaggio((String) messaggio.getContent());
+		}else{
+			//Se c'è un allegato il testo del messaggio si trova qua
+			MimeMultipart mmp= ( (MimeMultipart)( (MimeBodyPart)((MimeMultipart) messaggio.getDataHandler().getContent()).getBodyPart(0)).getDataHandler().getContent());
+			messaggioTO.setTextMessaggio((String) (mmp.getBodyPart(0).getDataHandler().getContent()));
+		}
+		
+		messaggioTO.setStatInvio(Constants.STATO_MESSAGGIO_INVIATO);
+		return messaggioTO;
+	}
+
+
+	@Override
+	public String recipientsToString(Address[] allRecipients) throws Throwable {
+		String toAddresses = "";
+		
+		for (Address address : allRecipients) {
+		    toAddresses = toAddresses.concat(address.toString())+"; ";
+		}
+		return toAddresses.substring(0, toAddresses.length()-1);
+	}
+
+
+	
+	
+	@Override
+	public MimeMessage invioPeoUltimaFirma(String codiFunzione, Utente utenteInSessione, String address, DocumentiViewTO documentiViewTO) throws Throwable {
+
+		MailTestiTO mailTesti = getDozerDriver().map(mailTestiDao.findMailTestiByCodiFunzione(codiFunzione), MailTestiTO.class, "Mail");
+		
+		if(mailTesti.getFlagInvioSn().equalsIgnoreCase(Constants.FUNZIONE_ABILITATA_INVIO_EMAIL) && mailTesti.getFlagPecSn().equalsIgnoreCase(Constants.FUNZIONE_DISABILITATA_INVIO_PEC)){
+			popolaMailSender(Constants.FLAG_NO_PEC);
+			MimeMessage message = creaMessaggioUltimaFirma(mailTesti, peo, address, documentiViewTO);
+			this.peo.send(message);
+			return message;
+		}
+		return null;
+	}
+	
+	
+	private MimeMessage creaMessaggioUltimaFirma(MailTestiTO mailTestiTO, JavaMailSenderImpl mailSender, String address, DocumentiViewTO documentiViewTO) throws Throwable {
+		
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
+		
+		if(address != null && address != ""){
+			if(mailTestiTO.getTextIndEmailA() != null && mailTestiTO.getTextIndEmailA() != ""){
+				helper.getMimeMessage().addRecipients(Message.RecipientType.TO, InternetAddress.parse(mailTestiTO.getTextIndEmailA()+","+address));
+			}else{
+				helper.getMimeMessage().addRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
+			}
+		}else if(mailTestiTO.getTextIndEmailA() != null && mailTestiTO.getTextIndEmailA() != ""){
+			helper.getMimeMessage().addRecipients(Message.RecipientType.TO, InternetAddress.parse(mailTestiTO.getTextIndEmailA()));
+		}else{
+			throw new ObjectNotFoundException("", Constants.ERROR_EMPTY_RECIPIENT_TYPE_TO);
+		}
+		
+		if(mailTestiTO.getTextIndEmailCc() != null && mailTestiTO.getTextIndEmailCc() != ""){
+			helper.getMimeMessage().addRecipients(Message.RecipientType.CC, InternetAddress.parse(mailTestiTO.getTextIndEmailCc()));
+		}
+		
+		helper.setText(mailTestiTO.getTextEmail() + " " + documentiViewTO.getDecreto());
+		helper.setSubject(mailTestiTO.getTextOggettoEmail()); 
+		helper.setFrom(new InternetAddress(mailSender.getUsername()));
+		return message;
+		
+	}
+}

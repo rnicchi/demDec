@@ -1,0 +1,149 @@
+
+  <!-- INIZIO MODALE DETT DOCUMENTO -->
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.WebConstants"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping"%>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+ <script type="application/javascript">
+
+
+function caricaModaleDettFascCdc(toOpenDett, idFasc){
+
+	size=$("#divErrore").length ;	
+	if( size>0  ) {	
+		$("#divErrore").empty();
+	}
+
+	size2=$("#title_modal_01").length ;
+	if( size2>0  ) {	
+		$("#title_modal_01").empty();
+	}
+
+	leng= this.document.getElementById("tabellaDettaglio3").rows.length;
+ 	
+	if(leng>0){				
+		$("#tabellaDettaglio3 tr").remove();		
+	} 
+	
+	$("#divErrore").empty();	
+
+
+	$.ajax({
+		
+		url: "<%=request.getContextPath() %>/private/consultaFascicoloCdcModali.do?cmdPOST___modaleDettaglioFascicolo=modaleDettaglioFascicolo&idFascicolo="+idFasc ,
+		
+	    type: 'POST',
+	    data: {
+	        json: jsonData
+	    },
+	    success: function (response) { 
+	        var trHTMLdett = '';
+	        var trHTMLdettTit = '';
+	  
+
+	  	  $.each(response, function (i, articleDett) {
+
+	  		if(articleDett.estremiStr=='ERRORE'){
+	  			 
+	  			 trHTMLdett='';
+	  			 trHTMLdettTit = '';
+			//	$("#divErrore").append("<div class=rowD  align=center><strong>Errore nel recupero dei dati  </strong></div>");
+				$("#title_modal_01").append('<div id=title_modal_2 class=bg-tono0><strong>&nbsp;&nbsp;&nbsp;Errore nel recupero dei dati&nbsp;&nbsp;&nbsp;</strong></div>');
+			}else {
+	
+				trHTMLdettTit='<div id=title_modal_2 class=bg-tono0><strong> </strong></div>';
+		  		
+		  		trHTMLdett = '<tr><td><strong>Decreto: </strong></td><td>' + (articleDett.numeNumDecreto==null?'':articleDett.numeNumDecreto)  + '</td></tr>'+			  		
+			  		'<tr><td><strong>Descrizione: </strong></td><td>' + (articleDett.descDecreto==null?'':articleDett.descDecreto) + '</td></tr>'+			  		
+			  		'<tr><td><strong>Amministrazione: </strong></td><td>' + ( articleDett.amministrazione==null?'':articleDett.amministrazione) + '</td></tr>'+
+			  		'<tr><td><strong>Stato Lavorazione: </strong></td><td>' + ( articleDett.descStato==null?'':articleDett.descStato) + '</td></tr>'+
+				  	'<tr><td><strong>Data Trasmissione: </strong></td><td>' +(articleDett.dataInvioCdcFormatted==null?'':articleDett.dataInvioCdcFormatted) + '</td></tr>'+	
+			  	 	'<tr><td><strong>Data Protocollo Entrata:  </strong></td><td>'+(articleDett.dataRicezioneCdcFormatted==null?'':articleDett.dataRicezioneCdcFormatted)+  '</td></tr>'+	 
+			  	 	'<tr><td><strong>Data Presa in Carico:  </strong></td><td>'+ (articleDett.dataPresaCaricoCdcFormatted==null?'':articleDett.dataPresaCaricoCdcFormatted)+  '</td></tr>'+	 			  	 		 	
+		  		    '<tr><td><strong>Numero Protocollo Entrata:  </strong></td><td>' + (articleDett.numeProtRicezioneCdc==null?'':articleDett.numeProtRicezioneCdc) + '</td></tr>'+
+		  		    '<tr><td><strong>Data Protocollo Uscita:  </strong></td><td>' + (articleDett.dataRegistrazioneCdcFormatted==null?'':articleDett.dataRegistrazioneCdcFormatted)+ '</td></tr>'+	  	 	
+		  		    '<tr><td><strong>Numero Protocollo Uscita:  </strong></td><td>'  + (articleDett.numeProtRegistrazioneCdc==null?'':articleDett.numeProtRegistrazioneCdc) +'</td></tr>';	  		    
+		  		 	/* '<tr><td><strong>Estremi Cdc:  </strong></td><td>'+'? '+ '</td></tr>'; */			
+		 
+  				$("#title_modal_01").append(trHTMLdettTit);	
+  				$("#tabellaDettaglio3").append(trHTMLdett);
+
+  			
+			}
+	  		
+	 
+	  	});
+
+	  	
+	  	apriPopUpModale(toOpenDett);
+		
+	},
+
+	
+    error: function(){
+    	
+			$("#divErrore").append("<div class=rowD align=center><strong>Errore nel recupero dei dati</strong></div>");
+			 
+			apriPopUpModale(toOpenDett);
+    } 
+
+	});
+
+
+}
+
+
+function confermaModaleDett() {
+
+	$('.overlay').fadeOut('fast');
+    $('.box').hide();
+	$('.box_meta').hide();
+}
+
+</script>
+
+ <demdec:useAttribute id="titoloModaleDett" name="<%=WebConstants.TITOLO_MODALE_DETTAGLIO%>"/>
+ 
+ <%--**INIZIO MODALE--%>
+   <div>
+     <div id="contModal_01" class="box_meta" >
+        
+        <div id="title_modal_01"></div>
+        
+    	<div>
+             
+      	  <div id='divErrore'></div>
+       
+            <!--INI SCROLL-->
+         	<div>          
+                            <!-- MODAL TABLE-->             
+	          <div class="width100">
+	                 <table  class="marg_0px_auto width100" id="tabellaDettaglio3" > 
+	                  <caption><span class="nascosto">Tabella Dettaglio</span></caption>  
+	                 
+	                   		
+	                 </table>            
+	           </div>
+       		 </div>
+        <!--END SCROLL-->
+
+        <div class="spacer_sm">&nbsp;</div>
+
+    </div>
+
+     <div class="text-center">
+    
+     <button type="button" class="button small " onClick="javascript:confermaModaleDett();">Torna alla lista</button>
+	
+    </div>
+
+<p class="chiudi">Chiudi X</p>
+
+</div>
+      
+</div>
+    
+    
+<!-- END MODALE DETT FASCICOLO-->  
+      
+

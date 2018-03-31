@@ -1,0 +1,151 @@
+
+  <!-- INIZIO MODALE Selezione Decreto -->
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.WebConstants"%>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+ <script type="application/javascript">
+
+
+ 
+function caricaModaleMetadatiDocRedCdc(toOpenDett, rowNum){
+
+	size=$("#dettaglioDocumento").length ;	
+	if( size>0  ) {	
+		$("#dettaglioDocumento").empty();
+	}
+
+	size2=$("#title_modal_0").length ;
+	if( size2>0  ) {	
+		$("#title_modal_0").empty();
+	}
+
+
+	$("#divErrore").empty();	
+	
+	$.ajax({
+		
+		url: "<%=request.getContextPath() %>/private/consultaFascicoloCdcModali.do?cmdPOST___modaleDocumentiRedCdc=modaleDocumentiRedCdc&rowNum="+rowNum ,
+		
+	    type: 'POST',
+	    data: {
+	        json: jsonData
+	    },
+	    success: function (response) { 
+	        var trHTMLdett = '';
+	        var trHTMLdettTit = '';
+	    	
+
+	  	  $.each(response, function (i, articleDett) {
+	  		if(articleDett.warningCode=='ERRORE'){
+	  			 
+	  			 trHTMLdett='';
+	  			 trHTMLdettTit = '';
+				$("#dettaglioDocumento").append("<div class=rowD  align=center><strong>Errore nel recupero dei dati  </strong></div>");
+			}else {
+				  
+		  		trHTMLdettTit='<div id=title_modal_2 class=bg-tono0><strong>Documento: '+ (articleDett.descFilename==null?'':articleDett.descFilename) + '</strong></div>';
+		  		
+		  		trHTMLdett = 
+			  		'<div class=rowD><strong>Esercizio Finanziario: </strong>' + (articleDett.anagAmminDem.eserciziDem.id==null?'':articleDett.anagAmminDem.eserciziDem.id)  + '</div>'+			  		
+			  		'<div class=rowD><strong>Amministrazione: </strong>' + articleDett.anagAmminDem.descAmm + '</div>'+	
+			  		'<div class=rowD><strong>Protocollo Red: </strong>' + articleDett.codiProtocollo + '</div>'+			  		
+			  	/* 	'<div class=rowD><strong>Ucb/Rts: </strong>' + articleDett.anagRagionerieDem.descRag + '</div>'+ */
+			  		'<div class=rowD><strong>Data Arrivo: </strong>' + articleDett.dataArrivoFormatted + '</div>'+
+				  	'<div class=rowD><strong>Tipo Documento: </strong>' +articleDett.tipoDocumento.descDescrizioneDoc + '</div>'+	
+			  	 	'<div class=rowD><strong>Descrizione Documento:  </strong>'+(articleDett.descDocumento==null?'':articleDett.descDocumento.descDescrizioneDoc )+  '</div>';	 
+
+		  		   
+	  				$("#title_modal_0").append(trHTMLdettTit);	
+	  				$("#dettaglioDocumento").append(trHTMLdett);
+			}
+	  		
+	 
+	  	});
+
+		  	
+
+
+	  	apriPopUpModale(toOpenDett);
+		
+	},
+
+	
+    error: function(){
+    	
+			$("#dettaglioDocumento").append("<div class=rowD align=center><strong>Errore nel recupero dei dati</strong></div>");
+			 
+			apriPopUpModale(toOpenDett);
+    } 
+
+	});
+
+
+}
+
+
+
+function confermaModaleDett() {
+
+	$('.overlay').fadeOut('fast');
+    $('.box').hide();
+	$('.box_meta').hide();
+}
+
+
+
+</script>
+
+ 
+ 
+ <demdec:useAttribute id="titoloModaleDett" name="<%=WebConstants.TITOLO_MODALE_DETTAGLIO%>"/>
+ 
+ <%--**INIZIO MODALE--%>
+    <div>
+    
+   
+
+    <div id="contModal_3" class="box_meta">
+    
+    
+     
+     
+        <div  id="title_modal_0" > </div>
+        <%-- <div id="title_modal_2" class="bg-tono0"> </div>
+         --%>
+        <div>
+        
+                                                          <!-- MODAL TABLE-->    
+           
+          <%--    <form id="documentoForm2" method="post" action="#" name="documentoForm2">  --%>
+            
+   
+                    
+               <div id="contentD">
+                 <div class="portletContentD" id="dettaglioDocumento">
+          			<%--<div class=rowD>&nbsp;</div>--%>
+                     
+                 </div>
+               </div> 
+                 
+       <%--     </form>  --%>
+        <div class="spacer_sm">&nbsp;</div>
+        
+        
+       
+</div>
+
+    <div class="text-center">
+    
+     <button type="button" class="button small " onClick="javascript:confermaModaleDett();">Torna alla lista</button>
+	
+    </div>
+
+<p class="chiudi">Chiudi X</p>
+
+</div>
+      
+    </div>
+    
+<!-- END MODALE DETT FASCICOLO-->  
+      
+

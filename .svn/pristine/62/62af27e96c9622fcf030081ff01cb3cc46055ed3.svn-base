@@ -1,0 +1,38 @@
+##Esempi di messaggi di warning:
+#warning.filter.delete.confirm=Confermi la cancellazione del filtro selezionato?
+#warning.risultati.aggiornamento.ko.disaccantonamento=Impossibile effettuare un disaccantonamento per:<br/>Cap <b>{0}</b><br/>Pg <b>{1}</b>.
+warninig.msgPrincipale=Attenzione
+
+
+
+warning.capPgAutNonAss=Il piano di gestione non è associato all'autorizzazione selezionata. Vuoi inserire l'associazione ?
+warning.rimodulazioniNull=Non sono presenti rimodulazioni per i criteri di ricerca selezionati. 
+warning.cancellazione.cedente=Confermi la cancellazione del cedente? Continuando con l'operazione verranno cancellatati anche i relativi riceventi.
+warning.cancellazione.ricevente=Confermi la cancellazione del ricevente?
+warning.confermaElimina=Confermi la cancellazione {0}?
+warning.aggiorna.bilancio=Allineare gli importi di cassa?
+warning.empty=Nessun risultato per i criteri di ricerca selezionati.
+warning.empty.doc=Non sono presenti documenti
+warning.confermaEliminaPartita= Confermi la cancellazione della Partita ?   
+warning.fondi.gestCoper.confirm=Confermi la cancellazione della Copertura ? 
+warning.tipofondo.empty=Selezionare il Tipo Fondo
+warning.noupdate=Nessuna modifica effettuata.
+warning.noinsert=Nessun inserimento effettuato.
+warning.noRecord.trovati=Nessun record trovato.
+warning.raccolteProvvisorie.statoInserito= Documenti in fase di caricamento da Sistema RED
+warning.no.Cdr=Nessun Cdr trovato.
+warning.delete.modello.iter.failed=Nessuna cancellazione effettuata: esistono Tipologia Decreto associate al Modello Iter.
+warning.delete.firmatario.iter.failed=Nessuna cancellazione effettuata: esistono Tipologia Decreto associate al Modello Iter del Firmatario.
+warning.utente.profilo.exists=Nessun inserimento effettuato, Profilo già esistente
+
+#--- MAIL ---#
+warning.email.not.sent=L&\#39e-mail di notifica non \u00E8 stata inviata
+
+#--- INVIO ALLE FIRME ---#
+warning.email.invfirme.not.sent=L&\#39e-mail di invio alle firme non \u00E8 stata inviata
+
+#--- SOSPENSIONE FIRME ---#
+warning.email.sosp.not.sent=L&\#39e-mail di sospensione firme non \u00E8 stata inviata
+
+#--- REVOCA SOSPENSIONE FIRME ---#
+warning.email.revsosp.not.sent=L&\#39e-mail di revoca sospensione firme non \u00E8 stata inviata

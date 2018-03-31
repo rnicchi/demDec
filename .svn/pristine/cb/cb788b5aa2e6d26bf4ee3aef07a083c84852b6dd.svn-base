@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class name="it.almavivaitalia.bilancio.commons.bo.DocumentiBO" table="D_DOCUMENTI">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <composite-id class="it.almavivaitalia.bilancio.commons.bo.DocumentiBOId" name="id">
+    <key-property name="fkNumeIdFascicolo" type="java.lang.Long">
+     <column name="FK_NUME_ID_FASCICOLO" precision="10" scale="0"/>
+    </key-property>
+    <key-property name="numeIdDocumento" type="java.lang.Long">
+     <column name="NUME_ID_DOCUMENTO" precision="10" scale="0"/>
+    </key-property>
+   </composite-id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO" fetch="select" name="anagAmminDem" not-null="false">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_ANNO_ESE" precision="4" scale="0"/>
+    <column name="FK_NUME_STP" precision="2" scale="0"/>
+    <column name="FK_NUME_APP" precision="1" scale="0"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagRagionerieDemBO" fetch="select" insert="false" name="anagRagionerieDem" update="false">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_ANNO_ESE" precision="4" scale="0"/>
+    <column name="FK_NUME_RAG" precision="4" scale="0"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagMetodoFirmaBO" fetch="select" name="anagMetodoFirma">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="12" name="FK_CODI_METODO_FIRMA"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.TipoDocumentoBO" fetch="select" name="tipoDocumento">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="16" name="FK_CODI_TIPO_DOCUMENTO" not-null="true"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.FascicoliBO" fetch="select" insert="false" name="fascicoli" update="false">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_NUME_ID_FASCICOLO" not-null="true" precision="10" scale="0"/>
+   </many-to-one>
+   <property generated="never" lazy="false"  name="numeVersion" type="int">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_VERSION" precision="6" scale="0">
+     <comment>Numero intero che serve per gestire l'accesso concorrente con i DAO</comment>
+    </column>
+   </property>
+   <property name="codiGuidDocumentoOrig" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="160" name="CODI_GUID_DOCUMENTO_ORIG" not-null="true">
+     <comment>Identificativo documento originale su DEMBIL</comment>
+    </column>
+   </property>
+   <property name="codiGuidDocumento" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="160" name="CODI_GUID_DOCUMENTO" not-null="true">
+     <comment>Identificativo documento trasformato su DEMBIL</comment>
+    </column>
+   </property>
+   <property name="descTipoFlusso" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="80" name="DESC_TIPO_FLUSSO"/>
+   </property>
+   <property name="statDocumento" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="STAT_DOCUMENTO" not-null="true" precision="2" scale="0"/>
+   </property>
+   <property name="statConversione" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="8" name="STAT_CONVERSIONE" not-null="true">
+     <comment>Stato delle operazioni di conversione e firma tecnica OK = COMPLETO (CONVERSIONE PDFA E FIRMA TECNICA COMPLETATI) NC = NON COMPLETO NA = NON
+                APPLICABILE</comment>
+    </column>
+   </property>
+   <property name="statEsitoConversione" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="8" name="STAT_ESITO_CONVERSIONE" not-null="true">
+     <comment>Stato delle operazioni di conversione e firma tecnica OK = COMPLETO (CONVERSIONE PDFA E FIRMA TECNICA COMPLETATI) K0 = ERRORE NA = NON
+                APPLICABILE</comment>
+    </column>
+   </property>
+   <property name="numeTitolo" type="java.lang.Short">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_TITOLO" precision="3" scale="0"/>
+   </property>
+   <property name="codiProtocollo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="80" name="CODI_PROTOCOLLO"/>
+   </property>
+   <property name="flagVisibilitaCdc01" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FLAG_VISIBILITA_CDC_01" not-null="true" precision="1" scale="0">
+     <comment>Visibilita Corte 1=non visibile 0= visibile</comment>
+    </column>
+   </property>
+   <property name="numeTicketConservazione" type="java.lang.Long">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_TICKET_CONSERVAZIONE" precision="15" scale="0">
+     <comment>Numero ticket conservazione sostitutiva, significativo per "AD"</comment>
+    </column>
+   </property>
+   <property name="dataDocumento" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_DOCUMENTO">
+     <comment>Data in cui � stato creato il documento</comment>
+    </column>
+   </property>
+   <property name="dataArrivo" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_ARRIVO">
+     <comment>Data in cui � stato caricato il documento</comment>
+    </column>
+   </property>
+   <property name="dataChiusura" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_CHIUSURA">
+     <comment>Data in cui � stato Bloccato il documento</comment>
+    </column>
+   </property>
+   <property name="dataAggiornamento" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_AGGIORNAMENTO"/>
+   </property>
+   <property name="fkCodiUtenteAgg" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="FK_CODI_UTENTE_AGG"/>
+   </property>
+   <property name="dataAnnullamento" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_ANNULLAMENTO">
+     <comment>Data in cui � stato Annullato il documento</comment>
+    </column>
+   </property>
+   <property name="descFilename" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="255" name="DESC_FILENAME">
+     <comment>Nome identificativo del documento</comment>
+    </column>
+   </property>
+   <property name="codiGuidFascicolo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="160" name="CODI_GUID_FASCICOLO" not-null="true"/>
+   </property>
+   <property name="codiMimeTypeOrig" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="CODI_MIME_TYPE_ORIG">
+     <comment>Mime type del documento originale</comment>
+    </column>
+   </property>
+   <property name="codiHash" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="CODI_HASH"/>
+   </property>
+   
+   <property name="textDescrizione" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="255" name="TEXT_DESCRIZIONE"/>
+   </property>
+  </class>
+ </hibernate-mapping>

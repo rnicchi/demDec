@@ -1,0 +1,83 @@
+package it.mef.bilancio.demdec.manager;
+
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bilancio.commons.to.AnagUfficiTO;
+import it.almavivaitalia.bilancio.commons.to.DescDocumentoTO;
+import it.mef.bilancio.demdec.servizi.client.ResponseDEMBILClient;
+import it.mef.bilancio.demdec.servizi.to.DocumentTO;
+import it.mef.bilancio.demdec.servizi.to.EsitoTO;
+import it.mef.bilancio.demdec.to.AnagTipologiaDecretoTO;
+import it.mef.bilancio.demdec.to.AmminRagDemTO;
+import it.mef.bilancio.demdec.to.DocumentiRedTO;
+import it.mef.bilancio.demdec.to.FascicoliFadSearhTO;
+import it.mef.bilancio.demdec.to.FascicoliTO;
+import it.mef.bilancio.demdec.to.GestioneFadTO;
+
+import java.util.List;
+
+public interface GestioneFadManager extends AbstractDemManager {
+
+	EsitoTO creaFAD(GestioneFadTO to) throws Throwable;
+
+	List<FascicoliTO> getFascicoliFad(FascicoliFadSearhTO to) throws Throwable;
+	
+	List<FascicoliTO> getFascicoliGestioneFad(FascicoliFadSearhTO to) throws Throwable;
+	
+	FascicoliTO getFascicoloFad(Long idFad) throws Throwable;
+	
+	ResponseDEMBILClient getFascicoliPatrimonio(String guidFascicolo) throws Throwable;
+
+	List<DocumentTO> getDocumentiPatrimonio(String guidFascicoloFad, String guidFascicoloSipatr) throws Throwable;
+	
+	DocumentiRedTO getDocumentoRedById(String guidDocumento, Long idFascicolo) throws Throwable;
+
+	EsitoTO modificaFAD(FascicoliTO to) throws Throwable;
+
+	EsitoTO eliminaFAD(FascicoliTO to) throws Throwable;
+	
+	EsitoTO eliminaFascicoloFAD(FascicoliTO to) throws Throwable; 
+	
+	EsitoTO eliminaDocumentoFAD(FascicoliTO to) throws Throwable;
+	
+	EsitoTO eliminaAllegatoFAD(FascicoliTO to) throws Throwable;
+
+	EsitoTO reinserisciAllegatoFAD(FascicoliTO to) throws Throwable;
+	
+	EsitoTO modificaDocumentoFAD(FascicoliTO to) throws Throwable;
+	
+	EsitoTO reinserisciDocumentoFAD(FascicoliTO to) throws Throwable;
+	
+	EsitoTO modificaAllegatoFAD(FascicoliTO to) throws Throwable;
+	
+//	DescDocumentoTO loadDescDocById(Integer id) throws Throwable;
+
+	FascicoliTO findFascicoloByAnnoTipoNum(Integer anno, Integer tipo, Integer numDec) throws Throwable;
+
+	void saveFascicolo(List<AmminRagDemTO> ragList, GestioneFadTO to, ResponseDEMBILClient resp) throws Throwable;
+	
+	AnagTipologiaDecretoTO findTipologiaByCodi(String codi) throws Throwable;
+	
+	AnagUfficiTO findUfficioByCodi(String codi) throws Throwable;
+	
+	AmminRagDemTO findAmminRagDemByAnagAmminDemTO(AnagAmminDemTO anagAmminDemTO) throws Throwable;
+	
+	EsitoTO trasportoVariazioniFascicolo(FascicoliTO src, FascicoliTO dest) throws Throwable;
+	
+	EsitoTO sospensioneFascicolo(FascicoliTO src) throws Throwable;
+	
+	EsitoTO revocaSospensioneFascicolo(FascicoliTO src) throws Throwable;
+	
+	EsitoTO riaperturaFascicolo(FascicoliTO src) throws Throwable;
+	
+	public List<FascicoliTO> findFascicoliFadByAnno(String anno) throws Throwable;	
+	
+	EsitoTO rielaborazioneFascicolo(FascicoliTO src, FascicoliTO dest, Integer tipoElaborazione) throws Throwable;
+	
+	public List<DescDocumentoTO> findDescDocumentoByTipoDocumento(String tipoDocumento) throws Throwable;
+	
+	//public List<DescDocumentoTO> findVisibilitaDocumentoByCodiDescDocumento(String codiDescDocumento) throws Throwable;
+	
+	public DescDocumentoTO findVisibilitaDocumentoByCodiDescDocumento(String codiDescDocumento) throws Throwable;
+	
+	boolean controlloDecretoNormativo(GestioneFadTO to) throws Throwable;
+}

@@ -1,0 +1,60 @@
+<%@page import="it.almavivaitalia.web.sh.utils.ContextHelper"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="nssb"%>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%> 
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%> 
+<%@page import="it.almavivaitalia.bsn.sh.paginator.Paginator"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+
+<!-- PageName = gestioneTipologiaDecreto -->
+<nssb:useAttribute id="paginator"     name="<%=SessionAttributes.OBJECT_PAGINATOR%>"/>
+<nssb:useAttribute id="listaTipologiaDecreto" name="<%=SessionAttributes.LIST_ANAG_TIPOLOGIA_DECRETO%>"></nssb:useAttribute>
+
+<div class="spacer_sm">&nbsp;</div>
+<div class="spacer_sm">&nbsp;</div>
+
+<c:if test="${not empty listaTipologiaDecreto}">
+
+	<div class="title_doc"><spring:message code="label.title.lista.tipologia.decreto"></spring:message></div>
+	<div class="spacer_sm_10">&nbsp;</div>
+
+	<div class="scroll_table_gen">
+		<nssb:displaytag-table name="pageScope.listaTipologiaDecreto" id="listaTipologiaDecreto" class="width100" >
+			<display:caption>
+						<span class="nascosto"><strong> <spring:message code="label.title.lista.tipologia.decreto"></spring:message></strong></span>
+			</display:caption>
+
+			<nssb:displaytag-column headerClass="nascosto" title="Selezione" >
+				<label for="radio_${listaTipologiaDecreto_rowNum}" class="nascosto">Seleziona</label>
+				<input type="radio" name="selectedTipologia" value="${listaTipologiaDecreto.id}" id="radio_${listaTipologiaDecreto_rowNum}" />
+			</nssb:displaytag-column>
+			<nssb:displaytag-column property="descTipologia" titleKey="label.tipologia.decreto"/>
+			<nssb:displaytag-column property="anagModelliIter.descIter" titleKey="label.modello.iter"/>
+
+		</nssb:displaytag-table>
+	</div>
+	<div class="spacer_sm">&nbsp;</div>
+	<div class="spacer_sm">&nbsp;</div>
+
+	<div class="center small">
+	   	 <demdec:submit keyValue="label.new" controllerCode="gestioneCreazioneDecreto" />
+	   	 <demdec:submit keyValue="label.modify" controllerCode="modificaDecreto" />
+	   	 <demdec:submit keyValue="label.delete" controllerCode="eliminaDecreto"  onclick="javascript:return confirm('Conferma cancellazione');"/>
+	</div>
+
+</c:if>
+	
+
+<c:if test="${paginator ne null}">
+	 <div>&nbsp;</div>
+     <div class="center color_grey">
+         <nssb:paginator controllerCode="<%=Paginator.PARAMETER_PAGINATOR%>"
+         				 paginatorSessionName="<%=SessionAttributes.OBJECT_PAGINATOR%>"
+                         paginatorName="<%=Paginator.PAGINATOR_NAME%>"
+                         controllerCodeEnableDisablePagin="<%=Paginator.PARAMETER_ENABLE_DISABLE_PAGIN%>" 
+         />
+	</div>                       
+</c:if>

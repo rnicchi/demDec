@@ -1,0 +1,122 @@
+<%@page import="it.almavivaitalia.web.sh.utils.ContextHelper"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="nssb"%>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%> 
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%> 
+<%@page import="it.almavivaitalia.bsn.sh.paginator.Paginator"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+
+<!-- PageName = firmaDocumenti.jsp -->
+<nssb:useAttribute id="paginator"     name="<%=SessionAttributes.OBJECT_PAGINATOR%>"/> 
+
+<nssb:useAttribute id="listaADToSign" name="<%=SessionAttributes.LIST_AD_TO_SIGN%>"/>
+<tiles:useAttribute name="action"/>
+<!-- INI MODALE DOC--> 
+<!--<div>-->
+
+    <div class="overlay"></div>
+    
+    <div id="contModal_1_doc" class="box_pin">
+        
+        <div id="title_modal_1"><strong><spring:message code="label.title.modal"/></strong></div>
+        
+        <div>
+        
+            <!--INI SCROLL-->
+            
+            <!--END SCROLL-->
+
+              <div class="spacer_sm">&nbsp;</div>
+
+
+                      <!--<div class="spacer">&nbsp;</div>-->
+                      <!--<div class="spacer_sm">&nbsp;</div>-->
+        
+                      <div class="small-12 columns">
+                              <label for="pin"><spring:message code="label.pin"/></label>
+                             	<form:password path="pin" id="pin"  maxlength="6" style="width:200px;"/>
+                              <!-- <input id="pin" value="" type="password"  maxlength="3" style="width:200px;"> -->
+                      </div>
+                      
+                      <div class="spacer_sm">&nbsp;</div>
+                      
+                      <div class="small-12 columns">
+                      	<nssb:buttons>
+                      		<demdec:submit keyValue="button.conferma" controllerCode="firma" styleClass="button small "/>
+                      		<%-- <demdec:submit styleId="undo_pin" keyValue="button.annulla" controllerCode="" styleClass="button small " onclick="return close();"/>--%> 
+                      		<button id="undo_pin" type="button" class="button small " onclick="javascript:close();"><spring:message code="button.annulla"/></button> 
+                      	</nssb:buttons>
+                      </div>
+        			 
+
+
+</div>
+
+              <div class="spacer_sm">&nbsp;</div>
+              <p class="chiudi_pin"><spring:message code="label.chiudiPin"/></p>
+              
+              
+              
+              
+              
+              
+              
+</div>
+        
+
+        
+  
+  
+<!--</div>-->
+<!-- END MODALE DOC--> 
+
+<c:if test="${not empty listaADToSign}">
+	<div class="title_doc"><spring:message code="label.title.list.AD.to.sign"></spring:message></div>
+	<div class="spacer_sm">&nbsp;</div>
+	<nssb:displaytag-table name="pageScope.listaADToSign" id="listaADToSign" class="width100">
+		<display:caption><span class="nascosto"><spring:message code="label.caption.list.AD.to.sign"/></span></display:caption>
+		<nssb:displaytag-column titleKey="" title="" style="text-align:center">
+			<form:checkbox path="selezioni" value="${listaADToSign.numeIdFascicolo}" cssClass="checkPlut"/>
+		</nssb:displaytag-column>
+		
+		<nssb:displaytag-column titleKey="label.tipo.file.pdf" title="label.tipo.file.pdf" style="text-align:center">
+			<demdec:linkButton styleClass="padd_sx_logo" action="${action}" imageKey="ico.download.pdf" parameter="download" parameterValue="${listaADToSign_rowNum -1}" labelKey="label.alt.img.pdf"/>
+		</nssb:displaytag-column>
+		<nssb:displaytag-column property="decreto" titleKey="label.decreto" title="label.decreto" style="text-align:center"/>
+		<nssb:displaytag-column property="descNomeDocumento" titleKey="label.nome" title="label.nome" style="text-align:center"/>
+		<nssb:displaytag-column property="descAmm" titleKey="label.amministrazione" title="label.amministrazione" style="text-align:center"/>
+		<nssb:displaytag-column property="codiTipoDocumento" titleKey="label.tipo.documento" title="label.tipo.documento" style="text-align:center"/>
+		<nssb:displaytag-column property="statFirma" titleKey="label.stato.lavorazione" title="label.stato.lavorazione" style="text-align:center"/>
+	</nssb:displaytag-table>
+</c:if>
+
+<c:if test="${paginator ne null}">
+	 <div>&nbsp;</div>
+     <div class="center color_grey">
+         <nssb:paginator controllerCode="<%=Paginator.PARAMETER_PAGINATOR%>"
+         				 paginatorSessionName="<%=SessionAttributes.OBJECT_PAGINATOR%>"
+                         paginatorName="<%=Paginator.PAGINATOR_NAME%>"
+                         controllerCodeEnableDisablePagin="<%=Paginator.PARAMETER_ENABLE_DISABLE_PAGIN%>" 
+         />
+     </div>                       
+  
+
+    <div>&nbsp;</div>
+</c:if>
+	<div class="left">
+        <img src="<%=request.getContextPath()%>/public/img/select_all.png" alt=""> <a href="#" id="selectAll"><spring:message code="label.selectAll"/></a>
+        <img src="<%=request.getContextPath()%>/public/img/unselect_all.png" alt=""> <a href="#"  id="unselectAll"><spring:message code="label.unselect"/></a>
+    </div>
+    
+    <div class="clear_both">&nbsp;</div>
+	<c:if test="${not empty listaADToSign}">
+    <div class="text-center">
+    	<demdec:buttons>
+    		<demdec:submit keyValue="button.firma" controllerCode="" styleClass="button small" onclick="return apriPopUpModale('contModal_1_doc');"/>
+    	</demdec:buttons>
+    </div>
+    </c:if>
+  

@@ -1,0 +1,198 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import it.almavivaitalia.bilancio.commons.dao.ActionDao;
+import it.almavivaitalia.bilancio.commons.dao.CroTransDao;
+import it.almavivaitalia.bilancio.commons.dao.ProfiloDao;
+import it.almavivaitalia.bilancio.commons.dao.UtenteDao;
+import it.almavivaitalia.bilancio.commons.to.ActionTO;
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTOId;
+import it.almavivaitalia.bilancio.commons.to.AnagUfficiTO;
+import it.almavivaitalia.bilancio.commons.to.CroTransTO;
+import it.almavivaitalia.bilancio.commons.to.EserciziTO;
+import it.almavivaitalia.bilancio.commons.to.ProfiloTO;
+import it.almavivaitalia.bilancio.commons.to.UtenteTO;
+import it.mef.bilancio.demdec.dao.AnagAmminDemDao;
+import it.mef.bilancio.demdec.dao.AnagCdrDemDao;
+import it.mef.bilancio.demdec.dao.AnagStatoFascicoloDao;
+import it.mef.bilancio.demdec.dao.AnagTipoDecretoDao;
+import it.mef.bilancio.demdec.dao.AnagTipologiaDecretoDao;
+import it.mef.bilancio.demdec.dao.AnagUfficiDao;
+import it.mef.bilancio.demdec.dao.EserciziDemDao;
+import it.mef.bilancio.demdec.dao.InvioAlleFirmeDao;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.to.AnagCdrDemTO;
+import it.mef.bilancio.demdec.to.AnagStatoFascicoloTO;
+import it.mef.bilancio.demdec.to.AnagTipoDecretoTO;
+import it.mef.bilancio.demdec.to.AnagTipologiaDecretoTO;
+import it.mef.bilancio.demdec.to.FirmatarioTO;
+import it.mef.bilancio.demdec.utils.Constants;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class ListManagerImpl extends AbstractListManagerImpl implements ListManager {
+	
+	@Autowired
+	private EserciziDemDao eserciziDemDao;
+	
+	@Autowired
+	private AnagAmminDemDao anagAmminDemDao;
+	
+	@Autowired
+	private AnagUfficiDao anagUfficiDao;
+	
+	@Autowired
+	private AnagStatoFascicoloDao anagStatoFascicoloDao;
+	
+	@Autowired
+	private AnagTipoDecretoDao anagTipoDecretoDao;
+	
+	@Autowired
+	private AnagTipologiaDecretoDao anagTipologiaDecretoDao;
+	
+	@Autowired
+	private AnagCdrDemDao anagCdrDemDao;
+	
+	@Autowired
+	private InvioAlleFirmeDao invioAlleFirmeDao;
+	
+	@Autowired
+	private UtenteDao utenteDao;
+    
+	@Autowired
+	private CroTransDao croTransDao;
+	
+	@Autowired
+	private ProfiloDao profiloDao;
+	
+	@Autowired
+	private ActionDao actionDao;
+	
+	
+	@Override
+	public List<ProfiloTO> findAllProfili() throws Throwable {
+		return getDozerDriver().mapList(profiloDao.findAll(),ProfiloTO.class,"Profilo");
+	}
+
+	@Override
+	public List<CroTransTO> loadFunzioni() throws Throwable {
+		return getDozerDriver().mapList(croTransDao.loadAllOrdById(),CroTransTO.class,"CroTrans");
+	}
+	
+	@Override
+	public List<UtenteTO> loadAllUtenti() throws Throwable {
+		return getDozerDriver().mapList(utenteDao.loadAllOrdById(),UtenteTO.class,"Utente");
+	}
+	
+	@Override
+	public List<EserciziTO> loadEserciziDemCG() throws Throwable {
+		return getDozerDriver().mapList(eserciziDemDao.loadEserciziDemCG(),EserciziTO.class,"Esercizi");
+	}
+	
+	@Override
+	public List<AnagAmminDemTO> getAmminDemByAnnoEse(String annoEse) throws Throwable {
+		return getDozerDriver().mapList(anagAmminDemDao.getAmminDemByAnnoEse(annoEse), AnagAmminDemTO.class, "AnagAmmin");
+	}
+	
+	@Override
+	public List<AnagAmminDemTO> getAmminDemByAnnoEseUtenteAndProfilo(String annoEse, String idUtente, String idProfilo) throws Throwable {
+		return getDozerDriver().mapList(anagAmminDemDao.getAmminDemByAnnoEseUtenteAndProfilo(annoEse, idUtente, idProfilo), AnagAmminDemTO.class, "AnagAmmin");
+	}
+	
+	@Override
+	public List<AnagAmminDemTO> getAmminDemCentraliByAnnoEse(String annoEse) throws Throwable {
+		return getDozerDriver().mapList(anagAmminDemDao.getAmminDemCentraliByAnnoEse(annoEse), AnagAmminDemTO.class, "AnagAmmin");
+	}
+	
+	@Override
+	public List<AnagUfficiTO> loadAnagUfficiAttivi() throws Throwable{
+		return getDozerDriver().mapList(anagUfficiDao.loadAnagUfficiAttivi(),AnagUfficiTO.class,"AnagUffici");
+	}
+	
+
+	@Override
+	public List<AnagUfficiTO> loadAnagUffici() throws Throwable{
+		return getDozerDriver().mapList(anagUfficiDao.loadAnagUffici(),AnagUfficiTO.class,"AnagUffici");
+	}
+
+
+	@Override
+	public List<AnagStatoFascicoloTO> loadStatiFascicoliRed() throws Throwable{
+		return getDozerDriver().mapList(anagStatoFascicoloDao.loadStatiFascicolo(Constants.FASCICOLO_RED), AnagStatoFascicoloTO.class,"AnagStatoFascicolo");
+	}
+	 
+	@Override
+	public List<AnagTipoDecretoTO> loadAnagTipoDecreto() throws Throwable{
+		return getDozerDriver().mapList(anagTipoDecretoDao.loadAnagTipoDecreto(), AnagTipoDecretoTO.class, "AnagTipoDecreto");
+	}
+	 
+	 
+	@Override
+	public List<AnagStatoFascicoloTO> loadStatiFascicoliFad() throws Throwable {
+		return getDozerDriver().mapList(anagStatoFascicoloDao.loadStatiFascicolo(Constants.FASCICOLO_FAD), AnagStatoFascicoloTO.class, "AnagStatoFascicolo");
+	}
+
+	@Override
+	public List<AnagStatoFascicoloTO> loadStatiFascicoliModificaFad() throws Throwable {
+		return getDozerDriver().mapList(anagStatoFascicoloDao.loadStatiFascicoloModifica(Constants.FASCICOLO_FAD), AnagStatoFascicoloTO.class, "AnagStatoFascicolo");
+	}
+
+	@Override
+	public String loadDecStatiFascicoliFad(String id) throws Throwable {
+		return anagStatoFascicoloDao.loadDecStatiFascicoloFad(id);
+	}
+	
+	@Override
+	public String loadDescStatiFascicoliRed(String id) throws Throwable {
+		return anagStatoFascicoloDao.loadDescStatiFascicoloRed(id);
+	}
+
+
+	@Override
+	public List<AnagCdrDemTO> getCdrByAdmin(AnagAmminDemTOId amminId)
+			throws Throwable {
+		return getDozerDriver().mapList(anagCdrDemDao.anagCdrList(amminId.getFkAnnoEse(), amminId.getNumeStp(), amminId.getNumeApp()), AnagCdrDemTO.class, "AnagCdr");
+	}
+	
+//	@Override
+//	public AmminRagDemTO getRagByEse(AnagAmminDemTOId amminId)	throws Throwable {
+//		return getDozerDriver().map(amminRagDemDao.loadById(amminId), AmminRagDemTO.class, "AmmRag");
+//	}
+
+
+	@Override
+	public List<AnagTipologiaDecretoTO> tipologiaDecretoList(
+			Integer codiTipoDecreto) throws Throwable {
+		
+		if(codiTipoDecreto != null){
+			return getDozerDriver().mapList(anagTipologiaDecretoDao.tiplogiaDecretoList(codiTipoDecreto), AnagTipologiaDecretoTO.class, "AnagTipologiaDecreto");
+		}
+		else{
+			return getDozerDriver().mapList(anagTipologiaDecretoDao.tiplogiaDecretoFullList(), AnagTipologiaDecretoTO.class, "AnagTipologiaDecreto");
+			
+		}
+	}
+
+	@Override
+	public List<FirmatarioTO> findFirmatari(Long idNumeFascicolo) throws Throwable {
+		return invioAlleFirmeDao.findFirmatari(idNumeFascicolo);
+	}
+	
+	//@Override
+	public List<ActionTO> findAllAction() throws Throwable {
+		return getDozerDriver().mapList(actionDao.findAll(),ActionTO.class,"Action");
+	}
+	
+	public List<ActionTO> findAllActionByProfilo(Integer sequIdProfilo) throws Throwable {
+		return getDozerDriver().mapList(actionDao.loadByProfilo(sequIdProfilo),ActionTO.class,"Action");
+	}
+
+	@Override
+	public List<AnagStatoFascicoloTO> loadStatiFascicoloMonitoraggio() throws Throwable {
+		return getDozerDriver().mapList(anagStatoFascicoloDao.loadStatiFascicoloMonitoraggio(), AnagStatoFascicoloTO.class, "AnagStatoFascicolo");
+	}
+
+	
+}

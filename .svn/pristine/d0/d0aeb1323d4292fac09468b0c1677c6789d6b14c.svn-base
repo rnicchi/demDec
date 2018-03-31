@@ -1,0 +1,264 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class name="it.almavivaitalia.bilancio.commons.bo.FascicoliBO" table="D_FASCICOLI">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <id name="id" type="java.lang.Long">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_ID_FASCICOLO" precision="10" scale="0"/>
+   </id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagUfficiBO" fetch="select" name="ufficioCapofila">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="12" name="FK_NUME_UFFICIO_CAPOFILA" not-null="true">
+     <comment>Numero dell'ufficio responsabile del fascicolo</comment>
+    </column>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.EserciziDemBO" fetch="select" name="eserciziDem">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_ANNO_ESE" not-null="true" precision="4" scale="0">
+     <comment>Esercizio di riferimento</comment>
+    </column>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagTipoDecretoBO" fetch="select" name="anagTipoDecreto">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_NUME_TIPO_DECRETO" not-null="true" precision="2" scale="0">
+     <comment>Numero tipo decreto collegato al fascicolo</comment>
+    </column>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagUfficiBO" fetch="select" name="ufficioCreatore">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="12" name="FK_NUME_UFF_CREATORE" not-null="true">
+     <comment>Numero dell'ufficio che ha creato il fascicolo</comment>
+    </column>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagTipologiaDecretoBO" fetch="select" name="anagTipologiaDecreto">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_NUME_TIPOLOGIA_DECRETO" not-null="true" precision="2" scale="0">
+     <comment>Numero corrispondente alla tipologia di decreto</comment>
+    </column>
+   </many-to-one>
+   <property name="numeVersion" type="int">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_VERSION" not-null="true" precision="6" scale="0">
+     <comment>Numero intero che serve per gestire l'accesso concorrente con i DAO</comment>
+    </column>
+   </property>
+   <property name="codiGuidFascicolo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="40" name="CODI_GUID_FASCICOLO" not-null="true">
+     <comment>Identificativo del fascicolo sul sistema documetale</comment>
+    </column>
+   </property>
+   <property name="numeNumDecreto" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_NUM_DECRETO" not-null="true" precision="6" scale="0">
+     <comment>Numero del decreto collegato al fascicolo</comment>
+    </column>
+   </property>
+   <property name="descSigla" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="16" name="DESC_SIGLA" not-null="true">
+     <comment>Decodifica del campo numero tipo decreto</comment>
+    </column>
+   </property>
+   <property name="statStato" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="STAT_STATO" not-null="true" precision="2" scale="0">
+     <comment>Stato del fascicolo</comment>
+    </column>
+   </property>
+   <property name="numeTitolo" type="java.lang.Short">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_TITOLO" precision="3" scale="0">
+     <comment>Numero titolo</comment>
+    </column>
+   </property>
+   <property name="numePatrimonio" type="java.lang.Short">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_PATRIMONIO" precision="3" scale="0">
+     <comment>Numero del decreto patrimonio collegato</comment>
+    </column>
+   </property>
+   <property name="descDecreto" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="320" name="DESC_DECRETO" not-null="true">
+     <comment>Descrizione del decreto</comment>
+    </column>
+   </property>
+   <property name="dataCreazioneFascicolo" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_CREAZIONE_FASCICOLO" not-null="true">
+     <comment>Data creazione</comment>
+    </column>
+   </property>
+   <property name="descUtenteCreatore" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="DESC_UTENTE_CREATORE" not-null="true">
+     <comment>Utente creatore del FAD</comment>
+    </column>
+   </property>
+   <property name="dataModificaFascicolo" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_MODIFICA_FASCICOLO">
+     <comment>Data modifica</comment>
+    </column>
+   </property>
+   <property name="descUtenteModifica" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="DESC_UTENTE_MODIFICA">
+     <comment>Ultimo utente che modifica il FAD</comment>
+    </column>
+   </property>
+   <property name="dataChiusuraFascicolo" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_CHIUSURA_FASCICOLO">
+     <comment>Data chiusura</comment>
+    </column>
+   </property>
+   <property name="flagVisibilitaCdc01" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FLAG_VISIBILITA_CDC_01" precision="1" scale="0">
+     <comment>Flag per la gestione della visibilita' alla Cdc</comment>
+    </column>
+   </property>
+   <property name="dataPresaCaricoCdc" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_PRESA_CARICO_CDC">
+     <comment>Data presa in carico dalla Cdc</comment>
+    </column>
+   </property>
+   <property name="numeProtRicezioneCdc" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="NUME_PROT_RICEZIONE_CDC">
+     <comment>Numero protocollo in entrata</comment>
+    </column>
+   </property>
+   <property name="dataRicezioneCdc" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_RICEZIONE_CDC">
+     <comment>Data protocollo ricezione</comment>
+    </column>
+   </property>
+   <property name="dataRegistrazioneCdc" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_REGISTRAZIONE_CDC">
+     <comment>Data protocollo registrazione</comment>
+    </column>
+   </property>
+   <property name="numeProtRegistrazioneCdc" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="NUME_PROT_REGISTRAZIONE_CDC">
+     <comment>Numero protocollo in uscita</comment>
+    </column>
+   </property>
+   <property name="flagNormativo01" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FLAG_NORMATIVO_01" precision="1" scale="0">
+     <comment>Flag indicatore di decreto normativo che non apporta variazioni in Bilancio. 0=Non normativo, 1=Normativo</comment>
+    </column>
+   </property>
+	<property name="dataInvioCdc" type="date">
+		<meta attribute="use-in-equals" inherit="false">true</meta>
+		<meta attribute="use-in-tostring" inherit="false">true</meta>
+		<column length="7" name="DATA_INVIO_CDC">
+			<comment>Data trasmissione fascicolo alla Cdc</comment>
+		</column>
+	</property>
+  	<bag fetch="subselect" lazy="true" name="anagAmminDemList" table="D_FASCICOLI_AMM">
+		<key>
+			<column name="FK_NUME_ID_FASCICOLO" not-null="true" precision="10" scale="0"/>
+		</key>
+		<many-to-many entity-name="it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO" unique="false">
+			<column name="FK_ANNO_ESE" not-null="true" precision="4" scale="0"/>
+			<column name="FK_NUME_STP" precision="2" scale="0"/>
+			<column name="FK_NUME_APP" precision="1" scale="0"/>
+		</many-to-many>
+	</bag>
+    <bag fetch="subselect" inverse="false" lazy="true" name="anagCdrDemList" table="D_FASCICOLI_CDR">
+	    <key>
+	    	<column name="FK_NUME_ID_FASCICOLO" not-null="true" precision="10" scale="0"/>
+	    </key>
+	    <many-to-many entity-name="it.almavivaitalia.bilancio.commons.bo.AnagCdrDemBO">
+	    	<column name="FK_ANNO_ESE" not-null="true" precision="4" scale="0"/>
+	    	<column name="FK_NUME_STP" precision="2" scale="0"/>
+	    	<column name="FK_NUME_APP" precision="1" scale="0"/>
+	    	<column name="FK_NUME_CDR" precision="4" scale="0"/>
+	    </many-to-many>
+    </bag>
+	<bag fetch="subselect" inverse="false" lazy="true" name="sottoFascicoliRedList" table="D_SOTTO_FASCICOLI_RED">
+   		<key>
+   			<column name="FK_NUME_ID_FASCICOLO" not-null="true" precision="10" scale="0"/>
+   		</key>
+   		<one-to-many class="it.almavivaitalia.bilancio.commons.bo.SottoFascicoliRedBO"/>
+   	</bag>
+   	<bag fetch="subselect" inverse="false" lazy="true" name="documentiList" table="D_DOCUMENTI">
+   		<key>
+   			<column name="FK_NUME_ID_FASCICOLO" not-null="true" precision="10" scale="0"/>
+   		</key>
+   		<one-to-many class="it.almavivaitalia.bilancio.commons.bo.DocumentiBO"/>
+   	</bag>
+   	
+<!--     <bag fetch="subselect" inverse="false" lazy="true" name="iterFirmaDecretoList" table="D_ITER_FIRMA_DECRETO">
+    <key>
+     <column name="FK_NUME_ID_FASCICOLO" not-null="true" precision="10" scale="0"/>
+    </key>
+    <one-to-many class="it.almavivaitalia.bilancio.commons.bo.IterFirmaDecretoBO"/>
+   </bag> -->
+   <bag fetch="subselect" inverse="false" lazy="true" name="anagRagionerieDemList" table="D_FASCICOLI_RAG">
+    <key>
+     <column name="FK_NUME_ID_FASCICOLO" not-null="true" precision="10" scale="0"/>
+    </key>
+    <many-to-many entity-name="it.almavivaitalia.bilancio.commons.bo.AnagRagionerieDemBO">
+     <column name="FK_ANNO_ESE" not-null="true" precision="4" scale="0"/>
+     <column name="FK_NUME_RAG" not-null="true" precision="4" scale="0"/>
+    </many-to-many>
+   </bag>
+  </class>
+ </hibernate-mapping>

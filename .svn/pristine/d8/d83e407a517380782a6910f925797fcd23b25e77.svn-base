@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class name="it.almavivaitalia.bilancio.commons.bo.SottoFascicoliRedBO" table="D_SOTTO_FASCICOLI_RED">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <composite-id class="it.almavivaitalia.bilancio.commons.bo.SottoFascicoliRedBOId" name="id">
+    <key-property name="codiIdRed" type="string">
+     <column length="1020" name="CODI_ID_RED"/>
+    </key-property>
+    <key-property name="fkNumeIdFascicolo" type="java.lang.Long">
+     <column name="FK_NUME_ID_FASCICOLO" precision="10" scale="0"/>
+    </key-property>
+   </composite-id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO" fetch="select" name="anagAmminDem">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_ANNO_ESE" not-null="true" precision="4" scale="0"/>
+    <column name="FK_NUME_STP" precision="2" scale="0"/>
+    <column name="FK_NUME_APP" precision="1" scale="0"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagRagionerieDemBO" fetch="select" insert="false" name="anagRagionerieDem" update="false">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_ANNO_ESE" not-null="true" precision="4" scale="0"/>
+    <column name="FK_NUME_RAG" precision="4" scale="0"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.FascicoliBO" fetch="select" insert="false" name="fascicoli" update="false">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_NUME_ID_FASCICOLO" not-null="true" precision="10" scale="0">
+     <comment>Identificativo Fascicolo FAD</comment>
+    </column>
+   </many-to-one>
+   <property name="numeVersion" type="int">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_VERSION" not-null="true" precision="6" scale="0">
+     <comment>Numero intero che serve per gestire l'accesso concorrente con i DAO</comment>
+    </column>
+   </property>
+   <property name="statStato" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="STAT_STATO" not-null="true" precision="2" scale="0"/>
+   </property>
+   <property name="descUtenteAss" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="DESC_UTENTE_ASS"/>
+   </property>
+   <property name="descUfficioAss" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="DESC_UFFICIO_ASS"/>
+   </property>
+   <property name="descOggettoRed" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="720" name="DESC_OGGETTO_RED"/>
+   </property>
+   <property name="dataRed" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_RED"/>
+   </property>
+   <property name="codiAooProtocollo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="80" name="CODI_AOO_PROTOCOLLO">
+     <comment>Codice Area Organizzativa Omogenea</comment>
+    </column>
+   </property>
+   <property name="descTipoFlusso" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="80" name="DESC_TIPO_FLUSSO"/>
+   </property>
+   <property name="dataArrivo" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_ARRIVO"/>
+   </property>
+   <property name="dataAggiornamento" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_AGGIORNAMENTO"/>
+   </property>
+   <property name="codiGuidFascicolo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="160" name="CODI_GUID_FASCICOLO" not-null="true"/>
+   </property>
+   <property name="codiGuidSFascicolo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="160" name="CODI_GUID_S_FASCICOLO" not-null="true">
+     <comment>GUID della Raccolta Provvisoria di provenienza</comment>
+    </column>
+   </property>
+   <property name="numeProtocollo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="NUME_PROTOCOLLO">
+     <comment>Numero Protocollo alfanumerico</comment>
+    </column>
+   </property>
+   <property name="descTipoProtocollo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="80" name="DESC_TIPO_PROTOCOLLO">
+     <comment>Tipo Protocollo INGRESSO, USCITA</comment>
+    </column>
+   </property>
+   <property name="dataProtocollo" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_PROTOCOLLO">
+     <comment>Data protocollo</comment>
+    </column>
+   </property>
+   <bag fetch="subselect" inverse="false" lazy="true" name="documentiRedList" table="D_DOCUMENTI_RED">
+    <key>
+     <column length="1020" name="CODI_ID_RED"/>
+     <column name="FK_NUME_ID_FASCICOLO" not-null="true" precision="10" scale="0"/>
+    </key>
+    <one-to-many class="it.almavivaitalia.bilancio.commons.bo.DocumentiRedBO"/>
+   </bag>
+  </class>
+ </hibernate-mapping>

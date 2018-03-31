@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:context="http://www.springframework.org/schema/context"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+ 		http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean id="generalResources" class="org.springframework.context.support.ResourceBundleMessageSource" lazy-init="true">
+		<property name="basenames">
+			<list>
+				<value>general</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean 
+			id="initController" 
+			class="it.mef.bilancio.demdec.web.spring.controller.InitController" 
+			parent="abstractMultiActionController" 
+			init-method="init">
+			<property name="initManager" ref="initManager"/>
+			<property name="listManager" ref="listManager"/>
+	</bean>
+  
+	<bean id="menuController" class="it.almavivaitalia.bilancio.commons.web.spring.controller.MenuController" parent="abstractFormAdminController">
+		<property name="constantsClassName"    value="it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping" />
+		<property name="methodMappings">
+			<list>
+				<value>onItemSelected#itemSelected##false</value>
+				<value>onMenuSelected#menuSelected##false</value>
+				<value>onActionSelected#actionSelected##false</value>
+				<value>onSubItemSelected#subItemSelected##false</value>
+				<value>onMenuExtSelected#menuExtSelected##false</value>
+			</list>
+		</property>		
+		<property name="applicationCode" value="DemDec" />		
+		<property name="menuManager" 	 	ref="menuManager"/>
+	</bean>
+	
+	<bean 
+			id="redirectController" 
+			class="it.almavivaitalia.bilancio.commons.web.spring.controller.RedirectController" 
+			parent="abstractFormAdminController">
+		<property name="generalResources" ref="generalResources"/>
+		<property name="formObjectClass" value="it.almavivaitalia.bilancio.commons.web.form.RedirectForm"/>
+		<property name="redirectManager" ref="redirectManager"/>
+		<property name="methodMappings">
+			<list>
+				<value>backFrom#backFrom##false</value>
+				<value>onCallApp#callApp##false</value>
+			</list>
+		</property>	
+	</bean>			
+	
+	<bean id="logoutController" class="it.almavivaitalia.bilancio.commons.web.spring.controller.LogoutController" parent="abstractFormAdminController"/>
+
+	<bean id="errorController" class="it.almavivaitalia.bilancio.commons.web.spring.controller.ErrorController" parent="abstractFormController"/>
+
+	
+	<bean id="testLoginController" class="it.almavivaitalia.bilancio.commons.web.spring.controller.TestLoginController" parent="abstractFormController">
+		<property name="generalResources" ref="generalResources"/>
+		<property name="formObjectClass" value="it.almavivaitalia.bilancio.commons.web.form.TestLoginForm"/>
+		<property name="methodMappings">
+			<list>
+				<value>onSubmit#submitLoginForm##false</value>
+			</list>
+		</property>		
+		<property name="applicationCode" value="demdec" />
+	</bean>
+	
+
+	
+	<bean id="loginController" 
+			class="it.almavivaitalia.bilancio.commons.web.spring.controller.LoginController" 
+				parent="abstractFormAdminController">
+			<property name="generalResources" ref="generalResources"/>
+			<property name="formObjectClass" value="it.almavivaitalia.bilancio.commons.web.form.LoginForm"/>
+			<property name="utenteManager" ref="utenteManager" />
+			<property name="administratorManager" 	ref="administratorManager" />    
+			<property name="menuManager" 			ref="menuManager"/> 
+			<property name="applicationCode" 		value="DemDec"/>
+			<property name="loadMenuFromDb" 		value="true"/>
+			<property name="loadNavigatorFromDb"	value="true"/>
+	</bean>
+	
+	<bean id="cambioProfiloController" class="it.almavivaitalia.bilancio.commons.web.spring.controller.CambioProfiloController" parent="abstractFormController">
+		<property name="formObjectClass" value="it.almavivaitalia.bilancio.commons.web.form.CambioProfiloForm"/>
+		<property name="methodMappings">
+			<list>
+				<value>onSubmit#nuovoProfilo##false</value>
+			</list>
+		</property>		
+	</bean>
+	
+
+	
+	<bean id="helpController" class="it.almavivaitalia.bilancio.commons.web.spring.controller.HelpController" parent="abstractFormController">
+		<property name="startView" value="helpView"/>
+		<property name="methodMappings">
+			<list>
+				<value>onBack#back##false</value>
+			</list>
+		</property>		
+	</bean>
+
+
+	<!-- <bean id="itemSelectorController"
+		class="it.almavivaitalia.bilancio.commons.web.spring.controller.DemDecItemSelectorController"
+		init-method="init">
+		<property name="itemSelectorRequest" value="itemSelector.do" />
+		<property name="view" value="itemSelectorView" />
+		<property name="formObjectClass"
+			value="it.almavivaitalia.web.sh.form.ItemSelectorForm" />
+		<property name="messageSource" ref="applicationResource" />
+		<property name="methodMappings">
+			<list>
+				<value>onSelect#select</value>
+				<value>onCancel#cancel</value>
+				<value>onMultiSelect#multiSelect</value>
+				<value>onSelectAll#selectAll</value>
+				<value>onRemoveItems#removeItems</value>
+				<value>onRemoveAll#removeAll</value>
+				<value>onShiftUp#shiftUp</value>
+				<value>onShiftDown#shiftDown</value>
+				<value>onExport#export##false</value>
+			</list>
+		</property>
+	</bean> -->
+</beans>

@@ -1,0 +1,30 @@
+# Properties file with JDBC-related settings.
+# Applied by PropertyPlaceholderConfigurer from "applicationContext-*.xml".
+# Targeted at system administrators, to avoid touching the context XML files.
+
+# Property that determines the Hibernate dialect
+#hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect
+#hibernate.dialect=org.hibernate.dialect.HSQLDialect
+
+hibernate.dialect=org.hibernate.dialect.Oracle9iDialect
+hibernate.max_fetch_depth=0
+hibernate.default_batch_fetch_size=0
+hibernate.format_sql=false
+hibernate.show_sql=true
+
+datasource.oracle=oracleDataSourceJNDI
+
+
+datasource.oracle.jndiName=ORADem
+
+
+abilita.oam=S
+
+url.service.daDB=S
+url.DEMBIL=XXXXX
+url.DOCCONVERTER=XXXXXX
+
+
+log4jxml=log4jCollaudo.xml
+
+helpResources=it.mef.bilancio.sbfj.pass.web.resources.newHelpResources

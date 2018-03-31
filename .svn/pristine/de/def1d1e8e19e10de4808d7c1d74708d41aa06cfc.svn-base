@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" ><![endif]-->
+<!--[if gt IE 8]><!-->
+<!--invaliduser><!-
+<html style="" class=" js no-touch svg inlinesvg svgclippaths no-ie8compat" lang="en"><!--<![endif]-->
+
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+
+<!--<meta charset="utf-8">-->
+
+<title>DemDec - Dematerializzazione Decreti</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Fogli di stile CSS -->
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/foundation.css">
+<link rel="stylesheet" href="css/style_a.css">  
+
+<link rel="stylesheet" href="css/firebugR.css">  
+</head>
+
+<!--<body style="padding-top: 45px;">-->
+<body>
+<!-- Header/navigazione top bar -->
+<header class="fixed">
+
+<div id="sf_eng">
+
+
+  <div class="area_ris_eng">
+    <ul class="menu">
+    </ul>
+  </div>
+  
+</div>
+
+
+<div id="Cont_logo"><img class="padd_sx_logo" src="img/logo_DEMDEC.jpg" alt="Vai alla home"></div>
+
+</header>
+<!-- Inizio griglia -->
+<!-- Sezione titoli in evidenza con slideshow -->
+<div class="container">
+
+
+
+
+	<table >
+		<tbody>
+			<tr>
+				<td><div class="alert">
+		Utente non valido 
+		</div></td>
+		</tr>
+		</tbody>
+	</table>
+</div>   
+<!-- Footer -->
+<footer>
+    <div class="row">
+    <div class="large-12 columns">
+    <p class="right">Copyright 2015 © RGS Ragioneria Generale dello Stato</p>
+    </div>
+    </div>
+</footer>
+</body>
+</html>

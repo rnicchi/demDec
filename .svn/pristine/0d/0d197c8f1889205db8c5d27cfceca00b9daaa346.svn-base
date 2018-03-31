@@ -1,0 +1,44 @@
+package it.mef.bilancio.demdec.manager;
+
+
+import it.almavivaitalia.bilancio.commons.bo.LettereIgbBO;
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.mef.bilancio.demdec.to.LettereIgbTO;
+
+import java.math.BigDecimal;
+import java.sql.Blob;
+import java.util.List;
+
+public interface LetterePreRegManager extends AbstractDemManager {
+//	List<Decreto> findDecreti(Decreto decreto);
+//	List<Decreto> findByDecreto(Decreto decreto);
+	List<AnagAmminDemTO> findAmministrazioniByIdFascicolo(Long idFascicolo)  throws Throwable;
+	
+	 void aggiornaLettere(LettereIgbTO lettera, Blob binaIntLettera) throws Throwable;
+	/*	List<CentroResponsabilita> findCentriResponsabilita(Long idDecrAmm, Long annoEse);
+	Long[] findNumeriFascicoli(Long idDecreto) ;
+    String[] getTestiLettere(String tipoLettera);
+   // boolean inserisciLettera(Long annoEse, Long idAmm, Date dataLettera, Long numeProgLettera, char statusLettera, byte[] pdf);
+    void aggiornaLettere(LetteraIgb lettera, PatUser user, String funzione) throws ParseException;
+    List<LetteraIgb> getLettere() throws ParseException;
+	List<LetteraIgb> findByLettera(LetteraIgb lettera) throws ParseException;
+	List<Amministrazione> findAmmInDecByAnnoEse(String annoEsercizio);
+	
+	
+	List<String> getAnnoEseLettereIgb(PatUser utenteInSessione, String minRangeAnno);
+	Long getIdLetteraByAmmDecr(Long idAmm, Long idDecr);
+	*/
+
+	String[] getLettereTestiByTipo(String string)  throws Throwable;
+
+	List<LettereIgbTO> findByLettera(LettereIgbTO lettera) throws Throwable;
+
+	LettereIgbTO getLetteraById(Long idLettera) throws Throwable;
+
+	Blob getBlobByIdLettera(BigDecimal id)  throws Throwable;
+
+	String[] getLettereTestiByTipoBalanced(String tipoLettera) throws Throwable;	
+
+	LettereIgbBO findByUK(LettereIgbTO lettera);
+		
+}

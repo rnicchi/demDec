@@ -1,0 +1,188 @@
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%-- <%@page import="it.almavivaitalia.web.sh.utils.BaseSessionAttributes"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.WebConstants"%>
+ --%>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<!-- PageName = ricercaFAD.jsp -->
+<!-- Controller  ConsultaFascicoloFadController-->
+
+<demdec:useAttribute id="listAnniEser" name="<%=SessionAttributes.LIST_ANNO_ESE%>"/> 
+<demdec:useAttribute id="tipoDecretoList" name="<%=SessionAttributes.LIST_TIPI_DECRETI%>" /> 
+<demdec:useAttribute id="tipologiaDecretoLis" name="<%=SessionAttributes.LIST_TIPOLOGIA_DECRETO%>"/> 
+<demdec:useAttribute id="amministrazioneList" name="<%=SessionAttributes.LIST_AMMIN_DEM%>"/>  
+<demdec:useAttribute id="ufficioCapofilaListList" name="<%=SessionAttributes.LIST_ANAG_UFF%>"/>  
+<demdec:useAttribute id="anagStatiFascList" name="<%=SessionAttributes.LIST_ANAG_STATI_FASC%>"/>  
+<demdec:useAttribute id="cdrList" name="<%=SessionAttributes.LIST_ANAG_CDR_DEM%>"/>  
+
+
+<div class="row">
+	<div class="large-12 columns">
+	<div class="spacer_sm">&nbsp;</div>
+	<div class="col_char_user obb_fields"><spring:message code="label.required.fields"></spring:message></div>
+		<fieldset>
+			<div class="row">
+				<div class="small-3 columns">
+					<demdec:label path="tipoDecreto" labelKey="label.tipoDecreto"/>
+					<form:select path="tipoDecreto">
+						<form:option value="">&nbsp;</form:option>
+						<c:forEach items="${tipoDecretoList}" var="item">
+							<form:option value="${item.id}">${item.descSigla} </form:option>
+						</c:forEach>
+					</form:select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-3 columns">
+					<demdec:label path="numeDecreto" labelKey="label.numeroDecreto"/>
+					<form:input path="numeDecreto" maxlength="6"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-3 columns">
+					<demdec:label path="annoDecreto" labelKey="label.decreto.anno.obb"/>
+		       		 <form:select path="annoDecreto"   > 
+		          		<c:forEach var="item" items="${listAnniEser}">		
+							 <form:option value="${item.id}" >${item.id} </form:option> 
+						</c:forEach>    		
+		        	 </form:select>  
+				</div>
+			</div>
+			
+				<div class="row">
+			
+			   <div class="left">
+            <demdec:submit keyValue="button.load" controllerCode="caricaTipologiaDecreto" titleKey="label.carica.tipologia" styleClass="subm_update posit-butt_up"  />
+            </div>
+			
+			
+				<div class="small-5 columns">
+
+					<demdec:label path="tipologiaDecreto"
+						labelKey="label.tipologiaDecreto" />
+					
+						
+						<form:select path="tipologiaDecreto">
+									<form:option value="" label="-- Selezionare una tipologia --" />
+									<c:forEach var="item" items="${tipologiaDecretoLis}" >
+										<form:option value="${item.id}">${item.descTipologia}</form:option>
+									</c:forEach>
+								</form:select>
+				</div>
+			</div>
+			<%-- 
+			<div class="row">
+				<div class="small-3 columns">
+					<demdec:label path="tipologiaDecreto" labelKey="label.tipologiaDecreto"/>
+				    <table>
+				    	<tr>
+				    		<td>
+				    			<demdec:submit titleKey="label.carica.tipologia" keyValue="button.load" controllerCode="caricaTipologiaDecreto"/>
+				    		</td>
+				    		<td>
+								<form:select path="tipologiaDecreto">
+									<form:option value="">&nbsp;</form:option>
+									<c:forEach items="${tipologiaDecretoLis}" var="item">
+										<form:option value="${item.id}">${item.descTipologia}</form:option>
+									</c:forEach>
+								</form:select>
+				    		</td>
+				    	</tr>
+				    </table>
+				</div>
+			</div> 
+			--%>
+			<div class="row">
+			    <div class="left">
+			    <demdec:submit titleKey="label.carica.amm" keyValue="button.load" controllerCode="caricaAmministrazioni"  styleClass="subm_update posit-butt_up"/>
+			   </div>
+			    <div class="small-10 columns">
+				    <demdec:label path="amministrazione" labelKey="label.amministrazione"/>
+				  
+				    	
+				    			<form:select path="amministrazione" >
+				    				<form:option value="" label="-- Selezionare un'amministrazione --"/>
+				    				<c:forEach var="item" items="${amministrazioneList}">
+				    					<form:option value="${item.id.ammin}" >${item.id.ammin} - ${item.descAmm}</form:option>
+				    				</c:forEach>
+				    			</form:select>
+				    
+			    </div>
+			</div>
+			
+  
+			<div class="row">
+			    <div class="small-4 columns">
+				    <demdec:label path="ufficio" labelKey="label.ufficioCapofila"/>
+	    			<form:select path="ufficio" >
+	    				<form:option value="" label="-- Selezionare un ufficio --"/>
+	    				<c:forEach var="item" items="${ufficioCapofilaListList}">
+	    					<form:option value="${item.id}" >${item.descUfficio}</form:option>
+	    				</c:forEach>
+	    			</form:select>
+			    </div>
+			</div>
+            <%--
+			<div class="row">
+			    <div class="left">
+				  	<demdec:submit titleKey="label.carica.cdr" keyValue="button.load" controllerCode="caricaCdr" styleClass="subm_update posit-butt_up"/>
+				    		
+				 </div>
+				 <div class="small-10 columns">
+				   <demdec:label path="cdr" labelKey="label.cdr" />
+				    			<form:select path="cdr" >
+				    				<form:option value="" label="-- Selezionare un CDR --"/>
+				    				<c:forEach var="item" items="${cdrList}">
+				    					<form:option value="${item.id.numeCdr}" >${item.descCdr}</form:option>
+				    				</c:forEach>
+				   				</form:select>
+			    </div>
+			</div>
+			--%>
+			<div class="row">
+				<div class="small-3 columns">
+					<demdec:label path="numePat" labelKey="label.numeroPatrimonio"/>
+					<form:input path="numePat" maxlength="5" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-3 columns">
+					<demdec:label path="stato" labelKey="label.stato"/>
+					<form:select path="stato" >
+						<form:option value="" label="-- Selezionare uno stato --"/>
+						<c:forEach var="item" items="${anagStatiFascList}">
+							<form:option value="${item.statStato}" >${item.descStato} </form:option>
+						</c:forEach>
+					</form:select>
+				</div> 
+			</div>
+			<div class="row">
+				<div class="small-3 columns">
+					<!--  <form:label path="dataArrivoDa" value="dataArrivoDa"><b>Data Arrivo Da</b>&nbsp;(dd/mm/yyyy)</form:label>  -->
+					<demdec:label path="dataArrivoDa" labelKey="label.dataArrivoDa"/>
+					<form:input path="dataArrivoDa" placeholder="gg/mm/aaaa" maxlength="10" type="text"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-3 columns">
+					<!--    <form:label path="dataArrivoA" value="dataArrivoA"><b>Data Arrivo A</b>&nbsp;(dd/mm/yyyy)</form:label>  -->
+					<demdec:label path="dataArrivoA" labelKey="label.dataArrivoA"/>
+					<form:input path="dataArrivoA" placeholder="gg/mm/aaaa" maxlength="10" type="text"/>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="small-10 columns">
+					<demdec:submit keyValue="label.filtro.data" controllerCode="eseguiRicerca" />
+					&nbsp;
+					<demdec:submit keyValue="label.clean" controllerCode="nuovaRicerca"/>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+</div>
+

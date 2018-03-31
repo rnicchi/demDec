@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="UtenteBO.findEmailSignatoryNext">
+			
+			SELECT  a.indi_email 
+			  FROM d_j_utente a, d_j_utente_profilo b, d_anag_firmatari c, d_iter_firma_decreto d
+			 
+			  where 
+			  a.sequ_id_utente = b.sequ_id_utente and 
+			  b.sequ_id_profilo = c.fk_sequ_id_profilo and
+			  c.codi_firmatario = d.fk_codi_firmatario and 
+			  ((b.fk_anno_ese = d.fk_anno_ese) 
+			  or (b.fk_anno_ese is null and d.fk_anno_ese is null)) 
+			  and
+			  ((b.fk_nume_stp = d.fk_nume_stp) 
+			  or (b.fk_nume_stp is null and d.fk_nume_stp is null)) 
+			  and 
+			  ((b.fk_nume_app = d.fk_nume_app) 
+			  or (b.fk_nume_app is null and d.fk_nume_app is null))
+			  and
+			  ((b.fk_codi_ufficio = d.fk_codi_ufficio) 
+			  or (b.fk_codi_ufficio is null and d.fk_codi_ufficio is null))
+			  and
+			  ((b.fk_nume_cdr = d.fk_nume_cdr) 
+			  or (b.fk_nume_cdr is null and d.fk_nume_cdr is null))
+			  and 
+			  d.stat_firma = :statFirma and 
+			  d.fk_nume_id_fascicolo = :numeIdFascicolo
+			  
+			  <query-param name="statFirma" type="integer" />
+  			<query-param name="numeIdFascicolo" type="long" />
+ 			
+ 			
+	</sql-query>
+	
+	<sql-query name="UtenteBO.findEmailUserPecRichSospensione">
+			
+			SELECT  a.indi_email as emailUtente, c.flag_pec_01 as flagEmailPec
+			  FROM d_j_utente a, d_j_utente_profilo b, d_anag_firmatari c, d_iter_firma_decreto d
+			 
+			  where 
+			  a.sequ_id_utente = b.sequ_id_utente and 
+			  b.sequ_id_profilo = c.fk_sequ_id_profilo and
+			  c.codi_firmatario = d.fk_codi_firmatario and 
+			  ((b.fk_anno_ese = d.fk_anno_ese) 
+			  or (b.fk_anno_ese is null and d.fk_anno_ese is null)) 
+			  and
+			  ((b.fk_nume_stp = d.fk_nume_stp) 
+			  or (b.fk_nume_stp is null and d.fk_nume_stp is null)) 
+			  and 
+			  ((b.fk_nume_app = d.fk_nume_app) 
+			  or (b.fk_nume_app is null and d.fk_nume_app is null))
+			  and
+			  ((b.fk_codi_ufficio = d.fk_codi_ufficio) 
+			  or (b.fk_codi_ufficio is null and d.fk_codi_ufficio is null))
+			  and
+			  ((b.fk_nume_cdr = d.fk_nume_cdr) 
+			  or (b.fk_nume_cdr is null and d.fk_nume_cdr is null))
+			  and 
+			  d.stat_firma != 0 and
+			  d.fk_nume_id_fascicolo = :numeIdFascicolo
+			  
+  			<query-param name="numeIdFascicolo" type="long" />
+
+ 			<return-scalar column="emailUtente"  type="string"/>
+  			<return-scalar column="flagEmailPec" type="integer"/>
+	</sql-query>
+</hibernate-mapping>

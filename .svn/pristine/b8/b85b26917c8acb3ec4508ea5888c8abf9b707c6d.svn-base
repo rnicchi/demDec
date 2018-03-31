@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 5-giu-2015 12.17.04 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="it.almavivaitalia.bilancio.commons.bo.ProfiloBO" table="D_J_PROFILO">
+        <meta attribute="extends" inherit="false">AbstractBO</meta>
+        <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+        <comment>Profili previsti nel sistema simulazione</comment>
+   <id name="id" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="SEQU_ID_PROFILO" precision="6" scale="0"/>
+    <generator class="sequence">
+     <param name="sequence">S_J_PROFILO</param>
+    </generator>
+   </id>
+  <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <property name="codiProfilo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="CODI_PROFILO" not-null="true" unique="true">
+     <comment>Codice indentificativo del profilo</comment>
+    </column>
+   </property>
+   <property name="descProfilo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="720" name="DESC_PROFILO">
+     <comment>Descizione del profilo</comment>
+    </column>
+   </property>
+   <bag fetch="subselect" inverse="false" lazy="true" name="utenteProfiloList" table="D_J_UTENTE_PROFILO">
+    <key>
+     <column name="SEQU_ID_PROFILO" not-null="true" precision="22" scale="0"/>
+    </key>
+    <one-to-many class="it.almavivaitalia.bilancio.commons.bo.UtenteProfiloBO"/>
+   </bag>
+   <bag fetch="subselect" inverse="false" lazy="true" name="actionList" table="D_J_MM_ACTION_PROFILO">
+    <key>
+     <column name="SEQU_ID_PROFILO" not-null="true" precision="22" scale="0">
+      <comment>Identificativo numerico dell profilo di abilitazione</comment>
+     </column>
+    </key>
+    <many-to-many entity-name="it.almavivaitalia.bilancio.commons.bo.ActionBO">
+     <column name="SEQU_ID_ACTION" not-null="true" precision="22" scale="0">
+      <comment>Identificativo numerico della funzionalit  abilitata</comment>
+     </column>
+    </many-to-many>
+   </bag>
+   <bag fetch="subselect" inverse="false" lazy="true" name="menuList" table="D_J_MM_MENU_PROFILO">
+    <key>
+     <column name="SEQU_ID_PROFILO" not-null="true" precision="22" scale="0">
+      <comment>Identificativo numerico del profilo di abilitazione</comment>
+     </column>
+    </key>
+    <many-to-many entity-name="it.almavivaitalia.bilancio.commons.bo.MenuBO">
+     <column name="SEQU_ID_MENU" not-null="true" precision="22" scale="0">
+      <comment>Identificativo numerico del men� abilitato</comment>
+     </column>
+    </many-to-many>
+   </bag>
+  </class>
+ </hibernate-mapping>

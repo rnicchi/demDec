@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Built-By: utente_hp
+Build-Jdk: 1.8.0_60
+Class-Path: demdec-business-0.0.1-SNAPSHOT.jar almavivaitalia.commons.
+ crystal-0.0.2.jar commons-fileupload-1.2.jar commons-httpclient-3.1.j
+ ar geronimo-jta_1.1_spec-1.1.jar geronimo-ws-metadata_2.0_spec-1.1.2.
+ jar neethi-2.0.4.jar woden-api-1.0M8.jar woden-impl-dom-1.0M8.jar axi
+ om-api-1.2.8.jar wsdl4j-1.6.2.jar axiom-dom-1.2.8.jar axiom-impl-1.2.
+ 8.jar XmlSchema-1.4.3.jar commons-io-1.4.jar wstx-asl-3.2.4.jar stax-
+ api-1.0.1.jar axis2-kernel-1.5.1.jar axis2-adb-1.5.1.jar axis2-transp
+ ort-local-1.5.1.jar axis2-transport-http-1.5.1.jar spring-context-sup
+ port-3.0.2.RELEASE.jar commons-dbcp-20030825.184428.jar mail-1.4.jar 
+ activation-1.1.jar itextpdf-5.5.7.jar tika-core-1.8.jar demdec-common
+ s-0.0.1-SNAPSHOT.jar spring-security-core-3.0.2.RELEASE.jar aspectjrt
+ -1.6.8.jar spring-security-config-3.0.2.RELEASE.jar spring-security-t
+ aglibs-3.0.2.RELEASE.jar spring-security-web-3.0.2.RELEASE.jar spring
+ -beans-3.0.2.RELEASE.jar spring-core-3.0.2.RELEASE.jar spring-jdbc-3.
+ 0.2.RELEASE.jar spring-tx-3.0.2.RELEASE.jar spring-webmvc-3.0.2.RELEA
+ SE.jar spring-context-3.0.2.RELEASE.jar spring-aop-3.0.2.RELEASE.jar 
+ aopalliance-1.0.jar spring-web-3.0.2.RELEASE.jar spring-orm-3.0.2.REL
+ EASE.jar hibernate-core-3.3.2.GA.jar dom4j-1.6.1.jar commons-lang-2.4
+ .jar displaytag-1.2.jar log4j-1.2.13.jar commons-logging-1.2.jar cast
+ or-1.2.jar itext-2.1.7.jar poi-3.12.jar commons-codec-1.9.jar dozer-5
+ .0.jar commons-collections-3.2.1.jar xstream-1.4.3.jar xmlpull-1.1.3.
+ 1.jar xpp3_min-1.1.4c.jar jackson-databind-2.2.2.jar jackson-core-2.2
+ .2.jar spring-asm-3.0.2.RELEASE.jar spring-expression-3.0.2.RELEASE.j
+ ar aspectjweaver-1.5.4.jar commons-pool-20030825.183949.jar slf4j-log
+ 4j12-1.4.2.jar slf4j-api-1.4.2.jar javassist-3.8.0.GA.jar cglib-2.2.j
+ ar asm-3.2.jar tiles-jsp-2.1.4-j4.jar tiles-servlet-2.1.4.jar tiles-c
+ ore-2.1.4.jar tiles-api-2.1.4.jar commons-digester-1.8.1.jar commons-
+ logging-api-1.1.jar commons-beanutils-1.8.0.jar jstl-1.1.2.jar standa
+ rd-1.1.2.jar retrotranslator-runtime-1.2.7.jar antlr-2.7.6.jar httpco
+ re-4.0.jar ckeditor-java-core-3.5.3.jar jackson-annotations-2.2.2.jar
+  backport-util-concurrent-2.2.jar
+Created-By: Maven Integration for Eclipse
+

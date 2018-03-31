@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>DEMDEC</display-name>
+	<description>Dematerializzazione Atto Decreto</description>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:META-INF/spring/spring-context.xml
+			/WEB-INF/applicationContext-security.xml
+		</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+	<servlet>
+		<servlet-name>spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>spring</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+	<!-- TOMCAT 
+	<servlet> <servlet-name>jaxws-servlet</servlet-name>
+	 <servlet-class>com.sun.xml.ws.transport.http.servlet.WSSpringServlet</servlet-class> 
+	 </servlet> 
+	  <servlet-mapping>
+	   <servlet-name>jaxws-servlet</servlet-name>
+	    <url-pattern>/public/nsbfGestioneFascicoliWS</url-pattern> </servlet-mapping>   
+	 TOMCAT -->
+	<servlet> 
+	   <servlet-name>NsbfGestioneFascicoliWS</servlet-name> 
+   <servlet-class>it.mef.bilancio.demdec.web.services.NsbfGestioneFascicoliWS</servlet-class> 
+	</servlet> 
+	   
+	<servlet-mapping> 
+	   <servlet-name>NsbfGestioneFascicoliWS</servlet-name> 
+	   <url-pattern>/public/nsbfGestioneFascicoliWS</url-pattern> 
+	</servlet-mapping>  
+	
+	
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+<!-- 	sostituito il vecchio filter con quello sopra
+ 	<filter>
+        <filter-name>mySecurityFilterChain</filter-name>
+        <filter-class>it.almavivaitalia.bilancio.commons.web.filters.SecurityFilter</filter-class>
+        <init-param>
+	        <param-name>avoid-urls</param-name>
+	        <param-value>/public/,/css,/img</param-value>
+        </init-param>
+        <init-param>
+        	<description> Il valore della proprieta' messSource a seguire, deve essere il nome
+			        	  del bean che nell'opportuno file di contesto di spring (in genere il 
+			        	  commons.xml) definisce un'istanza della classe 
+			        	  it.almavivaitalia.bsn.sh.utils.ResourceBundleMessageSource, 
+			        	  valorizzando a sua volta la proprieta' messageSource.
+			        	  Per un corretto funzionamento tuttavia occorre che in uno
+			        	  dei file di contesto di Spring (in genere il commons.xml)
+			        	  sia definito un bean istanza della classe
+			        	  it.almavivaitalia.web.sh.utils.ApplicationContextProvider.			        	  
+        	</description>
+	        <param-name>messSource</param-name>
+	        <param-value>passMessageSource</param-value>
+        </init-param>
+    </filter>
+ 
+	<filter-mapping>
+	   <filter-name>mySecurityFilterChain</filter-name>
+	   <url-pattern>/*</url-pattern>
+	</filter-mapping>	
+	 -->
+	<session-config>
+		<session-timeout>40</session-timeout>
+	</session-config>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	<error-page>
+		<error-code>500</error-code>
+		<location>/public/error.jsp</location>
+	</error-page>
+	<error-page>
+        <error-code>400</error-code>
+        <location>/public/testLogin.jsp</location>
+    </error-page>
+    <error-page> 
+        <error-code>404</error-code>
+        <location>/public/error.jsp</location>
+    </error-page>
+   
+    <error-page>
+        <error-code>403</error-code>
+        <location>/public/accessDenied.jsp</location>
+    </error-page>   
+    
+	<jsp-config>
+		<!-- TODO -->
+		<taglib>
+			<taglib-uri>http://almavivaitalia.web.sh/tags</taglib-uri>
+			<taglib-location>/WEB-INF/almavivaitalia.web.sh.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+	
+	<context-param>
+		<param-name>log4j-init-file</param-name>
+      	<param-value>WEB-INF/classes/log4j1.properties</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>applicationName</param-name>
+      	<param-value>DEMDEC</param-value>
+	</context-param>	
+
+</web-app>

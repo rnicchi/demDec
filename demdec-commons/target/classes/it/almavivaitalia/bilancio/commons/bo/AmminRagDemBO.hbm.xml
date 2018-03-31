@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class name="it.almavivaitalia.bilancio.commons.bo.AmminRagDemBO" table="D_AMM_RAG_DEM">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <composite-id class="it.almavivaitalia.bilancio.commons.bo.AmminRagDemBOId" name="id">
+    <key-property name="annoEse" type="java.lang.Short">
+     <column name="FK_ANNO_ESE" precision="4" scale="0"/>
+    </key-property>
+    <key-property name="numeStp" type="java.lang.Integer">
+     <column name="FK_NUME_STP" precision="2" scale="0"/>
+    </key-property>
+    <key-property name="numeApp" type="java.lang.Integer">
+     <column name="FK_NUME_APP" precision="1" scale="0"/>
+    </key-property>
+    <key-property name="numeRag" type="java.lang.Short">
+     <column name="FK_NUME_RAG" precision="4" scale="0"/>
+    </key-property>
+   </composite-id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+  </class>
+ </hibernate-mapping>

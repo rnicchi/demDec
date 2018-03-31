@@ -1,0 +1,780 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+ 		http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+ 
+   
+
+	<!-- REGOLE FILE EXCEL: INIZIO -->	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- dimensione massima del file in bytes  30MB-->
+		<property name="maxUploadSize" value="31457280"/>
+	</bean>
+	
+	<bean id="ricercaRedController" class="it.mef.bilancio.demdec.web.spring.controller.raccolteprovvisorie.AssociazioneAFadController" 
+		parent="abstractDemFormController">
+		<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.RicercaRedForm"/>
+		<property name="startView" 						value="ricercaRedView"/>
+		<property name="raccolteProvvisorie" 			value="raccolteProvvisorieView"/>
+		<property name="documentiFascicolo" 			value="documentiFascicoloView"/>
+		<property name="validator" ref="ricercaRedValidator"/> 
+		<property name="methodMappings">
+			<list>
+				<value>onCaricaAmministrazioni#caricaAmministrazioni##true</value>
+				<value>startController#back##false</value>
+				<value>ricercaRed#ricercaRed##true</value>
+				<value>apriDocumentiFascicolo#apriDocumentiFascicolo##false</value>
+				<value>pulisciRicercaRed#pulisciRicercaRed##false</value>
+				<value>pulisciRaccolteProvvisorie#pulisciRaccolteProvvisorie##false</value>
+				<value>inviaAFad#inviaAFad##true</value>
+				<value>pulisciDocumentiFascicolo#pulisciDocumentiFascicolo##false</value>
+				<value>download#download##false</value>
+			</list>
+		</property>	
+	</bean>	
+	
+	<bean 
+		id="ricercaRedValidator" class="it.mef.bilancio.demdec.web.spring.validator.RicercaRedValidator" parent="abstractDemValidator">
+	</bean>
+	
+	<bean id="ricercaRedModaliController" class="it.mef.bilancio.demdec.web.spring.controller.modali.AssociazioneAFadModaliController" parent="abstractDemFormController">
+	<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.RicercaRedForm"/>
+	<property name="startView" 						value="ricercaRedView"/>
+	<property name="methodMappings">
+			<list>
+				<value>modaleListaDecreti#modaleListaDecreti##false</value>
+				<value>modaleDettaglioFascicolo#modaleDettaglioFascicolo##false</value>
+				<value>modaleDettaglioDocumento#modaleDettaglioDocumento##false</value>
+			</list>
+		</property>	
+	</bean>	
+	
+	<bean id="chiusuraRaccolteSospModaliController" class="it.mef.bilancio.demdec.web.spring.controller.modali.ChiusuraRaccolteSospModaliController" parent="abstractDemFormController">
+	<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.RicercaRedForm"/>
+	<property name="startView" 						value="ricercaRedView"/>
+	<property name="methodMappings">
+			<list>
+				<value>modaleDettaglioFascicoloSosp#modaleDettaglioFascicoloSosp##false</value>
+				<value>modaleDettaglioDocumentoSosp#modaleDettaglioDocumentoSosp##false</value>
+			</list>
+		</property>	
+	</bean>	
+	
+	<bean id="documentiRedModaliController" class="it.mef.bilancio.demdec.web.spring.controller.modali.DocumentiRedModaliController" parent="abstractDemFormController">
+	<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.GestioneFascicoloFadForm"/>
+	<property name="startView" 						value="documentiRedView"/>
+	<property name="methodMappings">
+			<list>
+				<value>modaleMetadatiDocumentiRed#modaleMetadatiDocumentiRed##false</value>
+	           	<value>onModificaMetadatiDocRed#modificaMetadatiDocRed##false</value>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="documentiFadModaliController" class="it.mef.bilancio.demdec.web.spring.controller.modali.DocumentiFadModaliController" parent="abstractDemFormController">
+	<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.GestioneFascicoloFadForm"/>
+	<property name="startView" 						value="documentiFadView"/>
+	<property name="methodMappings">
+			<list>
+				<value>modaleMetadatiDocumentiFad#modaleMetadatiDocumentiFad##false</value>
+			</list>
+		</property>	
+	</bean>		
+	
+	<bean id="documentiPatModaliController" class="it.mef.bilancio.demdec.web.spring.controller.modali.DocumentiPatModaliController" parent="abstractDemFormController">
+	<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.GestioneFascicoloFadForm"/>
+	<property name="startView" 						value="documentiPatView"/>
+	<property name="methodMappings">
+			<list>
+				<value>modaleMetadatiDocumentiPat#modaleMetadatiDocumentiPat##false</value>
+			</list>
+		</property>	
+	</bean>		
+	
+	<bean id="invioAlleFirmeController" class="it.mef.bilancio.demdec.web.spring.controller.fascicolifad.InvioAlleFirmeController" parent="abstractDemFormController">
+	<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.InvioAlleFirmeForm"/>
+	<property name="startView" 						value="invioAlleFirmeView"/>
+	<property name="listaFirmatari" 				value="listaFirmatari"/>
+	<property name="listaFirmatariInvio" 			value="listaFirmatariInvio"/>
+	<property name="listaFirmatariInvioReadOnly"	value="listaFirmatariInvioReadOnly"/>
+	<property name="validator" ref="invioAlleFirmeValidator"/>
+	<property name="methodMappings">
+			<list>
+				<value>pulisci#pulisci##false</value>
+				<value>ricercaFirmatari#ricercaFirmatari##true</value>
+				<value>generazioneFirme#generazioneFirme##false</value>
+				<value>anteprimaPdf#anteprimaPdf##false</value>
+				<value>invioAFirme#invioAFirme##false</value>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="invioAlleFirmeModaliController" class="it.mef.bilancio.demdec.web.spring.controller.modali.InvioAlleFirmeModaliController" parent="abstractDemFormController">
+		<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.InvioAlleFirmeForm"/>
+		<property name="startView" 						value="invioAlleFirmeView"/>
+		<property name="methodMappings">
+				<list>			
+					<value>modaleInvioAFirme#modaleInvioAFirme##false</value>
+				</list>
+		</property>	
+	</bean>	
+	
+	<bean 
+		id="invioAlleFirmeValidator" class="it.mef.bilancio.demdec.web.spring.validator.InvioAlleFirmeValidator" parent="abstractDemValidator">
+	</bean>	
+	
+	 <bean id="sospensioneFirmeController" class="it.mef.bilancio.demdec.web.spring.controller.fascicolifad.SospensioneFirmeController" parent="abstractDemFormController">
+			<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.SospensioneFirmeForm"/>
+			<property name="startView" 						value="sospensioneFirmeView"/>	
+			<property name="validator" ref="sospensioneFirmeValidator"/>	
+			<property name="methodMappings">
+					<list>
+						<value>pulisci#pulisci##false</value>
+						<value>sospendiFirme#sospendiFirme##true</value>					
+					</list>
+			</property>	
+	</bean>
+	
+	<bean 
+		id="sospensioneFirmeValidator" class="it.mef.bilancio.demdec.web.spring.validator.SospensioneFirmeValidator" parent="abstractDemValidator">
+	</bean>	
+	
+	<bean id="revocaSospensioneFirmeController" class="it.mef.bilancio.demdec.web.spring.controller.fascicolifad.RevocaSospensioneFirmeController" parent="abstractDemFormController">
+			<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.RevocaSospensioneFirmeForm"/>
+			<property name="startView" 						value="revocaSospensioneFirmeView"/>	
+			<property name="validator" ref="revocaSospensioneFirmeValidator"/>	
+			<property name="methodMappings">
+					<list>
+						<value>pulisci#pulisci##false</value>
+						<value>revocaSospensioneFirme#revocaSospensioneFirme##true</value>					
+					</list>
+			</property>	
+	</bean>
+	
+	<bean 
+		id="revocaSospensioneFirmeValidator" class="it.mef.bilancio.demdec.web.spring.validator.RevocaSospensioneFirmeValidator" parent="abstractDemValidator">
+	</bean>	
+	
+	<bean id="sospensioneFirmeModaliController" class="it.mef.bilancio.demdec.web.spring.controller.modali.SospensioneFirmeModaliController" parent="abstractDemFormController">
+		<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.SospensioneFirmeForm"/>
+		<property name="startView" 						value="sospensioneFirmeView"/>
+		<property name="methodMappings">
+				<list>			
+					<value>modaleSospensioneFirme#modaleSospensioneFirme##false</value>
+				</list>
+		</property>	
+	</bean>	
+	
+	<bean id="revSospFirmeModaliController" class="it.mef.bilancio.demdec.web.spring.controller.modali.RevSospFirmeModaliController" parent="abstractDemFormController">
+		<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.RevocaSospensioneFirmeForm"/>
+		<property name="startView" 						value="revocaSospensioneFirmeView"/>
+		<property name="methodMappings">
+				<list>			
+					<value>modaleRevocaSospensioneFirme#modaleRevocaSospensioneFirme##false</value>
+				</list>
+		</property>	
+	</bean>	
+	
+	 <bean 
+		id="uploadValidator" 
+		class="it.mef.bilancio.demdec.web.spring.validator.UploadValidator" 		parent="abstractDemValidator"/> 
+	
+	<bean id="uploadController" class="it.mef.bilancio.demdec.web.spring.controller.upload.UploadDecController" parent="abstractDemFormController">
+		<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.UploadDecForm"/>
+		 <property name="validator" 						ref="uploadValidator"/> 
+		<property name="startView" 						value="uploadDecSeleFileView"/>		
+		<property name="uploadFileView"					value="uploadDecSeleFileView"/>	
+<!-- 		<property name="uploadDecManager" 	ref="uploadDecManager" /> 
+		<property name="gestioneFadManager" 	ref="gestioneFadManager" />  -->
+		<!--methodName#controllerCode(?)#codiAction(?)#validation[true/false](?)  -->
+		<property name="methodMappings">
+			<list>
+			<!-- 	<value>onSelectorProspetti#selectorProspetti##true</value>
+				<value>onConferma#conferma##true</value> -->
+				<value>onUploadFile#uploadFile##true</value>
+				<value>startController#back##false</value>
+				<value>onCaricaFascicoli#caricaFascicoli##false</value>
+			</list>
+		</property>		
+	</bean>
+	
+	
+	 <bean 
+		id="creaFadValidator" class="it.mef.bilancio.demdec.web.spring.validator.CreaFadValidator" parent="abstractDemValidator">
+	</bean>
+	
+	
+	<bean id="creaFadController" class="it.mef.bilancio.demdec.web.spring.controller.fascicolifad.CreaFascicoloFadController" 
+		parent="abstractDemFormController">
+		<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.CreaFadForm"/>
+		<property name="startView" 						value="creaFadView"/>	
+		<property name="selezioneAmmFadView" 			value="selezioneAmmFadView"/>	
+		<property name="selezioneCdrFadView" 			value="selezioneCdrFadView"/>	
+		<property name="validator" ref="creaFadValidator"/>
+		<!--methodName#controllerCode(?)#codiAction(?)#validation[true/false](?)  -->
+		<property name="methodMappings">
+			<list>
+				<value>onBackFromAmm#backFromAmm##false</value>
+				<value>onCaricaAmministrazioni#caricaAmministrazioni##true</value>
+				<value>startController#back##false</value>
+				<!-- <value>onUncheckAmmin#uncheckAmmin##false</value> -->
+				<value>onCaricaCdr#caricaCdr##true</value>
+				<value>onCaricaCdrFromAmm#caricaCdrFromAmm##true</value> 
+				<value>onCaricaTipologia#caricaTipologia##true</value> 
+				<value>onBackFromCdr#backFromCdr##false</value>
+				<value>onCreaFad#creaFad##true</value>
+				<!-- <value>onUncheckCdr#uncheckCdr##false</value> -->
+				<!-- <value>onCaricaUfficio#caricaUffCapofila##false</value> -->
+				<value>onCancelFromAmm#cancelFromAmm##false</value>
+				<value>onCancelFromCdr#cancelFromCdr##false</value>
+				
+				
+				
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="listEmailSent" 
+		class="it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio.ListEmailSentController" 
+		abstract="false" 
+		init-method="init" 
+		parent="abstractDemFormController">
+		<property name="listView" value="listaView"/>
+		<property name="validator" ref="mailValidator"/>
+		<property name="formObjectClass" value="it.mef.bilancio.demdec.web.spring.form.ListMsgSentForm"/>
+		<property name="methodMappings">
+            <list>
+                <value>filteredListByDate#listByDate##true</value>
+                
+            </list>
+        </property>
+	</bean>
+
+	 <bean 
+		id="mailController"
+		class="it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio.InvioMailController"
+		abstract="false" 
+		init-method="init" 
+		parent="abstractDemFormController">
+		<property name="startView" value="mailView"/>
+		<property name="validator" ref="mailValidator"/>
+		<property name="formObjectClass" value="it.mef.bilancio.demdec.web.spring.form.MailForm"/>
+		
+		
+		  <property name="methodMappings">
+            <list>
+                <value>invioPecDaForm#PecDaForm##true</value>
+                <value>invioMailNoPecDaForm#StandardMailDaForm##true</value>
+                <value>invioMailNoPecDaFunzione#funzione##false</value>
+                <value>invioPecDaFunzione#funzionePec##false</value>
+               
+            </list>
+        </property>      
+				
+	</bean>
+	
+	 <bean 
+		id="mailValidator" class="it.mef.bilancio.demdec.web.spring.validator.MailValidator" parent="abstractDemValidator">
+	</bean>
+	
+	
+	
+	<bean id="pec" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="javaMailProperties">
+		   <props>
+	       	      <prop key="mail.smtp.auth">true</prop>
+	       	      <prop key="mail.smtp.starttls.enable">true</prop>
+	       	      <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+	       	   </props>
+		</property>
+	</bean>
+	
+	<bean id="peo" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="javaMailProperties">
+		   <props>
+	       	      <prop key="mail.smtp.auth">true</prop>
+	       	      <prop key="mail.smtp.starttls.enable">true</prop>
+	       	   </props>
+		</property>
+	</bean>
+	
+	
+	<bean 
+		id="firmaValidator" class="it.mef.bilancio.demdec.web.spring.validator.FirmaValidator" parent="abstractDemValidator">
+	</bean>
+	
+	<bean id="firmaDocumentiController" class="it.mef.bilancio.demdec.web.spring.controller.firma.FirmaDocumentiController"
+		abstract="false" 
+		init-method="init"
+		parent="abstractDemFormController">
+		<property name="listView" value="firmaDocumentiView"/>
+		<property name="validator" ref="firmaValidator"/>
+		<property name="formObjectClass"  value="it.mef.bilancio.demdec.web.spring.form.FirmaDocumentiForm"/>
+		<property name="methodMappings">
+            <list>
+            	 <value>firma#firma##true</value>
+            	 <value>downloadAD#download##</value>
+            </list>
+        </property>
+	</bean>
+
+	<bean 
+		id="consultaFascicoloFadValidator" class="it.mef.bilancio.demdec.web.spring.validator.ConsultaFascicoloFadValidator" parent="abstractDemValidator">
+	</bean>
+	
+	<bean id="ricercaFascicoloFadController" class="it.mef.bilancio.demdec.web.spring.controller.fascicolifad.RicercaFascicoloFadController"
+		abstract="true" 
+		init-method="init"
+		parent="abstractDemFormController"/>
+
+	<bean id="consultaFascicoloFadController" class="it.mef.bilancio.demdec.web.spring.controller.fascicolifad.ConsultaFascicoloFadController"
+		abstract="false" 
+		init-method="init"
+		parent="ricercaFascicoloFadController">
+		<property name="startView" 			value="ricercaFadView"/>
+		<property name="afterRicercaView"	value="afterRicercaFadView"/>
+		<property name="fascicoloFadView"	value="fascicoloFadView"/>
+		<property name="documentiFadView"	value="documentiFadView"/>
+		<property name="documentiRedView"	value="documentiRedView"/>
+		<property name="documentiPatView"	value="documentiPatView"/>
+		
+		<property name="formObjectClass"  	value="it.mef.bilancio.demdec.web.spring.form.ConsultaFascicoloFadForm"/>
+		<property name="validator"			ref="consultaFascicoloFadValidator"/>
+		<property name="methodMappings">
+            <list>
+            	<value>onCaricaAmmin#caricaAmministrazioni##true</value>
+            	<value>onCaricaTipologiaDecreto#caricaTipologiaDecreto##true</value>
+            	<value>onCaricaCdr#caricaCdr##true</value>
+            	<value>onEseguiRicerca#eseguiRicerca##true</value>
+            	<value>onNuovaRicerca#nuovaRicerca##false</value>
+            	<value>onApriFascicoloFad#apriFascicoloFad##false</value>
+            	<!-- <value>onSelStrumModale#selStrumModale##false</value> -->
+            	<value>onApriDocumentiFad#apriDocumentiFad##false</value>
+            	<value>onApriDocumentiFascicoloRed#apriDocumentiFascicoloRed##false</value>
+            	<value>onApriDocumentiFascicoloPat#apriDocumentiFascicoloPat##false</value>
+            	<value>onBack#back##false</value>
+            	<value>onBackToFadSearch#backToFadSearch##false</value>
+            	<value>onBackToFadInitialPage#backToFadInitialPage##false</value>
+            	<value>onBackToFadInitialPageFromFad#backToFadInitialPageFromFad##false</value>
+            	<value>onBackToFadInitialPageFromRed#backToFadInitialPageFromRed##false</value>
+            	<value>onBackToFadInitialPageFromPatr#backToFadInitialPageFromPatr##false</value>
+            	<value>onScaricaPdfFad#scaricaPdfFad##false</value>
+            	<value>onScaricaOrigFad#scaricaOrigFad##false</value>
+            	<value>onScaricaOrigRed#scaricaOrigRed##false</value>
+            	<value>onScaricaPdfRed#scaricaPdfRed##false</value>
+            	<value>onScaricaPdfPat#scaricaPdfPat##false</value>
+            	<value>onScaricaOrigPat#scaricaOrigPat##false</value>
+            </list>
+        </property>
+	</bean>
+	
+	<bean 
+		id="gestioneFascicoloFadValidator" class="it.mef.bilancio.demdec.web.spring.validator.GestioneFascicoloFadValidator" parent="abstractDemValidator">
+	</bean>
+	
+	<bean id="gestioneFascicoloFadController" class="it.mef.bilancio.demdec.web.spring.controller.fascicolifad.GestioneFascicoloFadController"
+		abstract="false" 
+		init-method="init"
+		parent="consultaFascicoloFadController">
+		<property name="startView" 			value="gestRicercaFadView"/>
+		<property name="afterRicercaView"	value="gestAfterRicercaFadView"/>
+		<property name="fascicoloFadView"	value="gestFascicoloFadView"/>
+		<property name="documentiFadView"	value="gestDocumentiFadView"/>
+		<property name="documentiRedView"	value="gestDocumentiRedView"/>
+		<property name="documentiPatView"	value="gestDocumentiPatView"/>
+		<property name="selezioneAmmFadView" value="gestSelezioneAmmFadView"/>	
+		
+		<property name="formObjectClass"  	value="it.mef.bilancio.demdec.web.spring.form.GestioneFascicoloFadForm"/>
+		<property name="validator"			ref="gestioneFascicoloFadValidator"/>
+		<property name="methodMappings">
+            <list>
+            	<value>onCaricaAmmin#caricaAmministrazioni##true</value>
+            	<value>onBackFromAmm#backFromAmm##false</value>
+				<value>onCancelFromAmm#cancelFromAmm##false</value>
+				<value>onCaricaAmminModifica#caricaAmministrazioniMod##true</value>
+            	<value>onBackFromAmmModifica#backFromAmmMod##false</value>
+				<value>onCancelFromAmmModifica#cancelFromAmmMod##false</value>
+				<value>onCaricaTipologiaDecreto#caricaTipologiaDecreto##true</value>
+            	<value>onCaricaTipologiaDecretoFadPage#caricaTipologiaDecretoFadPage##true</value>
+            	<value>onCaricaUfficio#caricaUfficio##false</value>
+            	<value>onCaricaCdr#caricaCdr##true</value>
+            	<value>onEseguiRicerca#eseguiRicerca##true</value>
+            	<value>onNuovaRicerca#nuovaRicerca##false</value>
+            	<!-- <value>onSelStrumModale#selStrumModale##false</value> -->
+            	<value>onApriFascicoloFad#apriFascicoloFad##false</value>
+            	<value>onApriDocumentiFad#apriDocumentiFad##false</value>
+            	<value>onApriDocumentiFascicoloRed#apriDocumentiFascicoloRed##false</value>
+            	<value>onApriDocumentiFascicoloPat#apriDocumentiFascicoloPat##false</value>
+            	<value>onBack#back##false</value>
+            	<value>onBackToFadSearch#backToFadSearch##false</value>
+            	<value>onBackToFadInitialPage#backToFadInitialPage##false</value>
+            	<value>onBackToFadInitialPageFromFad#backToFadInitialPageFromFad##false</value>
+            	<value>onBackToFadInitialPageFromRed#backToFadInitialPageFromRed##false</value>
+            	<value>onBackToFadInitialPageFromPatr#backToFadInitialPageFromPatr##false</value>
+            	<value>onScaricaPdfFad#scaricaPdfFad##false</value>
+            	<value>onScaricaOrigFad#scaricaOrigFad##false</value>
+            	<value>onScaricaOrigRed#scaricaOrigRed##false</value>
+            	<value>onScaricaPdfRed#scaricaPdfRed##false</value>
+            	<value>onScaricaPdfPat#scaricaPdfPat##false</value>
+            	<value>onScaricaOrigPat#scaricaOrigPat##false</value>
+            	<value>onEliminaFad#eliminaFad##true</value>
+            	<value>onModificaFad#modificaFad##false</value>
+            	<value>onPulisciMetadati#pulisciMetadati##false</value>
+            	<value>onSalvaMetadati#salvaMetadati##false</value>
+            	<value>onEliminaDocumentoFascicoloAttoDecreto#eliminaDocumentoFascicoloAttoDecreto##false</value>
+            	<value>onEliminaAllegatoFascicoloAttoDecreto#eliminaAllegatoFascicoloAttoDecreto##false</value>
+            	<value>onUploadFile#uploadFile##true</value>
+            	<value>onDeleteDocFad#deleteDocFad##false</value>
+            	<value>onModificaMetadatiDocRed#modificaMetadatiDocRed##false</value>
+           		<value>onDeleteDocRed#deleteDocRed##false</value>
+            	<value>onModificaMetadatiDocFad#modificaMetadatiDocFad##false</value>
+            	<value>onCaricaDescrizioneDocumenti#caricaDescrizioneDocumenti##false</value>
+            </list>
+        </property>
+	</bean> 
+
+	<bean id="ModaliFadController" class="it.mef.bilancio.demdec.web.spring.controller.modali.FascicoloFadModaliController" parent="abstractDemFormController">
+	<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.RicercaRedForm"/>
+	<property name="methodMappings">
+			<list>
+				<value>modalemetadatiFascicoloFad#modalemetadatiFascicoloFad##false</value>
+				<value>modalemetadatiFascicoloRed#modalemetadatiFascicoloRed##false</value>
+				<value>modalemetadatiFascicoloPat#modalemetadatiFascicoloPat##false</value>
+			</list>
+		</property>	
+	</bean>	
+	
+	<bean id="chiusuraRaccolteSospeseRedController" class="it.mef.bilancio.demdec.web.spring.controller.raccolteprovvisorie.ChiusuraRaccolteSospeseRedController" 
+		parent="abstractDemFormController">
+		<property name="formObjectClass" 			value="it.mef.bilancio.demdec.web.spring.form.RicercaRedForm"/>
+		<property name="startView" 					value="ricercaSospesiRedView"/>
+		<property name="listaSospesiRed" 			value="listaSospesiRedView"/>
+		<property name="documentiFascicolo" 		value="documentiFascicoloApertiView"/>
+<!-- 		<property name="ricercaRedSospesiManager" 		ref="ricercaRedSospesiManager" /> -->
+		<property name="validator" 					ref="ricercaSospesiRedValidator"/> 
+		<property name="methodMappings">
+			<list>
+				<value>onCaricaAmministrazioni#caricaAmministrazioni##true</value>
+				<value>startController#back##false</value>
+				<value>ricercaSospesiRed#ricercaSospesiRed##true</value>
+				<value>pulisciRicercaSospesiRed#pulisciRicercaSospesiRed##false</value>
+				<value>inserisciSospesiRed#inserisciSospesiRed##false</value>
+				<value>ripristinaSospesiRed#ripristinaSospesiRed##false</value>
+				<value>apriDocumentiFascicolo#apriDocumentiFascicolo##false</value>
+				<value>modaleDettaglioFascicolo#modaleDettaglioFascicolo##false</value>
+				<value>backToList#backToList##false</value>
+				<value>download#download##false</value>
+			</list>
+		</property>	
+	</bean>	
+
+	 <bean 
+		id="ricercaSospesiRedValidator" class="it.mef.bilancio.demdec.web.spring.validator.RicercaSospesiRedValidator" parent="ricercaRedValidator">
+	</bean>
+	
+	
+	<bean id="siglaDocumentiController" class="it.mef.bilancio.demdec.web.spring.controller.sigla.SiglaDocumentiController"
+		abstract="false" 
+		init-method="init"
+		parent="abstractDemFormController">
+		<property name="listView" value="siglaDocumentiView"/>
+		<property name="validator" ref="firmaValidator"/>
+		<property name="formObjectClass"  value="it.mef.bilancio.demdec.web.spring.form.FirmaDocumentiForm"/>
+		<property name="methodMappings">
+            <list>
+            	 <value>sigla#sigla##true</value>
+            	 <value>downloadAD#download##</value>
+            </list>
+        </property>
+	</bean>
+	
+	<bean id="verificaDocumentiController" class="it.mef.bilancio.demdec.web.spring.controller.verifica.VerificaDocumentiController"
+		abstract="false" 
+		init-method="init"
+		parent="abstractDemFormController">
+		<property name="listView" value="verificaDocumentiView"/>
+		<property name="validator" ref="firmaValidator"/>
+		<property name="formObjectClass"  value="it.mef.bilancio.demdec.web.spring.form.FirmaDocumentiForm"/>
+		<property name="methodMappings">
+            <list>
+            	 <value>verifica#verifica##true</value>
+            	 <value>downloadAD#download##</value>
+            </list>
+        </property>
+	</bean>
+
+	<bean id="gestioneTipologiaDecretoController" class="it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio.GestioneTipologiaDecretoController" 
+		parent="abstractDemFormController">
+		<property name="startView" 					value="gestioneTipologiaDecretoView" />
+		<property name="creaView" 					value="gestioneCreazioneDecretoView" />
+		<property name="modificaView" 					value="gestioneModificaDecretoView" />
+		<property name="formObjectClass" 			value="it.mef.bilancio.demdec.web.spring.form.GestioneTipologiaDecretoForm"/>
+		<property name="validator" 					ref="gestioneTipologiaDecretoValidator"/> 
+		<property name="methodMappings">
+			<list>
+				<value>startController#back##false</value>
+				<value>onGestioneCreazioneDecreto#gestioneCreazioneDecreto##false</value>
+				<value>onConfermaDecreto#confermaDecreto##true</value>
+            	<value>onBack#back##false</value>
+				<value>onModificaDecreto#modificaDecreto##true</value>
+				<value>onConfermaModificaDecreto#confermaModificaDecreto##true</value>
+				<value>onEliminaDecreto#eliminaDecreto##true</value>
+			</list>
+		</property>	
+	</bean>	
+
+	 <bean 
+		id="gestioneTipologiaDecretoValidator" class="it.mef.bilancio.demdec.web.spring.validator.GestioneTipologiaDecretoValidator" parent="abstractDemValidator">
+	</bean>
+	
+	<bean 
+		id="creaPinValidator" class="it.mef.bilancio.demdec.web.spring.validator.CreaPinValidator" parent="abstractDemValidator">
+	</bean>
+	
+	<bean id="creaPinController" class="it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio.CreaPinController" parent="abstractDemFormController">
+	<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.CreaPinForm"/>
+	<property name="startView" 						value="creaPinView"/>
+	 <property name="validator" ref="creaPinValidator"/>
+	<property name="methodMappings">
+			<list>
+				<value>onCreaPin#creaPin##true</value>
+			</list>
+		</property>	
+	</bean>
+
+	<bean id="gestioneWorkflowFirmeController" class="it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio.GestioneWorkflowFirmeController" 
+		parent="abstractDemFormController">
+		<property name="startView" 					value="gestioneWorkflowFirmeView" />
+		<property name="creaView" 					value="creazioneWorkflowFirmeView" />
+		<property name="dettaglioView"				value="dettaglioWorkflowFirmeView" />
+		<property name="modDettaglioView"			value="modificaDettaglioWorkflowFirmeView" />
+		<property name="formObjectClass" 			value="it.mef.bilancio.demdec.web.spring.form.GestioneWorkflowFirmeForm"/>
+		<property name="validator" 					ref="gestioneWorkflowFirmeValidator"/> 
+		<property name="methodMappings">
+			<list>
+				<value>startController#back##false</value>
+				<value>onNuovoModelloIter#nuovoModelloIter##false</value>
+				<value>onDettaglioModelloIter#dettaglioModelloIter##true</value>
+				<value>onModificaDettaglioModelloIter#modificaDettaglioModelloIter##false</value>
+				<value>onEliminaModelloIter#eliminaModelloIter##true</value>
+				<value>onModificaModelloIter#modificaModelloIter##false</value>
+				<value>onConfermaModelloIter#confermaModelloIter##true</value>
+				<value>onConfermaIterFirma#confermaIterFirma##true</value>
+				<value>onEliminaIterFirma#eliminaIterFirma##true</value>
+				<value>onSalvaOrderIterFirma#salvaOrderIterFirma##false</value>
+				<value>onBack#back##false</value>
+			</list>
+		</property>	
+	</bean>	
+
+	 <bean 
+		id="gestioneWorkflowFirmeValidator" class="it.mef.bilancio.demdec.web.spring.validator.GestioneWorkflowFirmeValidator" parent="abstractDemValidator">
+	</bean>
+	
+
+	<bean id="consultaFascicoloCdcController" class="it.mef.bilancio.demdec.web.spring.controller.consultafascicolocdc.ConsFADCdcController" 
+			parent="abstractDemFormController">
+			<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.ConsFADCdcForm"/>
+			<property name="startView" 						value="ricercaFadCdcView"/>
+			<property name="afterRicercaView" 				value="fascicoliFadCdcView"/>
+			<property name="fascicoloFadView" 				value="gestFascicoloFadCdcView"/>
+			<property name="documentiFadView" 				value="documentiFadCdcView"/>
+			<property name="documentiRedView" 				value="documentiRedCdcView"/>
+			<property name="documentiPatView" 				value="documentiPatCdcView"/>		
+			<property name="validator" ref="consFADCdcValidator"/>  
+			<property name="methodMappings">
+				<list>
+					<value>startController#back##false</value>
+					<value>onEseguiRicerca#eseguiRicerca##true</value>
+					<value>onApriFascicoloFadCdc#apriFascicoloFadCdc##false</value>	
+					<value>onApriDocumentiFadCdc#apriDocumentiFadCdc##false</value>	
+					<value>onScaricaPdfFadCdc#scaricaPdfFadCdc##false</value>
+            		<value>onScaricaOrigFadCdc#scaricaOrigFadCdc##false</value>
+            		<value>onScaricaOrigRedCdc#scaricaOrigRedCdc##false</value>
+            		<value>onScaricaPdfRedCdc#scaricaPdfRedCdc##false</value>
+            		<value>onScaricaPdfPatCdc#scaricaPdfPatCdc##false</value>
+            		<value>onScaricaOrigPatCdc#scaricaOrigPatCdc##false</value>
+            		<value>onNuovaRicercaCdc#nuovaRicercaCdc##false</value>
+            		<value>onBackToFadSearchCdc#backToFadSearchCdc##false</value>
+            		<value>onApriFascicoloFadCdc#back##false</value>
+            		<value>onBackFromDocFad#backFromDocFad##false</value>
+	            	<value>onBackFromDocRed#backFromDocRed##false</value>
+	            	<value>onBackFromDocPatr#backFromDocPatr##false</value>
+	            	<value>onApriDocumentiFascicoloRedCdc#apriDocumentiFascicoloRedCdc##false</value>
+	            	<value>onApriDocumentiFascicoloPatCdc#apriDocumentiFascicoloPatCdc##false</value>
+            		<value>onSalvaDatiProtEntrataCdc#salvaDatiProtEntrataCdc##true</value>
+            		<value>onSalvaDatiProtUscitaCdc#salvaDatiProtUscitaCdc##true</value>
+            		<value>onSalvaDataPresaCaricoCdc#salvaDataPresaCaricoCdc##false</value>
+				</list>
+			</property>	
+	</bean>	
+		
+	 <bean 
+			id="consFADCdcValidator" class="it.mef.bilancio.demdec.web.spring.validator.ConsFADCdcValidator" parent="abstractDemValidator">
+	</bean> 
+	
+	<bean id="consFADCdcModaliController" class="it.mef.bilancio.demdec.web.spring.controller.modali.ConsFADCdcModaliController" parent="abstractDemFormController">
+		<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.ConsFADCdcForm"/>
+		<property name="startView" 						value="ricercaFadCdcView"/>
+	
+		<property name="methodMappings">
+				<list>
+					<value>modaleDettaglioFascicolo#modaleDettaglioFascicolo##false</value>	
+					<value>modaleDocumentiFadCdc#modaleDocumentiFadCdc##false</value>	
+					<value>modaleMetadatiRedCdc#modaleMetadatiRedCdc##false</value>		
+					<value>modaleDocumentiRedCdc#modaleDocumentiRedCdc##false</value>	
+					<value>modaleMetadatiPatCdc#modaleMetadatiPatCdc##false</value>	
+					<value>modaleDocumentiPatCdc#modaleDocumentiPatCdc##false</value>	
+				
+			</list>
+		</property>	
+	</bean>	
+	
+	
+	<!-- ################################### -->
+	<!-- CRONOLOGICO                         -->
+	<!-- ################################### -->
+	<bean 
+		id="intCronologicoValidator" 
+		class="it.mef.bilancio.demdec.web.spring.validator.IntCronologicoValidator" 
+		parent="abstractDemValidator"/>
+	
+	<bean id="intCronologicoController" 
+				class="it.mef.bilancio.demdec.web.spring.controller.IntCronologicoController" 
+				parent="abstractDemFormController">
+		  <property name="formObjectClass" value="it.mef.bilancio.demdec.web.spring.form.IntCronologicoForm"/>
+		<property name="validator" ref="intCronologicoValidator"/>	
+		<property name="startView" value="intCronologicoView"/>		
+		<property name="methodMappings">
+			<list>
+				<value>onSelectorUtente#selectorUtente##false</value>		
+				<value>onSelectorApplicazione#selectorApplicazione##false</value>
+				<value>onSelectorCategoria#selectorCategoria##true</value>
+				<value>onSelectorFunzione#selectorFunzione##true</value>
+				<value>onEliminaFiltri#eliminaFiltri##false</value>				
+				<value>onApriFiltri#apriFiltri##false</value>
+				<value>onSalvaFiltri#salvaFiltri##false</value>
+				<value>onChiudiFiltri#chiudiFiltri##false</value>
+				<value>onSelectorCapitolo#selectorCapitolo##false</value>
+				<value>onSelectorTipoAut#selectorTipoAut##false</value>
+				<value>onSelectorTipoStr#selectorTipoStr##false</value>
+				<value>onSelectorTipoSst#selectorTipoSst##false</value>
+				<value>onEseguiRicercaCrono#eseguiRicercaCrono##true</value>
+				<value>onNuovaRicerca#nuovaRicerca##false</value>
+				<value>onApriDettaglioCrono#apriDettaglioCrono##false</value>
+				<value>onPaginator#paginator##false</value>
+				<value>onEnableDisablePagin#enableDisablePagin##false</value>
+				<value>onExportExcel#exportExcel##false</value>
+				<value>onExportPdf#exportPdf##false</value>
+			</list>
+		</property>	
+	</bean>
+    <!-- ################################### -->
+	<!-- END CRONOLOGICO                         -->
+	<!-- ################################### -->
+
+
+
+	<bean id="gestioneUtentiValidator" class="it.mef.bilancio.demdec.web.spring.validator.GestioneUtentiValidator" parent="abstractDemValidator" />
+	<bean id="gestioneUtentiController" class="it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio.GestioneUtentiController" parent="abstractDemFormController">
+		<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.GestioneUtentiForm"/>
+		<property name="startView" 						value="gestioneListaUtentiView"/>
+		<property name="utenteView" 					value="gestioneUtenteView"/>
+		<property name="validator" ref="gestioneUtentiValidator"/> 
+		<property name="methodMappings">
+				<list>
+					<value>onGestioneNuovoUtente#gestioneNuovoUtente##false</value>
+					<value>onCreaUtente#creaUtente##true</value>
+					<value>onGestioneModificaUtente#gestioneModificaUtente##true</value>
+					<value>onModificaUtente#modificaUtente##true</value>
+					<value>onEliminaUtente#eliminaUtente##true</value>
+					<value>onPulisci#pulisci##false</value>
+					<value>onConfermaProfilo#confermaProfilo##true</value>
+					<value>tornaIndietroListaUtenti#tornaIndietroListaUtenti##false</value>
+					<value>onEliminaProfili#onEliminaProfili##false</value>
+			    </list>
+		</property>	
+	</bean>
+	
+	
+		<bean id="gestioneProfiliValidator" class="it.mef.bilancio.demdec.web.spring.validator.GestioneProfiliValidator" parent="abstractDemValidator" />
+	<bean id="gestioneProfiliController" class="it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio.GestioneProfiliController" parent="abstractDemFormController">
+		<property name="formObjectClass" 				value="it.mef.bilancio.demdec.web.spring.form.GestioneProfiliForm"/>
+		<property name="startView" 						value="gestioneListaProfiliView"/>
+		<property name="profiloView" 					value="gestioneProfiloView"/>
+		<property name="validator" ref="gestioneProfiliValidator"/> 
+		<property name="methodMappings">
+				<list>
+					<value>onGestioneNuovoProfilo#gestioneProfilo##false</value>
+					<value>onCreaProfilo#creaProfilo##true</value>
+					<value>onGestioneModificaProfilo#gestioneModificaProfilo##true</value>
+					<value>onModificaProfilo#modificaProfilo##true</value>
+					<value>onEliminaProfilo#eliminaProfilo##true</value>
+					<value>onPulisci#pulisci##false</value>
+					<value>tornaIndietroListaProfili#tornaIndietroListaProfili##false</value>
+			    </list>
+		</property>	
+	</bean>
+	
+	
+	
+	<!-- ################################ -->
+	<!-- Rielaborazione Fascicolo         -->
+	<!-- ################################ -->
+	<bean 
+		id="rielaborazioneFascicoloValidator" 
+		class="it.mef.bilancio.demdec.web.spring.validator.RielaborazioneFascicoloValidator" 
+		parent="abstractDemValidator"/>
+	
+	<bean id="rielaborazioneFascicoloController" 
+				class="it.mef.bilancio.demdec.web.spring.controller.RielaborazioneFascicoloController" 
+				parent="abstractDemFormController">
+		  <property name="formObjectClass" value="it.mef.bilancio.demdec.web.spring.form.RielaborazioneFascicoloForm"/>
+		<property name="validator" ref="rielaborazioneFascicoloValidator"/>	
+		<property name="startView" value="rielaborazioneFascicoloView"/>		
+		<property name="methodMappings">
+			<list>
+				<value>onEseguiRielaborazione#eseguiRielaborazione##true</value>
+				<value>onLoadListaDecreti#loadListaDecreti##true</value>
+			    </list>
+		</property>	
+	</bean>	
+	<!-- ################################ -->
+	<!-- END Rielaborazione Fascicolo     -->
+	<!-- ################################ -->
+	
+	<!-- ################################ -->
+	<!-- Monitoraggio firma               -->
+	<!-- ################################ -->
+	<bean 
+		id="monitoraggioFirmaValidator" class="it.mef.bilancio.demdec.web.spring.validator.MonitoraggioFirmaValidator" parent="abstractDemValidator">
+	</bean>
+	<bean id="monitoraggioFirmaController" class="it.mef.bilancio.demdec.web.spring.controller.fascicolifad.MonitoraggioFirmaController"
+		abstract="false" 
+		init-method="init"
+		parent="abstractDemFormController">
+		<property name="validator" ref="monitoraggioFirmaValidator"/>
+		<property name="formObjectClass"  value="it.mef.bilancio.demdec.web.spring.form.MonitoraggioFirmaForm"/>
+		<property name="startView" value="monitoraggioFirmaView"/>
+		<property name="dettaglioView" value="dettaglioMonitoraggioFirmaView"/>
+		<property name="dettaglioFascicoloView" value="dettaglioFascicoloMonitoraggioFirmaView"/>
+		
+		<property name="methodMappings">
+			<list>
+				<value>onEseguiRicerca#eseguiRicerca##false</value>
+				<value>onPulisci#pulisci##false</value>
+				<value>onNuovaRicerca#nuovaRicerca##false</value>
+				<value>onDettaglioFascicolo#dettaglioFascicolo##false</value>
+				<value>onIndietroLista#indietroLista##false</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ################################ -->
+	<!-- END Monitoraggio firma           -->
+	<!-- ################################ -->
+	
+</beans>

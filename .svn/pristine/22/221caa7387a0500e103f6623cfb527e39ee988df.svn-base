@@ -1,0 +1,4187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:types="http://mef.gov.it.v1.demdec.internal/servizi/InterfacciaDocumentaleDEMBILTypes_1" xmlns:ns1="http://www.fatturapa.gov.it/sdi/fatturapa/v1.0" targetNamespace="http://mef.gov.it.v1.demdec.internal/servizi/InterfacciaDocumentaleDEMBILTypes_1" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<!--Fascicolo Atto Decreto-->
+	<xsd:element name="richiesta_createFascicoloAttoDecreto" type="types:richiesta_createFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Crea un Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_createFascicoloAttoDecreto">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i dati del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="types:risposta_createFascicoloAttoDecreto_type"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="richiesta_copyFascicoloAttoDecreto" type="types:richiesta_copyFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Crea un Fascicolo Atto Decreto a partire da uno esistente chiudendo l'esistente</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_copyFascicoloAttoDecreto" type="types:risposta_copyFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i dati del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_archiveFascicoloAttoDecreto" type="types:richiesta_storeFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Archivia una copia del fascicolo Atto decreto in stato chiuso</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_archiveFascicoloAttoDecreto" type="types:risposta_archiveFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i dati del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_getFascicoloAttoDecreto" type="types:richiesta_getFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede i metadati del fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_getFascicoloAttoDecreto">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i metadati del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="types:risposta_getFascicoloAttoDecreto_type"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="richiesta_removeFascicoloAttoDecreto" type="types:richiesta_removeFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione del fascicolo Atto Decreto solo se vuoto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_removeFascicoloAttoDecreto" type="types:risposta_removeFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito dell'eliminazione del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_modifyMetadatiFascicoloAttoDecreto" type="types:richiesta_modifyMetadataFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la modifica dei metadati del fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_modifyMetadatiFascicoloAttoDecreto" type="types:risposta_modifyMetadataFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito della modifica dei metadati del fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_modifyMetadatiFascicoloRaccoltaProvvisoria" type="types:richiesta_modifyMetadataFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la modifica dei metadati del fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_modifyMetadatiFascicoloRaccoltaProvvisoria" type="types:risposta_modifyMetadataFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito della modifica dei metadati del fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_changeStatoFascicoloAttoDecreto" type="types:richiesta_changeStatoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il cambio Stato del fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_changeStatoFascicoloAttoDecreto" type="types:risposta_changeStatoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito del cambio di stato del fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_addDocumentoFascicoloAttoDecreto" type="types:richiesta_addDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede Aggiunta di una documento al fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_addDocumentoFascicoloAttoDecreto">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito dell'aggiunta di un documento al fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="types:risposta_addDocumentoFascicoloAttoDecreto_type"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="richiesta_updateContentDocumentoFascicoloAttoDecreto" type="types:richiesta_updateContentDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede L'aggiornamento del content di un documento al fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_updateContentDocumentoFascicoloAttoDecreto" type="types:risposta_updateContentDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito dell'aggiornamento del content di un documento al fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_getDocumentoFascicoloAttoDecreto" type="types:richiesta_getDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede i dati di un documento del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_getDocumentoFascicoloAttoDecreto" type="types:risposta_getDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i dati di un documento del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_removeDocumentoFascicoloAttoDecreto" type="types:richiesta_removeDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la rimozione di un documento del fascicolo Atto Decreto (solo se non condiviso) o annullato da SICOGE</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_removeDocumentoFascicoloAttoDecreto" type="types:risposta_removeDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito della rimozione di un documento del fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_modifyMetadatiDocumentoFascicoloAttoDecreto" type="types:richiesta_modifyMetadatiDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la modifica dei metadati di un documento del fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_modifyMetadatiDocumentoFascicoloAttoDecreto" type="types:risposta_modifyMetadatiDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito della modifica dei metadati del fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_downloadDocumentoFascicoloAttoDecreto" type="types:richiesta_downloadDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il content di un documento del fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_downloadDocumentoFascicoloAttoDecreto">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con il content del documento del fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="types:risposta_downloadDocumentoFascicoloAttoDecreto_type"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="richiesta_downloadDocumentoUrlFascicoloAttoDecreto" type="types:richiesta_downloadDocumentoUrlFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il content di un documento del fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_downloadDocumentoUrlFascicoloAttoDecreto">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con la url AXWAY per il Download Documento</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="types:risposta_downloadDocumentoUrlFascicoloAttoDecreto_type"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!--Fascicoli Collegati SIPATR-->
+	<xsd:element name="richiesta_getFascicoloSIPATRAttoDecreto" type="types:richiesta_getFascicoloSIPATRAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede i dati del fascicolo SIPATR dell'atto decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_getFascicoloSIPATRAttoDecreto" type="types:risposta_getFascicoloSIPATRAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i dati del Fascicolo SIPATR dell'atto decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_getDocumentoFascicoloSIPATRAttoDecreto" type="types:richiesta_getDocumentoFascicoloSIPATRAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede i dati di un documento del Fascicolo SIPATR del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_getDocumentoFascicoloSIPATRAttoDecreto" type="types:risposta_getDocumentoFascicoloSIPATRAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i dati di un documento del Fascicolo SIPATR del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_downloadDocumentoFascicoloSIPATRAttoDecreto" type="types:richiesta_downloadDocumentoFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il content di un documento del fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_downloadDocumentoFascicoloSIPATRAttoDecreto" type="types:risposta_downloadDocumentoFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con il content del documento in un fascicolo</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Sotto - Fascicolo Allegato Decreto IGB-->
+	<xsd:element name="richiesta_addDocumentoFascicoloAllegatoDecretoIGB" type="types:richiesta_addDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'aggiunta dell'Allegato Decreto IGB al Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_addDocumentoFascicoloAllegatoDecretoIGB" type="types:risposta_addDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito relativo all'aggiunta dell'Allegato Decreto IGB al Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_getDocumentoFascicoloAllegatoDecretoIGB" type="types:richiesta_getDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede i dati di un documento del Fascicolo Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_getDocumentoFascicoloAllegatoDecretoIGB" type="types:risposta_getDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i dati di un documento del Fascicolo Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_getElencoDocumentiFascicoloAllegatoDecretoIGB" type="types:richiesta_getElencoDocumentiFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede i documenti del Fascicolo Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_getElencoDocumentiFascicoloAllegatoDecretoIGB" type="types:risposta_getElencoDocumentiFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i documenti del Fascicolo Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_removeDocumentoFascicoloAllegatoDecretoIGB" type="types:richiesta_removeDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione dell'Allegato Decreto IGB al Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_removeDocumentoFascicoloAllegatoDecretoIGB" type="types:risposta_removeDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito relativo all'eliminazione dell'Allegato Decreto IGB al Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB" type="types:richiesta_modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la modifica dei metadati di un documento Allegato Decreto IGB (visibile, Attivo)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB" type="types:risposta_modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito della modifica dei metadati di un documento Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_downloadDocumentoFascicoloAllegatoDecretoIGB" type="types:richiesta_downloadDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il content di un documento Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_downloadDocumentoFascicoloAllegatoDecretoIGB" type="types:risposta_downloadDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con il content del documento Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_downloadDocumentoUrlFascicoloAllegatoDecretoIGB" type="types:richiesta_downloadDocumentoUrlFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il content di un documento Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_downloadDocumentoUrlFascicoloAllegatoDecretoIGB" type="types:risposta_downloadDocumentoUrlFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con la url AXWAY per il Download Documento</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Fascicolo Raccolta Provvisoria-->
+	<xsd:element name="richiesta_getElencoFascicoliRaccoltaProvvisoriaAttoDecreto" type="types:richiesta_getElencoFascicoliRaccoltaProvvisoriaAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede i Fascicoli Raccolta Provvisoria contenuti in un Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_getElencoFascicoliRaccoltaProvvisoriaAttoDecreto" type="types:risposta_getElencoFascicoliRaccoltaProvvisoriaAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con gli identificativi dei Fascicoli Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_createFascicoloRaccoltaProvvisoria" type="types:richiesta_createFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la creazione del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_createFascicoloRaccoltaProvvisoria" type="types:risposta_createFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito della creazione del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_getFascicoloRaccoltaProvvisoria" type="types:richiesta_getFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_getFascicoloRaccoltaProvvisoria">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i metadati del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="types:risposta_getFascicoloRaccoltaProvvisoria_type"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="richiesta_changeStatoFascicoloRaccoltaProvvisoria" type="types:richiesta_changeStatoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il cambio di stato del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_changeStatoFascicoloRaccoltaProvvisoria" type="types:risposta_changeStatoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito relativo al cambiamento di stato del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria" type="types:richiesta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la modifica dei metadati generici del documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria" type="types:risposta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito della modifica dei metadati generici del documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_addDocumentoFascicoloRaccoltaProvvisoria" type="types:richiesta_addDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'aggiunta del documento al Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_addDocumentoFascicoloRaccoltaProvvisoria" type="types:risposta_addDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito relativo all'aggiunta del documento nel fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_getDocumentoFascicoloRaccoltaProvvisoria" type="types:richiesta_getDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede i dati di un documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_getDocumentoFascicoloRaccoltaProvvisoria" type="types:risposta_getDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i dati di un documento del Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_removeDocumentoFascicoloRaccoltaProvvisoria" type="types:richiesta_removeDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione di un documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_removeDocumentoFascicoloRaccoltaProvvisoria" type="types:risposta_removeDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito relativo all'eliminazione di un documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_downloadDocumentoFascicoloRaccoltaProvvisoria" type="types:richiesta_downloadDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il download del documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_downloadDocumentoFascicoloRaccoltaProvvisoria" type="types:risposta_downloadDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_downloadDocumentoUrlFascicoloRaccoltaProvvisoria" type="types:richiesta_downloadDocumentoUrlFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il download del documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_downloadDocumentoUrlFascicoloRaccoltaProvvisoria" type="types:risposta_downloadDocumentoUrlFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con la url AXWAY per il Download Documento</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_searchFascicoliRaccolteProvvisorie" type="types:richiesta_searchFascicoliRaccolteProvvisorie_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la ricerca dei fascicoli contenuti nelle Raccolte Provvisorie, estrae i fascicoli senza i documenti Tipo EstrazioneElenco=NONE</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_searchFascicoliRaccolteProvvisorie" type="types:risposta_searchFascicoliRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con la lista dei fascicoli contenuti nelle Raccolte Provvisorie che soddisfano i criteri di ricerca</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Fascicolo Decreto SIPATR-->
+	<xsd:element name="richiesta_createFascicoloDecretoSIPATR" type="types:richiesta_createFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Crea un Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_createFascicoloDecretoSIPATR">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i dati del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="types:risposta_createFascicoloDecretoSIPATR_type">
+					<xsd:sequence>
+						<xsd:element name="DettaglioFascicolo" type="types:fascicoloDecretoSIPATR_type" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="richiesta_getFascicoloDecretoSIPATR" type="types:richiesta_getFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede i dati del fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_getFascicoloDecretoSIPATR" type="types:risposta_getFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i dati del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_removeFascicoloDecretoSIPATR" type="types:richiesta_removeFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione del fascicolo Decreto SIPATR (solo se vuoto o non attivo) </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_removeFascicoloDecretoSIPATR" type="types:risposta_removeFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito dell' eliminazione</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_modifyMetadataFascicoloDecretoSIPATR" type="types:richiesta_modifyMetadataFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la modifica dei metadati generici del fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_modifyMetadataFascicoloDecretoSIPATR" type="types:risposta_modifyMetadataFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito della modifica dei metadati generici del fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_changeStatoFascicoloDecretoSIPATR" type="types:richiesta_changeStatoFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il cambio Stato del fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_changeStatoFascicoloDecretoSIPATR" type="types:risposta_changeStatoFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito del cambio Stato del fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_addCollegamentoFascicoloSIPATR" type="types:richiesta_addCollegamentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'aggiunta del collegamento tra il Fascicolo SIPATR e Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_addCollegamentoFascicoloSIPATR" type="types:risposta_addCollegamentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito del collegamento</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_removeCollegamentoFascicoloSIPATR" type="types:richiesta_removeCollegamentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione del collegamento tra il Fascicolo SIPATR ed il Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_removeCollegamentoFascicoloSIPATR" type="types:risposta_removeCollegamentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde l'esito dell'eliminazione del collegameto tra il Fascicolo SIPATR ed il Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Fascicolo SIPATR-->
+	<xsd:element name="richiesta_createFascicoloSIPATR" type="types:richiesta_createFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Crea un Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_createFascicoloSIPATR">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i dati del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="types:risposta_createFascicoloSIPATR_type">
+					<xsd:sequence>
+						<xsd:element name="DettaglioFascicolo" type="types:fascicoloSIPATR_type" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="richiesta_modifyMetadataFascicoloSIPATR" type="types:richiesta_modifyMetadataFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la modifica dei metadati generici del fascicolo</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_modifyMetadataFascicoloSIPATR" type="types:risposta_modifyMetadataFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito della modifica dei metadati generici del fascicolo</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_getFascicoloSIPATR" type="types:richiesta_getFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede i dati del fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_getFascicoloSIPATR" type="types:risposta_getFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i dati del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_changeStatoFascicoloSIPATR" type="types:richiesta_changeStatoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il cambio Stato del fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_changeStatoFascicoloSIPATR" type="types:risposta_changeStatoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito del cambio Stato del fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_removeFascicoloSIPATR" type="types:richiesta_removeFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione del fascicolo SIPATR (solo se vuoto o non attivo) </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_removeFascicoloSIPATR" type="types:risposta_removeFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito della chiusura</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_addDocumentoFascicoloSIPATR" type="types:richiesta_addDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede Aggiunta di una documento al fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_addDocumentoFascicoloSIPATR" type="types:risposta_addDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito dell'aggiunta di un documento al fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_getDocumentoFascicoloSIPATR" type="types:richiesta_getDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede i dati di un documento del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_getDocumentoFascicoloSIPATR" type="types:risposta_getDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con i dati di un documento del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_removeDocumentoFascicoloSIPATR" type="types:richiesta_removeDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la rimozione di un documento al fascicolo SIPATR (solo se non condiviso) o annullato da SICOGE</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_removeDocumentoFascicoloSIPATR" type="types:risposta_removeDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito della rimozione di un documento al fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_modifyMetadataDocumentoFascicoloSIPATR" type="types:richiesta_modifyMetadataDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la modifica dei metadati generici del documento</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_modifyMetadataDocumentoFascicoloSIPATR" type="types:risposta_modifyMetadataDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con l'esito della modifica dei metadati generici del documento</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_downloadDocumentoFascicoloSIPATR" type="types:richiesta_downloadDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il content di un documento del fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_downloadDocumentoFascicoloSIPATR" type="types:risposta_downloadDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con il content del documento in un fascicolo</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="richiesta_downloadDocumentoUrlFascicoloSIPATR" type="types:richiesta_downloadDocumentoUrlFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il content di un documento del fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_downloadDocumentoUrlFascicoloSIPATR" type="types:risposta_downloadDocumentoUrlFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con la url AXWAY per il Download Documento</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Operazioni Documentali-->
+	<xsd:element name="richiesta_convertiDocumento" type="types:richiesta_convertiDocumento_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta Conversione documento sincrona</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_convertiDocumento" type="types:risposta_convertiDocumento_type">
+		<xsd:annotation>
+			<xsd:documentation>Risposta Conversione documento sincrona</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Common-->
+	<xsd:element name="richiesta_getRisultatoOperazioneDocumento" type="types:richiesta_getRisultatoOperazioneDocumento_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede i risultati delle operazioni effettuate sul documento del fascicolo indicato</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="risposta_getRisultatoOperazioneDocumento">
+		<xsd:annotation>
+			<xsd:documentation>Risponde con la lista delle operazioni effettuate sul documento</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="types:risposta_getRisultatoOperazioneDocumento_type"/>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- Complex Type -->
+	<xsd:complexType name="richiesta_convertiDocumento_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta Conversione documento sincrona</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TipoConversione" type="types:tipoConversione_type">
+				<xsd:annotation>
+					<xsd:documentation>Conversione per PDF, PDFA1A,PDBA1B</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatiDocumento" type="types:conversioneContent_type"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_addCollegamentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta collegamento del Fascicolo SIPATR al Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloDecretoSIPATR" type="types:Guid" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascicolo del decreto SIPATR a cui collegare il fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascicolo da collegare</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_addDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta di aggiunta del documento Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascioclo atto decreto</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IdDocumento" type="types:Guid" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Identificativo Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IdDocumentoRaccoltaProvvisoria" type="types:Guid" nillable="false">
+				<xsd:annotation>
+					<xsd:documentation>Identificativo Documento sorgente nella raccolta provvisoria</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascicolo , può essere generato automaticamente o inviato dall'applicazione chiamante</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoDocumento" type="types:tipoDocumento_type">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Descrizione" type="xsd:string"/>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento deve essere inviato </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP nei fascicoli Inviati</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Operazione" type="types:richiestaOperazioneDocumentale_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tipo operazione documentale</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_addDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta di aggiunta del documento al fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Identificativo Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoDocumento" type="types:tipoDocumento_type">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DocumentoContent" type="types:documentoContent_type">
+				<xsd:annotation>
+					<xsd:documentation>Contenuto in bytes del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatiDocumento" type="types:documentoMetadataAttoDecreto_type">
+				<xsd:annotation>
+					<xsd:documentation>Metadati agganciati al documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento deve essere inviato </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP nei fascicoli Inviati</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Operazione" type="types:richiestaOperazioneDocumentale_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tipo operazione documentale</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_addDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta di aggiunta del documento al fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Identificativo Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoDocumento" type="types:tipoDocumento_type">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DocumentoContent" type="types:documentoContent_type">
+				<xsd:annotation>
+					<xsd:documentation>Contenuto in bytes del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatiDocumento" type="types:documentoMetadataRaccoltaProvvisoria_type">
+				<xsd:annotation>
+					<xsd:documentation>Metadati agganciati al documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento deve essere inviato </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP nei fascicoli Inviati</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Operazione" type="types:richiestaOperazioneDocumentale_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tipo operazione documentale</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_addDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta di aggiunta del documento al fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Identificativo Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoDocumento" type="types:tipoDocumento_type">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DocumentoContent" type="types:documentoContent_type">
+				<xsd:annotation>
+					<xsd:documentation>Contenuto in bytes del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatiDocumento" type="types:documentoMetadataSIPATR_type">
+				<xsd:annotation>
+					<xsd:documentation>Metadati agganciati al documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento deve essere inviato </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP nei fascicoli Inviati</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Operazione" type="types:richiestaOperazioneDocumentale_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tipo operazione documentale</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_changeStatoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Cambio stato fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei fascicoli a cui cambiare lo stato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatoFascicoloDocumentale" type="types:statoFascicoloDocumentale_type">
+				<xsd:annotation>
+					<xsd:documentation>Aperto, Chiuso se Chiuso non è possibile inserire documenti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_changeStatoFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Cambio stato fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloDecretoSIPATR" type="types:Guid" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei fascicoli a cui cambiare lo stato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatoFascicoloDocumentale" type="types:statoFascicoloDocumentale_type">
+				<xsd:annotation>
+					<xsd:documentation>Aperto, Chiuso se Chiuso non è possibile inserire documenti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_changeStatoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Cambio stato fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid"/>
+			<xsd:element name="StatoFascicoloDocumentale" type="types:statoFascicoloDocumentale_type">
+				<xsd:annotation>
+					<xsd:documentation>Aperto, Chiuso se Chiuso non è possibile inserire documenti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_changeStatoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Cambio stato fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei fascicoli a cui cambiare lo stato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatoFascicoloDocumentale" type="types:statoFascicoloDocumentale_type">
+				<xsd:annotation>
+					<xsd:documentation>Aperto, Chiuso se Chiuso non è possibile inserire documenti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_createFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta creazione del fascicolo AttoDecreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascicolo, può essere generato automaticamento o inviato dall'applicazione chiamante</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Descrizione" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Oggetto del fascicolo, descrizione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatiFascicolo" type="types:fascicoloMetadataAttoDecreto_type">
+				<xsd:annotation>
+					<xsd:documentation>Dati del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo può essere inviato a sistemi esterni</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo è visibile al di fuori del Sistema Produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_copyFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta creazione del fascicolo AttoDecreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascicolo, può essere generato automaticamento o inviato dall'applicazione chiamante</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IdFascicoloAttoDecretoOrigine" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Fascicolo da cui generare il nuovo fascicolo, che verrà creato, sarà automaticamente impostato come CHIUSO </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Descrizione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oggetto del fascicolo, descrizione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatiFascicolo" type="types:fascicoloMetadataAttoDecreto_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Dati del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_createFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la creazione del fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloDecretoSIPATR" type="types:Guid" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascicolo , può essere generato automaticamente o inviato dall'applicazione chiamante</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Descrizione" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Oggetto del fascicolo, descrizione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatiFascicolo" type="types:fascicoloMetadataDecretoSIPATR_type">
+				<xsd:annotation>
+					<xsd:documentation>Dati del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo può essere inviato a sistemi esterni</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_createFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la creazione del fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascicolo , può essere generato automaticamente o inviato dall'applicazione chiamante</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Descrizione" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Oggetto del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatiFascicolo" type="types:fascicoloMetadataRaccoltaProvvisoria_type">
+				<xsd:annotation>
+					<xsd:documentation>Dati del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo può essere inviato a sistemi esterni</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_createFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la creazione del fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascicolo , può essere generato automaticamente o inviato dall'applicazione chiamante</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Descrizione" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Oggetto del fascicolo, descrizione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatiFascicolo" type="types:fascicoloMetadataSIPATR_type">
+				<xsd:annotation>
+					<xsd:documentation>Dati del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo può essere inviato a sistemi esterni</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_downloadDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta download Documento Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_downloadDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il download del documento del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_downloadDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il download del documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_downloadDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il download del documento del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_downloadDocumentoFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede il download del documento del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_downloadDocumentoUrlFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la url AXWAY per il Download Documento</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAllegatoDecretoIGB" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_downloadDocumentoUrlFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la url AXWAY per il Download Documento</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_downloadDocumentoUrlFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la url AXWAY per il Download Documento</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_downloadDocumentoUrlFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede la url AXWAY per il Download Documento</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_eliminaFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Rchiede la rimozione del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta dati del Documento del sotto Fascicolo del Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+			<xsd:element name="TipoEstrazioneDocumento" type="types:tipoEstrazione_type" default="NONE"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta dati del Documento del fascicolo AttoDecreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+			<xsd:element name="TipoEstrazioneDocumento" type="types:tipoEstrazione_type" default="NONE"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta dati del Documento della Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+			<xsd:element name="TipoEstrazioneDocumento" type="types:tipoEstrazione_type" default="NONE"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta dati del Documento SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+			<xsd:element name="TipoEstrazioneDocumento" type="types:tipoEstrazione_type" default="NONE"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getDocumentoFascicoloSIPATRAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta dati del Documento SIPATR dell'Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+			<xsd:element name="TipoEstrazioneDocumento" type="types:tipoEstrazione_type" default="NONE"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getElencoDocumentiFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta Documenti del sotto Fascicolo del Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="TipoEstrazioneDocumento" type="types:tipoEstrazione_type" default="NONE"/>
+			<xsd:element name="TipoElenco" type="types:tipoElenco_type" default="SOURCE"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getElencoFascicoliRaccoltaProvvisoriaAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta dei Fascicoli Raccolta Provvisoria contenuti in un Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta metadati del Fascicolo Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="idFascicoloAllegatoDecretoIGB" type="types:Guid"/>
+			<xsd:element name="ResponseFascicoloType" default="DATA">
+				<xsd:annotation>
+					<xsd:documentation>Fascicolo con e senza metadati</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="DATA"/>
+						<xsd:enumeration value="METADATA"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ResponseDocumentType" default="NONE">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei documenti presente con o senza metadati</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="NONE"/>
+						<xsd:enumeration value="DATA"/>
+						<xsd:enumeration value="METADATA"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta metadati del Fascicolo AttoDecreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="TipoEstrazioneFascicolo" type="types:tipoEstrazione_type" default="DATA"/>
+			<xsd:element name="AttoDecretoDocumentCriteria" type="types:criteriaDocumentiAttoDecreto_type" minOccurs="0"/>
+			<xsd:element name="DecretoIGBDocumentCriteria" type="types:criteriaDocumentiFascicoloIGB_type" minOccurs="0"/>
+			<xsd:element name="FascicoliSIPATRCriteria" type="types:criteriaFascicoliSIPATR_type" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta metadati del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloDecretoSIPATR" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>ID del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoEstrazioneFascicolo" type="types:tipoEstrazione_type" default="DATA">
+				<xsd:annotation>
+					<xsd:documentation>Fascicolo con e senza metadati</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FascicoliSIPATRCriteria" type="types:criteriaFascicoliSIPATR_type" minOccurs="0"/>
+			<xsd:element name="TipoElenco" type="types:tipoElenco_type" default="SOURCE"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta metadati del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid"/>
+			<xsd:element name="TipoEstrazioneFascicolo" type="types:tipoEstrazione_type" default="DATA"/>
+			<xsd:element name="DocumentCriteria" type="types:criteriaDocumentiRaccoltaProvvisoria_type" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta metadati dati del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>ID del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoEstrazioneFascicolo" type="types:tipoEstrazione_type" default="DATA"/>
+			<xsd:element name="DocumentCriteria" type="types:criteriaDocumentiSIPATR_type" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getFascicoloSIPATRAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta metadati dati del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>ID del fascicolo SIPATR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoEstrazioneFascicolo" type="types:tipoEstrazione_type" default="DATA"/>
+			<xsd:element name="DocumentCriteria" type="types:criteriaDocumentiSIPATR_type" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_getRisultatoOperazioneDocumento_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede lo stato dell'ultima operazione o l'elenco delle operazioni richieste</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicolo" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+			<xsd:element name="TipoRisultato" type="types:tipoRisultato_type" default="LAST"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_modifyMetadataDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'aggiornamento dei metadati di un documento del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+			<xsd:element name="DocumentoMetadata" type="types:documentoMetadataSIPATR_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati agganciati al documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento deve essere inviato </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_modifyMetadataFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'aggiornamento dei metadati del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="Descrizione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oggetto del fascicolo, descrizione, se mancante non aggiorna</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FascicoloMetadata" type="types:fascicoloMetadataAttoDecreto_type">
+				<xsd:annotation>
+					<xsd:documentation>Metadati agganciati al fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento deve essere inviato </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_modifyMetadataFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'aggiornamento dei metadati del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid"/>
+			<xsd:element name="FascicoloMetadata" type="types:fascicoloMetadataRaccoltaProvvisoria_type">
+				<xsd:annotation>
+					<xsd:documentation>Metadati agganciati al fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento deve essere inviato </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_modifyMetadataFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'aggiornamento dei metadati del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloDecretoSIPATR" type="types:Guid"/>
+			<xsd:element name="FascicoloMetadata" type="types:fascicoloMetadataDecretoSIPATR_type">
+				<xsd:annotation>
+					<xsd:documentation>Metadati agganciati al fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento deve essere inviato </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_modifyMetadataFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'aggiornamento dei metadati del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid"/>
+			<xsd:element name="FascicoloMetadata" type="types:fascicoloMetadataSIPATR_type">
+				<xsd:annotation>
+					<xsd:documentation>Metadati agganciati del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento deve essere inviato </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'aggiornamento dei metadati di un documento Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascioclo atto decreto</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+			<xsd:element name="Descrizione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Opzionale possibilità di aggiornare se c'è la descrizione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DocumentoMetadata" type="types:documentoMetadataAllegatoDecretoIGB_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati agganciati al documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento deve essere inviato </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_modifyMetadatiDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'aggiornamento dei metadati di un documento del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+			<xsd:element name="Descrizione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Opzionale possibilità di aggiornare se c'è la descrizione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DocumentoMetadata" type="types:documentoMetadataAttoDecreto_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati agganciati al documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento deve essere inviato </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'aggiornamento dei metadati di un documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+			<xsd:element name="Descrizione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Opzionale possibilità di aggiornare se c'è la descrizione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DocumentoMetadata" type="types:documentoMetadataRaccoltaProvvisoria_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati agganciati al documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento deve essere inviato </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_removeCollegamentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione del collegamento tra il Fascicolo SIPATR ed il Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloDecretoSIPATR" type="types:Guid" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascicolo del decreto SIPATR a cui collegare il fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascicolo da scollegare</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_removeDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione di un documento Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdDocumentoFascicoloAllegatoDecretoIGB" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_removeDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione di un documento del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_removeDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione di un documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_removeDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione di un documento del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid"/>
+			<xsd:element name="IdDocumento" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_removeFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_removeFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloDecretoSIPATR" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_removeFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'eliminazione del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_searchFascicoliRaccolteProvvisorie_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta ricerca Documenti Raccolte Provvisorie</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TipoEstrazioneFascicolo" type="types:tipoEstrazione_type" default="DATA"/>
+			<xsd:element name="TipoEstrazioneElenco" type="types:tipoEstrazione_type" default="NONE">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei documenti presente con o senza metadati</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IdentificativoRaccoltaProvvisoria" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Descrizione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oggetto del fascicolo, descrizione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatoFascicoloRaccoltaProvvisoria" type="types:statoFascicoloDocumentale_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Aperto, Chiuso, Storicizzato se Chiuso non è possibile inserire documenti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Ragioneria" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ragioneria</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Amministrazione" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amministrazione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UfficioCreatoreRED" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ufficio creatore di RED</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoFlusso" type="types:tipoFlusso_type" minOccurs="0"/>
+			<xsd:element name="Protocollo" type="types:protocolloSearch_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Protocollo in ingresso staccato da RED</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataProtocollo" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di protocollo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UtenteCreatore" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Utente creatore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazioneFascicolo" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del fascicolo nel sistema</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAggiornamento" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data ultimo aggiornamento del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_storeFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiesta creazione del Fascicolo AttoDecreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascicolo, può essere generato automaticamento o inviato dall'applicazione chiamante</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IdFascicoloAttoDecretoArchiviato" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascicolo che verrà creato, sarà automaticamente impostato come CHIUSO</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_updateContentDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Richiede l'aggiornamento del content del documento AttoDecreto al fascicolo</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdDocumentoAttoDecreto" type="types:Guid" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Identificativo Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DocumentoContent" type="types:documentoContent_type">
+				<xsd:annotation>
+					<xsd:documentation>Contenuto in bytes del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_addCollegamentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito del collegamento del Fascicolo SIPATR al Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_addDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito aggiunta del documento Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="Dati" type="types:risultatoAddDocumento_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_addDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito aggiunta del documento al Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="Dati" type="types:risultatoAddDocumento_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_addDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito aggiunta del documento al Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="Dati" type="types:risultatoAddDocumento_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_addDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito aggiunta del documento al Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="Dati" type="types:risultatoAddDocumento_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_changeStatoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito cambiamento stato Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_changeStatoFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito cambiamento stato Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_changeStatoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito cambiamento stato Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_changeStatoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito cambiamento stato Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_createFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito creazione del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioFascicolo" type="types:fascicoloAttoDecreto_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_copyFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito creazione del fascicolo AttoDecreto da uno esistente</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioFascicolo" type="types:fascicoloAttoDecreto_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_createFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito creazione del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_createFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito creazione del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioFascicolo" type="types:fascicoloRaccoltaProvvisoria_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_createFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito creazione del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_downloadDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Content del Documento Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DocumentoContent" type="types:documentoContent_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_downloadDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Content del Documento del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DocumentoContent" type="types:documentoContent_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_downloadDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Content del Documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DocumentoContent" type="types:documentoContent_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_downloadDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Content del Documento del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DocumentoContent" type="types:documentoContent_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_downloadDocumentoFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Content del Documento del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DocumentoContent" type="types:documentoContent_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_downloadDocumentoUrlFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Url AXWAY per il Download Documento</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DocumentoUrl" type="xsd:anyURI" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_downloadDocumentoUrlFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Url AXWAY per il Download Documento</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DocumentoUrl" type="xsd:anyURI" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_downloadDocumentoUrlFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Url AXWAY per il Download Documento</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DocumentoUrl" type="xsd:anyURI" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_downloadDocumentoUrlFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Url AXWAY per il Download Documento</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DocumentoUrl" type="xsd:anyURI" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_convertiDocumento_type">
+		<xsd:annotation>
+			<xsd:documentation>Content del Documento Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="Document" type="types:conversioneContent_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_eliminaFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito rimozione Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Dati del Documento del sotto fascicolo AllegatoDecretoIGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioDocumento" type="types:documentoFascicoloAllegatoDecretoIGB_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Dati del Documento del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioDocumento" type="types:documentoFascicoloAttoDecreto_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Dati del Documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioDocumento" type="types:documentoFascicoloRaccoltaProvvisoria_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Dati del Documento del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioDocumento" type="types:documentoFascicoloSIPATR_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getDocumentoFascicoloSIPATRAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Dati del Documento del Fascicolo SIPATR dell'Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioDocumento" type="types:documentoFascicoloSIPATR_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getElencoDocumentiFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Documenti del sotto fascicolo Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioDocumento" type="types:documentoFascicoloAllegatoDecretoIGB_type" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getElencoFascicoliRaccoltaProvvisoriaAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Identificativi dei Fascicoli Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ElencoFacicoliRaccoltaProvvisoria" type="types:identificativiFascicoloRaccoltaProvvisoria_type" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati del Fascicolo Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioFascicolo" type="types:fascicoloAttoDecreto_type" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Fascicolo Atto decreto</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioFascicolo" type="types:fascicoloDecretoSIPATR_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioFascicolo" type="types:fascicoloRaccoltaProvvisoria_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioFascicolo" type="types:fascicoloSIPATR_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getFascicoloSIPATRAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DettaglioFascicolo" type="types:fascicoloSIPATR_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_getRisultatoOperazioneDocumento_type">
+		<xsd:annotation>
+			<xsd:documentation>Restituisce il content del documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="Operazioni" type="types:risultatoOperazioneDocumento_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_modifyMetadataDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito aggiornamento metadati di un documento del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_modifyMetadataFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito aggiornamento metadati del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_modifyMetadataFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito aggiornamento metadati del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_modifyMetadataFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito aggiornamento metadati del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_modifyMetadataFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito aggiornamento metadati di un documento del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito aggiornamento metadati di un documento del Fascicolo Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_modifyMetadatiDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito aggiornamento metadati di un documento del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito aggiornamento metadati di un documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_removeCollegamentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito dell' eliminazione del collegamento tra il Fascicolo SIPATR ed il Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_removeDocumentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito eliminazione del documento Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_removeDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito eliminazione di un documento del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_removeDocumentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito eliminazione di un documento del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_removeDocumentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito eliminazione di un documento del Fascicolo SPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_removeFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito eliminazione del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_removeFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito eliminazione del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_removeFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito eliminazione del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_searchFascicoliRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Elenco Fascicoli Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="Fascicoli" type="types:fascicoloRaccoltaProvvisoria_type" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_archiveFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito archiviazione del fascicolo AttoDecreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_updateContentDocumentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito aggiornamento del content di un documento del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:BaseServiceResponseType">
+				<xsd:sequence>
+					<xsd:element name="DatiDocumento" type="types:documentoFile_type" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--Fascicolo Type -->
+	<xsd:complexType name="fascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Dettaglio del fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid"/>
+			<xsd:element name="IdFascicoloAttoDecretoParent" type="types:Guid" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Disponibile se è stato creato da un fascicolo esistente</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Descrizione" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Oggetto del fascicolo, descrizione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatiFascicolo" type="types:fascicoloMetadataAttoDecreto_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Documenti" type="types:documentoFascicoloAttoDecreto_type" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei cdocumenti del fascicolo "SottoFascicolo Atto Decreto"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FascicoliSIPATR" type="types:fascicoloSIPATR_type" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Fascicoli SIPATR collegati</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AllegatiDecretoIGB" type="types:documentoFascicoloAllegatoDecretoIGB_type" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei documenti "SottoFascicolo IGB"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatoFascicoloDocumentale" type="types:statoFascicoloDocumentale_type">
+				<xsd:annotation>
+					<xsd:documentation>Aperto, In Elaborazione, Chiuso se Chiuso non è possibile inserire documenti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del fascicolo nel sistema</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAggiornamentoAttoDecreto" type="xsd:dateTime">
+				<xsd:annotation>
+					<xsd:documentation>Data ultimo aggiornamento del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAggiornamentoSIPATR" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data ultimo aggiornamento dei fascicoli SIPATR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAggiornamentoFascicoloIGB" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data ultimo aggiornamento del SottoFascicolo IGB</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataChiusura" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di chiusura del fasciolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo può essere inviato a sistemi esterni</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SistemaProduttore" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Sistema Produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="fascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Dettaglio del fascicolo decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloDecretoSIPATR" type="types:Guid"/>
+			<xsd:element name="Descrizione" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Oggetto del fascicolo, descrizione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatiFascicolo" type="types:fascicoloMetadataDecretoSIPATR_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<!--xsd:element name="Documenti" type="types:documentoFascicoloDecretoSIPATR_type" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei cdocumenti del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element-->
+			<xsd:element name="FascicoliSIPATR" type="types:fascicoloSIPATR_type" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Fascicoli SIPATR collegati</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatoFascicoloDocumentale" type="types:statoFascicoloDocumentale_type">
+				<xsd:annotation>
+					<xsd:documentation>Aperto, In Elaborazione, Chiuso se Chiuso non è possibile inserire documenti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del fascicolo nel sistema</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAggiornamento" type="xsd:dateTime">
+				<xsd:annotation>
+					<xsd:documentation>Data ultimo aggiornamento del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataChiusura" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di chiusura del fasciolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo può essere inviato a sistemi esterni</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SistemaProduttore" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Sistema Produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="fascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Dettaglio del fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloSIPATR" type="types:Guid"/>
+			<xsd:element name="Descrizione" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Oggetto del fascicolo, descrizione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatiFascicolo" type="types:fascicoloMetadataSIPATR_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Documenti" type="types:documentoFascicoloSIPATR_type" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei cdocumenti del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatoFascicoloDocumentale" type="types:statoFascicoloDocumentale_type">
+				<xsd:annotation>
+					<xsd:documentation>Aperto, In Elaborazione, Chiuso se Chiuso non è possibile inserire documenti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del fascicolo nel sistema</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataChiusura" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di chiusura del fasciolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAggiornamento" type="xsd:dateTime">
+				<xsd:annotation>
+					<xsd:documentation>Data ultimo aggiornamento del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo può essere inviato a sistemi esterni</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SistemaProduttore" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Sistema Produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="fascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Dettaglio del fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid"/>
+			<xsd:element name="Descrizione" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Oggetto del fascicolo, descrizione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatiFascicolo" type="types:fascicoloMetadataRaccoltaProvvisoria_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Documenti" type="types:documentoFascicoloRaccoltaProvvisoria_type" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei cdocumenti del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatoFascicoloDocumentale" type="types:statoFascicoloDocumentale_type">
+				<xsd:annotation>
+					<xsd:documentation>Aperto, In Elaborazione, Chiuso se Chiuso non è possibile inserire documenti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del fascicolo nel sistema</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAggiornamento" type="xsd:dateTime">
+				<xsd:annotation>
+					<xsd:documentation>Data ultimo aggiornamento del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DaInviare" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo può essere inviato a sistemi esterni</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il fascicolo è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SistemaProduttore" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Sistema Produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Fascicolo Metadata Type -->
+	<xsd:complexType name="fascicoloMetadataAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati del Fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdentificativoAttoDecreto" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Chiave secondaria Identificativo Atto decreto</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Titolo" type="types:codiceDescrizione_type">
+				<xsd:annotation>
+					<xsd:documentation>Parte corrente o Conto Capitale</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Ragioneria" type="types:codiceDescrizione_type"/>
+			<xsd:element name="Amministrazione" type="types:codiceDescrizione_type"/>
+			<xsd:element name="Anno" type="xsd:int"/>
+			<xsd:element name="TipologiaDecreto" type="types:codiceDescrizione_type">
+				<xsd:annotation>
+					<xsd:documentation>Tipologia Decreto</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoDecreto" type="types:codiceDescrizione_type"/>
+			<xsd:element name="NumeroDecreto" type="xsd:int"/>
+			<xsd:element name="UfficioCapofila" type="types:codiceDescrizione_type"/>
+			<xsd:element name="UfficioCreatore" type="types:codiceDescrizione_type"/>
+			<xsd:element name="UtenteCreatore" type="types:codiceDescrizione_type" minOccurs="0"/>
+			<xsd:element name="StatoFascicoloAttoDecreto" type="xsd:string"/>
+			<xsd:element name="IdFascicoloDecretoSIPATR" type="types:Guid" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Collegamento al Fascicolo Decreto Sipatr per i sotto fascicoli</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NumeroDecretoSIPATR" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Collegamento al Fascicolo Decreto Sipatr per i sotto fascicoli</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VersioneMetadata" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Puntamento dell'XSD per la la validazione dei metadati obbligatorio se popolato l campo METADATA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Metadata" type="xsd:base64Binary" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati aggiuntivi</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="fascicoloMetadataDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati del Fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdentificativoSIPATR" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Identificativo secondario fascicolo SIPATR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IdFascicoloAttoDecreto" type="types:Guid" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fascicolo Atto decreto (automatico dopo la creazione)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Anno" type="xsd:int"/>
+			<xsd:element name="NumeroDecreto" type="xsd:int"/>
+			<xsd:element name="Titolo" type="types:codiceDescrizione_type">
+				<xsd:annotation>
+					<xsd:documentation>Parte corrente o conto capitale</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Metadata" type="xsd:base64Binary" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati aggiuntivi</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VersioneMetadata" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Puntamento dell'XSD per la la validazione dei metadati obbligatorio se popolato l campo METADATA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="fascicoloMetadataSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati del Fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdentificativoSIPATR" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Identificativo secondario fascicolo SIPATR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Amministrazione" type="types:codiceDescrizione_type"/>
+			<xsd:element name="Ragioneria" type="types:codiceDescrizione_type"/>
+			<xsd:element name="Titolo" type="types:codiceDescrizione_type">
+				<xsd:annotation>
+					<xsd:documentation>Parte corrente o Conto Capitale</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatoFascicoloSIPATR" type="xsd:string"/>
+			<xsd:element name="DataChiusuraFascicoloSIPATR" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data Chiusura del fascicolo </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Metadata" type="xsd:base64Binary" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati aggiuntivi</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VersioneMetadata" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Puntamento dell'XSD per la la validazione dei metadati obbligatorio se popolato l campo METADATA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="fascicoloMetadataRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdentificativoRaccoltaProvvisoria" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Idenitifcativo del fascicolo su RED</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Ragioneria" type="types:codiceDescrizione_type">
+				<xsd:annotation>
+					<xsd:documentation>Ragioneria</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Amministrazione" type="types:codiceDescrizione_type">
+				<xsd:annotation>
+					<xsd:documentation>Amministrazione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UfficioCreatoreRED" type="types:codiceDescrizione_type">
+				<xsd:annotation>
+					<xsd:documentation>Ufficio creatore di RED</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoFlusso" type="types:tipoFlusso_type"/>
+			<xsd:element name="Protocollo" type="types:protocollo_type">
+				<xsd:annotation>
+					<xsd:documentation>Protocollo in ingresso staccato da RED</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UtenteCreatore" type="types:codiceDescrizione_type">
+				<xsd:annotation>
+					<xsd:documentation>Utente creatore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatoFascicoloRaccoltaProvvisoria" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Stato a cura di DEMDEC</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Metadata" type="xsd:base64Binary" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati aggiuntivi</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VersioneMetadata" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Puntamento dell'XSD per la la validazione dei metadati obbligatorio se popolato l campo METADATA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Documento Type -->
+	<xsd:complexType name="documentoFascicoloAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Tipologia dei documenti presenti nel fascicolo Atto Decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdDocumento" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Riferimento al documento nel fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoDocumento" type="types:tipoDocumento_type">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documenti gestiti nel fascicolo </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Descrizione" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Descrizione del Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MetadatiDocumento" type="types:documentoMetadataAttoDecreto_type" minOccurs="0"/>
+			<xsd:element name="FileName" type="xsd:string" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Nome del file</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Hash" type="xsd:base64Binary" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>HASH Sha1 del contenuto del File</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MimeType" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Mime Type del File</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Length" type="xsd:long">
+				<xsd:annotation>
+					<xsd:documentation>Lunghezza in bytes del file</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoCompressione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tip Compressione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Firmato" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è firmato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ValidazioneFirma" type="types:validazioneFirma_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è stato validato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SistemaProduttore" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Sistema Produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IsDocumentoOriginale" type="xsd:boolean" default="true"/>
+			<xsd:element name="IsDocumentoTrattato" type="xsd:boolean" default="true"/>
+			<xsd:element name="DocumentoOrigine" type="types:documentoFile_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Operazione" type="types:operazioneDocumentale_type" minOccurs="0"/>
+			<xsd:element name="TicketArchiviazione" type="xsd:string" nillable="true" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentoFascicoloDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Tipologia dei documenti presenti nel fascicolo Decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdDocumento" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Riferimento al documento nel fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoDocumento" type="types:tipoDocumento_type">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documenti gestiti nel fascicolo </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Descrizione" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Descrizione del Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MetadatiDocumento" type="types:documentoMetadataDecretoSIPATR_type" minOccurs="0"/>
+			<xsd:element name="FileName" type="xsd:string" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Nome del file</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Hash" type="xsd:base64Binary" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>HASH Sha1 del contenuto del File</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MimeType" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Mime Type del File</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Length" type="xsd:long">
+				<xsd:annotation>
+					<xsd:documentation>Lunghezza in bytes del file</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoCompressione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tip Compressione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Firmato" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è firmato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ValidazioneFirma" type="types:validazioneFirma_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è stato validato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SistemaProduttore" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Sistema Produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IsDocumentoOriginale" type="xsd:boolean" default="true"/>
+			<xsd:element name="IsDocumentoTrattato" type="xsd:boolean" default="true"/>
+			<xsd:element name="DocumentoOrigine" type="types:documentoFile_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Operazione" type="types:operazioneDocumentale_type" minOccurs="0"/>
+			<xsd:element name="TicketArchiviazione" type="xsd:string" nillable="true" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentoFascicoloSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Tipologia dei documenti presenti nel fascicolo SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdDocumento" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Riferimento al documento nel fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoDocumento" type="types:tipoDocumento_type">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documenti gestiti nel fascicolo </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Descrizione" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Descrizione del Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MetadatiDocumento" type="types:documentoMetadataSIPATR_type" minOccurs="0"/>
+			<xsd:element name="FileName" type="xsd:string" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Nome del file</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Hash" type="xsd:base64Binary" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>HASH Sha1 del contenuto del File</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MimeType" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Mime Type del File</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Length" type="xsd:long">
+				<xsd:annotation>
+					<xsd:documentation>Lunghezza in bytes del file</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoCompressione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tip Compressione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Firmato" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è firmato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ValidazioneFirma" type="types:validazioneFirma_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è stato validato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SistemaProduttore" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Sistema Produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IsDocumentoOriginale" type="xsd:boolean" default="true"/>
+			<xsd:element name="IsDocumentoTrattato" type="xsd:boolean" default="true"/>
+			<xsd:element name="DocumentoOrigine" type="types:documentoFile_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Operazione" type="types:operazioneDocumentale_type" minOccurs="0"/>
+			<xsd:element name="TicketArchiviazione" type="xsd:string" nillable="true" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentoFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Tipologia dei documenti presenti nel fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdDocumento" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Riferimento al documento nel fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoDocumento" type="types:tipoDocumento_type">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documenti gestiti nel fascicolo </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Descrizione" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Descrizione del Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MetadatiDocumento" type="types:documentoMetadataRaccoltaProvvisoria_type" minOccurs="0"/>
+			<xsd:element name="FileName" type="xsd:string" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Nome del file</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Hash" type="xsd:base64Binary" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>HASH Sha1 del contenuto del File</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MimeType" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Mime Type del File</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Length" type="xsd:long">
+				<xsd:annotation>
+					<xsd:documentation>Lunghezza in bytes del file</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoCompressione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tip Compressione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Firmato" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è firmato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ValidazioneFirma" type="types:validazioneFirma_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è stato validato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SistemaProduttore" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Sistema Produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IsDocumentoOriginale" type="xsd:boolean" default="true"/>
+			<xsd:element name="IsDocumentoTrattato" type="xsd:boolean" default="true"/>
+			<xsd:element name="DocumentoOrigine" type="types:documentoFile_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Operazione" type="types:operazioneDocumentale_type" minOccurs="0"/>
+			<xsd:element name="TicketArchiviazione" type="xsd:string" nillable="true" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentoFascicoloAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Tipologia dei documenti presenti nel fascicolo Allegato Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdDocumento" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Riferimento al documento nel fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoDocumento" type="types:tipoDocumento_type">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documenti gestiti nel fascicolo </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Descrizione" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Descrizione del Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MetadatiDocumento" type="types:documentoMetadataAllegatoDecretoIGB_type" minOccurs="0"/>
+			<xsd:element name="FileName" type="xsd:string" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Nome del file</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Hash" type="xsd:base64Binary" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>HASH Sha1 del contenuto del File</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MimeType" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Mime Type del File</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Length" type="xsd:long">
+				<xsd:annotation>
+					<xsd:documentation>Lunghezza in bytes del file</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoCompressione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tip Compressione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Firmato" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è firmato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ValidazioneFirma" type="types:validazioneFirma_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è stato validato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Condivisibile" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è condivisibile per le altre APP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Attivo" type="xsd:boolean" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è visibile al di fuori del Sistema produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SistemaProduttore" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Sistema Produttore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IsDocumentoOriginale" type="xsd:boolean" default="true"/>
+			<xsd:element name="IsDocumentoTrattato" type="xsd:boolean" default="true"/>
+			<xsd:element name="DocumentoOrigine" type="types:documentoFile_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Operazione" type="types:operazioneDocumentale_type" minOccurs="0"/>
+			<xsd:element name="TicketArchiviazione" type="xsd:string" nillable="true" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentoFile_type">
+		<xsd:annotation>
+			<xsd:documentation>Dati del file del documento</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdDocumento" type="types:Guid" nillable="true"/>
+			<xsd:element name="Descrizione" type="xsd:string"/>
+			<xsd:element name="FileName" type="xsd:string" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Nome del file</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Hash" type="xsd:base64Binary" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>HASH Sha1 del contenuto del File</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MimeType" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Mime Type del File</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Firmato" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è firmato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ValidazioneFirma" type="types:validazioneFirma_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indica se il documento è stato validato</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoCompressione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tip Compressione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Length" type="xsd:long" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Lunghezza in bytes del file</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="conversioneContent_type">
+		<xsd:annotation>
+			<xsd:documentation>Contenuto in byte del file</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="FileName" type="xsd:string" nillable="true">
+				<xsd:annotation>
+					<xsd:documentation>Nome del file</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Content" type="xsd:base64Binary" xmime:expectedContentTypes="application/octet-stream">
+				<xsd:annotation>
+					<xsd:documentation>contenuto del file in BASE64</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentoContent_type">
+		<xsd:annotation>
+			<xsd:documentation>Contenuto in byte del file</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:documentoFile_type">
+				<xsd:sequence>
+					<xsd:element name="Content" type="xsd:base64Binary" xmime:expectedContentTypes="application/octet-stream">
+						<xsd:annotation>
+							<xsd:documentation>contenuto del file in BASE64</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="documentoResultType">
+		<xsd:annotation>
+			<xsd:documentation>Documento Trattato</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="types:documentoFile_type">
+				<xsd:sequence>
+					<xsd:element name="IdDocumentoOrigine" type="types:Guid" nillable="true">
+						<xsd:annotation>
+							<xsd:documentation>IdDocumento Origine a cui è collegato</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="IsDocumentoOriginale" type="xsd:boolean" default="true"/>
+					<xsd:element name="IsDocumentoTrattato" type="xsd:boolean" default="true"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--Documento Metadata Type -->
+	<xsd:complexType name="documentoMetadataSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati dei documenti del SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="DataDocumento" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataChiusura" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di chiusura del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAnnullamento" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di annullamento del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataRiapertura" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data riapertura (solo per lettera UCB e Fascicolo meccanizzato)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Protocollo" type="types:protocollo_type" minOccurs="0"/>
+			<xsd:element name="Note" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Note del Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Metadata" type="xsd:base64Binary" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati aggiuntivi</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VersioneMetadata" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Puntamento dell'XSD per la la validazione dei metadati obbligatorio se popolato l campo METADATA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentoMetadataAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati dei documenti del ATTO DECRETO</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Amministrazione" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amministrazione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Ragioneria" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ragioneria</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataDocumento" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataChiusura" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di chiusura del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAnnullamento" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di annullamento del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Protocollo" type="types:protocollo_type" minOccurs="0"/>
+			<xsd:element name="Note" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Note del Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Metadata" type="xsd:base64Binary" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati aggiuntivi</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VersioneMetadata" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Puntamento dell'XSD per la la validazione dei metadati obbligatorio se popolato l campo METADATA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentoMetadataDecretoSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati dei documenti del decreto SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="DataDocumento" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataChiusura" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di chiusura del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAnnullamento" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di annullamento del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataRiapertura" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data riapertura (solo per lettera UCB e Fascicolo meccanizzato)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Protocollo" type="types:protocollo_type" minOccurs="0"/>
+			<xsd:element name="Note" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Note del Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Metadata" type="xsd:base64Binary" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati aggiuntivi</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VersioneMetadata" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Puntamento dell'XSD per la la validazione dei metadati obbligatorio se popolato l campo METADATA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentoMetadataRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati dei documenti della raccolta provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="DataDocumento" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataChiusura" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di chiusura del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAnnullamento" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di annullamento del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataRiapertura" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data riapertura (solo per lettera UCB e Fascicolo meccanizzato)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Protocollo" type="types:protocollo_type" minOccurs="0"/>
+			<xsd:element name="Note" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Note del Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Metadata" type="xsd:base64Binary" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati aggiuntivi</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VersioneMetadata" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Puntamento dell'XSD per la la validazione dei metadati obbligatorio se popolato l campo METADATA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentoMetadataAllegatoDecretoIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Metadati dei documenti del Allegato decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Id del fascicolo , può essere generato automaticamente o inviato dall'applicazione chiamante</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IdDocumentoRaccoltaProvvisoria" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Id del documento della raccolta provvisoria</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IdentificativoRaccoltaProvvisoria" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Idenitifcativo del fascicolo su RED</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoDocumentoRED" type="types:tipoDocumento_type">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documenti Raccolta Provvisoria</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Ragioneria" type="types:codiceDescrizione_type">
+				<xsd:annotation>
+					<xsd:documentation>Ragioneria</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Amministrazione" type="types:codiceDescrizione_type">
+				<xsd:annotation>
+					<xsd:documentation>Amministrazione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UfficioCreatoreRED" type="types:codiceDescrizione_type">
+				<xsd:annotation>
+					<xsd:documentation>Ufficio creatore di RED</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoFlusso" type="types:tipoFlusso_type"/>
+			<xsd:element name="ProtocolloRed" type="types:protocollo_type">
+				<xsd:annotation>
+					<xsd:documentation>Protocollo in ingresso staccato da RED</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UtenteCreatore" type="types:codiceDescrizione_type">
+				<xsd:annotation>
+					<xsd:documentation>Utente creatore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataDocumento" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataChiusura" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di chiusura del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAnnullamento" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di annullamento del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Note" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Note del Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Protocollo" type="types:protocollo_type" minOccurs="0"/>
+			<xsd:element name="VersioneMetadata" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Puntamento dell'XSD per la la validazione dei metadati obbligatorio se popolato l campo METADATA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Metadata" type="xsd:base64Binary" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Metadati aggiuntivi</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Other Type -->
+	<xsd:complexType name="codiceDescrizione_type">
+		<xsd:annotation>
+			<xsd:documentation>Tipo generico per codice-descrizione</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Codice" type="xsd:string"/>
+			<xsd:element name="Descrizione" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="protocollo_type">
+		<xsd:annotation>
+			<xsd:documentation>Dati del protocollo</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Aoo" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Ente/Aoo del protocollo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Tipo">
+				<xsd:annotation>
+					<xsd:documentation>Ingresso, Uscita</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern value="NONE"/>
+						<xsd:pattern value="INGRESSO"/>
+						<xsd:pattern value="USCITA"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Data" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Data di protocollo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NumeroProtocollo" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Numero del protocollo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="protocolloSearch_type">
+		<xsd:annotation>
+			<xsd:documentation>Dati del protocollo</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Aoo" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ente/Aoo del protocollo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Tipo">
+				<xsd:annotation>
+					<xsd:documentation>Ingresso, Uscita</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern value="ALL"/>
+						<xsd:pattern value="INGRESSO"/>
+						<xsd:pattern value="USCITA"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Data" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di protocollo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NumeroProtocollo" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Numero del protocollo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="tipoDocumento_type">
+		<xsd:annotation>
+			<xsd:documentation>Elenco di Tipologia di Documenti Inseribili nel Fasciolo</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Codice" type="xsd:string"/>
+			<xsd:element name="Descrizione" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="operazioneDocumentale_type">
+		<xsd:annotation>
+			<xsd:documentation>Elenco di Tipologia di Documenti Inseribili nel Fasciolo</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TipoOperazione" type="types:tipoOperazione_type"/>
+			<xsd:element name="EsitoOperazione" type="types:esitoOperazione_type"/>
+			<xsd:element name="DocumentoOperazione" type="types:documentoFile_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Documento a cui viene applicata l'operazione presente solo se il documento non è l'originale</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiestaOperazioneDocumentale_type">
+		<xsd:annotation>
+			<xsd:documentation>Elenco di Tipologia di Documenti Inseribili nel Fasciolo</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TipoOperazione" type="types:tipoOperazione_type"/>
+			<xsd:element name="ParametriOperazione" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Chiave" type="xsd:string"/>
+						<xsd:element name="Valore" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="IdDocumentoOperazione" type="types:Guid" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Id del documento risultante per l'operazione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="risultatoOperazioneDocumento_type">
+		<xsd:annotation>
+			<xsd:documentation>Tipo generico </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence maxOccurs="unbounded">
+			<xsd:element name="IdDocumento" type="types:Guid">
+				<xsd:annotation>
+					<xsd:documentation>Id del documento risultante per l'operazione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Operazione" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="types:operazioneDocumentale_type"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Ordinamento" type="xsd:int">
+				<xsd:annotation>
+					<xsd:documentation>Ordinamento operazioni</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="risultatoAddDocumento_type">
+		<xsd:annotation>
+			<xsd:documentation>Tipo generico per la risposta Add Documento</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="DatiDocumento" type="types:documentoFile_type"/>
+			<xsd:element name="DocumentiTrattati" type="types:documentoResultType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="dataRange_type">
+		<xsd:annotation>
+			<xsd:documentation>Tipo utilizzato per le ricerche,  se valorizzato solo il campo Data diventa un =, se valorizzati tutti e due diventano data Da ..A</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Data" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Data Da</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataA" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data A</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="criteriaFascicoliSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Criteri di filtro per l'estrazione dei fascicoli SIPATR da un decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TipoEstrazioneFascicolo" type="types:tipoEstrazione_type" default="DATA">
+				<xsd:annotation>
+					<xsd:documentation>Fascicolo con e senza metadati</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Descrizione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oggetto del fascicolo, descrizione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Ragioneria" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ragioneria</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Amministrazione" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amministrazione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAggiornamento" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data ultimo aggiornamento del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Titolo" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Parte corrente o Conto Capitale</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatoFascicoloSIPATR" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="criteriaFascicoliRaccolteProvvisorie_type">
+		<xsd:annotation>
+			<xsd:documentation>Criteri di filtro per l'estrazione dei fascicoli Raccolta provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Descrizione" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Oggetto del fascicolo, descrizione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatoFascicoloRaccoltaProvvisoria" type="types:statoFascicoloDocumentale_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Aperto, Chiuso, Storicizzato se Chiuso non è possibile inserire documenti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Ragioneria" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ragioneria</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Amministrazione" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amministrazione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UfficioCreatoreRED" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ufficio creatore di RED</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoFlusso" type="types:tipoFlusso_type" minOccurs="0"/>
+			<xsd:element name="Protocollo" type="types:protocollo_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Protocollo in ingresso staccato da RED</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UtenteCreatore" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Utente creatore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazioneFascicolo" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del fascicolo nel sistema</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAggiornamento" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data ultimo aggiornamento del fascicolo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="criteriaDocumentiFascicoloIGB_type">
+		<xsd:annotation>
+			<xsd:documentation>Criteri di filtro per l'estrazione dei documenti del Decreto IGB</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TipoEstrazioneElenco" type="types:tipoEstrazione_type" default="NONE">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei documenti presente con o senza metadati</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoElenco" type="types:tipoElenco_type" default="SOURCE"/>
+			<xsd:element name="TipoDocumento" type="types:tipoDocumento_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataDocumento" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Amministrazione" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amministrazione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Ragioneria" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ragioneria</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UfficioCreatoreRED" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ufficio creatore di RED</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoFlusso" type="types:tipoFlusso_type" minOccurs="0"/>
+			<xsd:element name="Protocollo" type="types:protocollo_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Protocollo in ingresso staccato da RED</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UtenteCreatore" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Utente creatore</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="criteriaDocumentiAttoDecreto_type">
+		<xsd:annotation>
+			<xsd:documentation>Criteri di filtro per l'estrazione dei documenti del ATTo decreto</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TipoEstrazioneElenco" type="types:tipoEstrazione_type" default="NONE">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei documenti presente con o senza metadati</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoElenco" type="types:tipoElenco_type" default="SOURCE"/>
+			<xsd:element name="TipoDocumento" type="types:tipoDocumento_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Amministrazione" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amministrazione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Ragioneria" type="types:codiceDescrizione_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ragioneria</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataDocumento" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Protocollo" type="types:protocollo_type" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="criteriaDocumentiSIPATR_type">
+		<xsd:annotation>
+			<xsd:documentation>Criteri di filtro per l'estrazione dei documenti dei Documenti SIPATR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TipoEstrazioneElenco" type="types:tipoEstrazione_type" default="NONE">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei documenti presente con o senza metadati</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoElenco" type="types:tipoElenco_type" default="SOURCE"/>
+			<xsd:element name="TipoDocumento" type="types:tipoDocumento_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataRiapertura" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data riapertura (solo per lettera UCB e Fascicolo meccanizzato)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataDocumento" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataChiusura" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di chiusura del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Protocollo" type="types:protocollo_type" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="criteriaDocumentiRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Criteri di filtro per l'estrazione dei documenti dei Documenti Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TipoEstrazioneElenco" type="types:tipoEstrazione_type" default="NONE">
+				<xsd:annotation>
+					<xsd:documentation>Elenco dei documenti presente con o senza metadati</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TipoElenco" type="types:tipoElenco_type" default="SOURCE"/>
+			<xsd:element name="TipoDocumento" type="types:tipoDocumento_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tipo Documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataCreazione" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di creazione del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataDocumento" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataChiusura" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di chiusura del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataAnnullamento" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data di annullamento del documento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataRiapertura" type="types:dataRange_type" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Data riapertura (solo per lettera UCB e Fascicolo meccanizzato)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Protocollo" type="types:protocollo_type" minOccurs="0"/>
+			<xsd:element name="Note" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="identificativiFascicoloRaccoltaProvvisoria_type">
+		<xsd:annotation>
+			<xsd:documentation>Identificativi del Fascicolo Raccolta Provvisoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoria" type="types:Guid"/>
+			<xsd:element name="IdFascicoloRaccoltaProvvisoriaRED" type="types:Guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="Guid">
+		<xsd:annotation>
+			<xsd:documentation>Guid Type </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="BaseServiceResponseType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Base response type to be used across all operations </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Esito" type="types:esito_type">
+				<xsd:annotation>
+					<xsd:documentation>Ritorna l'esito dell'operazione</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ErrorList" type="types:ServiceErrorType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Torna un elenco di errori </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceErrorType">
+		<xsd:annotation>
+			<xsd:documentation>Common type to carry error details </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ErrorMessageString" type="xsd:string"/>
+			<xsd:element name="ErrorCode" type="xsd:int"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="esito_type">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration dell'esito</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="OK"/>
+			<xsd:enumeration value="ERRORE_ELABORAZIONE"/>
+			<xsd:enumeration value="ERRORE_DATI_NON_PRESENTI"/>
+			<xsd:enumeration value="ERRORE_NON_AUTORIZZATO"/>
+			<xsd:enumeration value="ERRORE_DATI_NON_DI_COMPETENZA"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="statoFascicoloDocumentale_type">
+		<xsd:annotation>
+			<xsd:documentation>Stato del fascicolo Documentale</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="INSERITO"/>
+			<xsd:enumeration value="APERTO"/>
+			<xsd:enumeration value="CHIUSO"/>
+			<xsd:enumeration value="IN_ELABORAZIONE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="validazioneFirma_type">
+		<xsd:annotation>
+			<xsd:documentation>Stato di validazione della firma</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NON_VALIDATA"/>
+			<xsd:enumeration value="VALIDATA_CON_SUCCESSO"/>
+			<xsd:enumeration value="VALIDATA_CON_ERRORE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tipoEstrazione_type">
+		<xsd:annotation>
+			<xsd:documentation>Tipo di estrazione dei dati dal fascicolo</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NONE"/>
+			<xsd:enumeration value="DATA"/>
+			<xsd:enumeration value="METADATA"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tipoElenco_type">
+		<xsd:annotation>
+			<xsd:documentation>Elenco dei documenti originali o tutti (originali e trasformati)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ALL"/>
+			<xsd:enumeration value="SOURCE"/>
+			<xsd:enumeration value="VISIBLE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tipoRisultato_type">
+		<xsd:annotation>
+			<xsd:documentation>Tipo di risultato per l'elenco delle operazione</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="LAST"/>
+			<xsd:enumeration value="ALL"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tipoFlusso_type">
+		<xsd:annotation>
+			<xsd:documentation>Manuale - Automatico</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MANUALE"/>
+			<xsd:enumeration value="AUTOMATICO"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tipoOperazione_type">
+		<xsd:annotation>
+			<xsd:documentation>Tipo operazione documentale</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CONVERSIONE"/>
+			<xsd:enumeration value="FIRMA_AUTOMATICA"/>
+			<xsd:enumeration value="FIRMA_IMMAGINE"/>
+			<xsd:enumeration value="TIMBRO"/>
+			<xsd:enumeration value="PLACEHOLDER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="esitoOperazione_type">
+		<xsd:annotation>
+			<xsd:documentation>Esito dell'operazione</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="INSERITA"/>
+			<xsd:enumeration value="LAVORAZIONE"/>
+			<xsd:enumeration value="COMPLETA"/>
+			<xsd:enumeration value="ERRORE"/>
+			<xsd:enumeration value="NONCONVERTIBILE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tipoConversione_type">
+		<xsd:annotation>
+			<xsd:documentation>Tipo di conversione</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PDF"/>
+			<xsd:enumeration value="PDF1A"/>
+			<xsd:enumeration value="PDF1B"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

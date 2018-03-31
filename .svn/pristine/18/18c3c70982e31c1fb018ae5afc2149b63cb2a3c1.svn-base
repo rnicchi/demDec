@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-lazy-init="false">
+    <!-- Configurer that replaces ${...} placeholders with values from properties files -->
+    <!-- Refer to the config.properties file for property name/value pairs -->
+    <!-- >bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"-->
+    <bean id="propertyConfigurer-common" class="it.almavivaitalia.bilancio.commons.utils.PropertyConfigurer">
+        <property name="locations">
+            <list>
+            	 <value>classpath:config.properties</value>
+            </list>
+        </property>
+    </bean>
+</beans>

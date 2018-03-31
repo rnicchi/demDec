@@ -1,0 +1,83 @@
+package it.mef.bilancio.demdec.dao.impl;
+
+import it.almavivaitalia.bilancio.commons.bo.LettereTestiPersBO;
+import it.mef.bilancio.demdec.dao.LettereTestiPersDao;
+import it.mef.bilancio.demdec.to.LettereTestiTO;
+
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.CacheMode;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.transform.Transformers;
+
+public class LettereTestiPersDaoImpl extends AbstractDemDaoImpl<LettereTestiPersBO> implements LettereTestiPersDao {
+
+	@Override
+	public List<LettereTestiPersBO> findTestoPersFasc(Long fkNumeIdFascicolo, String codiTipoLettera) {
+		
+		String q=
+			     " FROM LettereTestiPersBO item  "+
+			     " WHERE item.id.fkNumeIdFascicolo = :fkNumeIdFascicolo " +
+			     " AND item.id.codiTipoLettera = :codiTipoLettera " +
+			     " ORDER BY id.codiSezione, id.numeRiga ";
+		
+		Query query = createQuery(q);
+		
+		query.setParameter("fkNumeIdFascicolo", fkNumeIdFascicolo)
+		.setParameter("codiTipoLettera", codiTipoLettera);
+		
+		return query.list();
+				
+	}
+	
+	@Override
+	public List<LettereTestiTO> findActualTestoFasc(Long fkNumeIdFascicolo, String codiTipoLettera, String codiSezione) {
+		
+		String q = "  SELECT distinct LTRIM(RTRIM(DECODE(textContenuto, null, textContenuto2, textContenuto))) as textContenuto, " + 
+		" codiSezione as codiSezione, numeRiga as numeRiga, DECODE(textContenuto, null, 'N', 'S') as personalizzato  " + 
+		" FROM ( " +
+		" SELECT MAX(textContenuto) as textContenuto, MAX(textContenuto2) as textContenuto2, codiSezione, numeRiga " +
+				" FROM  " +
+				" (SELECT TEXT_CONTENUTO as textContenuto, null as textContenuto2, CODI_SEZIONE as codiSezione, NUME_RIGA as numeRiga  "+  
+  			    " FROM D_LETTERE_TESTI_PERS  "+
+  			    " WHERE FK_NUME_ID_FASCICOLO = :fkNumeIdFascicolo " +
+			    " AND CODI_TIPO_LETTERA = :codiTipoLettera ";
+		
+		if(StringUtils.isNotBlank(codiSezione)){
+			q += " AND CODI_SEZIONE = :codiSezione ";
+		}
+		
+		
+		q += " UNION " +
+			    " SELECT null as textContenuto, TEXT_CONTENUTO as textContenuto2, CODI_SEZIONE as codiSezione, NUME_RIGA as numeRiga  "+  
+  			    " FROM D_LETTERE_TESTI  "+
+  			    " WHERE CODI_TIPO_LETTERA = :codiTipoLettera ";
+		
+		if(StringUtils.isNotBlank(codiSezione)){
+			q += " AND CODI_SEZIONE = :codiSezione ";
+		}
+		
+		q += ") GROUP BY codiSezione, numeRiga ) " +
+				" ORDER BY codiSezione, numeRiga ";
+		
+		SQLQuery query= getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(q);
+		
+		query.setParameter("fkNumeIdFascicolo", fkNumeIdFascicolo)
+		.setParameter("codiTipoLettera", codiTipoLettera)
+		.setParameter("codiSezione", codiSezione);
+		
+		query.addScalar("textContenuto", Hibernate.STRING)
+		      .addScalar("codiSezione", Hibernate.STRING)			  
+			  .addScalar("numeRiga", Hibernate.STRING)
+			  .addScalar("personalizzato", Hibernate.STRING);
+		
+		
+		return (List<LettereTestiTO>)query.setResultTransformer(Transformers.aliasToBean(LettereTestiTO.class )).setCacheMode(CacheMode.GET).list();
+				
+	}
+	
+	
+}

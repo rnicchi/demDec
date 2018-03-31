@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class name="it.almavivaitalia.bilancio.commons.bo.RiepilogoDatiAnagBO" table="D_RIEPILOGO_DATI_ANAG">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <id name="id" type="java.lang.Long">
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <column name="FK_NUME_ID_FASCICOLO" precision="10" scale="0"/>
+    <generator class="sequence">
+     <param name="sequence">S_RIEPILOGO_DATI_ANAG</param>
+    </generator>
+   </id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <one-to-one class="it.almavivaitalia.bilancio.commons.bo.FascicoliBO" constrained="true" name="fascicoli" lazy="false"/>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagTipoRiepilogoBO" fetch="select" name="anagTipoRiepilogo">
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <column name="FK_NUME_TIPO_RIEPILOGO" precision="2" scale="0"/>
+   </many-to-one>
+   <property name="descRiepilogo" type="string">
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <column length="4000" name="DESC_RIEPILOGO" not-null="true">
+     <comment>Descrizione del decreto da esporre nel riepilogo</comment>
+    </column>
+   </property>
+   <property name="flagIndebitamento01" type="java.lang.Integer">
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <column name="FLAG_INDEBITAMENTO_01" not-null="true" precision="1" scale="0"/>
+   </property>
+  </class>
+ </hibernate-mapping>

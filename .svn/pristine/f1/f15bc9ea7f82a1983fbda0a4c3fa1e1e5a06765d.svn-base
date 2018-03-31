@@ -1,0 +1,140 @@
+package it.mef.bilancio.demdec.web.spring.controller.sigla;
+
+import java.util.List;
+
+import javax.mail.internet.MimeMessage;
+
+import it.almavivaitalia.bilancio.commons.manager.UtenteManager;
+import it.almavivaitalia.bsn.sh.manager.exception.ObjectNotFoundException;
+import it.almavivaitalia.bsn.sh.paginator.Paginator;
+import it.almavivaitalia.bsn.sh.utils.PaginatorUtil;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.almavivaitalia.web.sh.utils.ContextHelper;
+import it.mef.bilancio.demdec.manager.DocumentiManager;
+import it.mef.bilancio.demdec.manager.MailManager;
+import it.mef.bilancio.demdec.to.DocumentiViewTO;
+import it.mef.bilancio.demdec.to.IterFirmaDecretoTO;
+import it.mef.bilancio.demdec.to.PecMessaggiInviatiTO;
+import it.mef.bilancio.demdec.utils.Constants;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.FirmaDocumentiForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.NomeFunzioneConstants;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(value = ConstantsRequestMapping.SIGLA_DOCUMENTI)
+public class SiglaDocumentiController extends AbstractDemFormController {
+	
+	@Autowired
+	private DocumentiManager documentiManager;
+	
+	@Autowired
+	private UtenteManager utenteManager;
+	
+	@Autowired
+	private MailManager mailManager;
+	
+	private String listView;
+	
+	public String getListView() {
+		return listView;
+	}
+
+	public void setListView(String listView) {
+		this.listView = listView;
+	}
+
+	@Override
+	public String startController(Context context) throws Throwable {
+		
+		context.setCurrentNode("DemDec.menu.Sigla");
+		
+		List<DocumentiViewTO> listAttoDecretoToSign = this.documentiManager.listADToSignOrVerifyByLoggedUser(getUtenteInSessione(), Constants.SIGLA);
+		if(listAttoDecretoToSign.size() > 0){
+			PaginatorUtil.addPaginator(listAttoDecretoToSign, SessionAttributes.LIST_AD_TO_SIGN, Paginator.PAGE_RANGE_5, context);
+		}else{
+			PaginatorUtil.removePaginator(context, SessionAttributes.LIST_AD_TO_SIGN);
+            ContextHelper.addWarning(context.getRequest(),"warning.noRecord.trovati");
+		}
+		return listView;
+	}
+	
+	
+	/**
+	 * Cicla la lista dei documenti selezionati per ognuno dei quali:
+	 * 	- chiama il metodo sigla di documentiManager che esegue la sigla effettiva dei documenti e torna un ogggetto IterFirmaDecretoTO (sarebbe il firmatario successivo).
+	 * 		Se il metodo del manager solleva una eccezione di tipo ObjectNotFoundException significa che una delle chiamate ai ws è andata male e a seconda del codice dell'eccezione
+	 * 		setta un msg nel context (code:100 = manca il destinatario nella mail, code:777 = ws download errror, code:888 = pkbox error, code:999 = ws upload error).
+	 * 		Se l'oggetto di tipo IterFirmaDecretoTO è valorizzato viene mandata una e-mail al firmatario successivo.
+	 * 		
+	 * @param context
+	 * @return startController(context)
+	 * @throws Throwable
+	 */
+	public String sigla(Context context) throws Throwable {
+		FirmaDocumentiForm form = (FirmaDocumentiForm)context.getForm();
+		if(form.isValid()){
+			List<DocumentiViewTO> list = context.getModel(SessionAttributes.LIST_AD_TO_SIGN);
+			for (int i = 0; i < form.getSelezioni().length; i++) {
+				String selezione = form.getSelezioni()[i];
+				DocumentiViewTO documentiViewTO = list.get(Integer.valueOf(selezione));
+				context.valorizeAudit(documentiViewTO, NomeFunzioneConstants.SIGLA_DOCUMENTI );
+				try {
+					IterFirmaDecretoTO ifd = documentiManager.sigla(documentiViewTO, getUtenteInSessione(), context.getRequest(), context.getResponse(), form.getSelezioni().length);
+					
+					if(ifd != null){
+						String email = utenteManager.findEmailSignatoryNextByStatFirmaAndIdFascicolo(ifd.getStatFirma(), ifd.getFascicoli().getId());
+						//email = "entrate_test2@pec.almaviva.it"; // per testare invio email
+						MimeMessage message = null;
+						if((ifd.getAnagFirmatari().getFlagPec01() == HAVE_PEC)){
+							message = mailManager.invioPecDaFunzione(NomeFunzioneConstants.SIGLA_DOCUMENTI, getUtenteInSessione(), email);
+						}else{
+							message = mailManager.invioPeoDaFunzione(NomeFunzioneConstants.SIGLA_DOCUMENTI, getUtenteInSessione(), email);
+						}
+						if(message != null){
+							PecMessaggiInviatiTO messageToSave = mailManager.createMessageToSave(message,NomeFunzioneConstants.SIGLA_DOCUMENTI);
+							context.valorizeAuditCreated(messageToSave, NomeFunzioneConstants.SIGLA_DOCUMENTI);
+							context.valorizeAuditUpdated(messageToSave, NomeFunzioneConstants.SIGLA_DOCUMENTI);
+							mailManager.salvaMessaggioInviato(messageToSave, getUtenteInSessione());
+							context.addInfo("info.doc.initialed.and.msg.sent", documentiViewTO.getDescNomeDocumento(), mailManager.recipientsToString( message.getAllRecipients()));
+						}else{
+							context.addInfo("info.doc.initialed", documentiViewTO.getDescNomeDocumento());
+							context.addWarning("warning.email.not.sent");
+						}
+					}else{
+						context.addInfo("info.doc.initialed", documentiViewTO.getDescNomeDocumento());
+					}
+					
+				} catch ( ObjectNotFoundException onfe) {
+					switch (onfe.getCode()) {
+					case 100:
+						context.addError("error.empty.recipient.to");
+						break;
+					case 777:
+						context.addError("error.ws.download.fascicolo.atto.decreto", onfe.getObject().toString());
+						break;
+					case 888:
+						context.addError("error.ws.pkbox.firma.fascicolo.atto.decreto", onfe.getObject().toString());
+						break;
+					case 999:
+						context.addError("error.ws.upload.fascicolo.atto.decreto", onfe.getObject().toString());
+						break;
+					default:
+						context.addError("error.generic", onfe.getObject().toString());
+						break;
+					}
+					return startController(context);
+				}
+			}
+		}else{
+			return startController(context);
+		}
+		form.clear();
+		return startController(context);
+	}
+	
+
+}

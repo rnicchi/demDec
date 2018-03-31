@@ -1,0 +1,47 @@
+package it.almavivaitalia.web.sh.validator;
+
+import static it.almavivaitalia.bsn.sh.utils.DateUtil.isDate;
+import it.almavivaitalia.bsn.sh.utils.ResourceBundleMessageSource;
+import it.almavivaitalia.web.sh.form.AbstractForm;
+import it.almavivaitalia.web.sh.utils.BaseSessionAttributes;
+import it.almavivaitalia.web.sh.utils.Context;
+
+import java.util.HashMap;
+import java.util.List;
+
+public abstract class AbstractParentValidator implements BaseSessionAttributes{
+	
+	private ResourceBundleMessageSource messageSource;
+	
+	/*LOCM*/
+	@SuppressWarnings("unused") private static final long serialVersionLOCM = 0L;
+	@SuppressWarnings("unused") private static final long serialVersionLOCM2 = 1L;
+	/*END LOCM*/
+
+	public void setMessageSource(ResourceBundleMessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
+
+	public boolean onSubmit(Context context) throws Throwable{
+		return true;
+	}	
+	
+	protected ResourceBundleMessageSource getMessageSource() {
+		return messageSource;
+	}
+	
+	protected <T extends AbstractForm> boolean checkRequired(Context context, List<String> fieldNames, HashMap<String, String> codeFields, T form) throws Throwable{
+		boolean res=true;
+		return res; 
+	}
+	
+	protected boolean checkDate(Context context, String value, String codeField) throws Throwable{
+		boolean res=true;
+		if (!isDate(value)){
+			context.addError("error.dateFormat", getMessageSource().getMessage(codeField));
+			res=false;
+		}
+		return res; 
+	}
+	
+}

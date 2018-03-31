@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fieldFormatterMap >
+<FieldFormatterMap>
+  <entry>
+    <Property value="descSigla"/>
+    <FieldFormatter cssClass="w10 center" type="0" label="label.selector.tipo"/>
+  </entry>
+  
+   <entry>
+    <Property value="numeNum"/>
+    <FieldFormatter cssClass="w10 center" type="0" label="label.selector.numero"/>
+  </entry>
+  
+   <entry>
+    <Property value="annoEse"/>
+    <FieldFormatter cssClass="w10 center" type="0" label="label.selector.anno"/>
+  </entry>  
+</FieldFormatterMap>
+

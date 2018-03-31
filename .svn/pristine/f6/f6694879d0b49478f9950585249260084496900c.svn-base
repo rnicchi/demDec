@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 13-nov-2015 17.10.08 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="it.almavivaitalia.bilancio.commons.bo.DescDocumentoBO" table="D_DESC_DOCUMENTO">
+        <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+        <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+        <id name="id" type="string">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="CODI_DESC_DOCUMENTO" length="16" />
+        </id>
+        <!-- CAMPI DI AUDIT START -->
+		   <property name="rowCreatedDttm" type="timestamp">
+		    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+		   </property>
+		   <property name="rowCreatedUser" type="string">
+		    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+		   </property>
+		   <property name="rowUpdatedDttm" type="timestamp">
+		    <column name="ROW_UPDATED_DTTM" length="7" />
+		   </property>
+		   <property name="rowUpdatedUser" type="string">
+		    <column name="ROW_UPDATED_USER" length="50" />
+		   </property>
+		   <property name="rowCreatedForm" type="string">
+		    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+		   </property>
+		   <property name="rowUpdatedForm" type="string">
+		    <column name="ROW_UPDATED_FORM" length="50" />
+		   </property>
+   		<!-- CAMPI DI AUDIT END -->
+        <property name="textDescrizione" type="string">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="TEXT_DESCRIZIONE" length="1020">
+                <comment>Testo della descrizione attribuibile ai documenti</comment>
+            </column>
+        </property>
+        <property name="codiTipoDocumento" type="string">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="CODI_TIPO_DOCUMENTO" length="16">
+                <comment>Codice della raccolta documentale di riferimento per la descrizione utilizzabile</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

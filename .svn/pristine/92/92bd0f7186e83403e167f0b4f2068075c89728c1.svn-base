@@ -1,0 +1,183 @@
+package it.mef.bilancio.demdec.web.spring.controller.fascicolifad;
+
+import java.util.List;
+
+import it.almavivaitalia.bsn.sh.paginator.Paginator;
+import it.almavivaitalia.bsn.sh.utils.PaginatorUtil;
+import it.almavivaitalia.bsn.sh.utils.StringUtil;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.manager.GestioneWorkflowFirmeManager;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.manager.MonitoraggioFirmaManager;
+import it.mef.bilancio.demdec.to.AnagFirmatariTO;
+import it.mef.bilancio.demdec.to.IterFirmaDecretoTO;
+import it.mef.bilancio.demdec.to.MonitoraggioFirmaTO;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.MonitoraggioFirmaForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping (value=ConstantsRequestMapping.MONITORAGGIO_FIRMA)
+public class MonitoraggioFirmaController extends AbstractDemFormController {
+	
+	@Autowired
+	private ListManager listManager;
+	
+	@Autowired
+	private GestioneWorkflowFirmeManager workflowFirmeManager;
+	
+	@Autowired
+	private MonitoraggioFirmaManager monitoraggioFirmaManager;
+	
+	
+	private String startView;
+	private String dettaglioView;
+	private String dettaglioFascicoloView;
+	
+	
+	public String getStartView() {
+		return startView;
+	}
+
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+
+	public String getDettaglioView() {
+		return dettaglioView;
+	}
+
+	public void setDettaglioView(String dettaglioView) {
+		this.dettaglioView = dettaglioView;
+	}
+	
+	public String getDettaglioFascicoloView() {
+		return dettaglioFascicoloView;
+	}
+
+	public void setDettaglioFascicoloView(String dettaglioFascicoloView) {
+		this.dettaglioFascicoloView = dettaglioFascicoloView;
+	}
+
+	@Override
+	public String startController(Context context) throws Throwable {
+		
+		context.setCurrentNode("DemDec.menu.MonitoraggioFirme");
+		
+		MonitoraggioFirmaForm form = (MonitoraggioFirmaForm)context.getForm();
+		
+		context.setDataModel(SessionAttributes.LIST_ANNO_ESE, listManager.loadEserciziDemCG());		
+		context.setDataModel(SessionAttributes.LIST_TIPI_DECRETI, listManager.loadAnagTipoDecreto());
+		context.setDataModel(SessionAttributes.LIST_ANAG_STATI_FASC, listManager.loadStatiFascicoloMonitoraggio());
+		
+		List<AnagFirmatariTO> listaFirmatari = workflowFirmeManager.elencoAnagraficaFirmatari();
+		context.setDataModel(SessionAttributes.LIST_ANAG_FIRMATARI, listaFirmatari);
+		
+		return startView;		
+	}
+	
+	public String onEseguiRicerca(Context context) throws Throwable {
+		
+		MonitoraggioFirmaForm form = (MonitoraggioFirmaForm) context.getForm();
+		
+		if(form.isValid()){
+			
+			MonitoraggioFirmaTO monitoraggioFirmaTO = new MonitoraggioFirmaTO();
+			{
+				// Anno decreto
+				monitoraggioFirmaTO.setAnnoEse(Short.parseShort(form.getAnnoDecreto()));
+				
+				// Numero decreto
+				//if(form.getNumeDecreto() != null && !"".equals(form.getNumeDecreto())){
+				if(!StringUtil.isEmpty(form.getNumeDecreto())){
+					monitoraggioFirmaTO.setNumeNumDecreto(Integer.parseInt(form.getNumeDecreto()));
+				}
+				
+				// Tipo decreto
+				//if(form.getTipoDecreto() != null && !"".equals(form.getTipoDecreto()) ){
+				if(!StringUtil.isEmpty(form.getTipoDecreto())){
+					monitoraggioFirmaTO.setNumeTipoDecreto(Integer.parseInt(form.getTipoDecreto()));
+				}
+				
+				// In firma e Firmato
+				//if(form.getAllaFirma() != null && !"".equals(form.getAllaFirma()) ){
+				if(!StringUtil.isEmpty(form.getAllaFirma())){
+					monitoraggioFirmaTO.setDescInFirma(form.getAllaFirma());
+				}
+				//if(form.getFirmato() != null && !"".equals(form.getFirmato()) ){
+				if(!StringUtil.isEmpty(form.getFirmato())){	
+					monitoraggioFirmaTO.setDescFirmato(form.getFirmato());
+				}
+				
+				// Stato fascicolo
+				//if(form.getStatoFascicolo() != null && !"".equals(form.getStatoFascicolo())){
+				if(!StringUtil.isEmpty(form.getStatoFascicolo())){	
+					monitoraggioFirmaTO.setStatStato(Integer.parseInt(form.getStatoFascicolo()));
+				}
+			}
+			
+			List<MonitoraggioFirmaTO> listaDecretiTO = monitoraggioFirmaManager.caricaListaDecreti(monitoraggioFirmaTO);
+			
+			if(listaDecretiTO != null && listaDecretiTO.size() > 0){
+				PaginatorUtil.addPaginator(listaDecretiTO,LIST_DECRETI_MONITORAGGIO_FIRMA, Paginator.PAGE_RANGE_15, context);
+				return dettaglioView;
+			}
+			else {
+				PaginatorUtil.removePaginator(context, LIST_DECRETI_MONITORAGGIO_FIRMA);
+				context.addWarning("warning.empty");
+				return startView;				
+			}
+		}
+		
+		return startView;
+	}
+
+	public String onPulisci(Context context) throws Throwable {
+
+		MonitoraggioFirmaForm form = (MonitoraggioFirmaForm) context.getForm();
+		form.clean();
+
+		return startView;
+	}
+	
+	
+	public String onNuovaRicerca(Context context) throws Throwable {
+		
+		MonitoraggioFirmaForm form = (MonitoraggioFirmaForm) context.getForm();
+		form.clean();
+		
+		return startView;
+	}
+	
+	public String onDettaglioFascicolo(Context context) throws Throwable {
+		
+		MonitoraggioFirmaForm form = (MonitoraggioFirmaForm) context.getForm();
+		
+		String idFascicolo = getParameter(context, "numeIdFascicolo");
+		
+		List<IterFirmaDecretoTO> listaIterFirmaTO = monitoraggioFirmaManager.caricaListaIterFirmaDecreto(Long.parseLong(idFascicolo));
+		
+		if(listaIterFirmaTO != null && listaIterFirmaTO.size() > 0){
+			context.setDataModel(SessionAttributes.LIST_ITER_FIRMA_DECRETO, listaIterFirmaTO);
+			context.setDataModel(SessionAttributes.FASCICOLO_SELEZIONATO, listaIterFirmaTO.get(0).getFascicoli());
+		}
+		else {
+			context.removeDataModel(SessionAttributes.LIST_ITER_FIRMA_DECRETO);
+			context.addWarning("warning.empty");
+			return dettaglioView;
+		}
+		return dettaglioFascicoloView;
+	}
+	
+	public String onIndietroLista(Context context) throws Throwable {
+		
+		MonitoraggioFirmaForm form = (MonitoraggioFirmaForm) context.getForm();
+		context.removeDataModel(SessionAttributes.LIST_ITER_FIRMA_DECRETO);
+		context.removeDataModel(SessionAttributes.FASCICOLO_SELEZIONATO);
+		return dettaglioView;
+	}
+	
+}

@@ -1,0 +1,11 @@
+package it.almavivaitalia.bilancio.commons.dao;
+
+import java.util.List;
+
+import it.almavivaitalia.bilancio.commons.bo.UtenteProfiloBO;
+
+public interface UtenteProfiloDao extends AbstractCommonDao{
+	
+	public UtenteProfiloBO saveOrUpdate(UtenteProfiloBO o);
+	List<UtenteProfiloBO> loadAll();
+}

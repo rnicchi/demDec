@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false" threshold="debug">
+	<!-- Console Appender -->
+	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<!--<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p %C : %m%n"/>-->
+			<!--<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p %c{1} : %m%n"/>-->
+			<param name="ConversionPattern" value="%p - %c - %m%n"/>
+		</layout>
+	</appender>
+	
+	<!-- WEB -->
+	<appender name="DEMDEC_WEB" class="org.apache.log4j.RollingFileAppender">
+		<param name="Threshold" value="DEBUG"/>
+		<param name="File" value="/appoggio/demdec-web.log"/>
+		<param name="MaxFileSize" value="2000kb"/>
+		<param name="MaxBackupIndex" value="5"/>
+		<layout class="org.apache.log4j.PatternLayout">
+		
+			<!-- <param name="ConversionPattern" value="%d{ABSOLUTE} %-5p %c{1} : %m%n"/> -->
+		<param name="ConversionPattern" value="%d [%X{userName}] - %p - %c - %m%n"/>
+		</layout>
+	</appender>
+	
+	<!--config packages -->
+	<!--scala level: DEBUG INFO WARN ERROR FATAL LOG ALL -->
+
+	<!-- logger di business applicativo-->
+	<!-- logger name="it.mef.bilancio.cons" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="SSB_BUSINESS"/>
+	</logger-->
+	<!--  default logger -->
+	
+	<logger name="it.almaviva" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="DEMDEC_WEB"/>
+	</logger>
+		
+	<logger name="it.mef.bilancio.demdec" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="DEMDEC_WEB"/>
+	</logger>
+
+	<logger name="it.gov.mef.demdec" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="DEMDEC_WEB"/>
+	</logger>
+	
+	<logger name="org" additivity="false">
+		<level value="ERROR"/>
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="DEMDEC_WEB"/>
+	</logger>
+	<logger name="com" additivity="false">
+		<level value="ERROR"/>
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="DEMDEC_WEB"/>
+	</logger>
+
+	<!--  default logger -->
+	<root>
+		<level value="ERROR"/>
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="DEMDEC_WEB"/>
+	</root>
+	
+</log4j:configuration>

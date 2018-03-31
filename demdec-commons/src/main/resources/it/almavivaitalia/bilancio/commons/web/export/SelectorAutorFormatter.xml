@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fieldFormatterMap >
+<FieldFormatterMap>
+  <entry>
+    <Property value="descSigla"/>
+    <FieldFormatter cssClass="w10 center" type="0" label="label.selector.tipo"/>
+  </entry>  
+  <entry>
+    <Property value="legNumeNum"/>
+    <FieldFormatter cssClass="w10 center" type="0" label="label.selector.numero"/>
+  </entry>
+  <entry>
+    <Property value="legAnnoEse"/>
+    <FieldFormatter cssClass="w10 center" type="0" label="label.selector.anno"/>
+  </entry>
+  <entry>
+    <Property value="numeArt"/>
+    <FieldFormatter cssClass="w10 center" type="0" label="label.selector.articolo"/>
+  </entry>
+  <entry>
+    <Property value="numeSubArt"/>
+    <FieldFormatter cssClass="w10 center" type="0" label="label.selector.empty"/>
+  </entry>  
+  <entry>
+    <Property value="numeComma"/>
+    <FieldFormatter cssClass="w10 center" type="0" label="label.selector.comma"/>
+  </entry>
+  <entry>
+    <Property value="numeSubComma"/>
+    <FieldFormatter cssClass="w10 center" type="0" label="label.selector.empty"/>
+  </entry>  
+  <entry>
+    <Property value="codiPunto"/>
+    <FieldFormatter cssClass="w10 center" type="0" label="label.selector.punto"/>
+  </entry>
+  <entry>
+    <Property value="numeSubPunto"/>
+    <FieldFormatter cssClass="w10 center" type="0" label="label.selector.empty"/>
+  </entry>       
+</FieldFormatterMap>
+

@@ -1,0 +1,25 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import it.mef.bilancio.demdec.dao.PartecipazioniDao;
+import it.mef.bilancio.demdec.manager.InvioPecPartecipazioneManager;
+import it.mef.bilancio.demdec.to.PartecipazioniTO;
+
+public class InvioPecPartecipazioneManagerImpl extends AbstractDemManagerImpl implements InvioPecPartecipazioneManager {
+	
+	
+	@Autowired
+	private PartecipazioniDao partecipazioniDao;
+
+	@Override
+	public List<PartecipazioniTO> findByIdFascicolo(Integer idFascicolo) throws Throwable {
+
+		return partecipazioniDao.findByIdFascicolo(idFascicolo);
+	}
+	
+	
+	
+}

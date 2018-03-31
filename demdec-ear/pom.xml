@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>demdec</artifactId>
+		<groupId>it.mef.bilancio.demdec</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>demdec-ear</artifactId>
+	<packaging>ear</packaging>
+	<name>demdec-ear</name>
+
+	<dependencies>
+		<!-- PROJECT DEPENDENCY -->
+		<dependency>
+			<groupId>it.mef.bilancio.demdec</groupId>
+			<artifactId>demdec-web</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+			<scope>compile</scope>
+		</dependency>	
+		<!-- PROJECT DEPENDENCY -->
+	</dependencies>
+	<!-- <repositories> <repository> <id>myproject.repository</id> <name>MyProject 
+		Repository</name> <url>file:J:/DEV/MAVEN-REP-2</url> </repository> </repositories> -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.0.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<version>1.4</version>
+					<modules>
+						<webModule>
+							<groupId>it.mef.bilancio.demdec</groupId>
+							<artifactId>demdec-web</artifactId>
+							<contextRoot>/demdec</contextRoot>
+						</webModule>										
+					</modules>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jboss-maven-plugin</artifactId>
+				<version>1.3.1</version>
+				<configuration>
+					<jbossHome>${jboss.home}</jbossHome>
+					<serverName>${jboss.server.name}</serverName>
+					<hostName>${jboss.host.name}</hostName>
+					<port>${jboss.port}</port>
+					<deployUrlPath>${jboss.deploy.url}</deployUrlPath>
+					<undeployUrlPath>${jboss.undeploy.url}</undeployUrlPath>
+					<fileName>${project.build.directory}/${project.build.finalName}.${project.packaging}</fileName>
+				</configuration>
+			</plugin>
+
+		</plugins>
+		<finalName>demdec-ear</finalName>
+	</build>
+</project>

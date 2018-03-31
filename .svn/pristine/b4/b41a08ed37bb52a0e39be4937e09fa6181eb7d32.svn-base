@@ -1,0 +1,178 @@
+package it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.enums.TipoResponse;
+import it.mef.bilancio.demdec.to.AnagFirmatariTO;
+import it.mef.bilancio.demdec.to.AnagModelliIterTO;
+import it.mef.bilancio.demdec.to.IterFirmaTO;
+import it.mef.bilancio.demdec.to.IterFirmaTOId;
+import it.mef.bilancio.demdec.web.spring.form.GestioneWorkflowFirmeForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.NomeFunzioneConstants;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+
+
+@RequestMapping(value = ConstantsRequestMapping.GESTIONE_WORKFLOW_FIRME)
+public class GestioneWorkflowFirmeController extends GestioneWorkflowFirmeParentController {
+
+
+
+
+	public String onNuovoModelloIter(Context context) throws Throwable {
+
+		List<AnagFirmatariTO> listaAnagFirmatari = getGestioneWorkflowFirmeManager().elencoAnagraficaFirmatari();
+		context.setDataModel(SessionAttributes.LIST_ANAG_FIRMATARI, listaAnagFirmatari);
+
+		return getCreaView();
+	}
+
+	public String onConfermaModelloIter(Context context) throws Throwable {
+
+		GestioneWorkflowFirmeForm form = context.getForm();
+		if(!form.isValid()) return getCreaView();
+
+		String nuovoModello = form.getNuovoModello().toUpperCase().trim();
+		String selectedAnagFirmatario = form.getAnagFirmatario();
+
+		List<AnagModelliIterTO> listaModelliIter = context.getModel(SessionAttributes.LIST_ANAG_MODELLI_ITER);
+		for (AnagModelliIterTO to: listaModelliIter) 
+			if (to.getDescIter().equals(nuovoModello)) {
+					context.addError("errore.modello.iter.presente");
+					return getCreaView();
+			}
+
+		//inserimento nuovo modello Iter
+		AnagModelliIterTO anagModelliIterTO = new AnagModelliIterTO();
+		anagModelliIterTO.setDescIter(nuovoModello);
+		context.valorizeAuditCreated(anagModelliIterTO, NomeFunzioneConstants.FUNZIONE_GEST_WORKFLOW_FIRME);
+		short idNewModelloIter = getGestioneWorkflowFirmeManager().creaModelloIter(anagModelliIterTO);
+
+		creazioneIterFirma(context, idNewModelloIter, new Integer(1), selectedAnagFirmatario);
+
+		getResponseManager().predisponiStartView(context, TipoResponse.INFO, "info.create.modello.iter.success");
+		return getStartView();
+	}
+
+	public String onBack(Context context) throws Throwable {
+		return  getStartView();
+	}
+
+	public String onConfermaIterFirma(Context context) throws Throwable {
+
+		GestioneWorkflowFirmeForm form = context.getForm();
+		if(!form.isValid()) return getStartView();
+
+		String selectedModello = form.getSelectedModello();
+		String descrIter = form.getDescIter().toUpperCase().trim();
+		String selectedAnagFirmatario = form.getAnagFirmatario();
+		boolean modified = false;
+
+		//check aggiunto Firmatario
+		if (selectedAnagFirmatario != null && !selectedAnagFirmatario.equals("")) {
+			List<IterFirmaTO> listaIterFirmaTO = getGestioneWorkflowFirmeManager().elencoFirmatariPerModelloIter(selectedModello);
+			form.setAnagFirmatario("");
+			for (IterFirmaTO to: listaIterFirmaTO)
+				if (to.getAnagFirmatari().getId().equals(selectedAnagFirmatario)) {
+					//context.addError("errore.iter.firma.presente");
+					getResponseManager().predisponiModDettaglioView(context, TipoResponse.ERROR, "errore.iter.firma.presente", selectedModello);
+					return getModDettaglioView();
+				}
+
+			creazioneIterFirma(context, Short.valueOf(selectedModello), listaIterFirmaTO.size()+1, selectedAnagFirmatario);
+			modified = true;
+		}
+		//check modifica descrizione Modello Iter
+		List<AnagModelliIterTO> listaModelliIter = context.getModel(SessionAttributes.LIST_ANAG_MODELLI_ITER);
+		for (AnagModelliIterTO to: listaModelliIter) {
+			if (to.getId().equals(Short.valueOf(selectedModello))) {
+				if (!to.getDescIter().equals(descrIter)) {
+					//aggiornamento modello Iter
+					AnagModelliIterTO anagModelliIterTO = getGestioneWorkflowFirmeManager().loadAnagModelliIter(Short.valueOf(selectedModello));
+					anagModelliIterTO.setDescIter(descrIter);
+					context.valorizeAuditUpdated(anagModelliIterTO, NomeFunzioneConstants.FUNZIONE_GEST_WORKFLOW_FIRME);
+					getGestioneWorkflowFirmeManager().salvaModelloIter(anagModelliIterTO);
+					modified = true;
+				}
+			}
+			else if (to.getDescIter().equals(descrIter)) {
+//					context.addError("errore.modello.iter.presente");
+				getResponseManager().predisponiModDettaglioView(context, TipoResponse.ERROR, "errore.modello.iter.presente", selectedModello);
+					return getModDettaglioView();
+			}
+		}
+
+		if (modified) 
+			getResponseManager().predisponiDettaglioView(context, TipoResponse.INFO, "info.update.modello.iter.success", selectedModello);
+		return getDettaglioView();
+	}
+
+	public String onSalvaOrderIterFirma(Context context) throws Throwable {
+
+		GestioneWorkflowFirmeForm form = context.getForm();
+		String selectedModello = form.getSelectedModello();
+		String nuovoOrdineFirmatari = form.getListaNuovoOrdineFirmatari();
+
+		List<IterFirmaTO> listaIterFirme = context.getModel(SessionAttributes.LIST_ITER_FIRMA);
+		Map<Integer, IterFirmaTO> iterFirmaFinder = new HashMap<Integer, IterFirmaTO>();
+		for (IterFirmaTO to: listaIterFirme)
+			iterFirmaFinder.put(to.getId().getNumeOrdine(), to);
+
+		List<IterFirmaTO> nuovaListaIterFirme = new ArrayList<IterFirmaTO>(listaIterFirme.size());
+		for (String s: nuovoOrdineFirmatari.split(","))
+			nuovaListaIterFirme.add(iterFirmaFinder.get(Integer.valueOf(s)));
+
+		getGestioneWorkflowFirmeManager().salvaOrdineFirmatari(selectedModello, nuovaListaIterFirme);
+
+		getResponseManager().predisponiModDettaglioView(context, TipoResponse.INFO, "info.save.ordine.iter.success", selectedModello);
+		return getModDettaglioView();
+	}
+
+
+	//inserimento associazione primo firmatario per nuovo modello Iter
+	private void creazioneIterFirma(Context context, short idModelloIter, Integer numeOrdine, String codiceFirmatario) 
+			throws Throwable {
+
+		IterFirmaTO iterFirmaTO = 
+					new IterFirmaTO(new IterFirmaTOId(idModelloIter, numeOrdine));
+
+		AnagModelliIterTO anagModelliIterTO = getGestioneWorkflowFirmeManager().loadAnagModelliIter(idModelloIter);
+		iterFirmaTO.setAnagModelliIter(anagModelliIterTO);
+		AnagFirmatariTO anagFirmatariTO = getGestioneWorkflowFirmeManager().loadAnagFirmatari(codiceFirmatario);
+		iterFirmaTO.setAnagFirmatari(anagFirmatariTO);
+		context.valorizeAuditCreated(iterFirmaTO, NomeFunzioneConstants.FUNZIONE_GEST_WORKFLOW_FIRME);
+		getGestioneWorkflowFirmeManager().creaIterFirma(iterFirmaTO);
+	}
+
+	public String onModificaModelloIter(Context context) throws Throwable {
+		GestioneWorkflowFirmeForm form = context.getForm();
+		String selectedModello = form.getSelectedModello();
+	
+		List<IterFirmaTO> listaIterFirme = getGestioneWorkflowFirmeManager().elencoFirmatariPerModelloIter(selectedModello);
+		context.setDataModel(SessionAttributes.LIST_ITER_FIRMA, listaIterFirme);
+		List<AnagFirmatariTO> listaAnagFirmatari = getGestioneWorkflowFirmeManager().elencoAnagraficaFirmatari();
+		context.setDataModel(SessionAttributes.LIST_ANAG_FIRMATARI, listaAnagFirmatari);
+	
+		return getModDettaglioView();
+	}
+	
+	@Override
+	public String startController(Context context) throws Throwable {
+
+		context.setCurrentNode("DemDec.menu.WorkflowFirme");
+
+		List<AnagModelliIterTO> listaModelliIter = getGestioneWorkflowFirmeManager().elencoModelliIter();
+		context.setDataModel(SessionAttributes.LIST_ANAG_MODELLI_ITER, listaModelliIter);
+
+		return getStartView();
+		
+	}
+	
+
+}

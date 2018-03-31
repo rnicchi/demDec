@@ -1,0 +1,42 @@
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@page import="it.almavivaitalia.web.sh.utils.BaseSessionAttributes"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.WebConstants"%>
+
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<!-- PageName = testFirme.jsp -->
+
+
+<tiles:useAttribute name="action"/>
+<tiles:insertAttribute name="modalPin" flush="false"/>
+
+	<fieldset>
+		<legend>Test di validità del certificato</legend>
+ 
+      	<div class="spacer_sm">&nbsp;</div>
+		<div class="row center">
+			<img src="<%=request.getContextPath()%>/public/img/test_firma.png" alt="vai">
+        </div>
+      
+      <div class="spacer_sm">&nbsp;</div>
+      <div class="spacer_sm">&nbsp;</div>
+	
+		<div class="row center small">
+			<sec:authorize access="hasRole('bollinaDocumenti')">
+				<div class="small-4 columns left"><demdec:submit keyValue="button.bollina" controllerCode="autoTagVisibile"/></div>
+			</sec:authorize>
+			<sec:authorize access="hasRole('siglaDocumenti')">
+				<div class="small-4 columns left"><demdec:submit keyValue="button.sigla" controllerCode="autoTagInvisibile" /></div>
+			</sec:authorize>
+			<sec:authorize access="hasRole('firmaDocumenti')">
+				<div class="small-4 columns left"><demdec:submit keyValue="button.firma" controllerCode="" onclick="return apriPopUpModale('contModal_1_doc');"/></div>
+			</sec:authorize>
+		</div>
+	</fieldset>
+	

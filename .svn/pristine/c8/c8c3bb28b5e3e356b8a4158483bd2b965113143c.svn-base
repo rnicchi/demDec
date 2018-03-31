@@ -1,0 +1,120 @@
+/**
+ * 
+ */
+package it.mef.bilancio.demdec.dao.impl;
+
+
+import it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO;
+import it.mef.bilancio.demdec.dao.AnagAmminDemDao;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import org.hibernate.Query;
+
+
+
+/**
+ * @author utente
+ *
+ */
+public class AnagAmminDemDaoImpl extends AbstractDemDaoImpl<AnagAmminDemBO> implements AnagAmminDemDao {
+
+	
+	AnagAmminDemDaoImpl() {
+		super(AnagAmminDemBO.class);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AnagAmminDemBO> getAmminDemByAnnoEse(String annoEse) throws Throwable {
+		
+		Query query=createQuery("FROM AnagAmminDemBO a Where a.id.fkAnnoEse =:annoEse");
+		query.setParameter("annoEse", new Short(annoEse));
+		return (List<AnagAmminDemBO>)query.list();
+/*		List<AnagAmminDemBO> list=query.list(); 
+		List<AnagAmminDemTO> listaTO=new ArrayList<AnagAmminDemTO>();
+		
+		Iterator<AnagAmminDemBO> iter=list.iterator();
+		AnagAmminDemTO to=null;
+		AnagAmminDemBO bo=null;
+		while (iter.hasNext()) {
+			to=new AnagAmminDemTO();
+			to.setId(new AnagAmminDemTOId());
+			
+			bo=(AnagAmminDemBO)iter.next(); 
+			//TODO problemi col dozer Unknown property 'fkAnnoEse' on class 'class it.mef.bilancio.demdec.to.AnagCdrDemTO'
+			to.getId().setFkAnnoEse(bo.getId().getFkAnnoEse());
+			to.getId().setNumeApp(bo.getId().getNumeApp());
+			to.getId().setNumeStp(bo.getId().getNumeStp());
+			to.setDescAmm( bo.getDescAmm());
+			
+			listaTO.add(to);
+		}
+		
+		return listaTO;
+*/		
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AnagAmminDemBO> getAmminDemByAnnoEseUtenteAndProfilo(String annoEse, String idUtente, String idProfilo) throws Throwable {
+		
+		/*Query query=createQuery("select amm FROM AnagAmminDemBO amm, UtenteProfiloBO utProf,  "
+							  + " Where amm.id.fkAnnoEse=utProf.anagAmminDem.id.fkAnnoEse "
+							 // + " and amm.id.numeStp=utProf.anagAmminDem.id.numeStp and amm.id.numeApp=utProf.anagAmminDem.id.numeApp "
+							  + " and amm.id.fkAnnoEse =:annoEse  and utProf.id.sequIdUtente=:idUtente and utProf.profilo.id=:idProfilo ");*/
+		
+		Query query=createQuery(" select amm FROM AnagAmminDemBO amm, UtenteProfiloBO utProf, AnagAmminUfficiBO ammUffici "
+							  + " where amm.id.fkAnnoEse=utProf.anagAmminDem.id.fkAnnoEse "							 
+							  + " and amm.id.fkAnnoEse =:annoEse  and utProf.id.sequIdUtente=:idUtente and utProf.profilo.id=:idProfilo "					
+							  + " and utProf.anagUffici.id=ammUffici.id.fkCodiUfficio "			                
+			                  + " and ammUffici.id.fkNumeStp=amm.id.numeStp and ammUffici.id.fkNumeApp=amm.id.numeApp and ammUffici.id.fkAnnoEse=:annoEse ");
+		
+		query.setParameter("annoEse", new Short(annoEse));
+		query.setParameter("idUtente", new BigDecimal(idUtente));
+		query.setParameter("idProfilo", Integer.valueOf(idProfilo));
+		
+		List<AnagAmminDemBO> resultList=(List<AnagAmminDemBO>)query.list();
+		
+		return resultList;
+		
+/*		List<AnagAmminDemBO> list=query.list(); 
+		List<AnagAmminDemTO> listaTO=new ArrayList<AnagAmminDemTO>();
+		
+		Iterator<AnagAmminDemBO> iter=list.iterator();
+		AnagAmminDemTO to=null;
+		AnagAmminDemBO bo=null;
+		while (iter.hasNext()) {
+			to=new AnagAmminDemTO();
+			to.setId(new AnagAmminDemTOId());
+			
+			bo=(AnagAmminDemBO)iter.next(); 
+			//TODO problemi col dozer Unknown property 'fkAnnoEse' on class 'class it.mef.bilancio.demdec.to.AnagCdrDemTO'
+			to.getId().setFkAnnoEse(bo.getId().getFkAnnoEse());
+			to.getId().setNumeApp(bo.getId().getNumeApp());
+			to.getId().setNumeStp(bo.getId().getNumeStp());
+			to.setDescAmm( bo.getDescAmm());
+			
+			listaTO.add(to);
+		}
+		
+		return listaTO;
+*/		
+	}
+	
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AnagAmminDemBO> getAmminDemCentraliByAnnoEse(String annoEse) throws Throwable {
+		
+		Query query=createQuery("FROM AnagAmminDemBO a Where a.id.fkAnnoEse =:annoEse and a.id.numeApp=0 and a.id.numeStp>0  order by id.numeStp ");
+		query.setParameter("annoEse", new Short(annoEse));
+		return (List<AnagAmminDemBO>)query.list();
+	}
+
+}

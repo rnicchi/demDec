@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class name="it.almavivaitalia.bilancio.commons.bo.SospesiRedBO" table="D_SOSPESI_RED">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <comment>Raccolte provvisorie RED da chiudere/riaprire sui sistemi RED e DEMBIL</comment>
+   <id name="id" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="40" name="CODI_GUID_RED"/>
+    <generator class="assigned"/>
+   </id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <property name="numeVersion" type="int">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_VERSION" not-null="true" precision="6" scale="0">
+     <comment>Numero intero che serve per gestire l''accesso concorrente con i DAO</comment>
+    </column>
+   </property>
+   <property name="codiIdRed" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="255" name="CODI_ID_RED" not-null="true">
+     <comment>Identificativo del fascicolo RED sul sistema RED</comment>
+    </column>
+   </property>
+   <property name="codiOperazione" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="4" name="CODI_OPERAZIONE">
+     <comment>Operazione richiesta "C" = chiusura, "A" = apertura</comment>
+    </column>
+   </property>
+   <property name="statEsito" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="8" name="STAT_ESITO">
+     <comment>Esito dell'operazione di chiusura/apertura delle raccolte provvisorie sul sistema RED</comment>
+    </column>
+   </property>
+   <property name="codiAooProtocollo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="20" name="CODI_AOO_PROTOCOLLO">
+     <comment>Codice Area Organizzativa Omogenea</comment>
+    </column>
+   </property>
+   <property name="numeProtocollo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="50" name="NUME_PROTOCOLLO" />
+   </property>
+   <property name="descTipoProtocollo" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="20" name="DESC_TIPO_PROTOCOLLO">
+     <comment>Tipo Protocollo INGRESSO, USCITA</comment>
+    </column>
+   </property>
+   <property name="dataProtocollo" type="timestamp">
+    <column name="DATA_PROTOCOLLO" length="7"> 
+     <comment>Data protocollo</comment>
+    </column>
+   </property>
+  </class>
+ </hibernate-mapping>

@@ -1,0 +1,124 @@
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+
+<%-- <%@page import="it.almavivaitalia.web.sh.utils.BaseSessionAttributes"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.WebConstants"%>
+ --%>
+ 
+<%@page import="com.ckeditor.CKEditorConfig"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
+
+<%@page import="com.ckeditor.EventHandler"%>
+<%@page import="com.ckeditor.GlobalEventHandler"%>
+<%-- <%@page import="it.mef.bilancio.demdec.web.spring.utils.ConfigurationHelper"%> --%>
+
+
+
+
+ 
+ <%@ taglib uri="http://ckeditor.com" prefix="ckeditor" %>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<demdec:useAttribute id="testo" name="testoMail"/> 
+
+<!-- PageName = InvioMailPecPartecipazione.jsp -->
+<!-- Controller  InvioPecPartecipazioneController-->
+
+
+<br><br>
+    
+
+   
+  <form:form enctype="multipart/form-data" modelAttribute="<%=SessionAttributes.FORM%>" id="multipartForm">
+    
+   <div class="col_char_user obb_fields"><spring:message code="label.required.fields"></spring:message></div>
+			<fieldset>
+				<legend><img src="<%=request.getContextPath()%>/public/img/ico_mail_pec.png" alt=""></legend>
+					 <div class="row">
+					 	<div class="small-7 columns">
+					 		<%-- <demdec:label path="recipientTo" labelKey="label.destinatari.TO"></demdec:label> --%>
+					 		 <label for="recipientTo"><spring:message code="label.destinatari.TO"/></label>
+					 		<form:input path="recipientTo" placeholder="Inserire indirizzi separati da virgola"/>
+					 		<!-- <input type="text" name="recipientTo"  placeholder="Inserire indirizzi separati da virgola"/>  -->
+					 	</div>
+					 </div>
+					 <div class="row">
+					 	<div class="small-7 columns">
+					 		<%-- <demdec:label path="recipientCc" labelKey="label.destinatari.Cc"></demdec:label> --%>
+					 		<label for="recipientCc"><spring:message code="label.destinatari.Cc"/></label>
+					 		 <form:input path="recipientCc" placeholder="Inserire indirizzi separati da virgola"/> 
+					 	<!-- 	<input type="text" name="recipientCc"  placeholder="Inserire indirizzi separati da virgola"/> -->
+					 	</div>
+					 </div>
+					 <div class="row">
+					 	<div class="small-7 columns">
+					 		<%-- <demdec:label path="oggetto" labelKey="label.oggetto"></demdec:label> --%>
+					 		<label for="oggetto"><spring:message code="label.oggetto"/></label>
+					 		<form:input path="oggetto"/>
+					 	<!-- 	<input type="text" name="oggetto" /> -->
+						</div>
+					 </div>
+						<!-- <div class="row">
+							<div class="small-5 columns">
+				        			<label for="upFile">allegato</label>
+				        			<input name="upFile" class="text_upload" type="file"/>  
+							</div>
+						</div> -->
+					  
+					    <div class="row">
+							<div class="small-5 columns">
+									<label for="upFile">Allegato</label>
+				        			<form:input path="upFile" class="text_upload" type="file"/>  
+							</div>
+						</div>
+					  
+					 <div class="row">
+					 	<div class="small-9 columns">
+					 		<%-- <demdec:label path="message" labelKey="label.messaggio"></demdec:label> --%>
+					 		<%-- <form:textarea path="message" cssClass="height_100"/> --%>
+							 <%
+									CKEditorConfig settings = new CKEditorConfig();
+									Map<String, String> attr = new HashMap<String, String>();
+									attr.put("rows", "100");
+									attr.put("cols", "10");  
+							  %>
+								 <div>
+								 <label for="message">Testo</label>
+								 <script src="<c:url value="/private/ckeditor/ckeditor.js"/>"> </script> 
+								   <ckeditor:editor textareaAttributes="<%=attr %>" basePath="/demdec-web/private/ckeditor/ckeditor.css" editor="message" value="${testo}"  />  
+								</div> 
+
+						</div>
+					 </div>
+					  <div class="spacer_sm">&nbsp;</div>
+					 <div class="row">
+        				<div class="small-10 columns">
+        					<demdec:buttons>
+								<demdec:submit controllerCode="inviaPec" keyValue="label.invio.pec" />
+							<!-- 	<nssb:submit controllerCode="StandardMailDaForm" keyValue="label.invio.standardMail.da.form" /> -->
+							</demdec:buttons>
+        				</div>
+        			 </div>
+        			 
+        			 	
+			
+			</fieldset>
+		
+ </form:form>
+<%-- <div class="row">
+			<div class="small-6 columns">
+							
+								 <div>
+								 <label for="editor1">Editor 1:</label>
+								 <script src="<c:url value="/private/ckeditor/ckeditor.js"/>"> </script> 
+								   <ckeditor:editor textareaAttributes="<%=attr %>" basePath="/demdec-web/private/ckeditor/ckeditor.css" editor="editor1" value="Type here"  />  
+								</div> 
+
+			</div>
+</div> --%>

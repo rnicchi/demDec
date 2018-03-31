@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="Action.getByProfilo">
+	select a.codi_action from d_j_action a, d_j_mm_action_profilo b
+	where b.sequ_id_action = a.sequ_id_action and b.sequ_id_profilo =
+	:sequIdProfilo
+
+	<query-param name="sequIdProfilo" type="long" />
+	</sql-query>
+</hibernate-mapping>

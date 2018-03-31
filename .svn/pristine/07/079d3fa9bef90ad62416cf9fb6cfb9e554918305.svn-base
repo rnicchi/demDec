@@ -1,0 +1,53 @@
+package it.mef.bilancio.demdec.utils;
+
+import it.mef.bilancio.demdec.servizi.to.RaccoltaProvvisoriaRedTO;
+import it.mef.bilancio.demdec.to.AbstractDemTO;
+
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+
+/** classe per l'ordinamento di un ArrayList di RaccoltaProvvisoriaRedTO in base
+ *  all'anno (decrescente) della data di protocollo e al numero (crescente) di protocollo**/
+/** @author utente
+ *
+ */
+public class MyComparatorRaccProvvRedToAnnoProtNumProt implements Comparator<AbstractDemTO> {
+	
+    public int compare(AbstractDemTO a, AbstractDemTO b) {
+	      SimpleDateFormat sdf=new SimpleDateFormat("yyyy");
+	      if (!(a instanceof RaccoltaProvvisoriaRedTO) || !(b instanceof RaccoltaProvvisoriaRedTO)) {}
+	      RaccoltaProvvisoriaRedTO a1 = (RaccoltaProvvisoriaRedTO)a;
+	      RaccoltaProvvisoriaRedTO b1 = (RaccoltaProvvisoriaRedTO)b;
+	      
+	      if(a1.getProtocollo()==null || a1.getProtocollo().getData()==null){
+	    	  return -1;
+	      }
+	      if(b1.getProtocollo()==null || b1.getProtocollo().getData()==null){
+	    	  return 1;
+	      }
+	      	      
+	      if ( Integer.parseInt(sdf.format(a1.getProtocollo().getData()))<Integer.parseInt(sdf.format(b1.getProtocollo().getData())) ) {
+	    	  return 1;
+	      } else if (Integer.parseInt(sdf.format(a1.getProtocollo().getData()))==Integer.parseInt(sdf.format(b1.getProtocollo().getData()))){		        
+	      //A parità di anno ordiniamo per numero protocollo
+	    	  if(Integer.parseInt(a1.getProtocollo().getNumeroProtocollo())>Integer.parseInt(b1.getProtocollo().getNumeroProtocollo())){
+	    		  return 1;
+	    	  }else if(Integer.parseInt(a1.getProtocollo().getNumeroProtocollo())==Integer.parseInt(b1.getProtocollo().getNumeroProtocollo())){
+	    		  return 0;
+	    	  }else{
+	    		  return -1;
+	    	  }
+	      }
+	      else {
+	    	  return -1;
+	      }
+    }
+    
+    @SuppressWarnings("unused")
+	private void foo(){
+	}
+	@SuppressWarnings("unused")
+	private void foo2(){
+	}
+    
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class name="it.almavivaitalia.bilancio.commons.bo.LettereTestiPersBO" table="D_LETTERE_TESTI_PERS">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <composite-id class="it.almavivaitalia.bilancio.commons.bo.LettereTestiPersBOId" name="id">
+    <key-property name="fkSequIdLettereIgb" type="big_decimal">
+     <column name="FK_SEQU_ID_LETTERE_IGB" scale="0"/>
+    </key-property>
+    <key-property name="codiTipoLettera" type="string">
+     <column length="5" name="CODI_TIPO_LETTERA"/>
+    </key-property>
+    <key-property name="codiSezione" type="string">
+     <column length="6" name="CODI_SEZIONE"/>
+    </key-property>
+    <key-property name="numeRiga" type="java.lang.Short">
+     <column name="NUME_RIGA" precision="3" scale="0"/>
+    </key-property>
+   </composite-id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.FascicoliBO" fetch="select" name="fascicoli">
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <column name="FK_NUME_ID_FASCICOLO" not-null="true" precision="10" scale="0">
+     <comment>Numero identificativo del fascicolo</comment>
+    </column>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.LettereIgbBO" fetch="select" insert="false" name="lettereIgb" update="false">
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <column name="FK_SEQU_ID_LETTERE_IGB" not-null="true" scale="0">
+     <comment>Progressivo identificativo della lettera IGB</comment>
+    </column>
+   </many-to-one>
+   <property name="textContenuto" type="string">
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <column length="4000" name="TEXT_CONTENUTO">
+     <comment>Contenuto della sezione</comment>
+    </column>
+   </property>
+  </class>
+ </hibernate-mapping>

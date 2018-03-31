@@ -1,0 +1,10 @@
+package it.mef.bilancio.demdec.manager;
+
+import it.almavivaitalia.bilancio.commons.web.security.Utente;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public interface TestFirmeManager extends AbstractDemManager{
+
+	public void firma(String pin, Utente utenteInSessione,  HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,Integer maxTranSize) throws Throwable;
+}

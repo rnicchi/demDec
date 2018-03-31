@@ -1,0 +1,196 @@
+package it.mef.bilancio.demdec.web.spring.controller.consultafascicolocdc;
+
+import it.almavivaitalia.bsn.sh.paginator.Paginator;
+import it.almavivaitalia.bsn.sh.utils.PaginatorUtil;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.manager.ConsFADCdcManager;
+import it.mef.bilancio.demdec.manager.DocumentiManager;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.servizi.client.ResponseDEMBILClient;
+import it.mef.bilancio.demdec.servizi.to.DocumentTO;
+import it.mef.bilancio.demdec.to.DocumentiRedTO;
+import it.mef.bilancio.demdec.to.FascicoliFadSearhTO;
+import it.mef.bilancio.demdec.to.FascicoliTO;
+import it.mef.bilancio.demdec.web.spring.form.ConsFADCdcForm;
+import it.mef.bilancio.demdec.web.spring.utils.FileUtil;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+//@RequestMapping(value = ConstantsRequestMapping.CONSULTA_FASCICOLO_CDC)
+public class ConsFADCdcParentController extends ConsFADCdcGrandParentController implements WebConstants, SessionAttributes{
+	
+	@Autowired
+	private ListManager listManager; 
+	
+	@Autowired
+	private ConsFADCdcManager consFADCdcManager;
+	
+	@Autowired 
+	private DocumentiManager documentiManager;
+	
+	
+	
+	@Override
+	public String startController(Context context) throws Throwable {
+		
+		context.setDataModel(SessionAttributes.LIST_ANNO_ESE, listManager.loadEserciziDemCG());
+		context.setDataModel(SessionAttributes.LIST_TIPI_DECRETI, listManager.loadAnagTipoDecreto());
+		
+		context.setCurrentNode("DemDec.menu.ConsFADCdc");
+		
+		context.removeDataModel(OPEN_DETT_FAD);
+		context.removeDataModel(OPEN_DETT_RED);
+		context.removeDataModel(OPEN_DETT_PATR);
+		return getStartView();
+	}
+
+	public ListManager getListManager() {
+		return listManager;
+	}
+
+	public void setListManager(ListManager listManager) {
+		this.listManager = listManager;
+	}
+
+	public ConsFADCdcManager getConsFADCdcManager() {
+		return consFADCdcManager;
+	}
+
+	public void setConsFADCdcManager(ConsFADCdcManager consFADCdcManager) {
+		this.consFADCdcManager = consFADCdcManager;
+	}
+
+	public DocumentiManager getDocumentiManager() {
+		return documentiManager;
+	}
+
+	public void setDocumentiManager(DocumentiManager documentiManager) {
+		this.documentiManager = documentiManager;
+	}
+	
+	
+	
+	public String onEseguiRicerca(Context context) throws Throwable{
+		ConsFADCdcForm form = context.getForm();
+		
+		if(!form.isValid()){
+			return getStartView();
+		}
+		
+		FascicoliFadSearhTO to = new FascicoliFadSearhTO();
+		to.setAmmin(form.getAmministrazione());
+		to.setAnnoDecreto(form.getAnnoDecreto());
+		to.setCdr(form.getCdr());
+		to.setDataArrivoA(form.getDataArrivoA());
+		to.setDataArrivoDa(form.getDataArrivoDa());
+		to.setNumeDecreto(form.getNumeDecreto());
+		to.setNumePat(form.getNumePat());
+		to.setStato(form.getStato());
+		to.setTipoDecreto(form.getTipoDecreto());
+		to.setTipologiaDecreto(form.getTipologiaDecreto());
+		to.setUfficio(form.getUfficio());
+		to.setFlagVisibilitaCdc01(1);
+		to.setNumeProtEntrataCdc(form.getNumeProtEntrata());
+		to.setDataProtEntrataCdc(form.getDataProtEntrata());
+		to.setDataPresaInCaricoCdc(form.getDataPresaInCarico());
+		to.setNumeProtUscitaCdc(form.getNumeProtUscita());
+		to.setDataProtUscitaCdc(form.getDataProtUscita());
+		
+		
+		List<FascicoliTO> lista = getConsFADCdcManager().getFascicoliFadCdc(to);
+		for (int i = 0; i < lista.size(); i++) {
+			lista.get(i).setDescStato((String)getListManager().loadDecStatiFascicoliFad(lista.get(i).getStatStato().toString()));
+		}
+			
+		
+		if (lista==null||lista.size()==0){
+			PaginatorUtil.removePaginator(context, LIST_FASCICOLI_FAD_CDC);
+			context.addWarning("warning.empty");
+			return getStartView();
+		}
+		PaginatorUtil.addPaginator(lista,LIST_FASCICOLI_FAD_CDC, Paginator.PAGE_RANGE_15, context);
+		//context.setDataModel(SessionAttributes.LIST_FASCICOLI_FAD, lista);
+		
+		return getAfterRicercaView();
+	}
+
+	
+	public String onNuovaRicercaCdc(Context context)throws Throwable{
+		ConsFADCdcForm form = context.getForm();
+		form.reset();
+		context.removeDataModel(LIST_TIPOLOGIA_DECRETO);
+		context.removeDataModel(SessionAttributes.LIST_AMMIN_DEM);
+		context.removeDataModel(LIST_ANAG_CDR_DEM);
+		context.removeDataModel(OPEN_DETT_FAD);
+		context.removeDataModel(OPEN_DETT_RED);
+		context.removeDataModel(OPEN_DETT_PATR);
+		return getStartView();
+	}
+	
+	public String onBackToFadSearchCdc(Context context)throws Throwable{
+		context.removeDataModel(OPEN_DETT_FAD);
+		context.removeDataModel(OPEN_DETT_RED);
+		context.removeDataModel(OPEN_DETT_PATR);
+		context.removeDataModel(FASCICOLO_SELEZIONATO);
+		return getAfterRicercaView();
+	}
+	
+	public String onBack(Context context)throws Throwable{
+		context.removeDataModel(OPEN_DETT_FAD);
+		context.removeDataModel(OPEN_DETT_RED);
+		context.removeDataModel(OPEN_DETT_PATR);
+		return getFascicoloFadView();
+	}
+
+	public String onScaricaPdfPatCdc(Context context) throws Throwable{
+		ResponseDEMBILClient res = null;
+		DocumentTO doc = null;
+		FascicoliTO to = (FascicoliTO)context.getModel(FASCICOLO_SELEZIONATO);
+		String rowNum = context.getCommandParameter("scaricaPdfPatCdc");
+		List<DocumentTO> listDocAttoDecreto = context.getModel(LIST_DOCUMENTI_PAT);
+		
+		if(!listDocAttoDecreto.isEmpty() && rowNum != null && rowNum != "" ){
+			doc = listDocAttoDecreto.get(Integer.parseInt(rowNum)-1);
+		}
+		res = getDocumentiManager().wsDownloadDocumentoFascicoloSIPATRAttoDecreto(to.getCodiGuidFascicolo(), doc.getIdSottoFascicolo(), doc.getIdDocumento());
+		
+		if(res.getEsitoTo().getCodice().equalsIgnoreCase("OK")){
+			FileUtil.downloadFromResponseWs(res, context);
+			
+		}else{
+			context.addError("error.ws.download.fascicolo.atto.decreto", res.getEsitoTo().getDescrizione());
+			return getDocumentiPatView();
+		}
+	
+		return null;
+	}
+
+	public String onScaricaPdfRedCdc(Context context) throws Throwable{
+		ResponseDEMBILClient res = null;
+		DocumentiRedTO doc = null;
+		FascicoliTO to = (FascicoliTO)context.getModel(FASCICOLO_SELEZIONATO);
+		String rowNum = context.getCommandParameter("scaricaPdfRedCdc");
+		List<DocumentiRedTO> listDocAttoDecreto = context.getModel(LIST_DOCUMENTI_RED);
+		
+		if(!listDocAttoDecreto.isEmpty() && rowNum != null && rowNum != "" ){
+			doc = listDocAttoDecreto.get(Integer.parseInt(rowNum)-1);
+		}
+		res = getDocumentiManager().wsDownloadDocumentoFascicoloAllegatoIGB(to.getCodiGuidFascicolo(), doc.getCodiGuidDocumentoTrasf());
+		
+		if(res.getEsitoTo().getCodice().equalsIgnoreCase("OK")){
+			FileUtil.downloadFromResponseWs(res, context);
+			
+		}else{
+			context.addError("error.ws.download.fascicolo.atto.decreto", res.getEsitoTo().getDescrizione());
+			return getDocumentiRedView();
+		}
+	
+		return null;
+	}
+	
+}

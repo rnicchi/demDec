@@ -1,0 +1,786 @@
+package it.mef.bilancio.demdec.web.spring.controller.fascicolifad;
+
+/**
+ * 
+ */
+
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bsn.sh.paginator.Paginator;
+import it.almavivaitalia.bsn.sh.utils.PaginatorUtil;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.dao.LettereTestiDao;
+//import it.consip.pat.common.constants.ICommonWebConstants;
+//import it.consip.pat.common.model.Decreto;
+//import it.consip.pat.common.model.DecretoAmministrazione;
+//import it.consip.pat.common.model.LetteraIgb;
+//import it.consip.pat.common.model.bilancio.CentroResponsabilita;
+//import it.consip.pat.common.model.type.NumeroTitolo;
+//import it.consip.rpp.core.constants.IFunzioniConstants;
+//import it.consip.rpp.core.constants.IHelpConstants;
+//import it.consip.rpp.core.decreto.business.manager.DecretoManager;
+//import it.consip.rpp.core.decreto.business.manager.letterePreRegManager;
+//import it.consip.rpp.web.common.constants.ISessionConstants;
+//import it.consip.rpp.web.common.constants.IWebConstants;
+//import it.consip.rpp.web.common.controllers.AbstractController;
+import it.mef.bilancio.demdec.manager.LetterePreRegManager;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.to.FascicoliFadSearhTO;
+import it.mef.bilancio.demdec.to.FascicoliTO;
+import it.mef.bilancio.demdec.to.LettereIgbTO;
+import it.mef.bilancio.demdec.utils.Constants;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.PredLetterePreRegForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.NomeFunzioneConstants;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.sql.Blob;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+//import java.util.List;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.ServletOutputStream;
+
+import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+//import javax.persistence.criteria.JoinType;
+/**
+ * @author utente
+ *
+ */
+
+
+@RequestMapping(value = ConstantsRequestMapping.PRED_LETTERE_PRE_REG)
+public class PredLetterePreRegController extends AbstractDemFormController implements WebConstants, SessionAttributes{
+	
+	private static Logger _LOG = Logger.getLogger(PredLetterePreRegController.class);
+	
+	private String startView;	
+	 
+	private String listaDecretiView;
+	
+	private String listaLettereView;
+	
+	 @Autowired
+	 private ListManager listManager;
+
+	 @Autowired
+	 private LetterePreRegManager letterePreRegManager;
+	 
+
+		@Autowired
+		LettereTestiDao lettereTestiDao;
+	 
+	 public void setStartView(String startView) {
+			this.startView = startView;
+	}
+	 
+	 
+	 public void setListaDecretiView(String listaDecretiView) {
+			this.listaDecretiView = listaDecretiView;
+		}
+
+	public void setListaLettereView(String listaLettereView) {
+		this.listaLettereView = listaLettereView;
+	}
+
+	
+	
+	/*public void launchEditor(String listaLettereView) {
+		
+		
+		String[] arrayTesti=null;
+        try {
+        	 arrayTesti=letterePreRegManager.getLettereTestiByTipo("L-IGB");
+		} catch (Throwable e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        WordFrame mainFrame = new WordFrame(arrayTesti[12]);
+           // mainFrame.textArea.append(arrayTesti[12]);
+            //frame.textArea.append(data.showText().toString());
+		
+	     DataStuff data = new DataStuff();
+	     ProcessEvents process = new ProcessEvents(mainFrame, data );
+	     mainFrame.setVisible(true);
+	}*/
+	 
+	
+	
+	 
+	 	@Override
+		public String startController(Context context) throws Throwable {
+			
+			context.setCurrentNode("DemDec.menu.PredLetterePreReg");
+			context.setDataModel(SessionAttributes.LIST_ANNO_ESE, listManager.loadEserciziDemCG());
+			context.setDataModel(SessionAttributes.LIST_TIPI_DECRETI, listManager.loadAnagTipoDecreto());
+			context.setDataModel(SessionAttributes.LIST_ANAG_UFF, listManager.loadAnagUfficiAttivi());
+			
+			return startView;
+	 }
+	 
+	 
+	 	
+	    public String onVisualizzaLettereDecreto(Context context) throws Throwable {
+	    	LettereIgbTO lettera=new LettereIgbTO();
+	    	java.util.List<FascicoliTO> listaFascicoli=context.getModel(LIST_FASCICOLI_FAD);
+	    	String rowNum = context.getCommandParameter("visualizzaLettereDecreto");
+	    	
+	    	FascicoliTO fascicolo=listaFascicoli.get(new Integer(rowNum));
+//	    	fascicolo.setNumeNumDecreto(new Integer(form.getNumeDecreto()));
+//	    	fascicolo.getEserciziDem().setId(new Short(form.getAnnoDecreto()));
+	    //	lettera.setDecreto(facicolo);
+	    	lettera.setFascicoli(fascicolo);
+	    	
+	    	java.util.List<LettereIgbTO> listaLettere=letterePreRegManager.findByLettera(lettera) ;
+	    	
+	    	if (listaLettere==null || listaLettere.size()==0){
+				PaginatorUtil.removePaginator(context, LIST_LETTERE_PRE_REG);
+				context.addWarning("warning.empty");
+				return listaDecretiView;
+			}else {
+				
+				PaginatorUtil.addPaginator(listaLettere, LIST_LETTERE_PRE_REG, Paginator.PAGE_RANGE_15, context);
+				//context.setDataModel(SessionAttributes.LIST_FASCICOLI_FAD, lista);
+				
+	//	        java.util.List<String> annoEserFinList = letterePreRegManager.getAnnoEseLettereIgb(getUtenteInSessione(), IWebConstants.MIN_RANGE_ANNO);
+	//	 	       
+	//	        filtro.setAnnoEseList(annoEserFinList);
+		    	
+		    
+		    	return listaLettereView;
+			}
+	    
+	    }
+	    
+		
+		
+		
+		public String onRicercaDecreti(Context context)throws Throwable{
+			PredLetterePreRegForm form=(PredLetterePreRegForm) context.getForm();
+			if(!form.isValid()){
+				return startView;
+			}
+			
+			FascicoliFadSearhTO to = new FascicoliFadSearhTO();
+			to.setAmmin(form.getAmministrazione());
+			to.setAnnoDecreto(form.getAnnoDecreto());
+			to.setCdr(form.getCdr());
+			to.setDataArrivoA(form.getDataArrivoA());
+			to.setDataArrivoDa(form.getDataArrivoDa());
+			to.setNumeDecreto(form.getNumeDecreto());
+			to.setNumePat(form.getNumePat());
+			to.setStato(Constants.STATO_FAD_APERTO); 
+			to.setTipoDecreto(form.getTipoDecreto());
+			to.setTipologiaDecreto(form.getTipologiaDecreto());
+			to.setUfficio(form.getUfficio());
+			
+			java.util.List<FascicoliTO> lista = getGestioneFadManager().getFascicoliFad(to);
+			
+			LettereIgbTO letteraTo=new LettereIgbTO();
+			
+			//controllo se un fascicolo ha già lettere associate
+			for (int i = 0; i < lista.size(); i++) {
+				letteraTo.setFascicoli(lista.get(i));
+				List<LettereIgbTO> listaLettere=letterePreRegManager.findByLettera(letteraTo);
+				lista.get(i).setFlagLetterePreReg((listaLettere!=null && listaLettere.size()>0)?1:0);
+			}
+			
+			if (lista==null || lista.size()==0){
+				PaginatorUtil.removePaginator(context, LIST_FASCICOLI_FAD);
+				context.addWarning("warning.empty");
+				return startView;
+			}
+			PaginatorUtil.addPaginator(lista, LIST_FASCICOLI_FAD, Paginator.PAGE_RANGE_15, context);
+			//context.setDataModel(SessionAttributes.LIST_FASCICOLI_FAD, lista);
+			
+			return  listaDecretiView;
+		}
+		
+	    
+		
+	    
+  	
+		public String  onStampa (Context context) throws Throwable {
+				
+			PredLetterePreRegForm form=(PredLetterePreRegForm) context.getForm();
+			
+			if(!form.isValid()){
+				return listaDecretiView;
+			}
+			
+			java.util.List<FascicoliTO> listFascicoli=context.getModel(LIST_FASCICOLI_FAD);
+			FascicoliTO fascicolo=listFascicoli.get(Integer.valueOf(form.getRadioButtonDecreti())-1);
+			
+			List<AnagAmminDemTO> listaAmm=letterePreRegManager.findAmministrazioniByIdFascicolo(fascicolo.getId());
+			//ResourceLoader rl=null;
+			//String webINFPath = this.getClass().getClassLoader().getResource("").getPath();
+		//	letterePreRegManager.getLetteraByIdDecreto(form.getNumeDecreto());
+				SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+				//Long idDecreto=new Long(idDecr);
+	    		  
+	    		   
+	    	/*	   if (errors){
+	    			   Decreto decr=new Decreto();
+	    			   
+	    			   decr.setFlagCertSn(null);
+	    			   decr.setAnnoEsercizio(filtro.getAnnoEsercizio());
+	    			   
+	    			   if(filtro.getData()!=null)
+	    				   decr.setData(sdf.parse(filtro.getData()));
+	    			   if(filtro.getDataDefinitivaBil()!=null)
+	    				   decr.setDataDefinitivaBil(sdf.parse(filtro.getDataDefinitivaBil()));
+	    			   if(filtro.getNumeroPrelevamento()!=null)
+	    				   decr.setNumero(new Integer(filtro.getNumeroPrelevamento()));
+	    			   if(filtro.getNumeroBilancio()!=null)
+	    				   decr.setNumeroDefinitivoBil(new Integer(filtro.getNumeroBilancio()));
+	    			   if(filtro.getNumeroTitolo()!=null)
+	    				   decr.setNumeroTitolo(filtro.getNumeroTitolo());
+	    			   
+	    			   java.util.List<Decreto> decretoList = letterePreRegManager.findByDecreto(decr);
+	    		        
+				        if (decretoList.size() >0){
+				            
+				            context.setDataModel("decretoList", decretoList);
+				        }else{
+				            //addWarningMessages(model,new String[]{ICommonWebConstants.NESSUN_RISULTATO_TROVATO});
+				            context.addWarning("warning.noRecord.trovati");  
+				        }
+
+	    			   return "decreto/pred_lettere";
+	    		   }
+	    		   
+	    		   idDecreto=new Long(fascicolo.getId());
+	    		   String annoEse=filtro.getAnnoEsercizio(); */
+	    	
+			    //    Decreto decreto = decretoManager.findByIdFetch(idDecreto, JoinType.LEFT, new String[]{"relDecretoAmministrazioni"});
+		            
+			    //	Integer numeroDefBil=decreto.getNumeroDefinitivoBil();
+			    	       
+			 //       java.util.List<DecretoAmministrazione> decrAmmList = letterePreRegManager.findAmministrazioniByIdDecreto(idDecreto);
+			       
+			      //  int numTitolo=decreto.getNumeroTitolo().getOrdinal();
+			     //   String titolo=numTitolo==1?"parte corrente":"conto capitale";
+			     
+		
+			      //  ArrayList<DecretoAmministrazione> ammDecList = new ArrayList<DecretoAmministrazione>(decreto.getRelDecretoAmministrazioni());
+			        
+			        String [] testiLettere=letterePreRegManager.getLettereTestiByTipo("L-IGB");
+			       // Long [] arrayNumeriFascicoli=letterePreRegManager.findNumeriFascicoli(idDecreto);
+			         
+			       // java.util.List<CentroResponsabilita> listaCdr=null;
+			        String dest=null;
+			        byte[] pdfBytes=null;
+			        LettereIgbTO lettera=null;
+			        Long idAmm=null;
+			        
+			        for (AnagAmminDemTO amminDemTo : listaAmm) {
+				        	//listaCdr=letterePreRegManager.findCentriResponsabilita(decretoAmministrazione.getId(), new Long(filtro.getAnnoEsercizio()));
+				        	//dest= decretoAmministrazione.getAmministrazione().getDescrizione01();
+				           dest= amminDemTo.getDescAmm();
+				        	//idAmm=decretoAmministrazione.getId().get
+
+				           String realPath=context.getRealPath("/public/img/");
+//				    	        String pathImage=  context.getRequest().getContextPath()+"/public/img/";
+				        	
+				           pdfBytes= createPdf(new Integer(12), fascicolo.getEserciziDem().getId().toString()/* "2015"*/, fascicolo.getNumeNumDecreto(), "Tit prova", idAmm, dest,  new Long[5], testiLettere, realPath);
+			        	   
+			        	   Date data=new Date();
+			        	   
+			        	   lettera=new LettereIgbTO();
+			        	   
+					       lettera.setAnagAmminDem(amminDemTo);
+					       lettera.setFascicoli(fascicolo);
+					       Blob blob = Hibernate.createBlob(pdfBytes);
+					       lettera.setBinaIntLettera(null);  
+					       lettera.setDataLettera( sdf.parse( sdf.format(data)));
+					       lettera.setStatusLettera("S");
+					      // lettera.setId(new BigDecimal("1"));
+					       
+					       context.valorizeAudit(lettera, NomeFunzioneConstants.PRED_LETTERE_PRE_REG);
+					   //    lettera.setNumeroProgLettera(new Long(1));
+					       //questa operazione effettua una insert o una update
+					       letterePreRegManager.aggiornaLettere(lettera, blob);
+					}
+			        
+       
+			     //   model.addAttribute("operazione", "Predisposizione Lettere di Preregistrazione");
+			    //    model.addAttribute(IWebConstants.MSG_OPERAZIONE_OK, "Operazione correttamente eseguita.");
+			 
+			   /*     context.getResponse().setContentType("multipart/form-data");
+					context.getResponse().setHeader("Content-Disposition","attachment;filename="+"provaFileName.pdf");
+					ServletOutputStream out;
+					
+					out = context.getResponse().getOutputStream();
+					out.write(pdfBytes);
+					out.flush();
+					out.close();*/
+			        
+			        java.util.List<FascicoliTO> lista = context.getModel(LIST_FASCICOLI_FAD);
+					
+					LettereIgbTO letteraTo=new LettereIgbTO();
+					
+					//controllo se un fascicolo ha già lettere associate
+					List<LettereIgbTO> listaLettere=null;
+					for (int i = 0; i < lista.size(); i++) {
+						letteraTo.setFascicoli(lista.get(i));
+						listaLettere=letterePreRegManager.findByLettera(letteraTo);
+						lista.get(i).setFlagLetterePreReg((listaLettere!=null && listaLettere.size()>0)?1:0);
+					}
+					
+					PaginatorUtil.removePaginator(context, LIST_FASCICOLI_FAD);
+					PaginatorUtil.addPaginator(lista, LIST_FASCICOLI_FAD, Paginator.PAGE_RANGE_15, context);
+					context.addInfo("info.update.success");
+			        return  listaDecretiView;
+	    }
+	    
+	   
+	    
+	    //	public static final String imagePath ="./src/main/webapp/resources/images/squad.png";
+	    	
+//	    	private byte[] createPdf( Integer numProt, String annoEse, Integer numDefBil, String titolo, Long idAmm, String descAmm, java.util.List<CentroResponsabilita> listaCdr, Long[] arrayFascicoli, String[] testiLettere)
+//		    		throws DocumentException, IOException {
+//	    		
+	    		private byte[] createPdf( Integer numProt, String annoEse, Integer numDefBil, String titolo, Long idAmm, String descAmm, 
+	    				Long[] arrayFascicoli, String[] testiLettere, String pathImages)
+			    		throws DocumentException, IOException {
+		    		
+	    		  
+//	    			float w = PageSize.A4.getWidth();
+//	    	        float h = PageSize.A4.getHeight();
+	    	        Rectangle rect = new Rectangle( 595, 792);
+	    	        Document document=new Document(rect);
+	    	//	Rectangle rettangolo=new Rectangle(urx, ury, rotation)
+		    	      //  Document document = new Document();
+		    	       // Document document2 = new Document();	    	        
+		    	       // PdfWriter.getInstance(document2,  new FileOutputStream(filename));
+		    	        
+		    	        ByteArrayOutputStream byteArray= new ByteArrayOutputStream();
+		    	        PdfWriter.getInstance(document,  byteArray);
+		    	        
+		    	        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+//		    	 	    String path = classLoader.getResource(pathImages+"logoMinEcon.jpg").getPath();
+		    	        
+//		    	        String path01 = classLoader.getResource("/demdec-web/src/main/webapp/public/img/logoMinEcon2.jpg").getPath();
+//		    	        
+//		    	        String path02 = classLoader.getResource("/src/main/webapp/public/img/logoMinEcon2.jpg").getPath();
+//		    	        
+//		    	 	    String path2 = classLoader.getResource("/webapp/public/img/logoMinEcon2.jpg").getPath();
+//		    	 	    
+		    	 	   String path = pathImages+"logoMinEcon.jpg";
+		    	 	    String path2 = pathImages+"logoMinEcon2.jpg";
+
+		    	 	    Image logo = Image.getInstance(path);
+		    	 	    Image logo2 = Image.getInstance(path2);
+		    	      
+		    	        document.open();	    	  
+		    	        
+		    	        
+		    	        Font mioFont9 = new Font(FontFamily.TIMES_ROMAN, 9, Font.NORMAL);
+		    	        Font mioFont10 = new Font(FontFamily.TIMES_ROMAN, 10, Font.NORMAL);
+		    	        Font mioFont11 = new Font(FontFamily.TIMES_ROMAN, 11, Font.NORMAL);
+		    	        Font mioFont12 = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL);
+		    	    
+		    	      //  Font mioFontCors = new Font(FontFamily.TIMES_ROMAN, 9, Font.ITALIC  );	
+		    	        
+		    	      //  document.add(new Paragraph("   "));
+		    	             
+		    	        
+		    	        PdfPTable table = new PdfPTable(21);
+		    	        table.setComplete(true);
+		    	        table.setTotalWidth(100);
+		    	        table.setWidthPercentage(100);
+		    	        
+		    	        Paragraph paragraphVuoto=new Paragraph("",  mioFont10);
+		    	       
+		    	        
+		    	        PdfPCell cellLogo1 = new PdfPCell(logo, false);	    	        
+		    	        cellLogo1.setHorizontalAlignment(Element.ALIGN_CENTER); 
+		    	        cellLogo1.setVerticalAlignment(Element.ALIGN_TOP);
+		    	        cellLogo1.setBorder(Rectangle.NO_BORDER);
+		    	        cellLogo1.setColspan(11);
+		    	    //    cellLogo1.addElement(logo2);
+	    	        	
+		    	        table.addCell(cellLogo1);
+	    	        	
+	    	        	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	    	        	Date date = new Date();
+	    	        
+	    	        	//String luogoData="\n"+testiLettere[5].replace("$data", dateFormat.format(date));
+	    	        	String luogoData="\n"+"Roma, $data".replace("$data", dateFormat.format(date));
+	    	        	PdfPCell cellLuogoData = new PdfPCell(new Paragraph(luogoData,  mioFont12));
+	    	        	cellLuogoData.setBorder(Rectangle.NO_BORDER);
+	    	        	cellLuogoData.setVerticalAlignment(Element.ALIGN_TOP);
+	    	        	cellLuogoData.setColspan(9);
+	    	        	
+	    	        	Paragraph paragraphVuoto2=new Paragraph("",  mioFont10);
+		    	        PdfPCell cellaVuota2 = new PdfPCell(paragraphVuoto2);
+		    	        cellaVuota2.setBorder(Rectangle.NO_BORDER);
+	    	        	table.addCell(cellaVuota2);
+	    	        	
+	    	        	table.addCell(cellLuogoData);
+	    	        	
+	    	         	PdfPCell cellSubLogo = new PdfPCell(logo2);	    	        
+	    	         	cellSubLogo.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    	         	cellSubLogo.setVerticalAlignment(Element.ALIGN_TOP);
+	    	         	cellSubLogo.setBorder(Rectangle.NO_BORDER);
+	    	         	cellSubLogo.setColspan(11);
+	    	         	cellSubLogo.addElement(logo2);
+	    	         	
+	    	            Paragraph paragraph1=new Paragraph(testiLettere[2]+"\n", mioFont9); 
+	    	            // Paragraph paragraph1=new Paragraph("DIPARTIMENTO DELLA RAGIONERIA GENERALE DELLO STATO"+"\n", mioFont9); 
+	    	            paragraph1.setAlignment(Element.ALIGN_CENTER);
+	    	            
+	    	            Paragraph paragraph12=new Paragraph(testiLettere[3]+"\n", mioFont9); 
+	    	            //   Paragraph paragraph12=new Paragraph("Ispettorato Generale del Bilancio"+"\n", mioFont9); 
+	    	            paragraph12.setAlignment(Element.ALIGN_CENTER);
+	    	            
+	    	            Paragraph paragraph13=new Paragraph(testiLettere[4]+"\n", mioFont9);
+	    	            //  Paragraph paragraph13=new Paragraph("Ufficio II"+"\n", mioFont9);
+	    	            paragraph13.setAlignment(Element.ALIGN_CENTER);
+	    	            
+	    	           
+	    	            Paragraph paragraph14=new Paragraph("\n     "+testiLettere[10].replace("$PRO", numProt.toString())+"\n     "+testiLettere[11], mioFont12); 
+	    	          //Paragraph paragraph14=new Paragraph("\n    "+" Rif. Prot. Entrata N. $PRO".replace("$PRO", numProt.toString())+"\n     "+"Allegati: 1", mioFont12); 
+	    	            paragraph14.setAlignment(Element.ALIGN_LEFT);     
+	    	            
+	    	            cellSubLogo.addElement(paragraph1);
+	    	            cellSubLogo.addElement(paragraph12);
+	    	            cellSubLogo.addElement(paragraph13);
+	    	            cellSubLogo.addElement(paragraph14);
+	    	            
+	    	            
+	    	         //   List list1=new List(false, false, listaCdr.size());
+	    	            //List list1=new List(false,listaCdr.size());
+	    	            
+//	    	            if(listaCdr!=null && listaCdr.size()>0){
+//	    	            	listaCdr.get(0).setDescrzioneCentroResp(listaCdr.get(0).setDescrzioneCentroResp);
+//		    	        }
+	    	            
+			    	       
+		    	        
+		    	       Paragraph paragraphDest=new Paragraph(testiLettere[6].replace("$MINISTERO", descAmm)+"\n\n",  mioFont12);
+		    	    // Paragraph paragraphDest=new Paragraph("Al $MINISTERO".replace("$MINISTERO", descAmm)+"\n\n",  mioFont12);
+		    	     
+		    	       // paragraphDest.add(list1);
+		    	       
+		    	        
+		    	        
+		    	        Paragraph paragraphCdr=new Paragraph("",  mioFont10);  
+		    	        paragraphCdr.setSpacingBefore(2);
+		    	        
+		    	        
+//		    	        for (int i=0; i<listaCdr.size(); i++) {
+//		    	        	// list1.add(new ListItem(   (     (CentroResponsabilita) (listaCdr.get(i))  ).getDescrzioneCentroResp(), mioFont10  ));
+//		    	        	 //list1.add( new Chunk (    ( (CentroResponsabilita) (listaCdr.get(i))  ).getDescrzioneCentroResp(), mioFont9  ));
+//		    	        	 paragraphCdr.add(new Chunk( (     (CentroResponsabilita) (listaCdr.get(i))  ).getDescrzioneCentroResp()+";\n\n"));
+//						}	
+		    	        
+		    	        
+		    	    //    paragraphCdr.add(list1);
+		    	     
+		    	       // PdfPCell cellCdr = new PdfPCell(paragraphCdr);
+		    	       
+		    	        //table.addCell(cellaVuota3);
+		    	        
+	    	            PdfPCell cellaDest = new PdfPCell(paragraphDest);
+	    	              cellaDest.setBorder(Rectangle.NO_BORDER);
+	    	             cellaDest.addElement(paragraphDest);     
+	    	            cellaDest.addElement(paragraphCdr);    
+	    	            cellaDest.setColspan(9);
+	    	            cellaDest.setVerticalAlignment(Element.ALIGN_TOP);
+	    	            
+	    	            
+	    	            
+	    	            String fasc=(arrayFascicoli.length>1)?"fascicoli":"fascicolo";
+			    	       String listaFasc="";
+			    	       
+			    	       for (int j = 0; j < arrayFascicoli.length; j++) {
+			    	    	   listaFasc+=arrayFascicoli[j];	    	    	  
+			    	    	   if(j!=(arrayFascicoli.length-1)){
+			    	    		   listaFasc+=", ";	    	    		   
+			    	    	   }
+						   }
+			    	       
+			    	       
+			    	       Paragraph paragraph20=new Paragraph(testiLettere[8],  mioFont12);  	
+			    	       // Paragraph paragraph20=new Paragraph("All'UFFICIO CENTRALE DEL BILANCIO",  mioFont12);  	
+			    	      //  Paragraph paragraph21=new Paragraph("\n(rif. "+fasc+ " n. "+listaFasc+")",  mioFontCors);  	
+			    	       //(rif. $FAS)
+			    	      // testiLettere[9].replace("$FAS", fasc+ " n. "+listaFasc+"\n");
+			    	       Paragraph paragraph21=new Paragraph("",  mioFont9); 
+			    	        //paragraph21.add("(rif. "+fasc+ " n. "+listaFasc+")"+"\n");
+			    	        paragraph21.add(testiLettere[9].replace("$FAS", fasc+ " n. "+listaFasc)+"\n");
+			    	        paragraph21.setAlignment(Element.ALIGN_JUSTIFIED);
+			    	        cellaDest.addElement(paragraph20);
+			    	        cellaDest.addElement(paragraph21);
+	    	           
+//		    	        paragraph2.add(list1);
+//	    	            cellaDest.addElement(paragraph2);
+	    	           
+	    	         //   PdfPCell cell3 = new PdfPCell(paragraphVuoto);
+	    	      //       cell3.setBorder(Rectangle.NO_BORDER);
+	    	        //     cell3.setColspan(10);
+//		    	        cell3.addElement(paragraph1);
+//		    	        cell3.addElement(paragraph12);
+//		    	        cell3.addElement(paragraph13);
+//		    	        cell3.addElement(paragraph14);
+		    	        
+		    	        table.addCell(cellSubLogo);
+		    	        
+		    	        Paragraph paragraphVuoto5=new Paragraph("",  mioFont10);
+		    	        PdfPCell cellaVuota5 = new PdfPCell(paragraphVuoto5);
+		    	        cellaVuota5.setBorder(Rectangle.NO_BORDER);
+		    	        table.addCell(cellaVuota5);
+		    	        table.addCell(cellaDest);
+		    	        //table.addCell(cell3);
+		    	        
+		    	      //  table.addCell(cellaVuota);
+		    	        
+		    	        Paragraph paragraph2=new Paragraph("",  mioFont10);
+		    	        PdfPCell cell4 = new PdfPCell(paragraph2);
+		    	       
+		    	       
+		    	       // cell4.addElement(paragraph2);
+		    	        cell4.addElement(paragraphVuoto);
+		    	         cell4.setBorder(Rectangle.NO_BORDER);
+		    	         cell4.setColspan(11);
+		    	       // table.addCell(cell4);
+		    	   
+//		    	        String oggetto=" \n\n\n                    OGGETTO: Reiscrizione residui passivi perenti agli effetti amministrativi. Anno "+annoEse+".\n  "
+//		    	        		            + "                                      Decreto M.T. n. "+numDefBil+", concernente un prelevamento dal fondo speciale per la\n "
+//		    	        				    + "                                       riassegnazione dei residui passivi della spesa di "+titolo;
+//		    	        for
+		    	        PdfPTable table2 = new PdfPTable(18);
+		    	  
+		    	        table2.setWidthPercentage(84);
+    	        
+		    	        String numDefBilString=numDefBil!=null?numDefBil.toString():"";
+		    	        
+		    	        String oggetto0=" \n\n\n"+testiLettere[12].substring(0,8);
+		    	        //  String oggetto0=" \n\n\n"+"OGGETTO: Reiscrizione residui passivi perenti agli effetti amministrativi. Anno $ANNO Decreto M.T. n. $NUMERO, concernente un prelevamento dal fondo speciale per la riassegnazione dei residui passivi della spesa di $TIT.".substring(0,8);
+		    	        
+		    	        Paragraph paragraph30=new Paragraph(oggetto0, mioFont12);
+		    	        paragraph30.setAlignment(0);
+ 
+		    	        PdfPCell cell50 = new PdfPCell(paragraph30);
+		    	        
+		    	        cell50.addElement(paragraph30);
+		    	        cell50.setColspan(3);
+		    	        cell50.setBorder(Rectangle.NO_BORDER);
+		    	        cell50.setVerticalAlignment(Element.ALIGN_TOP);
+		    	        table2.addCell(cell50);
+	    	        
+		    	        String oggetto=" \n\n\n"+testiLettere[12].replace("$ANNO", annoEse).replace("$NUMERO", numDefBilString).replace("$TIT", titolo).substring(9);
+		    	        // String oggetto=" \n\n\n"+"OGGETTO: Reiscrizione residui passivi perenti agli effetti amministrativi. Anno $ANNO Decreto M.T. n. $NUMERO, concernente un prelevamento dal fondo speciale per la riassegnazione dei residui passivi della spesa di $TIT.".replace("$ANNO", annoEse).replace("$NUMERO", numDefBilString).replace("$TIT", titolo).substring(9);
+
+		    	        Paragraph paragraph3=new Paragraph(oggetto, mioFont12);
+		    	        paragraph3.setAlignment(Element.ALIGN_JUSTIFIED);
+		    	       
+		    	        PdfPCell cell5 = new PdfPCell(paragraph3);
+		    	        
+		    	        cell5.addElement(paragraph3);
+		    	        cell5.setColspan(15);
+		    	        cell5.setBorder(Rectangle.NO_BORDER);
+		    	        cell50.setVerticalAlignment(Element.ALIGN_TOP);
+		    	        table2.addCell(cell5);
+		    	      
+		    	        String testo0="\n\n             "+testiLettere[13];
+		    	        //  String testo0="\n\n             "+"In esito alle richieste incluse nei fascicoli in riferimento dall’Ufficio centrale del Bilancio presso codesto Ministero, si comunica che dalla data di registrazione da parte della Corte dei conti del decreto ministeriale indicato in oggetto, saranno rese disponibili le assegnazioni in termini di competenza e di cassa, a favore dei pertinenti capitoli dello stato di previsione di codesto Ministero, riportate nell'allegato prospetto. ";
+		    	        String testo=null;
+		    	        String testo1=null;
+		    	        	    
+		    	        if(idAmm!=null && idAmm.compareTo(new Long("9"))==0){		    	        
+		    	        	testo=testo0.replace("codesto", "questo");
+		    	        }else{
+		    	        	testo=testo0;
+		    	        }
+		    	        
+		    	        if(arrayFascicoli.length==1){		    	        
+		    	        	testo1=testo.replace("nei fascicoli", "nel fascicolo");
+		    	        }else{
+		    	        	testo1=testo;
+		    	        }
+			    	        
+		    	      
+		    	        PdfPTable table3=new PdfPTable(18);
+		    	        table3.setWidthPercentage(84);
+		    	        
+		    	        Paragraph paragraph40=new Paragraph(" ", mioFont12); 
+		    	        PdfPCell cell60 = new PdfPCell(paragraph40);
+		    	        cell60.setBorder(Rectangle.NO_BORDER);
+		    	        cell60.setVerticalAlignment(Element.ALIGN_TOP);
+		    	        table3.addCell(cell60);
+		    	        
+		    	        Paragraph paragraph4=new Paragraph(testo1, mioFont12); 
+		    	        paragraph4.setAlignment(Element.ALIGN_JUSTIFIED);
+		    	      
+		    	        PdfPCell cell6 = new PdfPCell(paragraph4);
+		    	       
+		    	        cell6.addElement(paragraph4);
+		    	        cell6.setColspan(17);
+		    	        cell6.setBorder(Rectangle.NO_BORDER);
+		    	        cell6.setVerticalAlignment(Element.ALIGN_TOP);
+		    	        table3.addCell(cell6);
+		    	      
+		    	        document.add(table);
+		    	        document.add(table2);
+		    	        document.add(table3);
+		    	        
+		    	        document.close();
+
+		    	       byte[] pdfBytes= byteArray.toByteArray();	    	       
+		    	       return pdfBytes;
+		    	
+		    	        
+		    	    }
+	   
+	   
+	    	
+	 	    public String onNuovaRicerca(Context context)  {
+	 	    	PredLetterePreRegForm form=(PredLetterePreRegForm) context.getForm();
+	 	    	
+	 	    	form.setAmministrazione(null);
+	 	    	form.setAnnoDecreto(null);
+	 	    	form.setCdr(null);
+	 	    	form.setCreatoDa(null);
+	 	    	form.setDataArrivoA(null);
+	 	    	form.setCdr(null);
+	 	    	form.setDataArrivoA(null);
+	 	    	form.setDataArrivoDa(null);
+	 	    	form.setDataCreazione(null);
+	 	    	form.setDataModifica(null);
+	 	    	form.setDecTipoDecreto(null);
+	 	    	form.setDescDecreto(null);
+	 	    	form.setDescStato(null);
+	 	    	form.setModificatoDa(null);
+	 	    	form.setNumeDecreto(null);
+	 	    	form.setNumePat(null);
+	 	    	form.setRadioButtonDecreti(null);
+	 	    	form.setDecTipoDecreto(null);
+	 	    	form.setDescDecreto(null);
+	 	    	form.setDescStato(null);
+	 	    	form.setModificatoDa(null);
+	 	    	form.setDataModifica(null);
+	 	    	form.setDataCreazione(null);
+	 	    	form.setStato(null);
+	 	    	form.setUfficio(null);
+	 	    	form.setUfficioCreatore(null);
+	 	    	form.setTipoDecreto(null);
+	 	    	form.setTipologiaDecreto(null);
+	 	    	
+    			return startView;
+    			
+    		}
+	 	    
+		 	 
+	 		public String onBackFromLettere(Context context) throws Throwable{
+	 			
+	 			
+	 			return  listaDecretiView;
+	 			
+	 		}
+	    	
+	    	
+	    	public void onApriLettera(Context context) throws Throwable{
+	     			SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+	     			List<LettereIgbTO> toList = context.getModel(LIST_LETTERE_PRE_REG);
+	     			String rowNum = context.getCommandParameter("apriLettera");
+	 	    		LettereIgbTO letteraIgb=toList.get(new Integer(rowNum));
+	 	    		
+	 	    	//	LettereIgbTO letteraIgbWithBlob=letterePreRegManager.getLetteraById(new Long(letteraIgb.getId().toString()));
+	 	    		
+	 	    		 Blob blob=letterePreRegManager.getBlobByIdLettera(letteraIgb.getId());
+	 	    		
+	 		 		String nomeFile=null;
+	 		 		//	letteraIgb=predLettereManager.findById(new Long(filtro.getLetteraIgb()));
+	 		 		//	letteraIgb=letterePreRegManager.getLetteraById(new Long(filtro.getLetteraIgb())); TODO scommentare
+ 			 		nomeFile=letteraIgb.getFascicoli().getEserciziDem().getId()+"_"+letteraIgb.getAnagAmminDem().getId().getNumeStpFormatted()+letteraIgb.getAnagAmminDem().getId().getNumeAppFormatted()+"_"+sdf.format(letteraIgb.getDataLettera())+".pdf";
+ 			    	HttpHeaders responseHeaders = new HttpHeaders();
+ 			        responseHeaders.set("Content-Disposition", "attachment; filename="+nomeFile);
+ 			        responseHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+ 			        
+// 			        Blob blob=letteraIgbWithBlob.getBinaIntLettera();
+ 			        int blobLength = (int) blob.length();  
+ 			        byte[] blobAsBytes = blob.getBytes(1, blobLength);
+ 			        //release the blob and free up memory. (since JDBC 4.0)
+ 			        
+ 			       context.getResponse().setContentType("multipart/form-data");
+					context.getResponse().setHeader("Content-Disposition","attachment;filename="+"provaApriFileName.pdf");
+					ServletOutputStream out;
+					
+					out = context.getResponse().getOutputStream();
+					out.write(blobAsBytes);
+					out.flush();
+					out.close();
+ 			        
+ 			        
+ 			      //  return new ResponseEntity<byte[]>(blobAsBytes, responseHeaders, HttpStatus.OK); 
+ 		 			
+	     	}
+	 		 		
+	     	
+/*	    	public void onModificaLettera(Context context) throws Throwable{
+     			SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+     			List<LettereIgbTO> toList = context.getModel(LIST_LETTERE_PRE_REG);
+     			String rowNum = context.getCommandParameter("modificaLettera");
+ 	    		LettereIgbTO letteraIgb=toList.get(new Integer(rowNum));
+ 	    		
+ 	    	//	LettereIgbTO letteraIgbWithBlob=letterePreRegManager.getLetteraById(new Long(letteraIgb.getId().toString()));
+ 	    		
+ 	    		launchEditor("provaEditor");
+			        
+			        
+			      //  return new ResponseEntity<byte[]>(blobAsBytes, responseHeaders, HttpStatus.OK); 
+		 			
+     	}*/
+	    	
+	    	
+
+	 		public String onCaricaTipologiaDecretoFadPage(Context context)throws Throwable{
+	 			PredLetterePreRegForm form=(PredLetterePreRegForm) context.getForm();
+	 			if (form.isValid()){
+	 				if(form.getTipoDecreto() != null && !"".equals(form.getTipoDecreto())){
+	 					context.setDataModel(LIST_TIPOLOGIA_DECRETO, listManager.tipologiaDecretoList(Integer.parseInt(form.getTipoDecreto())));
+	 				}
+	 				else {
+	 					context.setDataModel(LIST_TIPOLOGIA_DECRETO, listManager.tipologiaDecretoList(null));
+	 				}
+	 			}
+	 			//return getFascicoloFadView();
+	 			return startView;
+	 		}
+	 		
+	 		public String onCaricaAmmin(Context context)throws Throwable{
+	 			PredLetterePreRegForm form = context.getForm();
+	 			if (form.isValid()){
+	 				context.setDataModel(SessionAttributes.LIST_AMMIN_DEM, listManager.getAmminDemByAnnoEse(form.getAnnoDecreto()));
+	 			}
+	 			return startView;
+	 		}
+	    
+		
+	
+}
+

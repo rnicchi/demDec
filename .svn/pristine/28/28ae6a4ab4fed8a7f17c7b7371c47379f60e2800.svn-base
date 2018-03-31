@@ -1,0 +1,510 @@
+package it.mef.bilancio.demdec.dao.impl;
+
+import it.almavivaitalia.bilancio.commons.bo.DocumentiBO;
+import it.mef.bilancio.demdec.dao.InvioAlleFirmeDao;
+import it.mef.bilancio.demdec.to.CampoFirmaTO;
+import it.mef.bilancio.demdec.to.FascicoliViewTO;
+import it.mef.bilancio.demdec.to.FirmatarioTO;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.CacheMode;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.transform.Transformers;
+
+public class InvioAlleFirmeDaoImpl extends AbstractDemDaoImpl implements InvioAlleFirmeDao{
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FascicoliViewTO> findListaDecretiByTipoNumAnno(Integer anno, Integer tipo, Integer numDec ) {
+
+		      		  
+	  String q="SELECT id, codiGuidFascicolo, descSigla, numeNumDecreto, annoEse, numeTipoDecreto, "+
+         "dataCreazione, descDecreto, statStato, numeTiplogiaoDecreto, codiGuidDocumento FROM ( ";
+
+	  
+	  q+="SELECT a.nume_id_fascicolo as id, a.codi_guid_fascicolo as codiGuidFascicolo, a.desc_sigla as descSigla, to_char(a.nume_num_decreto) as numeNumDecreto, to_char(a.fk_anno_ese) as annoEse, "+
+		" to_char(a.fk_nume_tipo_decreto) as numeTipoDecreto, to_char(a.data_creazione_fascicolo,'DD/MM/YYYY') as dataCreazione, a.desc_decreto as descDecreto, "+
+		" to_char(a.stat_stato) as statStato, to_char(a.fk_nume_tipologia_decreto) as numeTiplogiaoDecreto, "+  
+		  " b.codi_guid_documento as codiGuidDocumento "+
+		  
+		  
+		  " FROM d_fascicoli a, d_documenti b, d_strumenti_dem str "+
+		 " where "+
+		 " a.nume_id_fascicolo = b.fk_nume_id_fascicolo "+
+		 " and a.stat_stato = 0 "+
+		 " and b.stat_documento = 0 "+
+		 " and b.fk_codi_tipo_documento = 'AD01' "+
+		  " and str.ESE_ANNO_ESE=a.FK_ANNO_ESE "+
+		  " and str.ATT_NUME_TIPO=a.FK_NUME_TIPO_DECRETO "+
+		  " and str.NUME_NUM=a.NUME_NUM_DECRETO "+
+          "and str.STAT_STATUS in ('1','2','6')   ";
+		  
+          
+		if(tipo!=null)
+		    q+=" and a.fk_nume_tipo_decreto =:tipo ";    //il tipo se selezionato
+		
+		if(numDec!=null)
+			    q+=" and a.nume_num_decreto =:numero ";       //il numero se digitato
+		
+		if(anno!=null)
+			    q+=" and a.fk_anno_ese =:anno ";   //l'anno se selezionato
+           
+           
+          
+          q+= " union "+
+         
+         "SELECT a.nume_id_fascicolo as id, a.codi_guid_fascicolo as codiGuidFascicolo, a.desc_sigla as descSigla, to_char(a.nume_num_decreto) as numeNumDecreto, to_char(a.fk_anno_ese) as annoEse, "
+		 + " to_char(a.fk_nume_tipo_decreto) as numeTipoDecreto, to_char(a.data_creazione_fascicolo,'DD/MM/YYYY') as dataCreazione, a.desc_decreto as descDecreto, "+
+		 " to_char(a.stat_stato) as statStato, to_char(a.fk_nume_tipologia_decreto) as numeTiplogiaoDecreto, "+  
+		  " b.codi_guid_documento as codiGuidDocumento "+
+          
+          " FROM d_fascicoli a, d_documenti b "+
+          " where "+
+          " a.nume_id_fascicolo = b.fk_nume_id_fascicolo "+
+          " and a.stat_stato = 0 "+
+          " and b.stat_documento = 0 "+
+          " and b.fk_codi_tipo_documento = 'AD01' "+
+          " and not EXISTS (select * from  d_strumenti_dem str  where "+
+          " str.ESE_ANNO_ESE=a.FK_ANNO_ESE "+
+          " and str.ATT_NUME_TIPO=a.FK_NUME_TIPO_DECRETO "+
+          "  and str.NUME_NUM=a.NUME_NUM_DECRETO ) ";
+          
+		  
+		if(tipo!=null)
+			    q+=" and a.fk_nume_tipo_decreto =:tipo ";    //il tipo se selezionato
+		
+		if(numDec!=null)
+  			    q+=" and a.nume_num_decreto =:numero ";       //il numero se digitato
+		
+		if(anno!=null)
+  			    q+=" and a.fk_anno_ese =:anno ";   //l'anno se selezionato
+		q+=" ) ";
+		//q+=" ORDER BY fk_anno_ese desc, fk_nume_tipo_decreto, nume_num_decreto";
+		q+= " ORDER BY to_number(annoEse) desc, to_number(numeNumDecreto) asc, descSigla asc ";
+		
+		SQLQuery query= getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(q);
+		query.addScalar("id", Hibernate.LONG)
+	 	  .addScalar("codiGuidFascicolo", Hibernate.STRING)
+	      .addScalar("descSigla", Hibernate.STRING)
+		  .addScalar("numeNumDecreto", Hibernate.STRING)
+		  .addScalar("annoEse", Hibernate.SHORT)
+		  .addScalar("numeTipoDecreto", Hibernate.STRING)
+		  .addScalar("dataCreazione", Hibernate.STRING)
+		  .addScalar("descDecreto", Hibernate.STRING)
+		  .addScalar("statStato", Hibernate.STRING)
+		  .addScalar("numeTiplogiaoDecreto", Hibernate.STRING)
+		  .addScalar("codiGuidDocumento", Hibernate.STRING);
+		
+		if(tipo!=null)
+			query.setParameter("tipo", tipo);		
+		if(numDec!=null)
+			query.setParameter("numero", numDec);
+		if(anno!=null)
+			query.setParameter("anno", anno);
+		
+		return (List<FascicoliViewTO>)query.setResultTransformer(Transformers.aliasToBean(FascicoliViewTO.class )).setCacheMode(CacheMode.GET).list();
+	
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FascicoliViewTO> findSospFirmeListaDecretiByTipoNumAnno(Integer anno, Integer tipo, Integer numDec ) {
+		  
+		String q="SELECT a.nume_id_fascicolo as id, a.codi_guid_fascicolo as codiGuidFascicolo, a.desc_sigla as descSigla, to_char(a.nume_num_decreto) as numeNumDecreto, to_char(a.fk_anno_ese) as annoEse, "
+		+ " to_char(a.fk_nume_tipo_decreto) as numeTipoDecreto, to_char(a.data_creazione_fascicolo,'DD/MM/YYYY') as dataCreazione, a.desc_decreto as descDecreto, "+
+		" to_char(a.stat_stato) as statStato, to_char(a.fk_nume_tipologia_decreto) as numeTiplogiaoDecreto "+  
+		 // " b.codi_guid_documento as codiGuidDocumento "+
+		  		  
+		  " FROM d_fascicoli a "+
+		 " where "+
+		 " a.stat_stato=2 ";
+	  
+		if(tipo!=null)
+			    q+=" and a.fk_nume_tipo_decreto =:tipo ";    //il tipo se selezionato
+		
+		if(numDec!=null)
+  			    q+=" and a.nume_num_decreto =:numero ";       //il numero se digitato
+		
+		if(anno!=null)
+  			    q+=" and a.fk_anno_ese =:anno ";   //l'anno se digitato
+  		
+		//q+=" ORDER BY fk_anno_ese, fk_nume_tipo_decreto, nume_num_decreto";
+		q+= " ORDER BY to_number(annoEse) desc, to_number(numeNumDecreto) asc, descSigla asc  ";
+		
+		SQLQuery query= getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(q);
+		query.addScalar("id", Hibernate.LONG)
+	 	  .addScalar("codiGuidFascicolo", Hibernate.STRING)
+	      .addScalar("descSigla", Hibernate.STRING)
+		  .addScalar("numeNumDecreto", Hibernate.STRING)
+		  .addScalar("annoEse", Hibernate.SHORT)
+		  .addScalar("numeTipoDecreto", Hibernate.STRING)
+		  .addScalar("dataCreazione", Hibernate.STRING)
+		  .addScalar("descDecreto", Hibernate.STRING)
+		  .addScalar("statStato", Hibernate.STRING)
+		  .addScalar("numeTiplogiaoDecreto", Hibernate.STRING);
+		
+		if(tipo!=null)
+			query.setParameter("tipo", tipo);		
+		if(numDec!=null)
+			query.setParameter("numero", numDec);
+		if(anno!=null)
+			query.setParameter("anno", anno);
+		
+		return (List<FascicoliViewTO>)query.setResultTransformer(Transformers.aliasToBean(FascicoliViewTO.class )).setCacheMode(CacheMode.GET).list();
+	
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FascicoliViewTO> findRevSospFirmeListaDecretiByTipoNumAnno(Integer anno, Integer tipo, Integer numDec ) {
+		  
+		String q="SELECT a.nume_id_fascicolo as id, a.codi_guid_fascicolo as codiGuidFascicolo, a.desc_sigla as descSigla, to_char(a.nume_num_decreto) as numeNumDecreto, to_char(a.fk_anno_ese) as annoEse, "
+		+ " to_char(a.fk_nume_tipo_decreto) as numeTipoDecreto, to_char(a.data_creazione_fascicolo,'DD/MM/YYYY') as dataCreazione, a.desc_decreto as descDecreto, "+
+		" to_char(a.stat_stato) as statStato, to_char(a.fk_nume_tipologia_decreto) as numeTiplogiaoDecreto "+  
+		 // " b.codi_guid_documento as codiGuidDocumento "+
+		  		  
+		  " FROM d_fascicoli a "+
+		 " where "+
+		 " a.stat_stato=3 ";
+	  
+		if(tipo!=null)
+			    q+=" and a.fk_nume_tipo_decreto =:tipo ";    //il tipo se selezionato
+		
+		if(numDec!=null)
+  			    q+=" and a.nume_num_decreto =:numero ";       //il numero se digitato
+		
+		if(anno!=null)
+  			    q+=" and a.fk_anno_ese =:anno ";   //l'anno se digitato
+  		
+		//q+=" ORDER BY fk_anno_ese, fk_nume_tipo_decreto, nume_num_decreto";
+		q+= "ORDER BY to_number(annoEse) desc, to_number(numeNumDecreto) asc, descSigla asc  ";
+		
+		SQLQuery query= getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(q);
+		query.addScalar("id", Hibernate.LONG)
+	 	  .addScalar("codiGuidFascicolo", Hibernate.STRING)
+	      .addScalar("descSigla", Hibernate.STRING)
+		  .addScalar("numeNumDecreto", Hibernate.STRING)
+		  .addScalar("annoEse", Hibernate.SHORT)
+		  .addScalar("numeTipoDecreto", Hibernate.STRING)
+		  .addScalar("dataCreazione", Hibernate.STRING)
+		  .addScalar("descDecreto", Hibernate.STRING)
+		  .addScalar("statStato", Hibernate.STRING)
+		  .addScalar("numeTiplogiaoDecreto", Hibernate.STRING);
+		
+		if(tipo!=null)
+			query.setParameter("tipo", tipo);		
+		if(numDec!=null)
+			query.setParameter("numero", numDec);
+		if(anno!=null)
+			query.setParameter("anno", anno);
+		
+		return (List<FascicoliViewTO>)query.setResultTransformer(Transformers.aliasToBean(FascicoliViewTO.class )).setCacheMode(CacheMode.GET).list();
+	
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FirmatarioTO> findFirmatari(Long numeIdFascicolo)  throws Throwable{
+		
+		String q= "(select rownum as numeroOrdineFirma, "+
+			      " INITCAP(desc_firmatario) as descFirmatario, INITCAP(desc_tipo_firma) as tipoSegnatura, "+
+			      "  ufficio_capofila as ufficio , INITCAP(amm) as amministrazione, nume_cdr as numeroCdr "+
+			      " from  (SELECT  "+
+			      " e.nume_ordine as  nume_ordine_iter, "+
+			      " f.desc_firmatario, f.desc_tipo_firma, null as ufficio_capofila, "+
+			      " null as AMM,   null as  nume_cdr "+
+			      " FROM d_fascicoli a,  "+
+			      " d_anag_tipologia_decreto d, "+
+			      "  d_iter_firma e, d_anag_firmatari f "+
+			      " where a.nume_id_fascicolo = :param "+
+			      " and a.fk_nume_tipologia_decreto = d.nume_tipologia "+
+			      " and d.fk_sequ_id_iter = e.fk_sequ_id_iter "+
+			      " and e.fk_codi_firmatario = f.codi_firmatario "+
+			      " and f.codi_firmatario not in ('UFF','MIN','DIR') "+
+			      " union "+
+			      " SELECT "+
+			      " e.nume_ordine as nume_ordine_iter, "+
+			      " f.desc_firmatario, f.desc_tipo_firma, null as ufficio_capofila , "+
+			     // " (select h.desc_amm from d_ammin_dem h where "+
+			      
+					" (select h.desc_amm from d_anag_ammin_dem h where "+
+			      
+			     // " a.fk_anno_ese = h.anno_ese and "+
+			      
+  				  " a.fk_anno_ese = h.fk_anno_ese and "+
+			      
+			      " b.fk_nume_stp = h.nume_stp and "+
+			      " b.fk_nume_app = h.nume_app) "+
+			      " as  amm,  "+
+			      " null as  nume_cdr "+
+			      " FROM d_fascicoli a, d_fascicoli_amm b, "+
+			      " d_anag_tipologia_decreto d, "+
+			      "   d_iter_firma e, d_anag_firmatari f "+
+			      "  where "+
+			      " a.nume_id_fascicolo = :param "+
+			      "  and a.nume_id_fascicolo = b.fk_nume_id_fascicolo "+
+			      " and a.fk_nume_tipologia_decreto = d.nume_tipologia "+
+			      " and d.fk_sequ_id_iter = e.fk_sequ_id_iter "+
+			      " and e.fk_codi_firmatario = f.codi_firmatario "+
+			      " and f.codi_firmatario =  'MIN' "+
+			      " union "+
+			      " SELECT  "+
+			      " e.nume_ordine as nume_ordine_iter, "+
+			      " f.desc_firmatario, f.desc_tipo_firma, (select g.desc_ufficio  from d_anag_uffici g "+
+			      " where "+
+			      " g.codi_ufficio = a.fk_nume_ufficio_capofila)  as ufficio_capofila, "+
+			      " null as amm, null as  nume_cdr "+
+			      "   FROM d_fascicoli a, "+
+			      "  d_anag_tipologia_decreto d, "+
+			      " d_iter_firma e, d_anag_firmatari f "+
+			      " where   a.nume_id_fascicolo = :param "+
+			      " and a.fk_nume_tipologia_decreto = d.nume_tipologia "+
+			      " and d.fk_sequ_id_iter = e.fk_sequ_id_iter "+
+			      " and e.fk_codi_firmatario = f.codi_firmatario "+
+			      "  and f.codi_firmatario =  'UFF' "+
+			      " union "+
+			      " SELECT  e.nume_ordine as nume_ordine_iter, "+
+			      "       f.desc_firmatario, f.desc_tipo_firma, null as ufficio_capofila, "+
+			      "       c.fk_nume_stp||c.fk_nume_app as amm, "+
+			      "       c.fk_nume_cdr as  nume_cdr "+
+			      "  FROM d_fascicoli a, d_fascicoli_cdr c, "+
+			      " d_anag_tipologia_decreto d, "+
+			      "  d_iter_firma e, d_anag_firmatari f "+
+			      " where   a.nume_id_fascicolo = :param "+
+			      " and a.nume_id_fascicolo = c.fk_nume_id_fascicolo "+
+			      " and a.fk_nume_tipologia_decreto = d.nume_tipologia "+
+			      " and d.fk_sequ_id_iter = e.fk_sequ_id_iter "+
+			      " and e.fk_codi_firmatario = f.codi_firmatario "+
+			      " and f.codi_firmatario =  'DIR')) "+
+			      " ORDER BY NUME_ORDINE_ITER"; 
+  
+		SQLQuery query= getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(q);
+		
+		//query.addScalar("id", Hibernate.INTEGER)
+	 	 query.addScalar("numeroOrdineFirma", Hibernate.STRING)
+	      .addScalar("descFirmatario", Hibernate.STRING)
+		  .addScalar("tipoSegnatura", Hibernate.STRING)
+		  .addScalar("ufficio", Hibernate.STRING)
+		  .addScalar("amministrazione", Hibernate.STRING)
+		  .addScalar("numeroCdr", Hibernate.STRING);
+		 
+		
+		
+		query.setParameter("param", numeIdFascicolo);	
+		
+		
+		List<FirmatarioTO> result=(List<FirmatarioTO>)query.setResultTransformer(Transformers.aliasToBean(FirmatarioTO.class )).setCacheMode(CacheMode.GET).list();
+		
+		return result;
+		
+	}
+	
+	
+	
+	@Override
+	public List<CampoFirmaTO> findListFirme(Long numeIdFascicolo)  throws Throwable{
+		
+		String q="select  nume_ordine_iter as numeOrdineIter, tagFirma , "+
+				" decode(tipoFirma,'F','V','S','T','B','V') as tipoFirma, dicitura "+
+"      from  ( "+
+    		  " SELECT  "+
+"  e.nume_ordine as  nume_ordine_iter, f.codi_tag_firma as tagFirma, "+
+  "  f.codi_tipo_firma as tipoFirma, f.desc_firmatario as dicitura "+
+  "  FROM d_fascicoli a,  "+
+  "  d_anag_tipologia_decreto d, "+
+  "  d_iter_firma e, d_anag_firmatari f "+
+  "  where a.nume_id_fascicolo = :param "+
+		  "  and a.fk_nume_tipologia_decreto = d.nume_tipologia "+
+		  "  and d.fk_sequ_id_iter = e.fk_sequ_id_iter "+
+		  "  and e.fk_codi_firmatario = f.codi_firmatario "+
+		  "   and f.codi_firmatario not in ('UFF','MIN','DIR','SEG') "+
+"   union "+
+  " SELECT "+
+" e.nume_ordine as nume_ordine_iter, "+
+" (f.codi_tag_firma||'_'||TRIM(to_char(b.fk_nume_stp,'09'))||b.fk_nume_app) as tagFirma, "+
+" f.codi_tipo_firma as tipoFirma, g.desc_amm_firma as dicitura "+
+"   FROM d_fascicoli a, d_fascicoli_amm b, "+
+  "  d_anag_tipologia_decreto d, "+
+  "   d_iter_firma e, d_anag_firmatari f, d_anag_ammin_dem g "+
+  "  where "+
+  " a.nume_id_fascicolo = :param "+
+		  " and a.nume_id_fascicolo = b.fk_nume_id_fascicolo "+
+		  " and a.fk_nume_tipologia_decreto = d.nume_tipologia "+
+		  " and d.fk_sequ_id_iter = e.fk_sequ_id_iter "+
+		  " and e.fk_codi_firmatario = f.codi_firmatario "+
+		  " and f.codi_firmatario =  'MIN' "+
+		  " and b.fk_anno_ese = g.fk_anno_ese "+
+		  "  and b.fk_nume_stp = g.nume_stp "+
+		  "   and b.fk_nume_app = g.nume_app "+
+		  " union "+
+" SELECT  "+
+" e.nume_ordine as nume_ordine_iter, (f.codi_tag_firma||'_'||a.fk_nume_ufficio_capofila) as tagFirma, "+
+" f.codi_tipo_firma as tipoFirma, f.desc_firmatario as dicitura "+
+" FROM d_fascicoli a, "+
+  " d_anag_tipologia_decreto d, "+
+  " d_iter_firma e, d_anag_firmatari f "+
+  " where   a.nume_id_fascicolo = :param "+
+		  " and a.fk_nume_tipologia_decreto = d.nume_tipologia "+
+		  " and d.fk_sequ_id_iter = e.fk_sequ_id_iter "+
+		  "  and e.fk_codi_firmatario = f.codi_firmatario "+
+		  "  and f.codi_firmatario =  'UFF' "+
+		  " union "+
+" SELECT  "+
+" e.nume_ordine as nume_ordine_iter, "+
+" f.codi_tag_firma as tagFirma, "+
+" f.codi_tipo_firma as tipoFirma, "+
+" f.desc_firmatario as dicitura "+
+" FROM d_fascicoli a, d_fascicoli_cdr c, "+
+  " d_anag_tipologia_decreto d, "+
+  " d_iter_firma e, d_anag_firmatari f "+
+  " where   a.nume_id_fascicolo = :param "+
+		  " and a.nume_id_fascicolo = c.fk_nume_id_fascicolo "+
+		  "   and a.fk_nume_tipologia_decreto = d.nume_tipologia "+
+		  "  and d.fk_sequ_id_iter = e.fk_sequ_id_iter "+
+		  "  and e.fk_codi_firmatario = f.codi_firmatario "+
+		  "   and f.codi_firmatario =  'DIR') "+
+" order by tipoFirma, numeOrdineIter ";
+	
+	
+				SQLQuery query= getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(q);
+							 
+				query.addScalar("tagFirma", Hibernate.STRING)
+				  	  .addScalar("tipoFirma", Hibernate.STRING)
+				  	  .addScalar("dicitura", Hibernate.STRING);
+				
+				query.setParameter("param", numeIdFascicolo);	
+				
+				List result=query.list();
+				
+				List<CampoFirmaTO> cfToList = new ArrayList<CampoFirmaTO>();
+				CampoFirmaTO cfTo=null;
+				for (int i = 0; i < result.size(); i++) {
+					cfTo=new CampoFirmaTO( (String)( (Object[])result.get(i) )[2], (String)( (Object[])result.get(i) )[0], (String)( (Object[])result.get(i) )[1]);
+					cfToList.add(cfTo);
+				}
+				
+			//	List<CampoFirmaTO> result=(List<CampoFirmaTO>)query.setResultTransformer(Transformers.aliasToBean(CampoFirmaTO.class )).setCacheMode(CacheMode.GET).list();
+				
+				return cfToList;
+				
+	}
+	
+	
+	@Override
+	public DocumentiBO loadDocumentoByGuidFascicoloETipo (String guidFascicolo, String tipoDocumento) throws Throwable{
+		Query query=createQuery("select d from DocumentiBO d where d.codiGuidFascicolo=:guidFasc and d.tipoDocumento.id=:tipo");
+		query.setString("guidFasc", guidFascicolo);
+		query.setString("tipo", tipoDocumento);
+		
+		DocumentiBO docBO = (DocumentiBO)query.uniqueResult();
+		
+		return docBO;
+	}
+	
+	
+	
+  @Override
+  public Integer insertIterFirmaDecreto(String idFascicolo, String utente, String funzione)  {
+	
+	  String queryInsertSelect= "insert into d_iter_firma_decreto (ROW_CREATED_DTTM, ROW_CREATED_USER, ROW_UPDATED_DTTM, ROW_UPDATED_USER, ROW_CREATED_FORM, "+
+						  		"ROW_UPDATED_FORM, nume_ordine_firma, fk_nume_id_fascicolo, codi_tipo_firma, fk_codi_ufficio, fk_nume_cdr, fk_sequ_id_iter, nume_ordine_iter, "+
+						  		"fk_codi_firmatario, fk_anno_ese, fk_nume_stp,  fk_nume_app, stat_firma) "+
+								"select SYSDATE, :utente, null, null, :funzione, null,  "+
+								"        rownum as nume_ordine_firma, nume_id_fascicolo, codi_tipo_firma, "+
+								"       codi_ufficio , nume_cdr, fk_sequ_id_iter, nume_ordine_iter, codi_firmatario, "+
+								"       fk_anno_ese, nume_stp,  nume_app , decode(rownum,1,1,0) as stat_firma "+
+								"       from  ( "+
+								"SELECT  "+
+								"  e.nume_ordine as  nume_ordine_iter, "+
+								"  a.nume_id_fascicolo, "+
+								"  f.codi_tipo_firma, "+
+								"  null as codi_ufficio,  "+
+								"  null as  nume_cdr, d.fk_sequ_id_iter, e.nume_ordine, f.codi_firmatario, "+
+								"  a.fk_anno_ese, null as  nume_stp, null as nume_app "+
+								"  FROM d_fascicoli a,  "+
+								"  d_anag_tipologia_decreto d, "+
+								"  d_iter_firma e, d_anag_firmatari f "+
+								"  where a.nume_id_fascicolo = :param "+
+								"  and a.fk_nume_tipologia_decreto = d.nume_tipologia "+
+								"  and d.fk_sequ_id_iter = e.fk_sequ_id_iter "+
+								"  and e.fk_codi_firmatario = f.codi_firmatario "+
+								"  and f.codi_firmatario not in ('UFF','MIN','DIR') "+
+								"  union "+
+								"SELECT "+
+								"e.nume_ordine as nume_ordine_iter, "+
+								"a.nume_id_fascicolo, "+
+								"f.codi_tipo_firma, "+
+								"null as codi_ufficio , "+
+								"null as  nume_cdr, d.fk_sequ_id_iter, e.nume_ordine, "+
+								"f.codi_firmatario, a.fk_anno_ese, b.fk_nume_stp, b.fk_nume_app "+
+								"  FROM d_fascicoli a, d_fascicoli_amm b, "+
+								"  d_anag_tipologia_decreto d, "+
+								"  d_iter_firma e, d_anag_firmatari f, d_anag_ammin_dem g "+
+								"  where "+
+								"  a.nume_id_fascicolo = :param "+
+								"  and a.nume_id_fascicolo = b.fk_nume_id_fascicolo "+
+								"  and a.fk_nume_tipologia_decreto = d.nume_tipologia "+
+								"  and d.fk_sequ_id_iter = e.fk_sequ_id_iter "+
+								"  and e.fk_codi_firmatario = f.codi_firmatario "+
+								"  and f.codi_firmatario =  'MIN' "+
+								"  and b.fk_anno_ese = g.fk_anno_ese "+
+								"  and b.fk_nume_stp = g.nume_stp "+
+								"  and b.fk_nume_app = g.nume_app "+
+								"union "+
+								"SELECT  "+
+								"e.nume_ordine as nume_ordine_iter, "+
+								"a.nume_id_fascicolo, "+
+								"f.codi_tipo_firma, "+
+								"a.fk_nume_ufficio_capofila  as codi_ufficio, "+
+								"null as  nume_cdr, d.fk_sequ_id_iter, e.nume_ordine, f.codi_firmatario, "+
+								"a.fk_anno_ese, null as  nume_stp, null as nume_app "+
+								"  FROM d_fascicoli a, "+
+								"  d_anag_tipologia_decreto d, "+
+								"  d_iter_firma e, d_anag_firmatari f "+
+								"  where   a.nume_id_fascicolo = :param "+
+								"  and a.fk_nume_tipologia_decreto = d.nume_tipologia "+
+								"  and d.fk_sequ_id_iter = e.fk_sequ_id_iter "+
+								"  and e.fk_codi_firmatario = f.codi_firmatario "+
+								"  and f.codi_firmatario =  'UFF' "+
+								"union "+
+								"SELECT  e.nume_ordine as nume_ordine_iter, "+
+								"a.nume_id_fascicolo, "+
+								"f.codi_tipo_firma, "+
+								  "     null as codi_ufficio, "+
+								     
+								 "     c.fk_nume_cdr as  nume_cdr, d.fk_sequ_id_iter, e.nume_ordine, f.codi_firmatario, "+
+								 "     a.fk_anno_ese, c.fk_nume_stp,  c.fk_nume_app "+
+								 " FROM d_fascicoli a, d_fascicoli_cdr c, "+
+								 " d_anag_tipologia_decreto d, "+
+								 " d_iter_firma e, d_anag_firmatari f "+
+								 " where   a.nume_id_fascicolo = :param "+
+								 " and a.nume_id_fascicolo = c.fk_nume_id_fascicolo "+
+								 " and a.fk_nume_tipologia_decreto = d.nume_tipologia "+
+								 " and d.fk_sequ_id_iter = e.fk_sequ_id_iter "+
+								 " and e.fk_codi_firmatario = f.codi_firmatario "+
+								 " and f.codi_firmatario =  'DIR') "+
+								"ORDER BY NUME_ORDINE_ITER ";
+								 
+
+		
+		Query query=createSQLQuery(queryInsertSelect);
+		
+		query.setString("param", idFascicolo);
+		query.setString("utente", utente);
+		query.setString("funzione", funzione);
+		
+		int res=query.executeUpdate();
+		
+		return res;
+	}
+	
+
+}

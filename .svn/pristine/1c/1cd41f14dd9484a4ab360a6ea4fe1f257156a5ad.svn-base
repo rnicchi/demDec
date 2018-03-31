@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 5-giu-2015 12.17.04 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="it.almavivaitalia.bilancio.commons.bo.UtenteProfiloBO" table="D_J_UTENTE_PROFILO">
+        <meta attribute="extends" inherit="false">AbstractBO</meta>
+        <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+        <composite-id name="id" class="it.almavivaitalia.bilancio.commons.bo.UtenteProfiloBOId">
+            <key-property name="sequIdUtente" type="big_decimal">
+                <column name="SEQU_ID_UTENTE" precision="22" scale="0" />
+            </key-property>
+            <key-property name="sequIdProfilo" type="big_decimal">
+                <column name="SEQU_ID_PROFILO" precision="22" scale="0" />
+            </key-property>
+            <key-property name="progressivo" type="big_decimal">
+                <column name="PROGRESSIVO" precision="22" scale="0" />
+            </key-property>
+        </composite-id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <property name="numeVersion" type="int">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_VERSION" precision="6" scale="0">
+     <comment>Numero intero che serve per gestire l'accesso concorrente con i DAO</comment>
+    </column>
+   </property>
+        <many-to-one name="anagUffici" class="it.almavivaitalia.bilancio.commons.bo.AnagUfficiBO" fetch="select">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="FK_CODI_UFFICIO" length="12" />
+        </many-to-one>
+        <many-to-one name="profilo" class="it.almavivaitalia.bilancio.commons.bo.ProfiloBO" update="false" insert="false" fetch="select">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="SEQU_ID_PROFILO" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="anagAmminDem" class="it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO" fetch="select">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="FK_ANNO_ESE" precision="4" scale="0" />
+            <column name="FK_NUME_STP" precision="2" scale="0" />
+            <column name="FK_NUME_APP" precision="1" scale="0" />
+        </many-to-one>
+        <many-to-one name="utente" class="it.almavivaitalia.bilancio.commons.bo.UtenteBO" update="false" insert="false" fetch="select">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="SEQU_ID_UTENTE" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="flagFirma01" type="java.lang.Integer">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="FLAG_FIRMA_01" precision="1" scale="0" not-null="true" />
+        </property>
+        <property name="flagModifica01" type="java.lang.Integer">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="FLAG_MODIFICA_01" precision="1" scale="0" not-null="true" />
+        </property>
+         <property name="flagDefault01" type="java.lang.Integer">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="FLAG_DEFAULT_01" precision="1" scale="0" not-null="true" />
+        </property>
+        <property name="flagDelega01" type="java.lang.Integer">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="FLAG_DELEGA_01" precision="1" scale="0" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

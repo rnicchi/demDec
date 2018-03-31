@@ -1,0 +1,142 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import java.util.Map;
+
+import it.almavivaitalia.bilancio.commons.manager.impl.AbstractCommonManagerImpl;
+import it.almavivaitalia.bilancio.commons.utils.PropertyConfigurer;
+import it.almavivaitalia.bilancio.commons.web.security.spring.SpringCommonBeanFactory;
+import it.mef.bilancio.demdec.servizi.pkbox.*;
+import it.mef.bilancio.demdec.manager.AbstractDemManager;
+import it.mef.bilancio.demdec.servizi.client.ParametriInput;
+import it.mef.bilancio.demdec.utils.Constants;
+
+public class AbstractDemManagerImpl extends AbstractCommonManagerImpl implements AbstractDemManager {
+
+	
+	public ParametriInput leggiParametriInputDemBil() throws Throwable {
+		
+		ParametriInput parametri = new ParametriInput();
+		
+		String actor=searchPropertyValueFromTabServ(Constants.DEMBIL_ACTOR_WS);
+		
+		if (actor!=null&&!actor.isEmpty()) {
+		parametri.setActorWS(actor); 
+		}
+		
+		parametri.setApplicazioneWS(Constants.DEMBIL_CONST_APPLICATION_WS); 
+		parametri.setClientWS(Constants.DEMBIL_CLIENT_WS);
+		parametri.setMustUnderstandWS(Constants.DEMBIL_CONST_MUST_UNDERSTAND_WS);
+		parametri.setOrgIDWS(Constants.DEMBIL_CONST_ORG_ID);  
+		parametri.setPasswdWS(searchPropertyValueFromTabServ(Constants.DEMBIL_PASS_WS));
+		parametri.setUtenteWS(searchPropertyValueFromTabServ(Constants.DEMBIL_UTENTE_WS));
+		parametri.setTipoUtenteWS(Constants.DEMBIL_CONST_TIPO_UTENTE_WS); 
+		parametri.setServizioWS(Constants.DEMBIL_CONST_SERVIZIO_WS);
+
+		PropertyConfigurer configurer = SpringCommonBeanFactory.getPropertyConfigurer();
+		Map<String, String> valuer = configurer.getResolvedProps();
+    	String urlWSDaDB = valuer.get("url.service.daDB");
+    	String urlWS = valuer.get("url.DEMBIL");
+    	if(urlWSDaDB !=null && urlWSDaDB.equals("N")){
+    		parametri.setUrlWS(urlWS);
+    	} else{
+    		if(searchPropertyValueFromTabServ(Constants.DEMBIL_FLAG_TEST).equals("1")){
+    			parametri.setUrlWS(searchPropertyValueFromTabServ(Constants.DEMBIL_URL_TEST_WS));
+    		}else{
+    			parametri.setUrlWS(searchPropertyValueFromTabServ(Constants.DEMBIL_URL_WS));
+    		}
+    	}
+    	
+		parametri.setTimeOutWS(Integer.parseInt(searchPropertyValueFromTabServ(Constants.DEMBIL_TIME_OUT)));
+		return parametri;
+
+		
+	}
+
+	
+	public PKBoxParameter leggiParametriInputPkbox() throws Throwable {
+		
+		PKBoxParameter pkBoxParam = new PKBoxParameter();
+		pkBoxParam.setPkBoxHandler(searchPropertyValueFromTabServ(Constants.TAB_SERV_PKBOX_HANDLER));
+		pkBoxParam.setProvider(searchPropertyValueFromTabServ(Constants.TAB_SERV_PKBOX_PROVIDER));
+		pkBoxParam.setSecurePinFilePath(searchPropertyValueFromTabServ(Constants.TAB_SERV_PKBOX_SECURE_PIN));
+		pkBoxParam.setOtpPropertiesFilePath(searchPropertyValueFromTabServ(Constants.TAB_SERV_PKBOX_OPT_PROPERTIES));
+		
+		return pkBoxParam;
+	}
+	
+	public ParametriInput leggiParametriInputDocConverter() throws Throwable {
+		
+		ParametriInput parametri = new ParametriInput();
+		
+		String actor=searchPropertyValueFromTabServ(Constants.DOCCONVERTER_ACTOR_WS);
+		
+		if (actor!=null&&!actor.isEmpty()) {
+		parametri.setActorWS(actor); 
+		}
+		parametri.setApplicazioneWS(Constants.DOCCONVERTER_CONST_APPLICATION_WS); 
+		parametri.setClientWS(Constants.DOCCONVERTER_CONST_CLIENT_WS);
+		parametri.setMustUnderstandWS(Constants.DOCCONVERTER_CONST_MUST_UNDERSTAND_WS);
+		parametri.setOrgIDWS(Constants.DOCCONVERTER_CONST_ORG_ID);  
+		parametri.setPasswdWS(searchPropertyValueFromTabServ(Constants.DOCCONVERTER_PASS_WS));
+		parametri.setUtenteWS(searchPropertyValueFromTabServ(Constants.DOCCONVERTER_UTENTE_WS));
+		parametri.setTipoUtenteWS(Constants.DOCCONVERTER_CONST_TIPO_UTENTE_WS);
+		parametri.setServizioWS(Constants.DOCCONVERTER_CONST_SERVIZIO_WS);
+
+		PropertyConfigurer configurer = SpringCommonBeanFactory.getPropertyConfigurer();
+		Map<String, String> valuer = configurer.getResolvedProps();
+    	String urlWSDaDB = valuer.get("url.service.daDB");
+    	String urlWS = valuer.get("url.DOCCONVERTER");
+    	if(urlWSDaDB !=null && urlWSDaDB.equals("N")){
+    		parametri.setUrlWS(urlWS);
+    	} else{
+    		if(searchPropertyValueFromTabServ(Constants.DOCCONVERTER_FLAG_TEST).equals("1")){
+    			parametri.setUrlWS(searchPropertyValueFromTabServ(Constants.DOCCONVERTER_URL_TEST_WS));
+    		}else{
+    			parametri.setUrlWS(searchPropertyValueFromTabServ(Constants.DOCCONVERTER_URL_WS));
+    		}
+    	}
+    	
+		parametri.setTimeOutWS(Integer.parseInt(searchPropertyValueFromTabServ(Constants.DOCCONVERTER_TIME_OUT)));
+		return parametri;
+
+		
+	}
+	
+/*	public ParametriInput leggiParametriInputDocConverterAdobe() throws Throwable {
+		
+		ParametriInput parametri = new ParametriInput();
+		
+		parametri.setActorWS(Constants.DOCCONVERTER_ADOBE_CONST_ACTOR_WS);
+		parametri.setApplicazioneWS(Constants.DOCCONVERTER_ADOBE_CONST_APPLICATION_WS);
+		parametri.setClientWS(Constants.DOCCONVERTER_ADOBE_CLIENT_WS);
+		parametri.setMustUnderstandWS(Constants.DOCCONVERTE_ADOBER_CONST_MUST_UNDERSTAND_WS);
+		parametri.setOrgIDWS(Constants.DOCCONVERTER_ADOBE_ORG_ID);
+		parametri.setPasswdWS(searchPropertyValueFromTabServ(Constants.DOCCONVERTER_ADOBE_PASS_WS));
+		parametri.setUtenteWS(searchPropertyValueFromTabServ(Constants.DOCCONVERTER_ADOBE_UTENTE_WS));
+		parametri.setTipoUtenteWS(Constants.DOCCONVERTER_ADOBE_CONST_TIPO_UTENTE_WS);
+		parametri.setServizioWS(Constants.DOCCONVERTER_ADOBE_CONST_SERVIZIO_WS);
+
+		PropertyConfigurer configurer = SpringCommonBeanFactory.getPropertyConfigurer();
+		Map<String, String> valuer = configurer.getResolvedProps();
+    	String urlWSDaDB = valuer.get("url.service.daDB");
+    	String urlWS = valuer.get("url.DOCCONVERTER");
+    	if(urlWSDaDB !=null && urlWSDaDB.equals("N")){
+    		parametri.setUrlWS(urlWS);
+    	} else{
+    		if(searchPropertyValueFromTabServ(Constants.DOCCONVERTER_ADOBE_FLAG_TEST).equals("1")){
+    			parametri.setUrlWS(searchPropertyValueFromTabServ(Constants.DOCCONVERTER_ADOBE_URL_TEST_WS));
+    		}else{
+    			parametri.setUrlWS(searchPropertyValueFromTabServ(Constants.DOCCONVERTER_ADOBE_URL_WS));
+    		}
+    	}
+    	
+		parametri.setTimeOutWS(Integer.parseInt(searchPropertyValueFromTabServ(Constants.DOCCONVERTER_TIME_OUT)));
+		return parametri;
+
+		
+	}*/
+	
+	
+	
+
+}

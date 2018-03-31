@@ -1,0 +1,20 @@
+package it.mef.bilancio.demdec.to;
+
+
+public class LettereTestiPersTO extends AbstractDemTO implements java.io.Serializable {
+
+	private static final long serialVersionUID = 7431443310853482400L;
+
+	private LettereTestiPersTOId id;
+
+	public LettereTestiPersTOId getId() {
+		return id;
+	}
+
+	public void setId(LettereTestiPersTOId id) {
+		this.id = id;
+	}
+	
+	
+	
+}

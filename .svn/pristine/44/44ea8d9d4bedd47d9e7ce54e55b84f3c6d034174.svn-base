@@ -1,0 +1,488 @@
+################################# BEGIN LABELS
+label.applicationTitle=DemDec Dematerializzazione Atto Decreto - rev.  1511090001 (09/11/2015)
+label.unassignedPageTitle=Pagina senza titolo
+label.menuFormazionePageTitle=Menu DemDec
+label.empty=
+label.descrizione=Descrizione
+label.itemSelectorPageTitle=Selezione da Lista
+label.titoloMultiSelector=Lista a selezione multipla
+label.titoloSelector=Lista a selezione singola
+label.titoloMultiDeletor=Lista a cancellazione multipla
+label.titoloMultiOrdinator=Lista ordinabile a cancellazione multipla
+label.between=BETWEEN
+label.or=OR
+label.condizioni=Condizioni
+label.required.fields=I campi contrassegnati con il simbolo * sono obbligatori
+# IMPORTANTE:
+# necessario per l'item selector
+MAX_TABLE_NO_SCROLL_SIZE=15
+shortcut.messages=vai direttamente ai messaggi
+label.infoUtente=utente
+#label vuota
+label.blank=
+label.errorPageTitle=Errore
+label.messagePageTitle=Messaggio di Notifica
+label.error=Errore
+label.warning=Avvertenza
+label.info=Informazione
+help.error.pageNotPresent=Pagina di Help non disponibile
+label.itemSelectorExportHeader=Lista Valori
+label.itemSelectorExportFooter=Lista Valori
+label.modify=Modifica
+label.detail=Dettaglio
+label.back=Indietro
+label.exit=Esci
+label.open=Apri
+label.delete=Elimina
+label.new=Nuovo
+label.save=Salva
+label.clean=Pulisci
+label.login=Login
+label.logout=Esci
+label.help=Help
+label.Manual=Manuale
+label.cancel=Annulla
+label.confirm=Conferma
+label.selection=Selezione
+label.multiSelect=Conferma Selezione
+label.selectAll=Seleziona Tutti
+label.multiDelete=Elimina Elementi
+label.deleteAll=Elimina Tutti
+label.exportPdf=Esporta in PDF
+label.exportExcel=Esporta in Excel
+acc.menuHidden=vai direttamente al contenuto
+acc.infoHidden=vai direttamente al path di navigazione
+label.imgSubmit.prefix=Scelta
+label.anno=Anno
+label.amministrazione=Amministrazione
+label.amministrazione.obb=* Amministrazione
+label.profilo.obb=* Profilo
+label.esercizio=Esercizio
+label.capitolo=Capitolo
+label.art=Art
+label.stp=Stp
+label.app=App
+label.eos=Eos
+label.cdr=CDR
+label.cdr.numero=Numero Cdr
+label.unselect=Annulla selezione 
+label.nuovo.profilo=Selezionare il nuovo profilo
+label.codice.fiscale=Codice Fiscale
+#label.pin=Codice Pin
+label.alt.img.pdf=Documento PDF
+label.tipo.file.pdf=Pdf
+
+################################# BEGIN ICONE
+ico.expand=img/puls_espandi.jpg
+ico.compress=img/puls_comprimi.jpg
+
+ico.enable=img/ico_enable.jpg
+ico.disable=img/ico_disable.jpg
+
+
+ico.open=img/ico_apri.jpg
+ico.delete=/public/img/ico_delete.png
+ico.modify=/public/img/upd.png
+ico.openList=img/puls_scelta.jpg
+
+ico.shiftUp=img/puls_comprimi.jpg
+ico.shiftDown=img/puls_espandi.jpg
+
+ico.publish=img/ico_esporta.jpg
+ico.copy=img/ico_importa.jpg
+
+ico.folder=/public/img/ico_folder.png
+ico.download.pdf=/public/img/ico_pdf.png
+ico.download.originale=/public/img/ico_download.png
+ico.download.excel=/public/img/ico_excel.png
+ico.document.delete=/public/img/del.png
+ico.document.modify=/public/img/upd.png
+################################# END ICONE
+
+################################# BEGIN BUTTONS
+button.confermaCancellazione=Conferma Cancellazione
+button.unselect=Deseleziona
+button.conferma=Conferma
+button.back=Indietro
+button.caricaRaffronto=Carica Raffronto
+button.aggiorna=Visualizza Modifiche
+button.annulla=Annulla
+button.salva=Salva
+button.modifica=Modifica
+button.eseguiRicerca=Esegui Ricerca
+button.nuovaRicerca=Nuova Ricerca
+button.autorizza=Autorizza
+button.revoca=Revoca Bilancio
+button.clean=Pulisci
+button.associa=Associa/Comp. Imp
+button.nuovaRim=Nuova Rimodulazione
+button.utilizzoSottostr=Utilizzo Sottostrumento
+button.utilizzoAccIgb=Utilizzo Accantonamento IGB
+button.inserisciCedente=Inserisci Cedente
+button.inserisciRicevente=Inserisci Ricevente
+button.schedula.chiusura.sospesi=Schedula Chiusura Sospesi
+button.revoca.schedulazione=Revoca Schedulazione
+button.aggiornaBilancio=Aggiorna Bilancio
+button.aggiungi=Aggiungi riga
+button.si=Si
+button.no=No
+button.selezionaTutti=Seleziona Tutti
+button.deselezionaTutti=Deseleziona Tutti
+button.visLog=Visualizza Log
+button.load=...
+button.eseguiRicercaProvvisorie=Ricerca
+button.Fad.invia=Invia a FAD
+button.ritornoLista=Torna alla Lista
+button.fad.crea=Crea FAD
+button.fad.modifica=Modifica
+button.fad.modificaMetadati=Modifica Metadati
+button.fad.cancella=Elimina
+button.fad.cancellaDocumento=Elimina Documento
+button.fad.cancellaAllegato=Elimina Allegato
+button.firma=Firma
+button.sigla=Sigla
+button.verifica=Verifica
+button.generazioneFirme=Pagina firme
+button.invioAFirme=Invio alle firme
+button.upload=Upload
+button.sospendi=Sospendi
+button.pin.crea=Crea Pin
+button.revocaSospFirme=Revoca Sospensione
+################################# END BUTTONS
+
+# --- Upload ----#
+
+label.title.uploadDec=Upload Documenti
+label.uploadDec.obb=* Upload Documenti
+label.tipo.doc=Tipo Documento
+label.tipo.doc.obb=* Tipo Documento
+label.descr.doc=Descrizione Documento
+label.descr.doc.obb=* Descrizione Documento
+label.decreto.fascicolo.carica=Carica Id Fascicolo
+label.decreto.fascicolo.obb=* Id Fascicolo
+label.decreto.fascicolo.id=Id Fascicolo
+# --- Crea Fad ----#		
+label.title.crea.fad= Crea FAD
+label.anno.dec=Anno Decreto
+label.carica.amm=Carica Amministrazioni
+label.sel.amm=Seleziona Amministrazioni
+label.mod.amm=Modifica Amministrazioni
+label.sel.cdr=Seleziona CDR
+label.mod.cdr=Modifica CDR
+label.selected.amm=Lista Amministrazioni Selezionate
+label.amm.list=Lista Amministrazioni
+label.selected.cdr=Lista Cdr Selezionati
+label.cdr.list=Lista Cdr
+label.carica.cdr=Carica combo Centri di responsabilita (CDR)
+label.decreto.tipo=Tipo Decreto
+label.decreto.tipo.obb=* Tipo Decreto
+label.decreto.numero= Numero Decreto
+label.decreto.numero.obb=* Numero Decreto
+label.decreto.anno=Anno Decreto
+label.decreto.anno.obb=* Anno Decreto
+label.decreto.descr=Descrizione Decreto
+label.decreto.descr.obb=* Descrizione Decreto
+label.decreto.tipologia=Tipologia Decreto
+label.decreto.tipologia.obb=* Tipologia Decreto
+label.decreto.flag=Flag Decreto Normativo
+label.ucb.rts=Ucb Rts
+label.patrimonio.numero=Numero patrimonio 
+button.cdr=Carica Cdr
+label.decreto.tipologia.carica=Carica Tipologia Decreto
+label.decreto.ufficio.capofila.carica=Carica Ufficio Capofila 
+label.uncheck.amm=Deseleziona Amministrazioni
+label.uncheck.cdr=Deseleziona Cdr
+label.conferma.amm=Conferma selezione Amministrazioni
+label.conferma.cdr=Conferma selezione Cdr
+label.ufficio.capofila.obb=* Ufficio Capofila
+label.ufficio.capofila=Ufficio Capofila
+# --- Ricerca Red ----#		
+label.title.ricercaRed=Ricerca
+label.idRed=Id Red
+label.protocolloRed=Protocollo Red
+label.ricercaRed=Ricerca RED
+label.annoEsercizio=Anno Esercizio
+label.ufficioAssociatoRed=Ufficio Associato Red
+label.stato=Stato Lavorazione
+label.pecRed=PEC RED
+label.scannerRed=Scanner RED
+label.dataRedDa=(da) Data Red 
+label.dataRedA=(a) Data Red 
+label.dataProtocolloRedDa=(da) Data Protocollo Red 
+label.dataProtocolloRedA=(a) Data Protocollo Red 
+label.dataArrivoDa=(da) Data Arrivo 
+label.dataArrivoA=(a) Data Arrivo 
+label.raccolteProvvisorie=Raccolte Provvisorie
+label.raccolteProvvisorie.protocollo=Protocollo
+label.documentiFascicolo=Documenti Fascicolo
+label.numero=Numero
+label.tipoFlusso=Tipo flusso
+label.sottofascicoli.red=Sottofascicoli IGB/RED
+# --- Gestione FAD ----#		
+label.metadatiFascicolo=Metadati Fascicolo
+label.metadatiModificabili=Metadati Modificabili
+label.creatoDa=Creato Da
+label.ufficioCreatore=Ufficio Creatore
+# --- Gestione FAD ----#
+
+# --- Raccolte provvisorie fascicoli ----#		
+label.raccoltaProvvisoria=Raccolta Provvisoria
+label.raccolteProvvisorie.estremiStr=Decreto
+label.raccolteProvvisorie.nome=Descrizione
+label.raccolteProvvisorie.oggettoRed=Oggetto Red
+label.raccolteProvvisorie.amministrazione=Amministrazione
+label.raccolteProvvisorie.statoLavorazione=Stato Lavorazione
+label.raccolteProvvisorie.dataCreazione=Data Creazione
+label.raccolteProvvisorie.dataProtocollo=Data Protocollo
+label.raccolteProvvisorie.utenteAssegnatario=Utente Assegnatario
+label.raccolteProvvisorie.origineCreazione=Origine Creazione
+label.raccolteProvvisorie.ufficioAssociato=Ufficio Associato
+label.raccolteProvvisorie.dataModifica=Data Modifica
+label.raccolteProvvisorie.modificatoDa=Modificato Da
+label.raccolteProvvisorie.visualizzaMetadati=Visualizza Metadati
+label.raccolteProvvisorie.tipoAllegati=Tipo Documento
+label.raccolteProvvisorie.tipo=Tipo
+label.raccolteProvvisorie.originale=Originale
+label.raccolteProvvisorie.documentiFascicolo=Tabella documenti fascicolo
+label.raccolteProvvisorie.pdf=Pdf
+label.raccolteProvvisorie.associato=Associato a
+# --- Raccolte provvisorie fascicoli ----#	
+
+
+# --- MAIL ----#
+label.title.mail=Mail
+label.text=Testo
+label.sendMail=Invia
+label.detailMail=Dettaglio
+label.oggetto.vuoto=oggetto
+label.destinatario.vuoto=To
+label.invio.pec.da.funzione=Invio PEC da Funzione
+label.invio.pec.da.form=Invio PEC Da Form
+label.invio.standardMail.da.funzine=Invio Standard Mail da Funzione
+label.invio.standardMail.da.form=Invio Standard Mail da Form
+label.filtro.data=Cerca
+label.data.formato.non.valido=Inserire una data valida nel formato GG/MM/AAAA
+label.data.invio=Data Invio
+label.destinatari.TO=* A
+label.destinatari.Cc=Cc
+label.oggetto=* Oggetto
+label.messaggio=Testo
+label.title.list.msg=Ricerca messaggi inviati
+label.lista.sentMsg.vuota=Non ci sono messaggi inviati
+label.title.tabel.list.sentMsg=Messaggi inviati
+label.find.list.sentMsg=Ricerca - Messaggi inviati
+label.caption.sentMsg=Tabella messaggi inviati
+# --- END MAIL ----#
+
+# --- FIRMA ----#
+label.nome=Nome
+label.tipo.documento=Tipo documento
+label.stato.lavorazione=Stato lavorazione
+label.pin=PIN Firma
+label.selezioni=AD Selezionati
+label.title.list.AD.to.sign=Lista Atti Decreto da firmare
+label.caption.list.AD.to.sign=Tabella documenti da firmare
+label.tipo.file=Tipo
+label.title.modal=Firma Documenti
+label.chiudiPin=Chiudi X
+label.decreto=Decreto
+# --- END FIRMA ----#
+
+# --- SIGLA ----#
+label.title.list.AD.to.initial=Lista Atti Decreto da siglare
+label.title.modal.sigla=Sigla Documenti
+# --- END SIGLA ----#
+
+# --- VERIFICA ----#
+label.title.modal.verifica=Verifica Documenti
+label.title.list.AD.to.verify=Lista Atti Decreto da verificare
+# --- END VERIFICA ----#		
+
+# --- Fascicoli Fad INIZIO --- #
+label.title.ricercaFad=Ricerca Fascicoli FAD
+label.tipoDecreto=Tipo Decreto
+label.numeroDecreto= Numero Decreto
+label.tipologiaDecreto=Tipologia Decreto
+label.ufficioCapofila=Ufficio Capofila
+label.numeroPatrimonio=Numero Patrimonio
+label.carica.tipologia=Carica combo Tipologia decreto
+label.carica.ufficio=Carica combo Uffici Attivi
+alt.apri.fascicoloFad=Apri fascicolo FAD
+label.show.metadati=Fascicolo Atto Decreto
+label.modify.metadati=Modifica Metadati Fascicolo
+label.sottofascicoli.fad=Sottofascicolo Atto Decreto
+label.caption.table.fad=Tabella fascicoli FAD
+# --- Fascicoli Fad FINE --- #
+
+# --- Gestione chiusura Sospesi RED (Raccolta Provvisorie aperte) INIZIO --- #
+label.title.ricerca.sospesi.red=Ricerca Sospesi Red
+label.title.lista.sospesi.red=Lista Sospesi Red
+label.title.lista.schedulazioni.chiusure=Lista Schedulazioni Chiusure
+# --- Gestione chiusura Sospesi RED (Raccolta Provvisorie aperte) FINE --- #
+
+# --- Crea Pin ----#		
+label.title.creaPin=Creazione Pin
+
+
+# --- Invio alle Firme ----#		
+label.title.invioAlleFirme=Invio alle Firme
+label.title.listaFirmatari=Lista Firmatari
+label.title.listaFirmatariInvio=Lista Firmatari Invio
+label.invioAlleFirme.numeroOrdineFirma=Ordine firma
+label.invioAlleFirme.firmatario=Firmatario
+label.invioAlleFirme.tipoSegnatura=Tipo segnatura
+label.invioAlleFirme.ufficio=Ufficio
+
+# --- Sospensione Firme ----#
+label.title.sospensioneFirme=Sospensione Firme
+
+
+# --- Revoca Sospensione Firme ----#
+label.title.revocaSospensioneFirme=Revoca Sospensione Firme
+
+# --- Gestione Tipologia Decreto INIZIO --- #
+label.title.gestione.tipologia.decreto=Gestione Tipologia Decreto
+label.title.creazione.tipologia.decreto=Gestione Creazione Tipologia Decreto
+label.title.modifica.tipologia.decreto=Gestione Modifica Tipologia Decreto
+label.title.lista.tipologia.decreto=Tabella Tipologia Decreto
+label.tipologia.decreto=Tipologia Decreto
+label.nuova.tipologia.decreto=Nuova Tipologia
+label.tipo.decreto=Tipo Decreto
+label.modello.iter=Modello
+# --- Gestione Tipologia Decreto FINE --- #
+
+# --- Gestione Workflow Firme INIZIO --- #
+label.title.gestione.workflow.firme=Gestione Workflow Firme
+label.title.lista.modelli.iter=Tabella Modelli Iter
+label.title.lista.iter.firma=Tabella Iter Firma
+label.title.lista.anag.firmatari=Tabella Anagrafica Firmatari
+label.title.creazione.workflow.firme=Creazione Modello Iter
+label.title.dettaglio.workflow.firme=Dettaglio Modello Iter
+label.title.modifica.dettaglio.workflow.firme=Modifica Dettaglio Modello Iter
+label.delete.firmatario=Elimina Firmatario
+label.save.ordine=Salva numero d'ordine
+label.workflow.firme.numero.ordine=Numero ordine
+label.workflow.firme.firmatario=Firmatario
+label.workflow.firme.tipofirma=Tipo Firma
+label.workflow.firme.nuova.anag.firmatario=Nuovo Firmatario
+label.workflow.firme.aggiungi.firmatario=Aggiungi Firmatario
+label.workflow.firme.nuovo.modello=Nuovo Modello
+# --- Gestione Workflow Firme FINE --- #
+
+# --- Consultazione FAD Cdc INIZIO --- #
+label.title.consFadCdc.ricercaFadCdc= Consultazione FAD Cdc
+label.title.consFadCdc.gestFascicoloFadCdc= Gestione FAD Cdc
+label.consFadCdc.dataInvioCdc= Data Invio Cdc
+label.consFadCdc.numeProtEntrata= Numero protocollo entrata
+label.consFadCdc.dataProtEntrata= Data protocollo entrata
+label.consFadCdc.numeProtUscita= Numero protocollo uscita
+label.consFadCdc.dataProtUscita= Data protocollo uscita
+label.consFadCdc.estremiCdc= Estremi Cdc
+label.consFadCdc.presaCarico=Presa in carico
+label.consFadCdc.dataPresaCarico= Data presa in carico
+label.consFadCdc.datiProtocollo=Dati Protocollo
+label.consFadCdc.datiProtocolloEntrata=Protocollo in entrata
+label.consFadCdc.datiProtocolloUscita=Protocollo in uscita
+label.consFadCdc.confermaPresaCarico= Si conferma la presa in carico dei documenti?
+# --- Consultazione FAD Cdc FINE --- #
+
+# --- Gestione Profilo Utente INIZIO --- #
+label.title.gestioneProfiloUtente=Gestione Profilo Utente
+# --- Gestione Profilo Utente FINE --- #
+
+#---	BEGIN PAGINATORE ---#
+paginator.keyBackLabel=Pagina precedente
+paginator.keyNextLabel=Pagina successiva
+paginator.keyPagePrefixLabel=Pagina 
+paginator.keyBackValue=<
+paginator.keyNextValue=>
+paginator.keyBackRangeLabel=Gruppo precedente
+paginator.keyNextRangeLabel=Gruppo successivo
+paginator.keyBackRangeValue=<<
+paginator.keyNextRangeValue=>>
+paginator.keyCurrentPagLabel=- Pagina
+paginator.keyTotPagLabel=di
+paginator.keyTotEleLabel=Record totali:
+paginator.keyGoToLabel=- Vai a
+
+paginator.keyEnablePaginValue=Paginazione
+paginator.keyEnablePaginLabel=Attiva la Paginazione relativamente al filtro impostato
+paginator.keyDisablePaginValue=Visualizza Tutti
+paginator.keyDisablePaginLabel=Disablita la Paginazione mostrando tutti gli elementi relativi al filtro impostato
+#---	END PAGINATORE ---#		
+
+########	CRONOLOGICO            ########
+label.intCronologico=Interrogazione Cronologico
+label.rielaborazioneFascicolo=Rielaborazione Fascicolo
+label.cronologicoApplication=Cronologico
+label.cronologicoDataOra=Data (gg/mm/aaaa) - Ora (hh:mi) - Utente
+label.cronologicoApplCatFun=Applicazione - Categoria - Funzione
+label.cronologicoApplicazione=Applicazione
+label.cronologicoCategoria=Categoria
+label.cronologicoFunzione=Funzione
+label.cronologicoDa=Da :
+label.cronologicoDataDa=* Data Da :
+label.cronologicoDataDaMsg=Data Da
+label.cronologicoDataAMsg=Data A
+label.cronologicoOraDaMsg=Ora Da
+label.cronologicoOraAMsg=Ora A  
+label.cronologicoData=Data
+label.cronologicoOra=Ora
+label.cronologicoA=A :
+label.cronologicoOraDa=Ora Da :
+label.cronologicoUtente=Utente
+button.salvaFiltri=Salva Filtri
+button.chiudiFiltri=Chiudi Filtri
+label.cronologicoFiltri=Filtri
+label.cronologico.filtro.cappg=Capitolo/Pg               
+label.cronologico.filtro.pl=Provvedimento Legislativo
+label.cronologico.filtro.partita=Partita
+label.cronologico.filtro.autorizzazione=Autorizzazione               
+label.cronologico.filtro.strumento=Strumento
+label.cronologico.filtro.sottostrumento=Sotto Strumento
+button.impostaFiltri=Imposta Filtri
+button.eliminaFiltri=Elimina Filtri
+label.operazione=Operazione
+label.dataOperazione=Data Operazione
+label.oraOperazione=Ora Operazione
+label.transazione=Transazione
+
+label.pg=PG
+label.articolo=Articolo
+label.subArt=Sub. Art
+label.comma=Comma
+label.subComma=Sub. Comma
+label.punto=Punto
+label.subPunto=Sub. Punto
+label.codice=Codice
+label.descRidotta=Desc. Ridotta
+label.apriDettaglio=Apri Dettaglio
+label.campo=Campo
+label.oldVal=Vecchio Valore
+label.newVal=Nuovo Valore
+label.modificato=Modificato
+label.cronologico.transazioni=Lista Transazioni
+label.cronologico.dettTransazioni=Dettaglio Transazione
+
+#--- Gestione Utenti ---#
+label.title.gestioneUtenti=Gestione Utenti
+label.codiUtente= Codice Utente
+label.persCognome= Cognome
+label.persNome= Nome
+label.indiEmail= Indirizzo E-mail
+label.codiNsbf= Codice Nsbf
+label.codiceFisFirma=Codice Fis Firma
+label.codicePinFirma=Codice Pin Firma
+label.profilo=Profilo
+label.ufficio=Ufficio
+
+#--- Gestione Utente Profilo ---#
+label.title.gestioneUtenteProfilo = Gestione Utente Profilo
+label.title.lista.utente.profilo = Tabella Utente Profilo
+
+#--- Rielaborazione fascicolo
+label.rielabFascicolo.tipoElaborazione=*Tipo Elaborazione
+label.rielabFascicolo.numDecreto=*Decreto
+label.rielabFascicolo.numDecretoArrivo=*Decreto di arrivo
+button.elaboraFascicolo=Elabora Fascicolo
+

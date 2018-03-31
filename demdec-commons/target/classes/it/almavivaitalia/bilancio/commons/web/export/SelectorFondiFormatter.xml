@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fieldFormatterMap >
+<FieldFormatterMap>
+  <entry>
+    <Property value="codiTipoFondo"/>
+    <FieldFormatter cssClass="w10 center" type="0" label="label.selector.codice"/>
+  </entry>
+  
+   <entry>
+    <Property value="descTipoFondo"/>
+    <FieldFormatter cssClass="w50 center" type="0" label="label.selector.descrizione"/>
+  </entry>
+</FieldFormatterMap>

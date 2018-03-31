@@ -1,0 +1,79 @@
+<%@ page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@ page import="it.almavivaitalia.bsn.sh.paginator.Paginator"%>
+<%@ page import="it.mef.bilancio.demdec.web.spring.utils.WebConstants"%>
+
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ taglib uri="http://displaytag.sf.net/el" prefix="display-el"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+<demdec:useAttribute id="paginator" name="<%=SessionAttributes.OBJECT_PAGINATOR%>"/>
+<demdec:useAttribute id="listDecretiMonitoraggio" name="<%=SessionAttributes.LIST_DECRETI_MONITORAGGIO_FIRMA%>"/>
+
+<tiles:useAttribute name="action"/>
+
+<script type="application/javascript">
+
+
+$(document).ready(function() {
+    
+    $("#btnNewRicerca").click(function() {
+        $('body').css("cursor", "wait");
+    });
+});
+</script>
+
+
+<div class="overlay"></div>
+
+<div class="spacer_sm">&nbsp;</div>
+
+	<c:if test="${not empty listDecretiMonitoraggio}">
+
+		<demdec:displaytag-table class="lux tableDati width100" name="pageScope.listDecretiMonitoraggio" id="listDecreti" >
+		
+			<display:caption>
+				<span class="nascosto"><spring:message code="label.monitoraggioFirma.caption.table"/></span>
+			</display:caption>
+			
+			<demdec:displaytag-column titleKey="label.monitoraggioFirma.table.stato" class="center">
+				<c:if test="${listDecreti.statStato eq 2}">
+					<img class="padd_sx_logo" src="<c:url value="/public/img/warning.png"/>" alt="In firma" title="In firma"/>
+				</c:if>
+				<c:if test="${listDecreti.statStato eq 3}">
+					<img class="padd_sx_logo" src="<c:url value="/public/img/error.png"/>" alt="Sospeso per integrazione" title="Sospeso"/>
+				</c:if>
+				<c:if test="${listDecreti.statStato eq 4}">
+					<img class="padd_sx_logo" src="<c:url value="/public/img/success.png"/>" alt="Firmato" title="Firmato"/>
+				</c:if>
+			</demdec:displaytag-column>
+			
+			<demdec:displaytag-column titleKey="label.monitoraggioFirma.table.decreto" >
+				<demdec:submit styleClass="nascosto" styleId="apri${listDecreti.id}" keyValue="label.empty" controllerCode="dettaglioFascicolo?numeIdFascicolo=${listDecreti.numeIdFascicolo}" />
+				<a href="javascript:this.document.getElementById('apri${listDecreti.id}').click();">${listDecreti.codiDecreto}</a>
+			</demdec:displaytag-column>
+			<demdec:displaytag-column property="descDecreto" titleKey="label.monitoraggioFirma.table.descrizione"/>
+			
+			<demdec:displaytag-column property="descInFirma" titleKey="label.monitoraggioFirma.table.allaAttenzioneDi"/>
+			<demdec:displaytag-column property="descFirmato" titleKey="label.monitoraggioFirma.table.approvatoDa"/>
+			
+									
+		</demdec:displaytag-table>
+		
+		<c:if test="${paginator ne null}">
+			<div>&nbsp;</div>
+			<div class="center color_grey">
+				<demdec:paginator controllerCode="<%=Paginator.PARAMETER_PAGINATOR%>"
+			                      paginatorName="<%=Paginator.PAGINATOR_NAME%>"
+			                      paginatorSessionName="<%=SessionAttributes.OBJECT_PAGINATOR%>"
+			                      controllerCodeEnableDisablePagin="<%=Paginator.PARAMETER_ENABLE_DISABLE_PAGIN%>" />
+				<div class="right">
+					<demdec:submit keyValue="button.nuovaRicerca" controllerCode="nuovaRicerca" styleId="btnNewRicerca" />
+				</div>
+		     </div>                       
+		</c:if>
+		   
+	</c:if>

@@ -1,0 +1,269 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>demdec</artifactId>
+		<groupId>it.mef.bilancio.demdec</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>demdec-business</artifactId>
+	<name>demdec-business</name>
+	<dependencies>
+		<!-- PROJECT DEPENDENCY -->
+		<dependency>
+			<groupId>it.mef.bilancio.demdec</groupId>
+			<artifactId>demdec-commons</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>it.pkbox</groupId>
+			<artifactId>jpkboxclient</artifactId>
+			<version>1.3.71.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/src/main/resources/lib/jpkboxclient-1.3.71.1.jar</systemPath>
+		</dependency>
+		<!-- PROJECT DEPENDENCY -->
+		
+		<!-- LIBRARY DEPENDENCY -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${org.springframework.version}</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${org.springframework.version}</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${org.springframework.version}</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework.version}</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${org.hibernate.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		 <dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.12</version>
+		</dependency> 
+		<dependency>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
+			<version>5.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Spring 3.0.0 END -->
+
+		<!-- LIBRARY DEPENDENCY -->
+		
+		
+			<!-- da togliere -->
+	<dependency>
+		<groupId>org.apache.tika</groupId>
+		<artifactId>tika-core</artifactId>
+		<version>1.8</version>
+	</dependency>
+
+<!-- 	<dependency>
+		<groupId>org.apache.tika</groupId>
+		<artifactId>tika-parsers</artifactId>
+		<version>1.8</version>
+	 	<exclusions>
+			<exclusion>
+				<groupId>org.apache.pdfbox</groupId>
+				<artifactId>pdfbox</artifactId>
+			</exclusion>
+			 <exclusion>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+			</exclusion> 
+
+			<exclusion>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+			</exclusion>
+	
+	       <exclusion>
+            <groupId>asm</groupId>
+            <artifactId>asm</artifactId>
+          </exclusion>
+
+			<exclusion>
+				<groupId>org.ow2.asm</groupId>
+				<artifactId>asm-debug-all</artifactId>
+				
+			</exclusion>
+
+pulizia 13 novembre
+			<exclusion>
+				<artifactId>bcmail-jdk15on</artifactId>
+				<groupId>org.bouncycastle</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>bcprov-jdk15on</artifactId>
+				<groupId>org.bouncycastle</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>rome</artifactId>
+				<groupId>rome</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>grib</artifactId>
+				<groupId>edu.ucar</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>cdm</artifactId>
+				<groupId>edu.ucar</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>vorbis-java-tika</artifactId>
+				<groupId>org.gagravarr</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>vorbis-java-core</artifactId>
+				<groupId>org.gagravarr</groupId>
+			</exclusion>
+			
+			<exclusion>
+				<artifactId>metadata-extractor</artifactId>
+				<groupId>com.drewnoakes</groupId>
+			</exclusion>
+			pulizia 13 novembre
+	 	</exclusions> 
+
+
+	</dependency> -->
+
+	<dependency>
+		<groupId>commons-io</groupId>
+		<artifactId>commons-io</artifactId>
+		<version>2.4</version>
+	</dependency>
+	
+
+<!-- 	AXIS2 CLIENT-->
+
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-kernel</artifactId>
+			<version>1.5.1</version>
+			<exclusions>
+				<exclusion>
+                    <groupId>xerces</groupId>
+                    <artifactId>xmlParserAPIs</artifactId>
+                </exclusion>
+			    <exclusion>
+					<groupId>org.apache.geronimo.specs</groupId>
+					<artifactId>geronimo-activation_1.1_spec</artifactId>
+			    </exclusion>
+			    <exclusion>
+					<groupId>org.apache.geronimo.specs</groupId>
+					<artifactId>geronimo-javamail_1.4_spec</artifactId>
+			   </exclusion>
+			</exclusions>
+			
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-adb</artifactId>
+			<version>1.5.1</version>
+			<exclusions>
+			    <exclusion>
+					<groupId>org.apache.geronimo.specs</groupId>
+					<artifactId>geronimo-activation_1.1_spec</artifactId>
+			    </exclusion>
+			    <exclusion>
+					<groupId>org.apache.geronimo.specs</groupId>
+					<artifactId>geronimo-javamail_1.4_spec</artifactId>
+			   </exclusion>
+			</exclusions>
+			
+		</dependency>
+	
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-transport-local</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-transport-http</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+	
+	<!-- 	AXIS2 CLIENT-->
+			
+		<!--  Pagina firme  -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itext-pdfa</artifactId>
+			<version>5.5.7</version>
+		</dependency>
+		<!--  Pagina firme  -->
+		<!-- pulizia 13 novembre commentate -->
+		   <!-- <dependency>
+                        <groupId>fr.opensagres.xdocreport</groupId>
+                        <artifactId>org.apache.poi.xwpf.converter.pdf</artifactId>
+                        <version>1.0.5</version>
+           </dependency>  -->
+           <!-- pulizia 13 novembre -->
+		
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,100 @@
+package it.mef.bilancio.demdec.to;
+
+
+
+public class IterFirmaDecretoTO extends AbstractDemTO implements java.io.Serializable {
+
+	
+	private static final long serialVersionUID = -8473765820254369466L;
+	
+	private IterFirmaDecretoTOId id;
+	private FascicoliTO fascicoli;
+	private AnagFirmatariTO anagFirmatari;
+	private Integer numeOrdineIter;
+	private String codiTipoFirma;
+	private String fkCodiUfficio;
+	private String statFirma;
+
+	public IterFirmaDecretoTO() {
+	}
+
+	public IterFirmaDecretoTO(IterFirmaDecretoTOId id,
+			FascicoliTO fascicoli, AnagFirmatariTO anagFirmatari, Integer numeOrdineIter) {
+		this.id = id;
+		this.fascicoli = fascicoli;
+		this.numeOrdineIter = numeOrdineIter;
+	}
+
+	public IterFirmaDecretoTO(IterFirmaDecretoTOId id,
+			FascicoliTO fascicoli, AnagFirmatariTO anagFirmatari, Integer numeOrdineIter, String codiTipoFirma, String fkCodiUfficio,
+			String statFirma) {
+		this.id = id;
+		this.fascicoli = fascicoli;
+		this.numeOrdineIter = numeOrdineIter;
+		this.codiTipoFirma = codiTipoFirma;
+		this.fkCodiUfficio = fkCodiUfficio;
+		this.statFirma = statFirma;
+		this.anagFirmatari = anagFirmatari;
+	}
+
+	public IterFirmaDecretoTOId getId() {
+		return id;
+	}
+
+	public void setId(IterFirmaDecretoTOId id) {
+		this.id = id;
+	}
+
+	public FascicoliTO getFascicoli() {
+		return fascicoli;
+	}
+
+	public void setFascicoli(FascicoliTO fascicoli) {
+		this.fascicoli = fascicoli;
+	}
+
+	public Integer getNumeOrdineIter() {
+		return numeOrdineIter;
+	}
+
+	public void setNumeOrdineIter(Integer numeOrdineIter) {
+		this.numeOrdineIter = numeOrdineIter;
+	}
+
+	public String getCodiTipoFirma() {
+		return codiTipoFirma;
+	}
+
+	public void setCodiTipoFirma(String codiTipoFirma) {
+		this.codiTipoFirma = codiTipoFirma;
+	}
+
+	public String getFkCodiUfficio() {
+		return fkCodiUfficio;
+	}
+
+	public void setFkCodiUfficio(String fkCodiUfficio) {
+		this.fkCodiUfficio = fkCodiUfficio;
+	}
+
+	public String getStatFirma() {
+		return statFirma;
+	}
+
+	public void setStatFirma(String statFirma) {
+		this.statFirma = statFirma;
+	}
+
+	public AnagFirmatariTO getAnagFirmatari() {
+		return anagFirmatari;
+	}
+
+	public void setAnagFirmatari(AnagFirmatariTO anagFirmatari) {
+		this.anagFirmatari = anagFirmatari;
+	}
+
+	
+	
+	
+
+}

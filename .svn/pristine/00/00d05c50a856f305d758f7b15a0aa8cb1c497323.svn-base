@@ -1,0 +1,12 @@
+package it.mef.bilancio.demdec.manager;
+
+import java.util.List;
+
+import it.almavivaitalia.bsn.sh.manager.AbstractManager;
+import it.mef.bilancio.demdec.to.PartecipazioniTO;
+
+public interface InvioPecPartecipazioneManager extends AbstractManager {
+
+	List<PartecipazioniTO>  findByIdFascicolo(Integer idFascicolo ) throws Throwable;
+	
+}

@@ -1,0 +1,1606 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<wsdl:definitions xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:types="http://mef.gov.it.v1.demdec.internal/servizi/InterfacciaDocumentaleDEMBILTypes_1" xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://mef.gov.it.v1.demdec.internal/servizi/InterfacciaDocumentaleDEMBIL" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns:headerAccesso="http://mef.gov.it.v1.demdec.internal/servizi/Common/HeaderAccessoApplicativo" xmlns:fault="http://mef.gov.it.v1.demdec.internal/servizi/Common/HeaderFault" xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/" targetNamespace="http://mef.gov.it.v1.demdec.internal/servizi/InterfacciaDocumentaleDEMBIL">
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:import namespace="http://mef.gov.it.v1.demdec.internal/servizi/InterfacciaDocumentaleDEMBILTypes_1" schemaLocation="InterfacciaDEMBILTypes_1.0.xsd"/>
+			<xsd:import namespace="http://mef.gov.it.v1.demdec.internal/servizi/Common/HeaderAccessoApplicativo" schemaLocation="SOAPHeaderAccessoApplicativo_1.0.xsd"/>
+			<xsd:import namespace="http://mef.gov.it.v1.demdec.internal/servizi/Common/HeaderFault" schemaLocation="SOAPHeaderFault_2.0.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="SecurityFault">
+		<wsdl:part name="SecurityFault" element="fault:SecurityFault"/>
+	</wsdl:message>
+	<wsdl:message name="GenericFault">
+		<wsdl:part name="GenericFault" element="fault:GenericFault"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_createFascicoloAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_createFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_createFascicoloAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_createFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_copyFascicoloAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_copyFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_copyFascicoloAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_copyFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_archiveFascicoloAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_archiveFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_archiveFascicoloAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_archiveFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_getFascicoloAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_getFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_getFascicoloAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_getFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_removeFascicoloAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_removeFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_removeFascicoloAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_removeFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_changeStatoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_changeStatoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_changeStatoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_changeStatoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_addDocumentoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_addDocumentoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_addDocumentoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_addDocumentoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_updateContentDocumentoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_updateContentDocumentoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_updateContentDocumentoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_updateContentDocumentoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_removeDocumentoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_removeDocumentoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_removeDocumentoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_removeDocumentoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_modifyMetadatiFascicoloAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_modifyMetadatiFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_modifyMetadatiFascicoloAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_modifyMetadatiFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_modifyMetadatiDocumentoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_modifyMetadatiDocumentoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_modifyMetadatiDocumentoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_modifyMetadatiDocumentoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB_Msg">
+		<wsdl:part name="parameters" element="types:risposta_modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_downloadDocumentoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_downloadDocumentoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_downloadDocumentoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_downloadDocumentoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_downloadDocumentoFascicoloAllegatoDecretoIGB_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_downloadDocumentoFascicoloAllegatoDecretoIGB"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_downloadDocumentoFascicoloAllegatoDecretoIGB_Msg">
+		<wsdl:part name="parameters" element="types:risposta_downloadDocumentoFascicoloAllegatoDecretoIGB"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_addCollegamentoFascicoloSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_addCollegamentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_addCollegamentoFascicoloSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_addCollegamentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_removeCollegamentoFascicoloSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_removeCollegamentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_removeCollegamentoFascicoloSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_removeCollegamentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_addDocumentoFascicoloAllegatoDecretoIGB_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_addDocumentoFascicoloAllegatoDecretoIGB"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_addDocumentoFascicoloAllegatoDecretoIGB_Msg">
+		<wsdl:part name="parameters" element="types:risposta_addDocumentoFascicoloAllegatoDecretoIGB"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_removeDocumentoFascicoloAllegatoDecretoIGB_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_removeDocumentoFascicoloAllegatoDecretoIGB"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_removeDocumentoFascicoloAllegatoDecretoIGB_Msg">
+		<wsdl:part name="parameters" element="types:risposta_removeDocumentoFascicoloAllegatoDecretoIGB"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_addDocumentoFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_addDocumentoFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_addDocumentoFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="parameters" element="types:risposta_addDocumentoFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_removeDocumentoFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_removeDocumentoFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_removeDocumentoFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="parameters" element="types:risposta_removeDocumentoFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="parameters" element="types:risposta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_getFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_getFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_getFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="parameters" element="types:risposta_getFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_changeStatoFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_changeStatoFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_changeStatoFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="parameters" element="types:risposta_changeStatoFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_createFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_createFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_createFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="parameters" element="types:risposta_createFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_downloadDocumentoFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_downloadDocumentoFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_downloadDocumentoFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="parameters" element="types:risposta_downloadDocumentoFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_createFascicoloSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_createFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_createFascicoloSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_createFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_getFascicoloSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_getFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_getFascicoloSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_getFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_changeStatoFascicoloSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_changeStatoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_changeStatoFascicoloSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_changeStatoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_modifyMetadataFascicoloSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_modifyMetadataFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_modifyMetadataFascicoloSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_modifyMetadataFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_removeFascicoloSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_removeFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_removeFascicoloSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_removeFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_addDocumentoFascicoloSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_addDocumentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_addDocumentoFascicoloSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_addDocumentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_getDocumentoFascicoloSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_getDocumentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_getDocumentoFascicoloSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_getDocumentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_removeDocumentoFascicoloSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_removeDocumentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_removeDocumentoFascicoloSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_removeDocumentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_modifyMetadataDocumentoFascicoloSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_modifyMetadataDocumentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_modifyMetadataDocumentoFascicoloSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_modifyMetadataDocumentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_downloadDocumentoFascicoloSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_downloadDocumentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_downloadDocumentoFascicoloSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_downloadDocumentoFascicoloSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_getFascicoloSIPATRAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_getFascicoloSIPATRAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_getFascicoloSIPATRAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_getFascicoloSIPATRAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_getDocumentoFascicoloSIPATRAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_getDocumentoFascicoloSIPATRAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_getDocumentoFascicoloSIPATRAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_getDocumentoFascicoloSIPATRAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_downloadDocumentoFascicoloSIPATRAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_downloadDocumentoFascicoloSIPATRAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_downloadDocumentoFascicoloSIPATRAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_downloadDocumentoFascicoloSIPATRAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_createFascicoloDecretoSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_createFascicoloDecretoSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_createFascicoloDecretoSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_createFascicoloDecretoSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_getFascicoloDecretoSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_getFascicoloDecretoSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_getFascicoloDecretoSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_getFascicoloDecretoSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_changeStatoFascicoloDecretoSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_changeStatoFascicoloDecretoSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_changeStatoFascicoloDecretoSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_changeStatoFascicoloDecretoSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_modifyMetadataFascicoloDecretoSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_modifyMetadataFascicoloDecretoSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_modifyMetadataFascicoloDecretoSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_modifyMetadataFascicoloDecretoSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_removeFascicoloDecretoSIPATR_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_removeFascicoloDecretoSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_removeFascicoloDecretoSIPATR_Msg">
+		<wsdl:part name="parameters" element="types:risposta_removeFascicoloDecretoSIPATR"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_getDocumentoFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_getDocumentoFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_getDocumentoFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="parameters" element="types:risposta_getDocumentoFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_modifyMetadatiFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_modifyMetadatiFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_modifyMetadatiFascicoloRaccoltaProvvisoria_Msg">
+		<wsdl:part name="parameters" element="types:risposta_modifyMetadatiFascicoloRaccoltaProvvisoria"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_getDocumentoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_getDocumentoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_getDocumentoFascicoloAttoDecreto_Msg">
+		<wsdl:part name="parameters" element="types:risposta_getDocumentoFascicoloAttoDecreto"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_searchFascicoliRaccoltaProvvisorie_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_searchFascicoliRaccolteProvvisorie"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_searchFascicoliRaccolteProvvisorie_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_searchFascicoliRaccolteProvvisorie"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_searchFascicoliRaccolteProvvisorie_Msg">
+		<wsdl:part name="parameters" element="types:risposta_searchFascicoliRaccolteProvvisorie"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_getDocumentoFascicoloAllegatoDecretoIGB_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_getDocumentoFascicoloAllegatoDecretoIGB"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_getDocumentoFascicoloAllegatoDecretoIGB_Msg">
+		<wsdl:part name="parameters" element="types:risposta_getDocumentoFascicoloAllegatoDecretoIGB"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_getRisultatoOperazioneDocumento_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_getRisultatoOperazioneDocumento"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_getRisultatoOperazioneDocumento_Msg">
+		<wsdl:part name="parameters" element="types:risposta_getRisultatoOperazioneDocumento"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_convertiDocumento_Msg">
+		<wsdl:part name="headerAccesso" element="headerAccesso:AccessoApplicativo"/>
+		<wsdl:part name="parameters" element="types:richiesta_convertiDocumento"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_convertiDocumento_Msg">
+		<wsdl:part name="parameters" element="types:risposta_convertiDocumento"/>
+	</wsdl:message>
+	<wsdl:portType name="InterfacciaAttoDecretoDEMBIL">
+		<wsdl:operation name="createFascicoloAttoDecreto">
+			<wsdl:input message="tns:richiesta_createFascicoloAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_createFascicoloAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="copyFascicoloAttoDecreto">
+			<wsdl:input message="tns:richiesta_copyFascicoloAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_copyFascicoloAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="archiveFascicoloAttoDecreto">
+			<wsdl:input message="tns:richiesta_archiveFascicoloAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_archiveFascicoloAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getFascicoloAttoDecreto">
+			<wsdl:input message="tns:richiesta_getFascicoloAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_getFascicoloAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadatiFascicoloAttoDecreto">
+			<wsdl:input message="tns:richiesta_modifyMetadatiFascicoloAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_modifyMetadatiFascicoloAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="changeStatoFascicoloAttoDecreto">
+			<wsdl:input message="tns:richiesta_changeStatoFascicoloAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_changeStatoFascicoloAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeFascicoloAttoDecreto">
+			<wsdl:input message="tns:richiesta_removeFascicoloAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_removeFascicoloAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="addDocumentoFascicoloAttoDecreto">
+			<wsdl:input message="tns:richiesta_addDocumentoFascicoloAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_addDocumentoFascicoloAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="updateContentDocumentoFascicoloAttoDecreto">
+			<wsdl:input message="tns:richiesta_updateContentDocumentoFascicoloAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_updateContentDocumentoFascicoloAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getDocumentoFascicoloAttoDecreto">
+			<wsdl:input message="tns:richiesta_getDocumentoFascicoloAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_getDocumentoFascicoloAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="downloadDocumentoFascicoloAttoDecreto">
+			<wsdl:input message="tns:richiesta_downloadDocumentoFascicoloAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_downloadDocumentoFascicoloAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadatiDocumentoFascicoloAttoDecreto">
+			<wsdl:input message="tns:richiesta_modifyMetadatiDocumentoFascicoloAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_modifyMetadatiDocumentoFascicoloAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeDocumentoFascicoloAttoDecreto">
+			<wsdl:input message="tns:richiesta_removeDocumentoFascicoloAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_removeDocumentoFascicoloAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="addDocumentoFascicoloAllegatoDecretoIGB">
+			<wsdl:input message="tns:richiesta_addDocumentoFascicoloAllegatoDecretoIGB_Msg"/>
+			<wsdl:output message="tns:risposta_addDocumentoFascicoloAllegatoDecretoIGB_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getDocumentoFascicoloAllegatoDecretoIGB">
+			<wsdl:input message="tns:richiesta_getDocumentoFascicoloAllegatoDecretoIGB_Msg"/>
+			<wsdl:output message="tns:risposta_getDocumentoFascicoloAllegatoDecretoIGB_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="downloadDocumentoFascicoloAllegatoDecretoIGB">
+			<wsdl:input message="tns:richiesta_downloadDocumentoFascicoloAllegatoDecretoIGB_Msg"/>
+			<wsdl:output message="tns:risposta_downloadDocumentoFascicoloAllegatoDecretoIGB_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB">
+			<wsdl:input message="tns:richiesta_modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB_Msg"/>
+			<wsdl:output message="tns:risposta_modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeDocumentoAllegatoDecretoIGB">
+			<wsdl:input message="tns:richiesta_removeDocumentoFascicoloAllegatoDecretoIGB_Msg"/>
+			<wsdl:output message="tns:risposta_removeDocumentoFascicoloAllegatoDecretoIGB_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getFascicoloRaccoltaProvvisoria">
+			<wsdl:input message="tns:richiesta_getFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:output message="tns:risposta_getFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="changeStatoFascicoloRaccoltaProvvisoria">
+			<wsdl:input message="tns:richiesta_changeStatoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:output message="tns:risposta_changeStatoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="searchFascicoliRaccolteProvvisorie">
+			<wsdl:input message="tns:richiesta_searchFascicoliRaccolteProvvisorie_Msg"/>
+			<wsdl:output message="tns:risposta_searchFascicoliRaccolteProvvisorie_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getDocumentoFascicoloRaccoltaProvvisoria">
+			<wsdl:input message="tns:richiesta_getDocumentoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:output message="tns:risposta_getDocumentoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="downloadDocumentoFascicoloRaccoltaProvvisoria">
+			<wsdl:input message="tns:richiesta_downloadDocumentoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:output message="tns:risposta_downloadDocumentoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getFascicoloSIPATRAttoDecreto">
+			<wsdl:input message="tns:richiesta_getFascicoloSIPATRAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_getFascicoloSIPATRAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getDocumentoFascicoloSIPATRAttoDecreto">
+			<wsdl:input message="tns:richiesta_getDocumentoFascicoloSIPATRAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_getDocumentoFascicoloSIPATRAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="downloadDocumentoFascicoloSIPATRAttoDecreto">
+			<wsdl:input message="tns:richiesta_downloadDocumentoFascicoloSIPATRAttoDecreto_Msg"/>
+			<wsdl:output message="tns:risposta_downloadDocumentoFascicoloSIPATRAttoDecreto_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getRisultatoOperazioneDocumento">
+			<wsdl:input message="tns:richiesta_getRisultatoOperazioneDocumento_Msg"/>
+			<wsdl:output message="tns:risposta_getRisultatoOperazioneDocumento_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="InterfacciaRaccoltaProvvisoriaDEMBIL">
+		<wsdl:operation name="createFascicoloRaccoltaProvvisoria">
+			<wsdl:input message="tns:richiesta_createFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:output message="tns:risposta_createFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getFascicoloRaccoltaProvvisoria">
+			<wsdl:input message="tns:richiesta_getFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:output message="tns:risposta_getFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="changeStatoFascicoloRaccoltaProvvisoria">
+			<wsdl:input message="tns:richiesta_changeStatoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:output message="tns:risposta_changeStatoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadatiFascicoloRaccoltaProvvisoria">
+			<wsdl:input message="tns:richiesta_modifyMetadatiFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:output message="tns:risposta_modifyMetadatiFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="addDocumentoFascicoloRaccoltaProvvisoria">
+			<wsdl:input message="tns:richiesta_addDocumentoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:output message="tns:risposta_addDocumentoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeDocumentoFascicoloRaccoltaProvvisoria">
+			<wsdl:input message="tns:richiesta_removeDocumentoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:output message="tns:risposta_removeDocumentoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria">
+			<wsdl:input message="tns:richiesta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:output message="tns:risposta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="downloadDocumentoFascicoloRaccoltaProvvisoria">
+			<wsdl:input message="tns:richiesta_downloadDocumentoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:output message="tns:risposta_downloadDocumentoFascicoloRaccoltaProvvisoria_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="InterfacciaSIPATRDEMBIL">
+		<wsdl:operation name="createFascicoloDecretoSIPATR">
+			<wsdl:input message="tns:richiesta_createFascicoloDecretoSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_createFascicoloDecretoSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getFascicoloDecretoSIPATR">
+			<wsdl:input message="tns:richiesta_getFascicoloDecretoSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_getFascicoloDecretoSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="changeStatoFascicoloDecretoSIPATR">
+			<wsdl:input message="tns:richiesta_changeStatoFascicoloDecretoSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_changeStatoFascicoloDecretoSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadataFascicoloDecretoSIPATR">
+			<wsdl:input message="tns:richiesta_modifyMetadataFascicoloDecretoSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_modifyMetadataFascicoloDecretoSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeFascicoloDecretoSIPATR">
+			<wsdl:input message="tns:richiesta_removeFascicoloDecretoSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_removeFascicoloDecretoSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="createFascicoloSIPATR">
+			<wsdl:input message="tns:richiesta_createFascicoloSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_createFascicoloSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getFascicoloSIPATR">
+			<wsdl:input message="tns:richiesta_getFascicoloSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_getFascicoloSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="changeStatoFascicoloSIPATR">
+			<wsdl:input message="tns:richiesta_changeStatoFascicoloSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_changeStatoFascicoloSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadataFascicoloSIPATR">
+			<wsdl:input message="tns:richiesta_modifyMetadataFascicoloSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_modifyMetadataFascicoloSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeFascicoloSIPATR">
+			<wsdl:input message="tns:richiesta_removeFascicoloSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_removeFascicoloSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="addDocumentoFascicoloSIPATR">
+			<wsdl:input message="tns:richiesta_addDocumentoFascicoloSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_addDocumentoFascicoloSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getDocumentoFascicoloSIPATR">
+			<wsdl:input message="tns:richiesta_getDocumentoFascicoloSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_getDocumentoFascicoloSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadataDocumentoFascicoloSIPATR">
+			<wsdl:input message="tns:richiesta_modifyMetadataDocumentoFascicoloSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_modifyMetadataDocumentoFascicoloSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="downloadDocumentoFascicoloSIPATR">
+			<wsdl:input message="tns:richiesta_downloadDocumentoFascicoloSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_downloadDocumentoFascicoloSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeDocumentoFascicoloSIPATR">
+			<wsdl:input message="tns:richiesta_removeDocumentoFascicoloSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_removeDocumentoFascicoloSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="addCollegamentoFascicoloSIPATR">
+			<wsdl:input message="tns:richiesta_addCollegamentoFascicoloSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_addCollegamentoFascicoloSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeCollegamentoFascicoloSIPATR">
+			<wsdl:input message="tns:richiesta_removeCollegamentoFascicoloSIPATR_Msg"/>
+			<wsdl:output message="tns:risposta_removeCollegamentoFascicoloSIPATR_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="getRisultatoOperazioneDocumento">
+			<wsdl:input message="tns:richiesta_getRisultatoOperazioneDocumento_Msg"/>
+			<wsdl:output message="tns:risposta_getRisultatoOperazioneDocumento_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="InterfacciaOperazioniDocumentali">
+			<wsdl:operation name="convertiDocumento">
+			<wsdl:input message="tns:richiesta_convertiDocumento_Msg"/>
+			<wsdl:output message="tns:risposta_convertiDocumento_Msg"/>
+			<wsdl:fault name="GenericFault" message="tns:GenericFault"/>
+			<wsdl:fault name="SecurityFault" message="tns:SecurityFault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="InterfacciaAttoDecretoDEMBIL_SOAP" type="tns:InterfacciaAttoDecretoDEMBIL">
+		<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="createFascicoloAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:createFascicoloAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_createFascicoloAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="copyFascicoloAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:copyFascicoloAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_copyFascicoloAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="archiveFascicoloAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:archiveFascicoloAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_archiveFascicoloAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getFascicoloAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:getFascicoloAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_getFascicoloAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadatiFascicoloAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:getFascicoloAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_modifyMetadatiFascicoloAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="changeStatoFascicoloAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:changeStatoFascicoloAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_changeStatoFascicoloAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="removeFascicoloAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:removeFascicoloAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_removeFascicoloAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="addDocumentoFascicoloAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:addDocumentoFascicoloAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_addDocumentoFascicoloAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="updateContentDocumentoFascicoloAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:updateContentDocumentoFascicoloAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_updateContentDocumentoFascicoloAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getDocumentoFascicoloAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:getDocumentoFascicoloAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_getDocumentoFascicoloAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="downloadDocumentoFascicoloAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:downloadDocumentoFascicoloAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_downloadDocumentoFascicoloAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadatiDocumentoFascicoloAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:modifyMetadatiDocumentoFascicoloAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_modifyMetadatiDocumentoFascicoloAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="removeDocumentoFascicoloAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:removeDocumentoFascicoloAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_removeDocumentoFascicoloAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="addDocumentoFascicoloAllegatoDecretoIGB">
+			<wsdlsoap:operation soapAction="urn:addDocumentoFascicoloAllegatoDecretoIGB"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_addDocumentoFascicoloAllegatoDecretoIGB_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getDocumentoFascicoloAllegatoDecretoIGB">
+			<wsdlsoap:operation soapAction="urn:getDocumentoFascicoloAllegatoDecretoIGB"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_getDocumentoFascicoloAllegatoDecretoIGB_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="downloadDocumentoFascicoloAllegatoDecretoIGB">
+			<wsdlsoap:operation soapAction="urn:downloadDocumentoAllegatoDecretoIGB"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_downloadDocumentoFascicoloAllegatoDecretoIGB_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB">
+			<wsdlsoap:operation soapAction="urn:modifyMetadatiAllegatoDecretoIGB"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_modifyMetadatiDocumentoFascicoloAllegatoDecretoIGB_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="removeDocumentoAllegatoDecretoIGB">
+			<wsdlsoap:operation soapAction="urn:removeAllegatoDecretoIGB"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_removeDocumentoFascicoloAllegatoDecretoIGB_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getFascicoloRaccoltaProvvisoria">
+			<wsdlsoap:operation soapAction="urn:getFascicoloRaccoltaProvvisoria"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_getFascicoloRaccoltaProvvisoria_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="changeStatoFascicoloRaccoltaProvvisoria">
+			<wsdlsoap:operation soapAction="urn:changeStatoFascicoloRaccoltaProvvisoria"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_changeStatoFascicoloRaccoltaProvvisoria_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="searchFascicoliRaccolteProvvisorie">
+			<wsdlsoap:operation soapAction="urn:searchFascicoliRaccolteProvvisorie"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_searchFascicoliRaccolteProvvisorie_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getDocumentoFascicoloRaccoltaProvvisoria">
+			<wsdlsoap:operation soapAction="urn:getDocumentoFascicoloRaccoltaProvvisoria"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_getDocumentoFascicoloRaccoltaProvvisoria_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="downloadDocumentoFascicoloRaccoltaProvvisoria">
+			<wsdlsoap:operation soapAction="urn:downloadDocumentoFascicoloRaccoltaProvvisoria"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_downloadDocumentoFascicoloRaccoltaProvvisoria_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getFascicoloSIPATRAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:getFascicoloSIPATRAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_getFascicoloSIPATRAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getDocumentoFascicoloSIPATRAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:getDocumentoFascicoloSIPATRAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_getDocumentoFascicoloSIPATRAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="downloadDocumentoFascicoloSIPATRAttoDecreto">
+			<wsdlsoap:operation soapAction="urn:downloadDocumentoFascicoloSIPATRAttoDecreto"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_downloadDocumentoFascicoloSIPATRAttoDecreto_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getRisultatoOperazioneDocumento">
+			<wsdlsoap:operation soapAction="urn:getRisultatoOperazioneDocumento"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_getRisultatoOperazioneDocumento_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="InterfacciaRaccoltaProvvisoriaDEMBIL_SOAP" type="tns:InterfacciaRaccoltaProvvisoriaDEMBIL">
+		<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="createFascicoloRaccoltaProvvisoria">
+			<wsdlsoap:operation soapAction="urn:createFascicoloRaccoltaProvvisoria"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_createFascicoloRaccoltaProvvisoria_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getFascicoloRaccoltaProvvisoria">
+			<wsdlsoap:operation soapAction="urn:getFascicoloRaccoltaProvvisoria"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_getFascicoloRaccoltaProvvisoria_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="changeStatoFascicoloRaccoltaProvvisoria">
+			<wsdlsoap:operation soapAction="urn:changeStatoFascicoloRaccoltaProvvisoria"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_changeStatoFascicoloRaccoltaProvvisoria_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadatiFascicoloRaccoltaProvvisoria">
+			<wsdlsoap:operation soapAction="urn:modifyMetadatiFascicoloRaccoltaProvvisoria"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_modifyMetadatiFascicoloRaccoltaProvvisoria_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="addDocumentoFascicoloRaccoltaProvvisoria">
+			<wsdlsoap:operation soapAction="urn:addDocumentoFascicoloRaccoltaProvvisoria"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_addDocumentoFascicoloRaccoltaProvvisoria_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="removeDocumentoFascicoloRaccoltaProvvisoria">
+			<wsdlsoap:operation soapAction="urn:removeDocumentoFascicoloRaccoltaProvvisoria"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_removeDocumentoFascicoloRaccoltaProvvisoria_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria">
+			<wsdlsoap:operation soapAction="urn:modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="downloadDocumentoFascicoloRaccoltaProvvisoria">
+			<wsdlsoap:operation soapAction="urn:downloadDocumentoFascicoloRaccoltaProvvisoria"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_downloadDocumentoFascicoloRaccoltaProvvisoria_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="InterfacciaSIPATRDEMBIL_SOAP" type="tns:InterfacciaSIPATRDEMBIL">
+		<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="createFascicoloDecretoSIPATR">
+			<wsdlsoap:operation soapAction="urn:createFascicoloDecretoSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_createFascicoloDecretoSIPATR_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getFascicoloDecretoSIPATR">
+			<wsdlsoap:operation soapAction="urn:getFascicoloDecretoSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_getFascicoloDecretoSIPATR_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="changeStatoFascicoloDecretoSIPATR">
+			<wsdlsoap:operation soapAction="urn:changeStatoFascicoloDecretoSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_changeStatoFascicoloDecretoSIPATR_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadataFascicoloDecretoSIPATR">
+			<wsdlsoap:operation soapAction="urn:modifyMetadataFascicoloDecretoSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_modifyMetadataFascicoloDecretoSIPATR_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="removeFascicoloDecretoSIPATR">
+			<wsdlsoap:operation soapAction="urn:removeFascicoloDecretoSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_removeFascicoloDecretoSIPATR_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="createFascicoloSIPATR">
+			<wsdlsoap:operation soapAction="urn:createFascicoloSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_createFascicoloSIPATR_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getFascicoloSIPATR">
+			<wsdlsoap:operation soapAction="urn:getFascicoloSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_getFascicoloSIPATR_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="changeStatoFascicoloSIPATR">
+			<wsdlsoap:operation soapAction="urn:changeStatoFascicoloSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_changeStatoFascicoloSIPATR_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadataFascicoloSIPATR">
+			<wsdlsoap:operation soapAction="urn:modifyMetadataFascicoloSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_modifyMetadataFascicoloSIPATR_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="removeFascicoloSIPATR">
+			<wsdlsoap:operation soapAction="urn:removeFascicoloSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_removeFascicoloSIPATR_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="addDocumentoFascicoloSIPATR">
+			<wsdlsoap:operation soapAction="urn:addDocumentoFascicoloSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_addDocumentoFascicoloSIPATR_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getDocumentoFascicoloSIPATR">
+			<wsdlsoap:operation soapAction="urn:getDocumentoFascicoloSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_getDocumentoFascicoloSIPATR_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="modifyMetadataDocumentoFascicoloSIPATR">
+			<wsdlsoap:operation soapAction="urn:modifyMetadataDocumentoFascicoloSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_modifyMetadataDocumentoFascicoloSIPATR_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="downloadDocumentoFascicoloSIPATR">
+			<wsdlsoap:operation soapAction="urn:downloadDocumentoFascicoloSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_downloadDocumentoFascicoloSIPATR_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="removeDocumentoFascicoloSIPATR">
+			<wsdlsoap:operation soapAction="urn:removeDocumentoFascicoloSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+				<wsdlsoap:header message="tns:richiesta_removeDocumentoFascicoloSIPATR_Msg" part="headerAccesso" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="addCollegamentoFascicoloSIPATR">
+			<wsdlsoap:operation soapAction="urn:addCollegamentoFascicoloSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_addCollegamentoFascicoloSIPATR_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="removeCollegamentoFascicoloSIPATR">
+			<wsdlsoap:operation soapAction="urn:removeCollegamentoFascicoloSIPATR"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_removeCollegamentoFascicoloSIPATR_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getRisultatoOperazioneDocumento">
+			<wsdlsoap:operation soapAction="urn:getRisultatoOperazioneDocumento"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_getRisultatoOperazioneDocumento_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="InterfacciaOperazioniDocumentali_SOAP" type="tns:InterfacciaOperazioniDocumentali">
+		<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="convertiDocumento">
+			<wsdlsoap:operation soapAction="urn:convertiDocumento"/>
+			<wsdl:input>
+				<wsdlsoap:header message="tns:richiesta_convertiDocumento_Msg" part="headerAccesso" use="literal"/>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GenericFault">
+				<wsdlsoap:fault name="GenericFault" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="SecurityFault">
+				<wsdlsoap:fault name="SecurityFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="InterfacciaAttoDecretoDEMBIL">
+		<wsdl:port name="InterfacciaAttoDecretoDEMBIL_SOAPPort" binding="tns:InterfacciaAttoDecretoDEMBIL_SOAP">
+			<wsdlsoap:address location="http://localhost/FepaExternalServicesWS/internal/DEMBIL/v1/InterfacciaAttoDecretoDEMBIL"/>
+		</wsdl:port>
+	</wsdl:service>
+	<wsdl:service name="InterfacciaRaccoltaProvvisoriaDEMBIL">
+		<wsdl:port name="InterfacciaRaccoltaProvvisoriaDEMBIL_SOAPPort" binding="tns:InterfacciaRaccoltaProvvisoriaDEMBIL_SOAP">
+			<wsdlsoap:address location="http://localhost/FepaExternalServicesWS/internal/DEMBIL/v1/InterfacciaRaccoltaProvvisoriaDEMBIL"/>
+		</wsdl:port>
+	</wsdl:service>
+	<wsdl:service name="InterfacciaSIPATRDEMBIL">
+		<wsdl:port name="InterfacciaSIPATRDEMBIL_SOAPPort" binding="tns:InterfacciaSIPATRDEMBIL_SOAP">
+			<wsdlsoap:address location="http://localhost/DEMBILExternalServicesWS/internal/SIPATR/v1/InterfacciaSIPATRDEMBIL"/>
+		</wsdl:port>
+	</wsdl:service>
+	<wsdl:service name="InterfacciaOperazioniDocumentali">
+		<wsdl:port name="InterfacciaOperazioniDocumentali_SOAPPort" binding="tns:InterfacciaOperazioniDocumentali_SOAP">
+			<wsdlsoap:address location="http://localhost/DEMBILExternalServicesWS/internal/SIPATR/v1/InterfacciaOperazioniDocumentali"/>
+		</wsdl:port>
+	</wsdl:service>
+	<wsp:Policy wsu:Id="InterfacciaDEMBIL_SOAPPortMtomBinding_MTOM_Policy-InterfacciaDEMBIL_SOAPPortMtomBinding_MTOM_Policy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<wsoma:OptimizedMimeSerialization xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" wsp:Optional="true"/>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+</wsdl:definitions>

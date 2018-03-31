@@ -1,0 +1,15 @@
+package it.mef.bilancio.demdec.dao;
+
+import it.almavivaitalia.bilancio.commons.bo.LettereTestiPersBO;
+import it.mef.bilancio.demdec.to.LettereTestiTO;
+
+import java.util.List;
+
+public interface LettereTestiPersDao extends AbstractDemDao<LettereTestiPersBO>  {
+
+	List<LettereTestiPersBO> findTestoPersFasc(Long fkNumeIdFascicolo, String codiTipoLettera);
+
+	List<LettereTestiTO> findActualTestoFasc(Long fkNumeIdFascicolo,
+			String codiTipoLettera, String codiSezione);
+
+}

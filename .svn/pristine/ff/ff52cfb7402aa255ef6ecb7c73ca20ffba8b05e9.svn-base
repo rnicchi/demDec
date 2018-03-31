@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<mapping>
+		<class-a>it.almavivaitalia.bilancio.commons.bo.UtenteBO</class-a>
+		<class-b>it.almavivaitalia.bilancio.commons.to.UtenteTO</class-b>
+	</mapping>
+	
+	<mapping>
+		<class-a>it.almavivaitalia.bilancio.commons.bo.UtenteProfiloBO</class-a>
+		<class-b>it.almavivaitalia.bilancio.commons.to.UtenteProfiloTO</class-b>
+	</mapping>
+
+	<mapping>
+		<class-a>it.almavivaitalia.bilancio.commons.bo.UtenteProfiloBOId</class-a>
+		<class-b>it.almavivaitalia.bilancio.commons.to.UtenteProfiloTOId</class-b>
+	</mapping>
+
+	<mapping>
+		<class-a>it.almavivaitalia.bilancio.commons.bo.ProfiloBO</class-a>
+		<class-b>it.almavivaitalia.bilancio.commons.to.ProfiloTO</class-b>
+		<field-exclude>
+			<a>actionList</a>
+			<b>actionList</b>
+		</field-exclude>
+		<field-exclude>
+			<a>menuList</a>
+			<b>menuList</b>
+		</field-exclude>
+	</mapping>
+
+	<mapping>
+		<class-a>it.almavivaitalia.bilancio.commons.bo.AnagUfficiBO</class-a>
+		<class-b>it.almavivaitalia.bilancio.commons.to.AnagUfficiTO</class-b>
+	</mapping>
+
+<!-- 
+ 	<mapping wildcard="false" map-null="false">
+		<class-a>it.almavivaitalia.bilancio.commons.bo.ProfiloBO</class-a>
+		<class-b>it.almavivaitalia.bilancio.commons.to.ProfiloTO</class-b>
+		<field>
+			<a>codiProfilo</a>
+			<b>codiProfilo</b>
+		</field>
+		<field>
+			<a>actionList</a>
+			<b>actionList</b>
+		</field>
+		
+		
+	</mapping>	
+	<mapping wildcard="false" map-null="false">
+		<class-a>it.almavivaitalia.bilancio.commons.bo.ActionBO</class-a>
+		<class-b>it.almavivaitalia.bilancio.commons.to.ActionTO</class-b>
+		<field>
+			<a>codiAction</a>
+			<b>codiAction</b>
+		</field>
+	</mapping>	
+	 -->
+</mappings>

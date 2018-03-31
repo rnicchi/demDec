@@ -1,0 +1,879 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<definition name="baseTemplateWithoutHeader" extends="baseTemplate">
+		<put-attribute name="header" value="" />
+	</definition>
+
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Upload File 					******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".uploadDecSeleFile" template="/private/jsp/upload/upload.jsp" >
+	<put-attribute name="action" value="uploadDec.do"/>
+	</definition>     
+	<definition name="uploadDecSeleFile.main" extends="baseMultiFormTemplate">
+		<put-attribute name="page" value=".uploadDecSeleFile"/>
+		<put-attribute name="title" value="label.title.uploadDec" />
+	</definition>	
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Upload File 						******* -->
+	<!-- ****************************************************** -->
+	
+	
+	<definition name=".ricercaRed" template="/private/jsp/application/raccolteprovvisorie/associazioneAFad/ricercaRed.jsp" >
+		<put-attribute name="action" value="ricercaRed.do"/>
+	</definition>   	
+	<definition name="ricercaRed.main" extends="baseTemplate">
+		<put-attribute name="page" value=".ricercaRed"/>
+		<put-attribute name="title" value="label.title.ricercaRed" />
+	</definition>
+	
+	<definition name=".raccolteProvvisorie" template="/private/jsp/application/raccolteprovvisorie/associazioneAFad/raccolteProvvisorie.jsp" >
+		<put-attribute name="action" value="raccolteProvvisorie.do"/>
+	</definition>    
+	<definition name="raccolteProvvisorie.main" extends="baseTemplate">
+		<put-attribute name="page" value=".raccolteProvvisorie"/>
+		<put-attribute name="title" value="label.blank" />
+	</definition>
+	
+
+	
+
+	<definition name=".modalFascDocRed" template="/private/jsp/modal/modaleDocumentiFascicolo.jsp"/>
+	<definition name=".documentiFascicolo" template="/private/jsp/application/raccolteprovvisorie/associazioneAFad/documentiFascicolo.jsp" >
+		<put-attribute name="action" value="documentiFascicolo.do"/>
+		<put-attribute name="modalFascDocRed" value=".modalFascDocRed"/>
+	</definition>    	
+	<definition name="documentiFascicolo.main" extends="baseTemplate">
+		<put-attribute name="page" value=".documentiFascicolo"/>
+		<put-attribute name="title" value="label.blank" />
+	</definition>
+	
+	<definition name=".invioAlleFirme" template="/private/jsp/application/fascicoliFad/invioAlleFirme/startInvioAlleFirme.jsp" >
+		<put-attribute name="action" value="invioAlleFirme.do"/>
+	</definition>   	
+	<definition name="invioAlleFirme.main" extends="baseTemplate">
+		<put-attribute name="page" value=".invioAlleFirme"/>
+		<put-attribute name="title" value="label.title.invioAlleFirme" />
+	</definition>
+	
+	<definition name=".listaFirmatari" template="/private/jsp/application/fascicoliFad/invioAlleFirme/listaFirmatari.jsp" >
+		<put-attribute name="action" value="listaFirmatari.do"/>
+	</definition>   	
+	<definition name="listaFirmatari.main" extends="baseTemplate">
+		<put-attribute name="page" value=".listaFirmatari"/>
+		<put-attribute name="title" value="label.title.listaFirmatari" />
+	</definition>
+	
+	<definition name=".listaFirmatariInvio" template="/private/jsp/application/fascicoliFad/invioAlleFirme/listaFirmatariInvio.jsp" >
+		<put-attribute name="action" value="listaFirmatariInvio.do"/>
+		<put-attribute name="readOnly"	value="false"/>
+	</definition>   	
+	<definition name="listaFirmatariInvio.main" extends="baseTemplate">
+		<put-attribute name="page" value=".listaFirmatariInvio"/>
+		<put-attribute name="title" value="label.title.listaFirmatariInvio" />
+	</definition>
+	
+	<definition name=".listaFirmatariInvioReadOnly" template="/private/jsp/application/fascicoliFad/invioAlleFirme/listaFirmatariInvio.jsp" >
+		<put-attribute name="action" value="listaFirmatariInvio.do"/>
+		<put-attribute name="readOnly"	value="true"/>
+	</definition>   	
+	<definition name="listaFirmatariInvioReadOnly.main" extends="baseTemplate">
+		<put-attribute name="page" value=".listaFirmatariInvioReadOnly"/>
+		<put-attribute name="title" value="label.title.listaFirmatariInvio" />
+	</definition>
+	
+	<definition name=".creaPin" template="/private/jsp/application/funzioniDiServizio/creaPin.jsp" >
+		<put-attribute name="action" value="creaPin.do"/>
+	</definition>   	
+	<definition name="creaPin.main" extends="baseTemplate">
+		<put-attribute name="page" value=".creaPin"/>
+		<put-attribute name="title" value="label.title.creaPin" />
+	</definition>
+	
+	
+	<!-- ****************************************************** -->
+	<!-- *******   INIZIO CONSULTA FASCICOLO FAD        ******* -->
+	<!-- ****************************************************** -->
+
+	<definition name=".ricercaFad" template="/private/jsp/application/fascicoliFad/consultazioneFad/ricercaFAD.jsp"/>
+
+	<definition name="ricercaFad.main" extends="baseTemplate">
+		<put-attribute name="page" value=".ricercaFad"/>
+		<put-attribute name="title" value="label.title.ricercaFad" />
+	</definition>
+	
+	<definition name=".modalFascFad" template="/private/jsp/modal/modaleMetadatiFascicoloFad.jsp"/>
+	<definition name=".modalFascRed" template="/private/jsp/modal/modaleMetadatiFascicoloRed.jsp"/>
+	<definition name=".modalFascPat" template="/private/jsp/modal/modaleMetadatiFascicoloPat.jsp"/>
+	<!-- <definition name=".modalSottoFasc" template="/private/jsp/modal/modaleMetadatiSottoFascicoloAD.jsp"/> -->
+	
+	
+	<definition name=".fascicoloFad" template="/private/jsp/application/fascicoliFad/consultazioneFad/fascicoloFAD.jsp">
+		<put-attribute name="action" value="/private/consultaFascicoloFAD.do"/>
+		<put-attribute name="modalFascFad" value=".modalFascFad"/>
+		<put-attribute name="modalFascRed" value=".modalFascRed"/>
+		<put-attribute name="modalFascPat" value=".modalFascPat"/>
+		<!-- <put-attribute name="modalSottoFasc" value=".modalSottoFasc"/> -->
+	</definition>
+
+	<definition name="fascicoloFad.main" extends="baseTemplate">
+		<put-attribute name="page" value=".fascicoloFad"/>
+		<put-attribute name="title" value="label.title.ricercaFad" />
+	</definition>
+	
+	<definition name=".afterRicercaFad" template="/private/jsp/application/fascicoliFad/consultazioneFad/afterRicercaFAD.jsp">
+		<put-attribute name="action" value="/private/consultaFascicoloFAD.do"/>
+		<put-attribute name="modalFascFad" value=".modalFascFad"/>
+	</definition>
+
+	<definition name="afterRicercaFad.main" extends="baseTemplate">
+		<put-attribute name="page" value=".afterRicercaFad"/>
+		<put-attribute name="title" value="label.title.ricercaFad" />
+	</definition>
+	
+	<definition name=".documentiFad" template="/private/jsp/application/fascicoliFad/consultazioneFad/documentiFad.jsp">
+		<put-attribute name="action" value="/private/consultaFascicoloFAD.do"/>
+		<put-attribute name="modalVisualizzaDocumentiFad" value=".modalVisualizzaDocumentiFad"/>
+	</definition>
+
+	<definition name="documentiFad.main" extends="baseMultiFormTemplate">
+		<put-attribute name="page" value=".documentiFad"/>
+		<put-attribute name="title" value="label.title.ricercaFad" />
+	</definition>
+	
+	<definition name=".documentiRed" template="/private/jsp/application/fascicoliFad/consultazioneFad/documentiRed.jsp">
+		<put-attribute name="action" value="/private/consultaFascicoloFAD.do"/>
+		<put-attribute name="modalVisualizzaDocumentiRed" value=".modalVisualizzaDocumentiRed"/>
+	</definition>
+
+	<definition name="documentiRed.main" extends="baseTemplate">
+		<put-attribute name="page" value=".documentiRed"/>
+		<put-attribute name="title" value="label.title.ricercaFad" />
+	</definition>
+	
+	<definition name=".documentiPat" template="/private/jsp/application/fascicoliFad/consultazioneFad/documentiPat.jsp">
+		<put-attribute name="action" value="/private/consultaFascicoloFAD.do"/>
+		<put-attribute name="modalVisualizzaDocumentiPat" value=".modalVisualizzaDocumentiPat"/>
+	</definition>
+
+	<definition name="documentiPat.main" extends="baseTemplate">
+		<put-attribute name="page" value=".documentiPat"/>
+		<put-attribute name="title" value="label.title.ricercaFad" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******   FINE CONSULTA FASCICOLO FAD          ******* -->
+	<!-- ****************************************************** -->
+	
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Mail 							******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".mailTemplate" template="/private/jsp/application/funzioniDiServizio/mail.jsp"/>
+		
+	<definition name="mail.main" extends="baseTemplate">
+		<put-attribute name="page" value=".mailTemplate" />
+		<put-attribute name="title" value="label.title.mail" />
+	</definition>
+	
+	<definition name=".listMsgTemplate" template="/private/jsp/application/funzioniDiServizio/listaMsgInviati.jsp"/>
+	
+	<definition name="listMsg.main" extends="baseTemplate">
+		<put-attribute name="page" value=".listMsgTemplate" />
+		<put-attribute name="title" value="label.title.list.msg" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Mail 							******* -->
+	<!-- ****************************************************** -->
+
+
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Firma Documenti 					******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".firmaDocumentiTemplate" template="/private/jsp/application/firma/firmaDocumenti.jsp">
+		<put-attribute name="action" value="/private/firmaDocumenti.do"/>
+		<put-attribute name="modalAmm" value=".modalAmm" />
+	</definition>
+	
+	<definition name=".myFirmaDocumentsTemplate" template="/private/jsp/application/firma/mieiDocumentiFirmati.jsp">
+		<put-attribute name="action" value="/private/firmaDocumenti.do"/>
+		<put-attribute name="modalAmm" value=".modalAmm" />
+	</definition>
+	
+	<definition name="firmaDocumenti.main" extends="baseTemplate">
+		<put-attribute name="page" value=".firmaDocumentiTemplate" />
+		<put-attribute name="title" value="label.title.list.AD.to.sign" />
+	</definition>
+	
+	<definition name="documentiFirmati.main" extends="baseTemplate">
+		<put-attribute name="page" value=".myFirmaDocumentsTemplate" />
+		<put-attribute name="title" value="label.title.list.AD.firmati" />
+	</definition>
+
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Firma Documenti 					******* -->
+	<!-- ****************************************************** -->
+
+
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Sospesi Red 					******* -->
+	<!-- ****************************************************** -->
+
+	<definition name=".ricercaSospesiRed" template="/private/jsp/application/raccolteprovvisorie/chiusuraRaccoltaSospeseRed/ricercaSospesiRed.jsp" >
+		<put-attribute name="action" value="ricercaSospesiRed.do"/>
+	</definition>   	
+	<definition name="ricercaSospesiRed.main" extends="baseTemplate">
+		<put-attribute name="page" value=".ricercaSospesiRed"/>
+		<put-attribute name="title" value="label.title.ricerca.sospesi.red" />
+	</definition>
+	
+	<definition name=".listaSospesiRed" template="/private/jsp/application/raccolteprovvisorie/chiusuraRaccoltaSospeseRed/listaSospesiRed.jsp" >
+		<put-attribute name="action" value="listaSospesiRed.do"/>
+	</definition>   	
+	<definition name="listaSospesiRed.main" extends="baseTemplate">
+		<put-attribute name="page" value=".listaSospesiRed"/>
+		<put-attribute name="title" value="label.title.lista.sospesi.red" />
+	</definition>
+
+
+	<definition name=".modalFascDocRedSosp" template="/private/jsp/modal/modaleDocumFascicoloSospesi.jsp"/>
+	<definition name=".documentiFascicoloAperti" template="/private/jsp/application/raccolteprovvisorie/chiusuraRaccoltaSospeseRed/documentiFascicoloAperti.jsp" >
+		<put-attribute name="action" value="documentiFascicoloAperti.do"/>
+		<put-attribute name="modalFascDocRedSosp" value=".modalFascDocRedSosp"/>
+	</definition>    
+	<definition name="documentiFascicoloAperti.main" extends="baseTemplate">
+		<put-attribute name="page" value=".documentiFascicoloAperti"/>
+		<put-attribute name="title" value="label.blank" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Sospesi Red 						******* -->
+	<!-- ****************************************************** -->
+	
+	
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Crea Fad   					******* -->
+	<!-- ****************************************************** -->
+
+	 <definition name=".selezionaAmm" template="/private/jsp/application/fascicoliFad/creazioneFad/selezionaAmm.jsp"/> 
+	 <definition name=".selezionaCdr" template="/private/jsp/application/fascicoliFad/creazioneFad/selezionaCdr.jsp"/> 
+	 <definition name=".creaFad" template="/private/jsp/application/fascicoliFad/creazioneFad/creaFad.jsp"/> 
+	 
+	
+	<definition name="creaFad.main" extends="baseTemplate">
+		<put-attribute name="page" value=".creaFad" />
+		<put-attribute name="title" value="label.title.crea.fad" />
+	</definition>
+	
+	<definition name="selezioneAmm.main" extends="baseTemplate">
+		<put-attribute name="page" value=".selezionaAmm" />
+		<put-attribute name="title" value="label.title.crea.fad" />
+	</definition>
+	
+	<definition name="selezioneCdr.main" extends="baseTemplate">
+		<put-attribute name="page" value=".selezionaCdr" />
+		<put-attribute name="title" value="label.title.crea.fad" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Crea Fad   						******* -->
+	<!-- ****************************************************** -->
+	
+
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Sigla Documenti   				******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".siglaDocumentiTemplate" template="/private/jsp/application/sigla/siglaDocumenti.jsp">
+		<put-attribute name="action" value="/private/siglaDocumenti.do"/>
+		<put-attribute name="modalAmm" value=".modalAmm" />
+	</definition>
+	
+	<definition name=".mySiglaDocumentsTemplate" template="/private/jsp/application/sigla/mieiDocumentiSiglati.jsp">
+		<put-attribute name="action" value="/private/siglaDocumenti.do"/>
+		<put-attribute name="modalAmm" value=".modalAmm" />
+	</definition>
+	
+	<definition name="siglaDocumenti.main" extends="baseTemplate">
+		<put-attribute name="page" value=".siglaDocumentiTemplate" />
+		<put-attribute name="title" value="label.title.list.AD.to.initial" />
+	</definition>
+	
+	<definition name="documentiSiglati.main" extends="baseTemplate">
+		<put-attribute name="page" value=".mySiglaDocumentsTemplate" />
+		<put-attribute name="title" value="label.title.list.AD.siglati" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Sigla Documenti   				******* -->
+	<!-- ****************************************************** -->
+	
+	
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Bollina Documenti   			******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".modalAmm" template="/private/jsp/modal/modaleListaAmministrazioni.jsp"/>
+	
+	<definition name=".bollinaDocumentiTemplate" template="/private/jsp/application/workFlowFirma/bollina/bollinaDocumenti.jsp">
+		<put-attribute name="action" value="/private/bollinaDocumenti.do"/>
+		<put-attribute name="modalAmm" value=".modalAmm" />
+	</definition>
+	
+	<definition name=".myBollDocumentsTemplate" template="/private/jsp/application/workFlowFirma/bollina/mieiDocumentiBollinati.jsp">
+		<put-attribute name="action" value="/private/bollinaDocumenti.do"/>
+		<put-attribute name="modalAmm" value=".modalAmm" />
+	</definition>
+	
+	<definition name="bollinaDocumenti.main" extends="baseTemplate">
+		<put-attribute name="page" value=".bollinaDocumentiTemplate" />
+		<put-attribute name="title" value="label.title.list.AD.to.bollinare" />
+	</definition>
+	
+	<definition name="documentiBollinati.main" extends="baseTemplate">
+		<put-attribute name="page" value=".myBollDocumentsTemplate" />
+		<put-attribute name="title" value="label.title.list.AD.bollinati" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Bollina Documenti   				******* -->
+	<!-- ****************************************************** -->
+	
+	
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Verifica Documenti   			******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".verificaDocumentiTemplate" template="/private/jsp/application/verifica/verificaDocumenti.jsp">
+		<put-attribute name="action" value="/private/verificaDocumenti.do"/>
+		<put-attribute name="modalAmm" value=".modalAmm" />
+	</definition>
+	
+	<definition name=".myVerifiedDocumentsTemplate" template="/private/jsp/application/verifica/mieiDocumentiVerificati.jsp">
+		<put-attribute name="action" value="/private/verificaDocumenti.do"/>
+		<put-attribute name="modalAmm" value=".modalAmm" />
+	</definition>
+	
+	<definition name="verificaDocumenti.main" extends="baseTemplate">
+		<put-attribute name="page" value=".verificaDocumentiTemplate" />
+		<put-attribute name="title" value="label.title.list.AD.to.verify" />
+	</definition>
+	<definition name="documentiVerificati.main" extends="baseTemplate">
+		<put-attribute name="page" value=".myVerifiedDocumentsTemplate" />
+		<put-attribute name="title" value="label.title.list.AD.verificati" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Verifica Documenti   			******* -->
+	<!-- ****************************************************** -->
+	
+
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Gestione Tipologia Decreto   	******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".gestioneTipologiaDecreto" template="/private/jsp/application/funzioniDiServizio/gestioneTipologiaDecreto.jsp" >
+		<put-attribute name="action" value="gestioneTipologiaDecreto.do"/>
+	</definition>   	
+	<definition name="gestioneTipologiaDecreto.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestioneTipologiaDecreto"/>
+		<put-attribute name="title" value="label.title.gestione.tipologia.decreto" />
+	</definition>
+
+	<definition name=".gestioneCreazioneDecreto" template="/private/jsp/application/funzioniDiServizio/creazioneTipologiaDecreto.jsp" >
+		<put-attribute name="action" value="gestioneCreazioneDecreto.do"/>
+	</definition>   	
+	<definition name="gestioneCreazioneDecreto.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestioneCreazioneDecreto"/>
+		<put-attribute name="title" value="label.title.creazione.tipologia.decreto" />
+	</definition>
+
+	<definition name=".gestioneModificaDecreto" template="/private/jsp/application/funzioniDiServizio/modificaTipologiaDecreto.jsp" >
+		<put-attribute name="action" value="gestioneModificaDecreto.do"/>
+	</definition>   	
+	<definition name="gestioneModificaDecreto.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestioneModificaDecreto"/>
+		<put-attribute name="title" value="label.title.modifica.tipologia.decreto" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Gestione Tipologia Decreto   	******* -->
+	<!-- ****************************************************** -->
+	
+	
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Sospensione Firme   				******* -->
+	<!-- ****************************************************** -->
+	<definition name=".sospensioneFirme" template="/private/jsp/application/fascicoliFad/sospensioneFirme/startSospensioneFirme.jsp" >
+		<put-attribute name="action" value="sospensioneFirme.do"/>
+	</definition>   	
+	<definition name="sospensioneFirme.main" extends="baseTemplate">
+		<put-attribute name="page" value=".sospensioneFirme"/>
+		<put-attribute name="title" value="label.title.sospensioneFirme" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Sospensione Firme   				******* -->
+	<!-- ****************************************************** -->
+	
+	
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Revoca Sospensione Firme   	******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".revocaSospensioneFirme" template="/private/jsp/application/fascicoliFad/revocaSospensioneFirme/startRevSospFirme.jsp" >
+		<put-attribute name="action" value="revocaSospensioneFirme.do"/>
+	</definition>   	
+	<definition name="revocaSospensioneFirme.main" extends="baseTemplate">
+		<put-attribute name="page" value=".revocaSospensioneFirme"/>
+		<put-attribute name="title" value="label.title.revocaSospensioneFirme" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Revoca Sospensione Firme   		******* -->
+	<!-- ****************************************************** -->
+	
+	
+	<!-- ****************************************************** -->
+	<!-- *******   INIZIO GESTIONE FASCICOLO FAD        ******* -->
+	<!-- ****************************************************** -->
+
+	<definition name=".modalVisualizzaDocumentiRed" template="/private/jsp/modal/modaleVisMetadatiDocRed.jsp"/>
+	
+	<definition name=".modalVisualizzaDocumentiFad" template="/private/jsp/modal/modaleVisMetadatiDocFad.jsp"/>
+	
+	<definition name=".modalVisualizzaDocumentiPat" template="/private/jsp/modal/modaleVisMetadatiDocPat.jsp"/>
+
+	<definition name=".modalModificaDocumentiRed" template="/private/jsp/modal/modaleModMetadatiDocRed.jsp"/>
+	
+	<definition name=".modalModificaDocumentiFad" template="/private/jsp/modal/modaleModMetadatiDocFad.jsp"/>
+
+	<definition name=".gestRicercaFad" template="/private/jsp/application/fascicoliFad/gestioneFad/ricercaFAD.jsp"/>
+
+	<definition name="gestRicercaFad.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestRicercaFad"/>
+		<put-attribute name="title" value="label.title.ricercaFad" />
+	</definition>
+	
+	<definition name=".gestAfterRicercaFad" template="/private/jsp/application/fascicoliFad/gestioneFad/afterRicercaFAD.jsp">
+		<put-attribute name="action" value="/private/gestioneFascicoloFAD.do"/>
+		<put-attribute name="modalFascFad" value=".modalFascFad"/>
+	</definition>
+
+	<definition name="gestAfterRicercaFad.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestAfterRicercaFad"/>
+		<put-attribute name="title" value="label.title.ricercaFad" />
+	</definition>
+	
+	<definition name=".gestFascicoloFad" template="/private/jsp/application/fascicoliFad/gestioneFad/fascicoloFAD.jsp">
+		<put-attribute name="action" value="/private/gestioneFascicoloFAD.do"/>
+		<put-attribute name="modalFascFad" value=".modalFascFad"/>
+		<put-attribute name="modalFascRed" value=".modalFascRed"/>
+		<put-attribute name="modalFascPat" value=".modalFascPat"/>
+	</definition>
+
+	<definition name="gestFascicoloFad.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestFascicoloFad"/>
+		<put-attribute name="title" value="label.title.ricercaFad" />
+	</definition>
+	
+	<definition name=".gestDocumentiFad" template="/private/jsp/application/fascicoliFad/gestioneFad/documentiFad.jsp">
+		<put-attribute name="action" value="/private/gestioneFascicoloFAD.do"/>
+		<put-attribute name="modalModificaDocumentiFad" value=".modalModificaDocumentiFad"/>
+		<put-attribute name="modalVisualizzaDocumentiFad" value=".modalVisualizzaDocumentiFad"/>
+	</definition>
+
+	<definition name="gestDocumentiFad.main" extends="baseMultiFormTemplate">
+		<put-attribute name="page" value=".gestDocumentiFad"/>
+		<put-attribute name="title" value="label.title.ricercaFad" />
+	</definition>
+	
+	<definition name=".gestDocumentiRed" template="/private/jsp/application/fascicoliFad/gestioneFad/documentiRed.jsp">
+		<put-attribute name="action" value="/private/gestioneFascicoloFAD.do"/>
+		<put-attribute name="modalModificaDocumentiRed" value=".modalModificaDocumentiRed"/>
+		<put-attribute name="modalVisualizzaDocumentiRed" value=".modalVisualizzaDocumentiRed"/>
+	</definition>
+
+	<definition name="gestDocumentiRed.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestDocumentiRed"/>
+		<put-attribute name="title" value="label.title.ricercaFad" />
+	</definition>
+	
+	<definition name=".gestDocumentiPat" template="/private/jsp/application/fascicoliFad/gestioneFad/documentiPat.jsp">
+		<put-attribute name="action" value="/private/gestioneFascicoloFAD.do"/>
+		<put-attribute name="modalVisualizzaDocumentiPat" value=".modalVisualizzaDocumentiPat"/>
+	</definition>
+
+	<definition name="gestDocumentiPat.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestDocumentiPat"/>
+		<put-attribute name="title" value="label.title.ricercaFad" />
+	</definition>
+	
+	<definition name=".gestSelezionaAmm" template="/private/jsp/application/fascicoliFad/gestioneFad/selezionaAmm.jsp"/> 
+
+	<definition name="gestSelezioneAmm.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestSelezionaAmm" />
+		<put-attribute name="title" value="label.title.ricercaFad" />
+	</definition>
+
+	 
+	<!-- ****************************************************** -->
+	<!-- *******   FINE GESTIONE FASCICOLO FAD          ******* -->
+	<!-- ****************************************************** -->
+
+
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Gestione Workflow Firme   		******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".gestioneWorkflowFirme" template="/private/jsp/application/funzioniDiServizio/workflowFirme/gestioneWorkflowFirme.jsp" >
+		<put-attribute name="action" value="gestioneWorkflowFirme.do"/>
+	</definition>
+	<definition name="gestioneWorkflowFirme.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestioneWorkflowFirme"/>
+		<put-attribute name="title" value="label.title.gestione.workflow.firme" />
+	</definition>
+	<definition name=".creazioneWorkflowFirme" template="/private/jsp/application/funzioniDiServizio/workflowFirme/creazioneWorkflowFirme.jsp" >
+		<put-attribute name="action" value="creaWorkflowFirme.do"/>
+	</definition>
+	<definition name="creazioneWorkflowFirme.main" extends="baseTemplate">
+		<put-attribute name="page" value=".creazioneWorkflowFirme"/>
+		<put-attribute name="title" value="label.title.creazione.workflow.firme" />
+	</definition>
+	<definition name=".dettaglioWorkflowFirme" template="/private/jsp/application/funzioniDiServizio/workflowFirme/dettaglioWorkflowFirme.jsp" >
+		<put-attribute name="action" value="dettagliaWorkflowFirme.do"/>
+	</definition>
+	<definition name="dettaglioWorkflowFirme.main" extends="baseTemplate">
+		<put-attribute name="page" value=".dettaglioWorkflowFirme"/>
+		<put-attribute name="title" value="label.title.dettaglio.workflow.firme" />
+	</definition>
+
+	<definition name=".modificaDettaglioWorkflowFirme" template="/private/jsp/application/funzioniDiServizio/workflowFirme/modificaDettaglioWorkflowFirme.jsp" >
+		<put-attribute name="action" value="dettagliaWorkflowFirme.do"/>
+	</definition>
+	<definition name="modificaDettaglioWorkflowFirme.main" extends="baseTemplate">
+		<put-attribute name="page" value=".modificaDettaglioWorkflowFirme"/>
+		<put-attribute name="title" value="label.title.modifica.dettaglio.workflow.firme" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Gestione Workflow Firme   		******* -->
+	<!-- ****************************************************** -->
+
+
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Consultazione FAD Cdc   			******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".ricercaFadCdc" template="/private/jsp/application/consFadCdc/ricercaFadCdc.jsp" >
+		<put-attribute name="action" value="consultaFascicoloCdc.do"/>
+	</definition>   	
+	<definition name="ricercaFadCdc.main" extends="baseTemplate">
+		<put-attribute name="page" value=".ricercaFadCdc"/>
+		<put-attribute name="title" value="label.title.consFadCdc.ricercaFadCdc" />
+	</definition>
+	
+	<definition name=".fascicoliFadCdc" template="/private/jsp/application/consFadCdc/listFascicoliFadCdc.jsp" >
+		<put-attribute name="action" value="consultaFascicoloCdc.do"/>
+		<put-attribute name="modalFascFad" value=".modalFascFad"/>		
+	</definition>   	
+	<definition name="fascicoliFadCdc.main" extends="baseTemplate">
+		<put-attribute name="page" value=".fascicoliFadCdc"/>		
+		<put-attribute name="title" value="label.title.consFadCdc.ricercaFadCdc" />
+	</definition>
+	
+	<definition name=".gestFascicoloFadCdc" template="/private/jsp/application/consFadCdc/fascicoloFadCdc.jsp" >
+		<put-attribute name="action" value="consultaFascicoloCdc.do"/>	
+		<put-attribute name="modalFascFad" value=".modalFascFad"/>	
+		<put-attribute name="modalFascRed" value=".modalFascRed"/>
+		<put-attribute name="modalFascPat" value=".modalFascPat"/>
+		<put-attribute name="datiProtEntrataCdc" value=".datiProtEntrataCdc"/>	
+		<put-attribute name="datiProtUscitaCdc" value=".datiProtUscitaCdc"/>	
+		<put-attribute name="dataPresaCaricoCdc" value=".dataPresaCaricoCdc"/>	
+	</definition>   	
+	<definition name="gestFascicoloFadCdc.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestFascicoloFadCdc"/>		
+		<put-attribute name="title" value="label.title.consFadCdc.gestFascicoloFadCdc" />
+	</definition>
+	
+	<definition name=".documentiFadCdc" template="/private/jsp/application/consFadCdc/documentiFadCdc.jsp" >
+		<put-attribute name="action" value="/private/consultaFascicoloCdc.do"/>	
+		<put-attribute name="modalFascFad" value=".modalFascFad"/>	
+		<put-attribute name="modalFascRed" value=".modalFascRed"/>
+		<put-attribute name="modalFascPat" value=".modalFascPat"/>
+	</definition>   	
+	<definition name="documentiFadCdc.main" extends="baseMultiFormTemplate">
+		<put-attribute name="page" value=".documentiFadCdc"/>		
+		<put-attribute name="title" value="label.title.consFadCdc.gestFascicoloFadCdc" />
+	</definition>
+	
+	<definition name=".documentiRedCdc" template="/private/jsp/application/consFadCdc/documentiRedCdc.jsp" >
+		<put-attribute name="action" value="/private/consultaFascicoloCdc.do"/>	
+		<put-attribute name="modalFascFad" value=".modalFascFad"/>	
+		<put-attribute name="modalFascRed" value=".modalFascRed"/>
+		<put-attribute name="modalFascPat" value=".modalFascPat"/>
+	</definition>   	
+	<definition name="documentiRedCdc.main" extends="baseTemplate">
+		<put-attribute name="page" value=".documentiRedCdc"/>		
+		<put-attribute name="title" value="label.title.consFadCdc.gestFascicoloFadCdc" />
+	</definition>
+	
+	<definition name=".documentiPatCdc" template="/private/jsp/application/consFadCdc/documentiPatCdc.jsp" >
+		<put-attribute name="action" value="/private/consultaFascicoloCdc.do"/>	
+		<put-attribute name="modalFascFad" value=".modalFascFad"/>	
+		<put-attribute name="modalFascRed" value=".modalFascRed"/>
+		<put-attribute name="modalFascPat" value=".modalFascPat"/>
+	</definition>   	
+	<definition name="documentiPatCdc.main" extends="baseTemplate">
+		<put-attribute name="page" value=".documentiPatCdc"/>		
+		<put-attribute name="title" value="label.title.consFadCdc.gestFascicoloFadCdc" />
+	</definition>
+	
+	
+	<definition name=".datiProtEntrataCdc" template="/private/jsp/modal/modaleDatiProtEntrataCdc.jsp"/>
+	
+	<definition name="datiProtEntrataCdc.main" extends="baseTemplate">
+		<put-attribute name="page" value=".datiProtEntrataCdc" />
+		<put-attribute name="title" value="label.title.consFadCdc.gestFascicoloFadCdc" />
+	</definition>
+	
+	<definition name=".datiProtUscitaCdc" template="/private/jsp/modal/modaleDatiProtUscitaCdc.jsp"/>
+	
+	<definition name="datiProtUscitaCdc.main" extends="baseTemplate">
+		<put-attribute name="page" value=".datiProtUscitaCdc" />
+		<put-attribute name="title" value="label.title.consFadCdc.gestFascicoloFadCdc" />
+	</definition>
+	
+	<definition name=".dataPresaCaricoCdc" template="/private/jsp/modal/modaleDataPresaCaricoCdc.jsp"/>
+	
+	<definition name="dataPresaCaricoCdc.main" extends="baseTemplate">
+		<put-attribute name="page" value=".dataPresaCaricoCdc" />
+		<put-attribute name="title" value="label.title.consFadCdc.gestFascicoloFadCdc" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Consultazione FAD Cdc   			******* -->
+	<!-- ****************************************************** -->
+	
+
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Cronologico   					******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".intCronologico" template="/private/jsp/application/funzioniDiServizio/intCronologico.jsp" >
+		<put-attribute name="action" value="/private/intCronologico.do"/>
+	</definition>
+	<definition name="intCronologico.main" extends="baseTemplate">
+		<put-attribute name="page" value=".intCronologico"/>
+		<put-attribute name="title" value="label.intCronologico" />
+	</definition>	
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Cronologico   					******* -->
+	<!-- ****************************************************** -->
+	
+	
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Rielaborazione Fascicolo   	******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".rielaborazioneFascicolo" template="/private/jsp/application/funzioniDiServizio/rielaborazioneFascicolo.jsp" >
+		<put-attribute name="action" value="/private/rielaborazioneFascicolo.do"/>
+	</definition>
+	<definition name="rielaborazioneFascicolo.main" extends="baseTemplate">
+		<put-attribute name="page" value=".rielaborazioneFascicolo"/>
+		<put-attribute name="title" value="label.rielaborazioneFascicolo" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Rielaborazione Fascicolo   	******* -->
+	<!-- ****************************************************** -->	
+	
+
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Gestione Utenti   				******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".gestioneListaUtenti" template="/private/jsp/application/funzioniDiServizio/gestioneUtenti/gestioneListaUtenti.jsp"/>
+	<definition name="gestioneListaUtenti.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestioneListaUtenti" />
+		<put-attribute name="title" value="label.title.gestioneUtenti" />
+	</definition>
+
+	<definition name=".gestioneUtente" template="/private/jsp/application/funzioniDiServizio/gestioneUtenti/gestioneUtente.jsp"/>
+	<definition name="gestioneUtente.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestioneUtente" />
+		<put-attribute name="title" value="label.title.gestioneUtenti" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Gestione Utenti   				******* -->
+	<!-- ****************************************************** -->
+	
+	
+	<!-- ****************************************************** -->
+	<!-- *******  INIZIO Gestione Profili   				******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".gestioneListaProfili" template="/private/jsp/application/funzioniDiServizio/gestioneProfili/gestioneListaProfili.jsp"/>
+	<definition name="gestioneListaProfili.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestioneListaProfili" />
+		<put-attribute name="title" value="label.title.gestioneProfili" />
+	</definition>
+
+	<definition name=".gestioneProfilo" template="/private/jsp/application/funzioniDiServizio/gestioneProfili/gestioneProfilo.jsp"/>
+	<definition name="gestioneProfilo.main" extends="baseTemplate">
+		<put-attribute name="page" value=".gestioneProfilo" />
+		<put-attribute name="title" value="label.title.gestioneProfili" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******  FINE Gestione Profili   				******* -->
+	<!-- ****************************************************** -->
+	
+
+	<!-- ****************************************************** -->
+	<!-- *******   INIZIO Monitoraggio Firma   			******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".monitoraggioFirma" template="/private/jsp/application/fascicoliFad/monitoraggioFirma/monitoraggioFirma.jsp" >
+		<put-attribute name="action" value="/private/monitoraggioFirma.do"/>
+	</definition>
+	<definition name="monitoraggioFirma.main" extends="baseTemplate">
+		<put-attribute name="page" value=".monitoraggioFirma"/>
+		<put-attribute name="title" value="label.title.monitoraggioFirma" />
+	</definition>
+	
+	<definition name=".dettaglioMonitoraggioFirma" template="/private/jsp/application/fascicoliFad/monitoraggioFirma/dettMonitoraggioFirma.jsp" >
+		<put-attribute name="action" value="/private/monitoraggioFirma.do"/>
+	</definition>
+	<definition name="dettaglioMonitoraggioFirma.main" extends="baseTemplate">
+		<put-attribute name="page" value=".dettaglioMonitoraggioFirma"/>
+		<put-attribute name="title" value="label.title.monitoraggioFirma" />
+	</definition>
+	
+	<definition name=".dettaglioFascicoloMonitoraggioFirma" template="/private/jsp/application/fascicoliFad/monitoraggioFirma/dettaglioFascicoloMonitoraggioFirma.jsp" >
+		<put-attribute name="action" value="/private/monitoraggioFirma.do"/>
+	</definition>
+	<definition name="dettaglioFascicoloMonitoraggioFirma.main" extends="baseTemplate">
+		<put-attribute name="page" value=".dettaglioFascicoloMonitoraggioFirma"/>
+		<put-attribute name="title" value="label.title.monitoraggioFirma" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******   FINE Monitoraggio Firma   			******* -->
+	<!-- ****************************************************** -->
+
+
+	<!-- ****************************************************** -->
+	<!-- *******   INIZIO Abilita invio e-amil   		******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".abilitaInvioMail" template="/private/jsp/application/funzioniDiServizio/abilitaInvioMail.jsp" >
+		<put-attribute name="action" value="/private/abilitaMail.do"/> 
+	</definition>
+	<definition name="abilitaInvioMail.main" extends="baseTemplate">
+		<put-attribute name="page" value=".abilitaInvioMail"/>
+		<put-attribute name="title" value="label.title.abilitaInvioMail" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******   FINE Abilita invio e-amil   			******* -->
+	<!-- ****************************************************** -->
+	
+	
+	<!-- ****************************************************** -->
+	<!-- *******   INIZIO Lettere di Preregistrazione   ******* -->
+	<!-- ****************************************************** -->
+	
+	<definition name=".predLetterePreReg" template="/private/jsp/application/fascicoliFad/predLetterePreRegistrazione/predisposizioneLettere.jsp" >
+		<put-attribute name="action" value="/private/predLetterePreReg.do"/>
+	</definition>
+	<definition name="predLetterePreReg.main" extends="baseTemplate">
+		<put-attribute name="page" value=".predLetterePreReg"/>
+		<put-attribute name="title" value="label.title.predLetterePreReg" />
+	</definition>
+	
+	<definition name=".predLettereListaDecreti" template="/private/jsp/application/fascicoliFad/predLetterePreRegistrazione/predLettereListaDecreti.jsp" >
+		<put-attribute name="action" value="/private/predLetterePreReg.do"/>
+		<put-attribute name="modalAmm" value=".modalAmm" />
+	</definition>
+	<definition name="predLettereListaDecreti.main" extends="baseTemplate">
+		<put-attribute name="page" value=".predLettereListaDecreti"/>
+		<put-attribute name="title" value="label.title.predLetterePreReg" />
+	</definition>
+	
+	
+	<definition name=".predLettereListaLettere" template="/private/jsp/application/fascicoliFad/predLetterePreRegistrazione/predLettereLista.jsp" >
+		<put-attribute name="action" value="/private/predLetterePreReg.do"/>
+	</definition>
+	<definition name="predLettereListaLettere.main" extends="baseTemplate">
+		<put-attribute name="page" value=".predLettereListaLettere"/>
+		<put-attribute name="title" value="label.title.predLetterePreReg" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******   FINE Lettere di Preregistrazione   	******* -->
+	<!-- ****************************************************** -->
+	
+	<!-- INIZIO Predisposizione Tagliatella -->
+	
+	<definition name=".predisposizioneTagliatella" template="/private/jsp/application/fascicoliFad/predisposizioneTagliatella/predisposizioneTagliatella.jsp" >
+		<put-attribute name="action" value="/private/predisposizioneTagliatella.do"/>
+	</definition>
+	<definition name="predisposizioneTagliatella.main" extends="baseTemplate">
+		<put-attribute name="page" value=".predisposizioneTagliatella"/>
+		<put-attribute name="title" value="label.title.predisposizioneTagliatella" />
+	</definition>
+  
+  
+  
+  
+	<definition name=".predTagliatellaListaDecreti" template="/private/jsp/application/fascicoliFad/predisposizioneTagliatella/predTagliatellaListaDecreti.jsp" >
+		<put-attribute name="action" value="/private/predisposizioneTagliatella.do"/>
+	</definition>
+	<definition name="predTagliatellaListaDecreti.main" extends="baseTemplate">
+		<put-attribute name="page" value=".predTagliatellaListaDecreti"/>
+		<put-attribute name="title" value="label.title.predisposizioneTagliatella" />
+	</definition>
+	
+	
+	
+		<definition name=".predDecretoPerTagliatella" template="/private/jsp/application/fascicoliFad/predisposizioneTagliatella/predDecretoPerTagliatella.jsp" >
+		<put-attribute name="action" value="/private/predisposizioneTagliatella.do"/>
+	</definition>
+	<definition name="predDecretoPerTagliatella.main" extends="baseTemplate">
+		<put-attribute name="page" value=".predDecretoPerTagliatella"/>
+		<put-attribute name="title" value="label.title.predisposizioneTagliatella" />
+	</definition>
+	
+
+	
+	<!-- FINE Predisposizione Tagliatella -->
+	
+	<!-- ****************************************************** -->
+	<!-- *******   INIZIO Test Firme        			******* -->
+	<!-- ****************************************************** -->
+	<definition name=".modalPin" template="/private/jsp/modal/modalePinFirma.jsp"/>
+	
+	<definition name=".testFirme" template="/private/jsp/application/funzioniDiServizio/testFirme/testFirme.jsp" >
+		<put-attribute name="action" value="/private/testFirme.do"/>
+		<put-attribute name="modalPin" value=".modalPin" />
+	</definition>
+	
+	<definition name="testFirme.main" extends="baseTemplate">
+		<put-attribute name="page" value=".testFirme"/>
+		<put-attribute name="title" value="label.title.testFirme" />
+	</definition>
+	
+	<!-- ****************************************************** -->
+	<!-- *******   FINE Test Firme        			******* -->
+	<!-- ****************************************************** -->
+
+</tiles-definitions>

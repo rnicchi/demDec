@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="it" ><![endif]-->
+<!--[if gt IE 8]><!-->
+<html style="" class=" js no-touch svg inlinesvg svgclippaths no-ie8compat" lang="it"><!--<![endif]-->
+
+<head>
+
+<meta charset="utf-8">
+
+<title>DemDec - Dematerializzazione Decreti</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Fogli di stile CSS -->
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/foundation.css">
+<link rel="stylesheet" href="css/style_a.css">
+
+<link rel="stylesheet" href="css/firebugR.css">  
+
+
+
+                                    
+<!-- Modernizr -->
+<script src="custom.js"></script>
+<script>
+Modernizr.load(
+{
+test: Modernizr.mq('only all'),
+nope: 'respond.min.js'
+}
+);
+</script>
+
+</head>
+
+<body>
+
+<div class="nascosto"><a href="#contenuto">Vai direttamente al contenuto</a></div>
+
+
+<!-- Header/navigazione top bar -->
+<header class="fixed">
+
+<div id="sf_eng">
+
+
+  <div class="area_ris_eng">
+    <ul class="menu">
+        <li><img src="img/ico_user.png" alt="" class="inline" /><span class="col_char_user">Mario Rossi &#8226; Coordinamento Bilancisti</span></li>
+        <li><img src="img/ico_ch_user.png" alt="" class="inline hidd" /><a href="#" title="Cambio profilo">Cambio profilo</a></li>
+        <li><img src="img/ico_logout.png" alt="" class="inline hidd" /><a href="#" title="Logout">Logout</a></li>
+    </ul>
+  </div>
+
+
+</div>
+
+<div id="Cont_logo"><a href="index.htm"><img class="padd_sx_logo" src="img/logo_DEMDEC.jpg" alt="Vai alla home"></a></div>
+
+
+
+<nav class="top-bar">
+  <ul class="title-area">
+  <!-- Title Area -->
+  <li class="name">
+  <h1 id="logo" class="hide-text"><a href="#">MEF - Ragioneria Generale dello Stato</a></h1>
+  </li>
+  <!-- Icona e testo per il menu su mobile.
+       Rimuovere la classe "menu-icon" per eliminare l'icona. 
+       Rimuovere il testo "Menu" per avere solo l'icona -->
+  <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+ </ul>
+ 
+<section style="left: 0%;" class="top-bar-section">
+ <!-- Navigazione: parte sinistra -->
+  <ul class="left">
+<li class="has-dropdown"><a href="#">Raccolte Provvisorie</a>
+    <ul class="dropdown"><li class="title back js-generated"><h5><a href="#">« Indietro</a></h5></li>
+     <li class=""><a href="#">Ricerca generica</a></li>
+     <!--<li class=""><a href="#">Bbbbbbbbb</a></li>-->
+     <li class="divider"></li>
+     <li class="has-dropdown"><a href="#" class="">Amministrazione </a>
+      <ul class="dropdown"><li class="title back js-generated"><h5><a href="#">« Indietro</a></h5></li>
+       <li class=""><a href="2_add_element.htm">Ministero degli Affari Esteri</a></li>
+       <li class=""><a href="2_add_element.htm">Ministero dell' Ambiente e della Tutela del Territorio e del Mare</a></li>
+       <li class=""><a href="2_add_element.htm">Ministero per i Beni e le Attività culturali</a></li>
+       <li class=""><a href="2_add_element.htm">Ministero dell'istruzione dell'Università e della Ricerca</a></li>
+       <li class=""><a href="2_add_element.htm">Ministero della Difesa</a></li>
+       <li class=""><a href="2_add_element.htm">Ministero dell' Economia e delle Finanze</a></li>
+       <li class=""><a href="2_add_element.htm">Ministero della Giustizia</a></li>
+       <li class=""><a href="2_add_element.htm">Ministero delle Infrastrutture e Trasporti</a></li>
+       <li class=""><a href="2_add_element.htm">Ministero dell'Interno</a></li>
+       <li class=""><a href="2_add_element.htm">Ministero del Lavoro e delle Politiche sociali</a></li>
+       <li class=""><a href="2_add_element.htm">Ministero delle Politiche Agricole Alimentari e Forestali</a></li>
+       <li class=""><a href="2_add_element.htm">Ministero della Salute</a></li>
+       <li class=""><a href="2_add_element.htm">Ministero dello Sviluppo Economico</a></li>
+      </ul>
+     </li>
+     
+     
+    </ul>
+   </li>   <li class="divider"></li>
+   <li><a href="#">Gestione Fascicoli <abbr title="Fascicolo Decreto">FAD</abbr></a></li>
+   <li class="divider"></li>
+   <li><a href="firma.htm">Firma</a></li>
+   <li class="divider"></li>
+   <li><a href="sigla.htm">Sigla</a></li>
+   <li class="divider"></li>
+   <li><a href="#">Bollinatura</a></li>
+   <li class="divider"></li>
+   <li><a href="help.htm">Help</a></li>
+   
+  </ul>
+ <!-- Navigazione: parte destra -->
+ </section></nav>
+ 
+</header>
+
+
+<!-- Inizio griglia -->
+<!-- Sezione titoli in evidenza con slideshow -->
+<div class="container">
+
+
+<div class="spacer">&nbsp;</div>
+
+  <a id="contenuto"></a>
+
+  <span class="nascosto">Ti trovi in:</span>
+  <span class="path_N"><a href="index.htm">Home</a> &#8250; Upload</span>
+   
+ <div class="spacer_sm">&nbsp;</div>
+<!-- Fine section -->
+
+<!-- Sezione help -->
+<section id="lanci-servizi" class="margine-bottom">
+<div class="row">
+ <div class="large-12 columns">
+ <!--<h2>Ricerca</h2>-->
+ 
+ </div>
+ <div class="large-12 columns">
+  <fieldset>
+  
+    <div class="row">
+      <div class="small-6 columns">
+      
+     <label for="original_file">Upload</label>
+     
+        <form method="post" action="upload.php" enctype="multipart/form-data"> 
+        <input type="file" name="file" id="original_file" />
+        
+        <label for="new_file" class="nascosto">Upload</label>
+        <input type="text" value="" name="new_submit" id="new_file" readonly/>
+        </form>
+
+
+      </div>
+    </div> 
+    
+    
+  
+    <div class="row">
+      <div class="small-4 columns">
+          <label for="tipo_doc">Tipo documento</label>
+              <select id="tipo_doc" name="aa">
+                        <option value="" >&nbsp;</option>
+                        <option value="" >Atto decreto</option>
+               </select>
+      </div>
+    </div> 
+    
+<div class="row">
+      <div class="small-8 columns">
+          <label for="Amm">Amministrazione</label>
+              <select id="Amm" name="bb">
+                        <option value="" >&nbsp;</option>
+                        <option value="" >MINISTERO DEGLI AFFARI ESTERI</option>
+                        <option value="" >MINISTERO DELL'AMBIENTE E DELLA TUTELA DEL TERRITORIO E DEL MARE</option>
+                        <option value="" >MINISTERO PER I BENI E LE ATTIVITA' CULTURALI</option>
+                        <option value="" >MINISTERO DELL'ISTRUZIONE DELL'UNIVERSITA' E DELLA RICERCA</option>
+                        <option value="" >MINISTERO DELLA DIFESA</option>
+                        <option value="" >MINISTERO DELL'ECONOMIA E DELLE FINANZE</option>
+                        <option value="" >MINISTERO DELLA GIUSTIZIA</option>
+                        <option value="" >MINISTERO INFRASTRUTTURE E TRASPORTI</option>
+                        <option value="" >MINISTERO DELL'INTERNO</option>
+                        <option value="" >MINISTERO DEL LAVORO E DELLE POLITICHE SOCIALI</option>
+                        <option value="" >MINISTERO DELLE POLITICHE AGRICOLE ALIMENTARI E FORESTALI</option>
+                        <option value="" >MINISTERO DELLA SALUTE</option>
+                        <option value="" >MINISTERO SVILUPPO ECONOMICO</option>
+               </select>
+      </div>
+  </div>
+  <div class="row">
+      
+        <div class="small-8 columns">
+          <label for="desc_doc">Descrizione documento</label>
+          <textarea cols="180" id="desc_doc"></textarea>
+        </div>
+    
+  </div>
+
+
+    <div class="row">
+        <div class="small-10 columns">
+          <button type="button" class="button" onclick="javascript: document.location = '#';">Conferma</button>
+        </div>
+    </div>
+  
+  </fieldset>
+ </div> 
+ 
+</div>
+</section> 
+<!-- Fine section -->
+
+
+
+<!-- Footer -->
+<footer>
+    <div class="row">
+    <div class="large-12 columns">
+    <ul class="inline-list left">
+     <li><a href="#">Accessibilità</a></li>
+     <li><a href="#">Note legali</a></li>
+     <li><a href="#">Privacy</a></li>
+    </ul>
+    <p class="right">Copyright 2015 © RGS Ragioneria Generale dello Stato</p>
+    </div>
+    </div>
+</footer>
+</div>
+
+<script src="jquery.js"></script>
+<script src="foundation.js"></script>
+<script>
+ $(document).foundation();
+</script>
+
+
+<script type="text/javascript">//INI script per graphic input type file
+ 	var new_file = document.getElementById('new_file');
+	var original_file = document.getElementById('original_file');
+	new_file.onclick = function() { //eseguiamo una funzione quando si clicca sull'input "new_file"
+		original_file.click(); //eseguiamo l'evento click sull'input "original_file"
+	}
+	original_file.onchange = function() { //eseguiamo una funzione quando l'input "original_file" cambia
+		new_file.value = original_file.value; //modifichiamo il value dell'input "new_file"
+	}//END script per graphic input type file
+
+</script>
+
+
+
+
+
+</body></html>

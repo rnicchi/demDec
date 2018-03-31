@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class name="it.almavivaitalia.bilancio.commons.bo.MailTestiBO" table="D_MAIL_TESTI">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <comment>Testi e-mail</comment>
+   <id name="id" type="big_decimal">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="SEQU_ID_MAIL" scale="0"/>
+   </id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <property name="numeVersion" type="int">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_VERSION" not-null="true" precision="6" scale="0">
+     <comment>Numero intero che serve per gestire l'accesso concorrente con i DAO</comment>
+    </column>
+   </property>
+   <property name="codiFunzione" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="200" name="CODI_FUNZIONE" not-null="true">
+     <comment>Identificativo evento che ha generato l'invio dell'e-mail</comment>
+    </column>
+   </property>
+   <property name="textIndEmailA" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="480" name="TEXT_IND_EMAIL_A">
+     <comment>Destinatario e-mail</comment>
+    </column>
+   </property>
+   <property name="textIndEmailCc" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="2000" name="TEXT_IND_EMAIL_CC">
+     <comment>Copia per conoscenza e-mail</comment>
+    </column>
+   </property>
+   <property name="textOggettoEmail" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="480" name="TEXT_OGGETTO_EMAIL" not-null="true">
+     <comment>Oggetto e-mail</comment>
+    </column>
+   </property>
+   <property name="textEmail" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="4000" name="TEXT_EMAIL" not-null="true">
+     <comment>Testo e-mail</comment>
+    </column>
+   </property>
+   <property name="flagInvioSn" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="4" name="FLAG_INVIO_SN">
+     <comment>Indicatore di invio e-mail</comment>
+    </column>
+   </property>
+   <property name="flagPecSn" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="4" name="FLAG_PEC_SN">
+     <comment>Indicatore di invio PEC</comment>
+    </column>
+   </property>
+  </class>
+ </hibernate-mapping>

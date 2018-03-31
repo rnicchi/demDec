@@ -1,0 +1,248 @@
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@page import="it.almavivaitalia.web.sh.utils.BaseSessionAttributes"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.WebConstants"%>
+
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+
+
+
+<%-- <demdec:useAttribute id="listAnniEser" name="<%=WebConstants.LIST_ANNO_ESE%>"/> --%> 
+<demdec:useAttribute id="listProfili" name="<%=WebConstants.LIST_PROFILI%>"/> 
+<demdec:useAttribute id="listUffici"  name="<%=WebConstants.LIST_UFFICI%>"/> 
+<demdec:useAttribute id="listAmm"  name="<%=WebConstants.LIST_AMMIN_DEM%>"/> 
+<demdec:useAttribute id="listProfUfficiAmm"  name="<%=WebConstants.LIST_PROF_UFF_AMM%>"/> 
+<demdec:useAttribute id="f" name="<%=BaseSessionAttributes.FORM%>" />
+
+
+
+<div class="row">
+<div class="large-12 columns">
+<br>
+ <div class="col_char_user obb_fields"><spring:message code="label.required.fields"></spring:message></div>
+<fieldset>
+  
+
+  
+<div class="spacer_sm">&nbsp;</div>
+
+
+	<div class="row"> 
+		<div class="small-3 columns">
+			<c:if test="${empty f.selectedCodiUtente}">
+				<demdec:label path="codiUtente" labelKey="label.codiUtente.obb"/>
+				<form:input path="codiUtente" maxlength="50" /> 
+			</c:if>
+			<c:if test="${not empty f.selectedCodiUtente}">
+				<demdec:label path="codiUtente" labelKey="label.codiUtente" labelParam="${f.codiUtente}"/>
+				<form:hidden path="codiUtente"/>
+				<form:hidden path="selectedCodiUtente"/>
+			</c:if>  
+		</div>
+	</div>
+	<div class="spacer_sm">&nbsp;</div>
+	<div class="row"> 
+		<div class="small-3 columns">
+			<demdec:label path="persCognome"  labelKey="label.persCognome"/>
+			<form:input path="persCognome" maxlength="50"/> 
+		</div>
+	</div>
+	<div class="row"> 
+		<div class="small-3 columns">
+			<demdec:label path="persNome"  labelKey="label.persNome"/>
+			<form:input path="persNome" maxlength="50" /> 
+		</div>
+	</div>
+   
+  <div class="row"> 
+      <div class="small-3 columns">
+         <demdec:label path="indiEmail"  labelKey="label.indiEmail"/>
+         <form:input path="indiEmail" maxlength="50" /> 
+      </div>
+  </div>
+  
+  <div class="row"> 
+       <div class="small-3 columns">
+         <demdec:label path="codiUtenteNsbf"  labelKey="label.codiNsbf"/>
+         <form:input path="codiUtenteNsbf" maxlength="50" /> 
+      </div>
+  </div>
+  
+ <%--  
+  <div class="row"> 
+       <div class="small-3 columns">
+         <demdec:label path="codiCodiceFiscale"  labelKey="label.codice.fiscale"/>
+         <form:input path="codiCodiceFiscale" maxlength="16" /> 
+      </div>
+  </div>
+  
+  <div class="row"> 
+       <div class="small-3 columns">
+         <demdec:label path="codiCodiceFisFirma"  labelKey="label.codiceFisFirma"/>
+         <form:input path="codiCodiceFisFirma" maxlength="50" /> 
+      </div>
+  </div>
+  
+  <div class="row"> 
+       <div class="small-3 columns">
+         <demdec:label path="codiPinFirma"  labelKey="label.codicePinFirma"/>
+         <form:input path="codiPinFirma" maxlength="256" /> 
+      </div>
+  </div>
+ --%>
+</fieldset>
+
+<fieldset>
+        <div class="row" >
+            <div class="small-3 columns left">          		
+           		<demdec:label path="profilo"  labelKey="label.profilo.obb"/>
+           			
+           		
+					       		 <form:select path="profilo" id="profilo" onchange="changeTipoAmministrazione()"> 
+					       		    <form:option value="" >&nbsp;</form:option> 
+					          		<c:forEach var="msg" items="${listProfili}">
+										 <form:option value="${msg.id}-${msg.descProfilo}" >${msg.descProfilo} </form:option> 
+									</c:forEach>    		
+					        	 </form:select> 
+            </div>
+			<div class="small-7 columns">
+				<demdec:submit	keyValue="label.aggiungi.profilo" controllerCode="confermaProfilo"/>
+			</div> 
+        </div>
+        <div class="row" >
+            <div class="small-3 columns left">          		
+           		<demdec:label path="ufficio"  labelKey="label.ufficio"/>
+					       		 <form:select path="ufficio"   id="ufficio"> 
+					       		    <form:option value="" >&nbsp;</form:option> 
+					          		<c:forEach var="msg" items="${listUffici}">		
+										 <form:option value="${msg.id}-${msg.descUfficio}" >${msg.descUfficio} </form:option>
+									</c:forEach>
+					        	 </form:select>
+            </div>
+        </div>
+<%--   
+		<div class="row">
+			<div class="small-3 columns">
+			       
+				<demdec:label path="annoEse"  labelKey="label.annoEsercizio"/>
+				<form:select path="annoEse"   > 
+					<form:option value="" >&nbsp;</form:option>
+					<c:forEach var="msg" items="${listAnniEser}">		
+						<form:option value="${msg.id}" >${msg.id} </form:option> 
+					</c:forEach>    		
+				</form:select>  
+			</div>
+		</div>
+ --%>
+		<div class="row">
+<%-- 			<div class="left">
+				<demdec:submit keyValue="button.load" controllerCode="caricaAmministrazioni" styleClass="subm_update posit-butt_up"  title="Aggiorna Amministrazione"/>
+			</div> --%>
+			<div class="left" style="display: none;">
+           		<demdec:submit styleId="caricaAmm" keyValue="button.load" controllerCode="caricaAmministrazioniProfili" titleKey="label.carica.tipologia" styleClass="subm_update posit-butt_up"  />
+           	</div>
+			<div class="small-5 columns">
+				<demdec:label path="amministrazione"  labelKey="label.raccolteProvvisorie.amministrazione"/>
+				<form:select path="amministrazione" >
+					<form:option value="" label="-- Selezionare un'amministrazione --"/>
+
+					<c:forEach var="msg" items="${listAmm}">	
+						<c:choose> 
+							<c:when test="${msg.id.numeStp<10}"> 
+								<form:option value="${msg.id.fkAnnoEse}-0${msg.id.numeStp}-${msg.id.numeApp}-${msg.descAmm}" >0${msg.id.numeStp}${msg.id.numeApp} - ${msg.descAmm}</form:option> 
+							</c:when>
+							<c:otherwise>
+								<form:option value="${msg.id.fkAnnoEse}-${msg.id.numeStp}-${msg.id.numeApp}-${msg.descAmm}" >${msg.id.numeStp}${msg.id.numeApp} - ${msg.descAmm}</form:option>
+							</c:otherwise>
+						</c:choose>   
+					</c:forEach> 
+				</form:select>
+			</div>
+		</div>
+
+
+         <c:if test="${not empty listProfUfficiAmm}">
+        				<div class="row">
+
+								<div class="small-10 columns">
+								<!--  <demdec:label path="ammRows" labelKey="label.profilo.obb" />  -->	
+
+      							    <demdec:displaytag-table
+										name="pageScope.listProfUfficiAmm" id="listProfUfficiAmm" class="lux width100" >
+										<display:caption>
+											<span class="nascosto">Lista Valori Selezionati</span>
+										</display:caption>
+										
+										 	
+
+										
+										<demdec:displaytag-column title="" >
+														
+										 <label for="radio_${listProfUfficiAmm_rowNum}" class="nascosto">Seleziona</label>
+										
+										<c:set var="idCheck" value="1"/>
+										
+										<form:checkbox path="idProfiloDaEliminare" value="${listProfUfficiAmm_rowNum}" cssClass="checkPlut"/> 
+										</demdec:displaytag-column>
+										
+										<demdec:displaytag-column titleKey="label.profilo" property="profilo.descProfilo" class="center" />
+										<demdec:displaytag-column titleKey="label.ufficio" property="anagUffici.descUfficio"  class="center" />
+										<demdec:displaytag-column titleKey="label.amministrazione" property="anagAmminDem.descAmm"   />
+									</demdec:displaytag-table>
+									
+							<!--  	<div class="small-7 columns">   -->	
+											<div class="left">
+												<img src="<%=request.getContextPath()%>/public/img/select_all.png" alt=""> <a href="#" id="selectAll"><spring:message code="label.selectAll"/></a>
+										        <img src="<%=request.getContextPath()%>/public/img/unselect_all.png" alt=""> <a href="#"  id="unselectAll"><spring:message code="label.unselect"/></a>
+										    </div>
+										    
+										    <br><br><br>
+										    
+									<demdec:submit	keyValue="label.elimina.profili.selezionati" controllerCode="onEliminaProfili"/>
+							<!--		</div> -->	
+
+<%-- 									<demdec:submit keyValue="label.mod.amm"
+										controllerCode="caricaProfiloUfficioAmm"
+										styleClass="buttonPag border-radius"  titleKey="label.mod.amm"/> --%>
+  								</div>
+
+						</div>
+						</c:if>
+   </br>
+   </br>
+ 
+   <div class="row">
+      <div class="small-10 columns">
+		<c:if test="${empty f.selectedCodiUtente}">
+		      	 <demdec:submit keyValue="button.salva" controllerCode="creaUtente" />
+		</c:if>
+		<c:if test="${not empty f.selectedCodiUtente}">
+		      	 <demdec:submit keyValue="button.conferma" controllerCode="modificaUtente" />
+		</c:if>
+        <!--   <demdec:submit keyValue="label.clean" controllerCode="pulisci" />  -->
+         <demdec:submit keyValue="label.back" controllerCode="tornaIndietroListaUtenti" styleClass="button small"/>
+      </div>
+  </div>
+  
+  
+  
+</fieldset>
+ 
+ </div> 
+ 
+</div>
+
+
+<script type="text/javascript">
+		
+	function changeTipoAmministrazione(){
+		
+		$("#caricaAmm").click();
+		
+	}
+</script>

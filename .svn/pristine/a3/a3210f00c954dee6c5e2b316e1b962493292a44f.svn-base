@@ -1,0 +1,483 @@
+/**
+ * 
+ */
+package it.mef.bilancio.demdec.web.spring.controller.raccolteprovvisorie;
+
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bilancio.commons.to.AnagUfficiTO;
+import it.almavivaitalia.bilancio.commons.to.EserciziTO;
+import it.almavivaitalia.bilancio.commons.to.UtenteProfiloTO;
+import it.almavivaitalia.bilancio.commons.to.UtenteTO;
+import it.almavivaitalia.bilancio.commons.web.security.Utente;
+import it.almavivaitalia.bsn.sh.paginator.Paginator;
+import it.almavivaitalia.bsn.sh.utils.PaginatorUtil;
+import it.almavivaitalia.web.sh.utils.ApplicationContextProvider;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.almavivaitalia.web.sh.utils.ContextHelper;
+import it.mef.bilancio.demdec.manager.InitManager;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.manager.RicercaRedSospesiManager;
+import it.mef.bilancio.demdec.servizi.client.ParametriInput;
+import it.mef.bilancio.demdec.servizi.client.ResponseDEMBILClient;
+import it.mef.bilancio.demdec.to.AbstractDemTO;
+import it.mef.bilancio.demdec.to.AnagStatoFascicoloTO;
+import it.mef.bilancio.demdec.to.AnagTipoDecretoTO;
+import it.mef.bilancio.demdec.to.AnagTipoFlussoTO;
+import it.mef.bilancio.demdec.to.TipoDocumentoTO;
+import it.mef.bilancio.demdec.servizi.to.DocumentTO;
+import it.mef.bilancio.demdec.servizi.to.RaccoltaProvvisoriaRedTO;
+import it.mef.bilancio.demdec.to.RicercaRedTO;
+import it.mef.bilancio.demdec.to.SospesiRedTO;
+import it.mef.bilancio.demdec.utils.MyComparatorRaccProvvRedToAnnoProtNumProt;
+import it.mef.bilancio.demdec.web.spring.form.RicercaRedForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.NomeFunzioneConstants;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Collections;
+
+
+/**
+ * @author Pietro
+ *
+ */
+@RequestMapping(value = ConstantsRequestMapping.RICERCA_SOSPESI_RED)
+public class ChiusuraRaccolteSospeseRedController extends AssociazioneAFadController implements WebConstants, SessionAttributes{
+	
+	private String startView;
+	private String listaSospesiRed;
+	private String documentiFascicolo;
+
+	@Autowired
+	private RicercaRedSospesiManager ricercaRedSospesiManager;
+	@Autowired
+	private ListManager listManager;
+	
+	@Override
+	public String startController(Context context) throws Throwable {
+
+		context.setCurrentNode("DemDec.menu.RicercaSosp");
+
+		List<EserciziTO> listaAnniEsercizio = listManager.loadEserciziDemCG();
+		List<AnagStatoFascicoloTO> listaStatiFascRed = listManager.loadStatiFascicoliRed();
+		List<AnagAmminDemTO> listaAmm = new ArrayList<AnagAmminDemTO>();
+		List<AnagTipoFlussoTO> listAnagTipoFlusso = listManager.loadAnagTipoFlusso();
+		List<AnagUfficiTO> listaUfficiAssociatiRed = 
+					getListaUfficiAssociatiRed(context);
+		
+		context.setDataModel(WebConstants.LIST_ANNO_ESE, listaAnniEsercizio);
+		context.setDataModel(WebConstants.LIST_ANAG_STATI_FASC, listaStatiFascRed);
+		context.setDataModel(WebConstants.LIST_AMMIN_DEM, listaAmm);
+		context.setDataModel(WebConstants.LIST_ANAG_TIPO_FLUSSO, listAnagTipoFlusso);
+		context.setDataModel(WebConstants.LIST_ANAG_UFF, listaUfficiAssociatiRed);
+		
+		return startView;
+		
+	}
+	
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+	public void setListaSospesiRed(String listaSospesiRed) {
+		this.listaSospesiRed = listaSospesiRed;
+	}
+	public void setDocumentiFascicolo(String documentiFascicolo) {
+		this.documentiFascicolo = documentiFascicolo;
+	}
+	
+
+
+	public String ricercaSospesiRed(Context context) throws Throwable {
+		
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+		
+		if(form.isValid()){
+			//invoco il webservice
+		}else {
+			return startView;
+		}
+
+		context.getRequest().getSession().removeAttribute("ricercaRedTo");
+		
+		RicercaRedTO ricercaRedTO=new RicercaRedTO();
+	
+		ricercaRedTO.setIdRed(form.getIdRed());
+		ricercaRedTO.setAmministrazione(form.getAmministrazione());
+		ricercaRedTO.setAnnoEse(form.getAnnoEse());
+		ricercaRedTO.setDataArrivoA(form.getDataArrivoA());
+		ricercaRedTO.setDataArrivoDa(form.getDataArrivoDa());
+		ricercaRedTO.setDataRedDa(form.getDataRedDa());
+		ricercaRedTO.setDataRedA(form.getDataRedA());
+		ricercaRedTO.setProtocolloRed(form.getProtocolloRed());
+		ricercaRedTO.setStato(form.getStato());
+		ricercaRedTO.setTipoFlusso(form.getTipoFlusso());
+		ricercaRedTO.setUfficioAssociatoRed(form.getUfficioAssociatoRed());
+		
+		context.getRequest().getSession().setAttribute("ricercaRedTo", ricercaRedTO);
+		
+		ApplicationContext applContext=ApplicationContextProvider.getApplicationContext();
+		InitManager inMan =(InitManager )applContext.getBean("initManager");
+		ParametriInput paramInp= inMan.leggiParametriInputDemBil();
+		
+		ResponseDEMBILClient respClient=ricercaRedSospesiManager.wsRicercaRed(paramInp, ricercaRedTO); 
+		
+		String codiceEsito=respClient.getEsitoTo().getCodice();
+
+		if(codiceEsito.equalsIgnoreCase("OK")) {
+			List<AbstractDemTO> respListTo=respClient.getListoutputTO();
+
+
+			if (respListTo == null || respListTo.size() == 0) {
+				context.addWarning("warning.empty");
+				return startView; 
+			}
+
+	    	Collections.sort(respListTo, new MyComparatorRaccProvvRedToAnnoProtNumProt());
+
+			List<AbstractDemTO> listaRedDaSospendere = new ArrayList<AbstractDemTO>();
+			List<AbstractDemTO> listaRedSospesi = new ArrayList<AbstractDemTO>();
+
+			//suddivide la lista di Raccolte Provvisorie proveniente da WS in due liste
+			differenziaRaccolteProvvDaWS(respListTo, listaRedDaSospendere, listaRedSospesi);
+
+			context.setDataModel(SessionAttributes.LIST_RICERCA_RED, respListTo /* listTO */ );
+
+			if (listaRedDaSospendere.size()>0)
+				PaginatorUtil.addPaginator(context, listaRedDaSospendere, SessionAttributes.LIST_SOSPENDIBILI_RED, Paginator.PAGE_RANGE_5, SessionAttributes.PAGINATOR_SOSPENDIBILI_RED);
+	        else 
+	     		PaginatorUtil.removePaginator(context, SessionAttributes.LIST_SOSPENDIBILI_RED, SessionAttributes.PAGINATOR_SOSPENDIBILI_RED);
+
+			if (listaRedSospesi.size()>0)
+				PaginatorUtil.addPaginator(context, 
+						listaRedSospesi, SessionAttributes.LIST_SOSPESI_RED, Paginator.PAGE_RANGE_5, SessionAttributes.PAGINATOR_SOSPESI_RED);
+	        else
+	     		PaginatorUtil.removePaginator(context, SessionAttributes.LIST_SOSPESI_RED, SessionAttributes.PAGINATOR_SOSPESI_RED);
+
+			return listaSospesiRed;
+
+		}else if (codiceEsito.equalsIgnoreCase("ERRORE_DATI_NON_PRESENTI")){
+			context.addWarning("warning.empty");
+			return startView;
+		}else {
+			context.addError("error.generic", respClient.getEsitoTo().getDescrizione()); 
+			return startView;
+		}
+	}
+
+
+
+	public String inserisciSospesiRed(Context context) throws Throwable {
+
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+
+		List<AbstractDemTO> listaRaccoltaWsTO = context.getModel(SessionAttributes.LIST_RICERCA_RED);
+		List<SospesiRedTO> listaSospesiRedTO = (List<SospesiRedTO>) ricercaRedSospesiManager.getListaSospesiRed();
+
+		List<AbstractDemTO> listaRaccoltaTO = getListaWsFiltered(listaRaccoltaWsTO, listaSospesiRedTO); 
+
+		//se non ci sono check selezionati, ritorno senza fare nulla
+		if (form.getListaRedDaSospendere() == null
+				|| form.getListaRedDaSospendere().length == 0){
+			
+			context.addError("errore.raccolta.null");
+			return listaSospesiRed;
+		}
+
+		List<SospesiRedTO> listaRedDaSospendereTO = new ArrayList<SospesiRedTO>();
+		for (String indice: form.getListaRedDaSospendere()) {
+			RaccoltaProvvisoriaRedTO to = (RaccoltaProvvisoriaRedTO) listaRaccoltaTO.get(new Integer(indice));
+
+			SospesiRedTO sospesoRedTO = new SospesiRedTO(to);
+			context.valorizeAudit(sospesoRedTO, NomeFunzioneConstants.FUNZIONE_FORM_SOSPESI_RED);
+
+			listaRedDaSospendereTO.add(sospesoRedTO);
+		}
+
+		ricercaRedSospesiManager.saveSospesiRed(listaRedDaSospendereTO);
+
+		List<AbstractDemTO> listaRedDaSospendere = new ArrayList<AbstractDemTO>();
+		List<AbstractDemTO> listaRedSospesi = new ArrayList<AbstractDemTO>();
+		//suddivide la lista di Raccolte Provvisorie proveniente da WS in due liste
+		differenziaRaccolteProvvDaWS(listaRaccoltaWsTO, listaRedDaSospendere, listaRedSospesi);
+
+		if (listaRedDaSospendere.size()>0)
+			PaginatorUtil.addPaginator(context, listaRedDaSospendere, SessionAttributes.LIST_SOSPENDIBILI_RED, Paginator.PAGE_RANGE_5, SessionAttributes.PAGINATOR_SOSPENDIBILI_RED);
+		else
+			PaginatorUtil.removePaginator(context, SessionAttributes.LIST_SOSPENDIBILI_RED, SessionAttributes.PAGINATOR_SOSPENDIBILI_RED);
+
+		if (listaRedSospesi.size()>0)
+			PaginatorUtil.addPaginator(context, 
+					listaRedSospesi, SessionAttributes.LIST_SOSPESI_RED, Paginator.PAGE_RANGE_5, SessionAttributes.PAGINATOR_SOSPESI_RED);
+		else
+			PaginatorUtil.removePaginator(context, SessionAttributes.LIST_SOSPESI_RED, SessionAttributes.PAGINATOR_SOSPESI_RED);
+		form.setListaRedDaSospendere(new String[]{});
+
+		return listaSospesiRed;
+	}
+
+
+
+	public String ripristinaSospesiRed(Context context) throws Throwable {
+
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+
+		if (form.getListaRedSospesi() == null
+				|| form.getListaRedSospesi().length == 0){
+			
+			context.addError("errore.raccolta.null");
+			return listaSospesiRed;
+		}
+
+		List<AbstractDemTO> listaRaccoltaWsTO = context.getModel(SessionAttributes.LIST_RICERCA_RED);
+
+		//lista id sospesi da ripristinare
+		List<String> listaIdSospesiRed = Arrays.asList(form.getListaRedSospesi());
+		ricercaRedSospesiManager.deleteSospesiRed(listaIdSospesiRed);
+
+		List<AbstractDemTO> listaRedDaSospendere = new ArrayList<AbstractDemTO>();
+		List<AbstractDemTO> listaRedSospesi = new ArrayList<AbstractDemTO>();
+		//suddivide la lista di Raccolte Provvisorie proveniente da WS in due liste
+		differenziaRaccolteProvvDaWS(listaRaccoltaWsTO, listaRedDaSospendere, listaRedSospesi);
+
+		if (listaRedDaSospendere.size()>0)
+			PaginatorUtil.addPaginator(context, listaRedDaSospendere, SessionAttributes.LIST_SOSPENDIBILI_RED, Paginator.PAGE_RANGE_5, SessionAttributes.PAGINATOR_SOSPENDIBILI_RED);
+		else
+			PaginatorUtil.removePaginator(context, SessionAttributes.LIST_SOSPENDIBILI_RED, SessionAttributes.PAGINATOR_SOSPENDIBILI_RED);
+
+		if (listaRedSospesi.size()>0)
+			PaginatorUtil.addPaginator(context, 
+					listaRedSospesi, SessionAttributes.LIST_SOSPESI_RED, Paginator.PAGE_RANGE_5, SessionAttributes.PAGINATOR_SOSPESI_RED);
+		else
+			PaginatorUtil.removePaginator(context, SessionAttributes.LIST_SOSPESI_RED, SessionAttributes.PAGINATOR_SOSPESI_RED);
+		form.setListaRedSospesi(new String[]{});
+
+		return listaSospesiRed;
+	}
+
+
+
+	//metodo per suddividere la lista di Raccolte Provvisorie proveniente da WS in due liste: 
+	//	1) Raccolte da valutare per una evntuale sospensione;
+	//	2) Raccolte precedentemente valutate e inserite nel DB per la successiva elaborazione
+	private void differenziaRaccolteProvvDaWS(List<? extends AbstractDemTO> listaRaccoltaTO, 
+				List<AbstractDemTO> listaSuperiore,
+				List<AbstractDemTO> listaInferiore
+				) throws Throwable {
+
+
+		List<SospesiRedTO> listaSospesiRed = (List<SospesiRedTO>) ricercaRedSospesiManager.getListaSospesiRed();
+
+		Set<String> set = new HashSet<String>();
+		for (SospesiRedTO sr: listaSospesiRed)
+			set.add(sr.getId());
+
+
+		for (AbstractDemTO raccoltaAbs: listaRaccoltaTO) {
+			RaccoltaProvvisoriaRedTO raccolta = (RaccoltaProvvisoriaRedTO) raccoltaAbs; 
+			if (set.contains(raccolta.getIdFascicoloRaccoltaProvvisoria()))
+				listaInferiore.add(raccolta);
+			else
+				listaSuperiore.add(raccolta);
+		}
+
+	}
+
+
+	//metodo per filtrare i dati del Ws, escludendo quelli presenti su DB
+	private List<AbstractDemTO> getListaWsFiltered(List<AbstractDemTO> listaWS, List<SospesiRedTO> listaSospesiRed) throws Throwable {
+
+		if (listaSospesiRed == null || listaSospesiRed.size()==0)
+			return listaWS;
+
+		List<AbstractDemTO> listaOut = new ArrayList<AbstractDemTO>();
+
+		//lista id sospesi red
+		List<String> listaIdSospesiRed = new ArrayList<String>();
+		for (SospesiRedTO rs: listaSospesiRed)
+			listaIdSospesiRed.add(rs.getId());
+
+		for (AbstractDemTO to: listaWS)
+			if (!listaIdSospesiRed.contains(((RaccoltaProvvisoriaRedTO)to).getIdFascicoloRaccoltaProvvisoria()))
+					listaOut.add(to);
+
+		return listaOut;
+	}
+
+	/******metodo per visualizzare i metadati di un fascicolo*****/
+
+	public void modaleDettaglioFascicolo(Context context) throws IOException {
+
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+
+		boolean LISTA_SUPERIORE = form.getIdRed().startsWith("sup")? true: false;
+		String idFascicolo=form.getIdRed();
+		Integer idLista=new Integer(idFascicolo.substring(3));
+
+//		List<AbstractDemTO>  listaDettFascWs=context.getModel(SessionAttributes.LIST_RICERCA_RED);
+		List<AbstractDemTO>  listaSospendibili=context.getModel(SessionAttributes.LIST_SOSPENDIBILI_RED);
+		List<AbstractDemTO>  listaSospesi=context.getModel(SessionAttributes.LIST_SOSPESI_RED);
+
+		List<RaccoltaProvvisoriaRedTO> listaDettFasc=new ArrayList<RaccoltaProvvisoriaRedTO>();
+
+		//recupera il dato della Raccolta selezionata da lista superiore o inferiore
+		if (LISTA_SUPERIORE)
+		    listaDettFasc.add((RaccoltaProvvisoriaRedTO)listaSospendibili.get(idLista));
+		else
+		    listaDettFasc.add((RaccoltaProvvisoriaRedTO)listaSospesi.get(idLista));
+
+	    ObjectMapper mapper = new ObjectMapper();
+
+	    context.getResponse().setContentType("application/json");   
+	   
+	    mapper.writeValue(context.getResponse().getOutputStream(), listaDettFasc);
+	}
+
+	
+	public String apriDocumentiFascicolo(Context context) throws Throwable{
+
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+		List<RaccoltaProvvisoriaRedTO> listaRaccolteProvv=context.getModel(SessionAttributes.LIST_RICERCA_RED);
+		String idFascicoloRaccoltaProvvisoria = getParameter(context, "idRed");
+
+		RaccoltaProvvisoriaRedTO rprto = null;
+		for (int i=0; i<listaRaccolteProvv.size(); i++) {
+			if (idFascicoloRaccoltaProvvisoria.equals(((RaccoltaProvvisoriaRedTO)listaRaccolteProvv.get(i)).getIdFascicoloRaccoltaProvvisoria())) {	
+				rprto = (RaccoltaProvvisoriaRedTO)listaRaccolteProvv.get(i);
+			    break;
+			}
+		}
+
+		
+		context.setDataModel(WebConstants.ID_FASC_RACC_PROVV, idFascicoloRaccoltaProvvisoria);
+
+		ApplicationContext applContext=ApplicationContextProvider.getApplicationContext();
+		InitManager inMan =(InitManager )applContext.getBean("initManager");
+		ParametriInput paramInp= inMan.leggiParametriInputDemBil();
+		
+		ResponseDEMBILClient resp= ricercaRedSospesiManager.wsDocumentiFascicolo(paramInp, rprto);
+		RaccoltaProvvisoriaRedTO rp=(RaccoltaProvvisoriaRedTO)resp.getOutputTO();
+		DocumentTO docTo=null;
+		List<DocumentTO> listDocTO=new ArrayList<DocumentTO> ();
+	
+		
+		String codiceEsito=resp.getEsitoTo().getCodice();
+		
+		if(codiceEsito.equalsIgnoreCase("OK")) { 
+			for (int i = 0; i < rp.getDocumenti().size(); i++) {
+				docTo=(DocumentTO)  rp.getDocumenti().get(i);
+				docTo.setAmministrazione(rp.getAmministrazione());
+				listDocTO.add(docTo);
+			}
+			
+			List<TipoDocumentoTO> listTipoDocumentoIG=listManager.loadTipoDocumentoIG();
+			
+			String[] listaTipoAlleg=new String[ rp.getDocumenti().size()];//inserire la dimensione della lista che arriva dal servizio web
+			for (int j = 0; j < listaTipoAlleg.length; j++) {
+				listaTipoAlleg[j]="tipoAllegati"+j;
+			}
+			
+			form.setListaTipoAllegati(listaTipoAlleg);
+			
+			List<AnagTipoDecretoTO> listaTipiDecreti=listManager.loadAnagTipoDecreto();
+			context.setDataModel(WebConstants.LIST_TIPI_DECRETI, listaTipiDecreti );
+			context.setDataModel(WebConstants.LIST_TIPO_ALLEGATI, listTipoDocumentoIG);
+	
+			List<EserciziTO> listEsercizi=listManager.loadEserciziDemCG();
+			context.setDataModel(WebConstants.LIST_ANNO_ESE, listEsercizi );
+			
+			context.setDataModel(WebConstants.LIST_DOC_FASC, listDocTO );
+	
+			
+			if( listDocTO.size()>0) {
+			    	PaginatorUtil.addPaginator(listDocTO, SessionAttributes.LIST_DOCUMENTI_FASCICOLO, Paginator.PAGE_RANGE_5, context); 
+			}else {
+				  	PaginatorUtil.removePaginator(context, SessionAttributes.LIST_DOCUMENTI_FASCICOLO);
+				  	ContextHelper.addWarning(context.getRequest(),"warning.noRecord.trovati");    
+			}
+		}
+		else{
+			context.addError("error.generic", resp.getEsitoTo().getDescrizione());
+			return listaSospesiRed;
+		}
+		
+		return documentiFascicolo;
+	}
+
+	@Override
+	public String onCaricaAmministrazioni(Context context) throws Throwable {
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+		String annoEsercizio=form.getAnnoEse();
+		//String protocolloRed=form.getProtocolloRed();
+		Utente ut=getUtenteInSessione();
+		if (form.isValid()){
+			List<AnagAmminDemTO> listaAmm=listManager.getAmminDemByAnnoEseUtenteAndProfilo(annoEsercizio, ut.getUtente().getId().toString(), ut.getProfiloInUso().getId().toString());
+			
+			context.setDataModel(WebConstants.LIST_AMMIN_DEM, listaAmm);
+			form.setAnnoEse(annoEsercizio);
+		}
+		return startView;
+	}
+
+
+	public  String  backToList(Context context) throws Throwable {
+
+		return listaSospesiRed;
+	}
+
+
+	private List<AnagUfficiTO> getListaUfficiAssociatiRed(Context context) throws Throwable {
+
+		List<AnagUfficiTO> listaUfficiAssociatiRed;
+
+		Utente user = getUtenteInSessione();
+		UtenteProfiloTO utProfTo = ((UtenteTO) ContextHelper.getModel(OBJECT_USER, context.getRequest()))
+							.getUtenteProfilo(user.getProfiloInUso().getCodiProfilo());
+
+		//		String idUfficio = utProfTo.getAnagUffici().getId();
+		if(utProfTo.getAnagUffici()!=null){
+			String idUfficio = utProfTo.getAnagUffici().getId();
+
+			/** se l'ufficio di appartenenza è 1 o 2 carico nella combo tutti gli uffici, altrimenti solo l'ufficio di appartenenza**/
+			switch (Integer.valueOf(idUfficio)) {		
+				case 1:
+				case 2:
+					listaUfficiAssociatiRed = listManager.loadAnagUffici();
+					break;
+				default:
+					listaUfficiAssociatiRed = new ArrayList<AnagUfficiTO> ();
+					AnagUfficiTO uffTo = new AnagUfficiTO();
+					uffTo.setId(idUfficio);
+					uffTo.setDescUfficio(utProfTo.getAnagUffici().getDescUfficio());
+					listaUfficiAssociatiRed.add(uffTo);
+			}
+		} else {
+			listaUfficiAssociatiRed = listManager.loadAnagUffici();
+		}
+
+		return listaUfficiAssociatiRed;
+	}
+
+	public String pulisciRicercaSospesiRed(Context context) throws Throwable {
+
+		RicercaRedForm form = (RicercaRedForm) context.getForm();		
+
+		form.clean();
+
+		return startView;
+	}
+
+}

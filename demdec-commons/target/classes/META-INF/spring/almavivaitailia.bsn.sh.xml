@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd 
+">
+	
+	<!--  AOP SECTION BEGIN -->
+	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<!-- tx:method name="get*" read-only="true" rollback-for="ObjectNotFoundException"/-->
+			<!-- tx:method name="*" rollback-for="Throwable" no-rollback-for="ObjectNotFoundException"/-->
+			<!-- The Exception(s) that will not trigger rollback; comma-delimited. For example, 'com.foo.MyBusinessException,ServletException' -->
+			<tx:method name="*" no-rollback-for="com.hobject.exception.DuplicateKeyException" rollback-for="java.lang.Throwable"  />
+			
+		</tx:attributes>
+	</tx:advice>
+	
+	<bean id="bsnMessageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource"
+		lazy-init="true">
+		<property name="basenames">
+
+			<list>
+				<value>it.almavivaitalia.bsn.sh.messages.bsn</value>
+			</list>
+
+		</property>
+
+	</bean>
+
+	<!-- bean id="almavivaBsnMessageSource"
+		class="it.almavivaitalia.bsn.sh.utils.ResourceBundleMessageSource"
+		lazy-init="true">
+		<property name="messageSource" ref="bsnMessageSource"/>
+	</bean-->
+
+
+	<bean id="exceptionManager" class="it.almavivaitalia.bsn.sh.aop.ExceptionManager" >
+		<property name="resources" ref="bsnMessageSource"/>
+	</bean>
+	
+	
+	<bean id="logManager" class="it.almavivaitalia.bsn.sh.aop.LogManager" >
+		<property name="resources" ref="bsnMessageSource"/>
+	</bean>
+	
+	
+	<bean id="abstractManager" class="it.almavivaitalia.bsn.sh.manager.impl.AbstractManagerImpl" abstract="true" lazy-init="false" />
+	   
+	
+	
+
+	
+	<!--  aop:config>
+		<aop:pointcut id="managerMethod" expression="execution(* it.mef.bilancio.nssb.manager.*.*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="managerMethod"/>
+		<aop:aspect id="managerException" ref="exceptionManager">
+			<aop:after-throwing pointcut-ref="managerMethod" throwing="throwable" method="newManageManagerException" />
+		</aop:aspect>
+		<aop:aspect id="log" ref="logManager">
+			<aop:pointcut id="daoOperation" expression="execution(* it.mef.bilancio.nssb.dao.*.*(..))"/>
+			<aop:before pointcut-ref="daoOperation" method="debugInizio"/>
+			<aop:after pointcut-ref="daoOperation" method="debugFine"/>
+		</aop:aspect>
+		
+	</aop:config-->
+	<!-- 
+			<bean id="profiler" class="com.hobject.spring.aop.Profiler" >
+				<property name="resources" ref="messageSource"/>
+			</bean>
+			<aop:config>
+				<aop:aspect id="logging" ref="profiler">
+					<aop:pointcut id="daoOperation" expression="execution(* com.hobject.test.hibernate.dao.*.*(..))"/>
+					<aop:around pointcut-ref="daoOperation" method="log"/>
+				</aop:aspect>
+				<aop:aspect id="commandException" ref="exceptionManager">
+					<aop:pointcut id="commandMethod" expression="execution(* it.mef.bilancio.nssb.command.impl.*.*(..))"/>
+					<aop:after-throwing pointcut-ref="commandMethod" method="manageCommandException" throwing="java.lang.Throwable"/>
+				</aop:aspect>
+ 
+			</aop:config>
+	 -->
+
+
+	<!--  AOP SECTION END -->
+
+	<!--  DAO SECTION BEGIN -->
+
+
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+
+	<bean id="abstractDao" lazy-init="true" abstract="true">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate" />
+		</property>	
+		<!--  property name="businessMessageSource"/-->
+    </bean>
+
+	
+
+
+
+	<!-- bean id="sessionFactory" lazy-init="false"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="oracleDataSource" />
+		<property name="mappingResources">
+			<list>								
+				<value>it/mef/bilancio/nssb/bo/Action.hbm.xml</value>
+	
+				<value>it/mef/bilancio/nssb/bo/Decod.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+			</props>
+		</property>
+	</bean-->	
+	<!--  DAO SECTION END -->
+	
+	
+	
+	<!--  MANAGER SECTION BEGIN -->
+	
+	<!-- 
+	<bean id="dozerDriver" lazy-init="true" class="it.almavivaitalia.bsn.sh.utils.DozerDriverImpl" init-method="init">
+		<property name="defaultPath" value="it/mef/bilancio/nssb/manager/dozer/"/>
+		<property name="defaults">
+			<list>
+				<value>minimalUser.xml</value>
+			</list>
+		</property>
+	</bean>
+
+
+	 -->
+	<!--  MANAGER SECTION END -->
+    <bean id="it.mef.bilancio.intgen.business.spring.applicationContext"
+         class="org.springframework.context.support.ClassPathXmlApplicationContext">
+
+<!--         
+		<constructor-arg>
+           <list>
+                <value>propertyConfigurer.xml</value>
+                <value>applicationContext.xml</value>
+                <value>it/mef/bilancio/common/business/springconfig/context.xml</value> 	
+           		<value>it/mef/bilancio/common/business/springconfig/context-DAO.xml</value>
+           		<value>it/mef/bilancio/common/business/springconfig/context-Service.xml</value>
+           </list>
+        </constructor-arg>
+-->
+    </bean>
+
+</beans>

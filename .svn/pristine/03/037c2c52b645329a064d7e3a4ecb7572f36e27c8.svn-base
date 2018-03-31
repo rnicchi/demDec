@@ -1,0 +1,357 @@
+package it.mef.bilancio.demdec.web.services;
+
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTOId;
+import it.almavivaitalia.bilancio.commons.to.AnagUfficiTO;
+import it.almavivaitalia.bsn.sh.utils.TraceLogger;
+import it.mef.bilancio.demdec.manager.GestioneFadManager;
+import it.mef.bilancio.demdec.servizi.to.EsitoTO;
+import it.mef.bilancio.demdec.to.AnagTipologiaDecretoTO;
+import it.mef.bilancio.demdec.to.FascicoliTO;
+import it.mef.bilancio.demdec.to.GestioneFadTO;
+import it.mef.bilancio.demdec.web.services.type.AnagAmminDemType;
+import it.mef.bilancio.demdec.web.services.type.EsitoType;
+import it.mef.bilancio.demdec.web.services.type.GestioneFadType;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import javax.jws.WebMethod;
+
+import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+@Service("NsbfGestioneFascicoli")
+public class NsbfGestioneFascicoli {
+	
+	
+	@Autowired
+	private GestioneFadManager gestioneFadManager;
+	
+	@WebMethod
+	public EsitoType creaFascicolo(HeaderNsbf headerApplicativo, GestioneFadType type) throws Exception {
+		
+		EsitoTO esito=null;
+		
+		try {
+			doAuthentication(headerApplicativo);
+			
+			GestioneFadTO fadTO = getGestioneFadTO(type);
+			fadTO.setRowCreatedDttm(Calendar.getInstance().getTime());
+			fadTO.setRowCreatedForm("NsbfGestioneFascicoli");
+			fadTO.setRowCreatedUser(type.getCodiUtente());
+			
+			esito = gestioneFadManager.creaFAD(fadTO);
+			
+		} catch (Throwable t) {
+			TraceLogger.errorLog("creaFascicolo ", this.getClass(), t);
+			if (t instanceof Exception) {
+				throw (Exception) t;
+			}
+		}
+		
+		return (esito==null?new EsitoType(NsbfGestioneFascicoliConstants.ESITO_KO, NsbfGestioneFascicoliConstants.DESC_ESITO_KO):new EsitoType(esito));
+	}
+
+	@WebMethod
+	public EsitoType modificaFascicolo(HeaderNsbf headerApplicativo, GestioneFadType type) throws Throwable {
+		
+		EsitoTO esito =null;
+		
+		try {
+			doAuthentication(headerApplicativo);
+			
+			FascicoliTO fascicoliTO=getFascicoliTO(type);
+			
+			esito = gestioneFadManager.modificaFAD(fascicoliTO);
+			
+		} catch (Throwable t) {
+			TraceLogger.errorLog("creaFascicolo ", this.getClass(), t);
+			if (t instanceof Exception) {
+				throw (Exception) t;
+			}
+		}
+		
+		return (esito==null?new EsitoType(NsbfGestioneFascicoliConstants.ESITO_KO, NsbfGestioneFascicoliConstants.DESC_ESITO_KO):new EsitoType(esito));
+	}
+	
+	@WebMethod
+	public EsitoType eliminaFascicolo(HeaderNsbf headerApplicativo, GestioneFadType type) throws Exception {
+		
+		EsitoTO esito =null;
+		
+		try {
+			doAuthentication(headerApplicativo);
+			
+			FascicoliTO fascicoliTO=getFascicoliTO(type);
+			
+			esito = gestioneFadManager.eliminaFAD(fascicoliTO);
+
+		} catch (Throwable t) {
+			TraceLogger.errorLog("eliminaFascicolo ", this.getClass(), t);
+			if (t instanceof Exception) {
+				throw (Exception) t;
+			}
+		}
+		
+		return (esito==null?new EsitoType(NsbfGestioneFascicoliConstants.ESITO_KO, NsbfGestioneFascicoliConstants.DESC_ESITO_KO):new EsitoType(esito));
+	}	
+	
+	@WebMethod
+	public EsitoType trasportoVariazioniFascicolo(HeaderNsbf headerApplicativo, GestioneFadType type) throws Exception {
+		
+		EsitoTO esito =null;
+		
+		try {
+			doAuthentication(headerApplicativo);
+			
+			/*decreto partenza*/
+			FascicoliTO src=gestioneFadManager.findFascicoloByAnnoTipoNum(type.getAnnoDec(), type.getTipoDec(), type.getNumeroDec());
+			
+			src.setRowUpdatedDttm(Calendar.getInstance().getTime());
+			src.setRowUpdatedForm("NsbfGestioneFascicoli");
+			src.setRowUpdatedUser(type.getCodiUtente());			
+			
+			/*decreto arrivo*/
+			FascicoliTO dest=gestioneFadManager.findFascicoloByAnnoTipoNum(type.getAnnoDec(), type.getTipoDec(), type.getNumeroDecDest());
+			
+			dest.setRowUpdatedDttm(Calendar.getInstance().getTime());
+			dest.setRowUpdatedForm("NsbfGestioneFascicoli");
+			dest.setRowUpdatedUser(type.getCodiUtente());				
+			
+			esito = gestioneFadManager.trasportoVariazioniFascicolo(src, dest);
+			
+		} catch (Throwable t) {
+			TraceLogger.errorLog("trasportoVariazioniFascicolo ", this.getClass(), t);
+			if (t instanceof Exception) {
+				throw (Exception) t;
+			}
+		}
+		
+		return (esito==null?new EsitoType(NsbfGestioneFascicoliConstants.ESITO_KO, NsbfGestioneFascicoliConstants.DESC_ESITO_KO):new EsitoType(esito));
+	}	
+	
+	@WebMethod
+	public EsitoType sospensioneFascicolo(HeaderNsbf headerApplicativo, GestioneFadType type) throws Exception {
+		
+		EsitoTO esito =null;
+		
+		try {
+			doAuthentication(headerApplicativo);
+			
+			esito = gestioneFadManager.sospensioneFascicolo(getFascicoliTO(type));
+			
+		} catch (Throwable t) {
+			TraceLogger.errorLog("sospensioneFascicolo ", this.getClass(), t);
+			if (t instanceof Exception) {
+				throw (Exception) t;
+			}
+		}
+		
+		return (esito==null?new EsitoType(NsbfGestioneFascicoliConstants.ESITO_KO, NsbfGestioneFascicoliConstants.DESC_ESITO_KO):new EsitoType(esito));
+	}	
+	
+	@WebMethod
+	public EsitoType revocaSospensioneFascicolo(HeaderNsbf headerApplicativo, GestioneFadType type) throws Exception {
+		
+		EsitoTO esito =null;
+		
+		try {
+			doAuthentication(headerApplicativo);
+			
+			esito = gestioneFadManager.revocaSospensioneFascicolo(getFascicoliTO(type));
+			
+		} catch (Throwable t) {
+			TraceLogger.errorLog("revocaSospensioneFascicolo ", this.getClass(), t);
+			if (t instanceof Exception) {
+				throw (Exception) t;
+			}
+		}
+		
+		return (esito==null?new EsitoType(NsbfGestioneFascicoliConstants.ESITO_KO, NsbfGestioneFascicoliConstants.DESC_ESITO_KO):new EsitoType(esito));
+	}
+	
+	@WebMethod
+	public EsitoType riaperturaFascicolo(HeaderNsbf headerApplicativo, GestioneFadType type) throws Exception {
+		
+		EsitoTO esito =null;
+		
+		try {
+			doAuthentication(headerApplicativo);
+			
+			esito = gestioneFadManager.riaperturaFascicolo(getFascicoliTO(type));
+			
+		} catch (Throwable t) {
+			TraceLogger.errorLog("riaperturaFascicolo ", this.getClass(), t);
+			if (t instanceof Exception) {
+				throw (Exception) t;
+			}
+		}
+		
+		return (esito==null?new EsitoType(NsbfGestioneFascicoliConstants.ESITO_KO, NsbfGestioneFascicoliConstants.DESC_ESITO_KO):new EsitoType(esito));
+	}		
+	
+//	@WebMethod
+//	public EsitoType rielaboraFascicolo(HeaderNsbf headerApplicativo, GestioneFadType type) throws Exception {
+//		
+//		EsitoTO esito =null;
+//		
+//		try {
+//			doAuthentication(headerApplicativo);
+//			
+//			esito = gestioneFadManager.rielaboraFascicolo(getFascicoliTO(type));
+//			
+//		} catch (Throwable t) {
+//			TraceLogger.errorLog("rielaboraFascicolo ", this.getClass(), t);
+//			if (t instanceof Exception) {
+//				throw (Exception) t;
+//			}
+//		}
+//		
+//		return (esito==null?new EsitoType(NsbfGestioneFascicoliConstants.ESITO_KO, NsbfGestioneFascicoliConstants.DESC_ESITO_KO):new EsitoType(esito));
+//	}		
+	
+	private FascicoliTO getFascicoliTO(GestioneFadType gestioneFadType) throws Throwable {
+		
+		FascicoliTO fascicoliTO=gestioneFadManager.findFascicoloByAnnoTipoNum(gestioneFadType.getAnnoDec(), gestioneFadType.getTipoDec(), gestioneFadType.getNumeroDec());
+		
+		fascicoliTO.setRowUpdatedDttm(Calendar.getInstance().getTime());
+		fascicoliTO.setRowUpdatedForm("NsbfGestioneFascicoli");
+		fascicoliTO.setRowUpdatedUser(gestioneFadType.getCodiUtente());
+		//#########################################################################Tipologia Decreto
+		AnagTipologiaDecretoTO anagTipologiaDecreto = gestioneFadManager.findTipologiaByCodi(""+gestioneFadType.getTipologiaDec());
+//		anagTipologiaDecreto.setId(gestioneFadType.getTipologiaDec());
+		
+		fascicoliTO.setAnagTipologiaDecreto(anagTipologiaDecreto);
+		//#########################################################################Tipologia Decreto
+		
+		//#########################################################################Amministrazione
+		if(gestioneFadType.getAmmList()!=null){
+			List<AnagAmminDemTO> anagAmminDemList= new ArrayList<AnagAmminDemTO>();
+			
+			for (AnagAmminDemType anagAmminDemType:gestioneFadType.getAmmList()) {
+				AnagAmminDemTO anagAmminDemTO= new AnagAmminDemTO(); 
+				anagAmminDemTO.setId(new AnagAmminDemTOId(anagAmminDemType.getFkAnnoEse(),anagAmminDemType.getNumeStp(),anagAmminDemType.getNumeApp()));
+				anagAmminDemTO.setDescAmm(anagAmminDemType.getDescAmm());
+				anagAmminDemList.add(anagAmminDemTO);
+				
+			} 
+			
+			fascicoliTO.setAnagAmminDemList(anagAmminDemList);				
+		}
+	
+		//#########################################################################Amministrazione
+		
+		//#########################################################################Ufficio Capofila
+		AnagUfficiTO ufficioCapofila= gestioneFadManager.findUfficioByCodi(gestioneFadType.getUfficio());
+//		ufficioCapofila.setId(gestioneFadType.getUfficio());
+		fascicoliTO.setUfficioCapofila(ufficioCapofila);
+		//#########################################################################Ufficio Capofila		
+		
+		//#########################################################################Numero Patrimonio
+		if(gestioneFadType.getNumPatr()!=null){
+			fascicoliTO.setNumePatrimonio(gestioneFadType.getNumPatr().shortValue());	
+		}
+		//#########################################################################Numero Patrimonio
+		
+		//#########################################################################Descrizione
+		fascicoliTO.setDescDecreto(gestioneFadType.getDescDec());
+		//#########################################################################Descrizione
+		
+		return fascicoliTO;
+	}
+	
+	private GestioneFadTO getGestioneFadTO (GestioneFadType gestioneFadType) throws Exception {
+		
+		GestioneFadTO fadTO= new GestioneFadTO();
+		
+		
+//		fadTO.setChiamante("NSBF");
+		//fadTO.setCodiGuid(codiGuid);
+
+		fadTO.setCodiUtente(gestioneFadType.getCodiUtente());
+		TraceLogger.infoLog("CodiUtente: " + gestioneFadType.getCodiUtente(), NsbfGestioneFascicoli.class);
+//		fadTO.setDescDec(gestioneFadType.getDescDec());
+		// non si sa	fadTO.setFlagNormativo(flagNormativo);
+		
+//		fadTO.setAnnoDec(gestioneFadType.getAnnoDec());
+//		TraceLogger.infoLog("CodiUtente: " + gestioneFadType.getCodiUtente(), NsbfGestioneFascicoli.class);
+	
+		
+		fadTO.setChiamante("NSBF");
+		fadTO.setTipoDec(gestioneFadType.getTipoDec());
+		TraceLogger.infoLog("Tipo Dec: " + gestioneFadType.getTipoDec(), NsbfGestioneFascicoli.class);
+		fadTO.setNumeroDec(gestioneFadType.getNumeroDec());
+		TraceLogger.infoLog("Numero Dec: " + gestioneFadType.getNumeroDec(), NsbfGestioneFascicoli.class);
+		fadTO.setAnnoDec(gestioneFadType.getAnnoDec());
+		TraceLogger.infoLog("Anno Dec: " + gestioneFadType.getAnnoDec(), NsbfGestioneFascicoli.class);
+		fadTO.setDescDec(gestioneFadType.getDescDec());
+		TraceLogger.infoLog("Desc Dec: " + gestioneFadType.getDescDec(), NsbfGestioneFascicoli.class);
+		fadTO.setTipologiaDec(gestioneFadType.getTipologiaDec());
+		TraceLogger.infoLog("Tipologia Dec: " + gestioneFadType.getTipologiaDec(), NsbfGestioneFascicoli.class);
+		fadTO.setUfficio(gestioneFadType.getUfficio());
+		TraceLogger.infoLog("Ufficio: " + gestioneFadType.getUfficio(), NsbfGestioneFascicoli.class);
+		fadTO.setNumPatr(gestioneFadType.getNumPatr());
+		TraceLogger.infoLog("Numero Patrimoni: " + gestioneFadType.getNumPatr(), NsbfGestioneFascicoli.class);
+		// non si sa	fadTO.setFlagNormativo(flagNormativo);
+		
+		
+		//AMMINISTRAZIONI
+		if(gestioneFadType.getAmmList()!=null){
+			List<AnagAmminDemTO> listTO= new ArrayList<AnagAmminDemTO>();
+			for (AnagAmminDemType anagAmminDemType:gestioneFadType.getAmmList()) {
+				AnagAmminDemTO anagAmminDemTO= new AnagAmminDemTO(); 
+				
+				anagAmminDemTO.setId(
+						new AnagAmminDemTOId(
+								anagAmminDemType.getFkAnnoEse(),
+								anagAmminDemType.getNumeStp(),
+								anagAmminDemType.getNumeApp()));
+				
+				TraceLogger.infoLog("Anno Amm: " + anagAmminDemType.getFkAnnoEse(), NsbfGestioneFascicoli.class);
+				TraceLogger.infoLog("Stp: " + anagAmminDemType.getNumeStp(), NsbfGestioneFascicoli.class);
+				TraceLogger.infoLog("App: " + anagAmminDemType.getNumeApp(), NsbfGestioneFascicoli.class);
+				anagAmminDemTO.setDescAmm(anagAmminDemType.getDescAmm());
+				TraceLogger.infoLog("Desc Ammin: " + anagAmminDemType.getDescAmm(), NsbfGestioneFascicoli.class);
+			 	
+				listTO.add(anagAmminDemTO);
+				
+			} 
+			fadTO.setAmmList(listTO);			
+		}
+
+		//TODO cdr
+		
+		//fadTO.getCdrList();
+	
+//		fadTO.setCodiUtente(gestioneFadType.getCodiUtente());
+		
+		return fadTO;
+		
+	}
+	
+	private void doAuthentication(HeaderNsbf headerApplicativo) throws Throwable {
+		TraceLogger.infoLog("VERIFICO UTENTE E PASSWORD ", this.getClass());
+
+		/*VERIFICO UTENTE E PASSWORD*/
+		String userName= new String(Base64.decodeBase64(headerApplicativo.getUtente().getBytes()));
+		String userPass = new String(Base64.decodeBase64(headerApplicativo.getPassword().getBytes()));
+		
+		if (!userName.equals(gestioneFadManager.searchPropertyValueFromTabServ("WS_DEMDEC_USER")) || !userPass.equals(gestioneFadManager.searchPropertyValueFromTabServ("WS_DEMDEC_PWD"))) {
+			
+			TraceLogger.infoLog("UTENTE INESISTENTE ", this.getClass());
+			
+			NsbfGestioneFascicoliServiceFault fault=new NsbfGestioneFascicoliServiceFault();
+			fault.setFaultCode(NsbfGestioneFascicoliServiceFault.UTENTE_NON_AUTORIZZATO_CODE);
+			fault.setFaultDescription(NsbfGestioneFascicoliServiceFault.UTENTE_NON_AUTORIZZATO_DESCRIPTION);
+			
+			throw new NsbfGestioneFascicoliServiceException(fault);
+		} 
+	}	
+
+	
+	
+}

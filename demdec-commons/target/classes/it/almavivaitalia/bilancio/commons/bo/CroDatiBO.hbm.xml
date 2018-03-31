@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class dynamic-update="true" name="it.almavivaitalia.bilancio.commons.bo.CroDatiBO"   table="D_CRO_DATI">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <composite-id class="it.almavivaitalia.bilancio.commons.bo.CroDatiBOId" name="id">
+    <key-property name="codiId" type="java.lang.Integer">
+     <column name="CODI_ID" precision="9" scale="0"/>
+    </key-property>
+    <key-property name="traCodiCodice" type="java.lang.Short">
+     <column name="TRA_CODI_CODICE" precision="4" scale="0"/>
+    </key-property>
+   </composite-id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.CroTransBO" fetch="select" insert="false" name="croTrans" update="false">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="TRA_CODI_CODICE" not-null="true" precision="4" scale="0"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.ActionBO" fetch="select" name="action">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_SEQU_ID_ACTION" not-null="true" precision="6" scale="0"/>
+   </many-to-one>
+   <property name="annoEseCap" type="java.lang.Short">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="ANNO_ESE_CAP" precision="4" scale="0"/>
+   </property>
+   <property name="numeStpCap" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_STP_CAP" precision="2" scale="0"/>
+   </property>
+   <property name="numeAppCap" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_APP_CAP" precision="1" scale="0"/>
+   </property>
+   <property name="numeEosCap" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_EOS_CAP" precision="1" scale="0"/>
+   </property>
+   <property name="numeNumCap" type="java.lang.Short">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_NUM_CAP" precision="4" scale="0"/>
+   </property>
+   <property name="annoEseAut" type="java.lang.Short">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="ANNO_ESE_AUT" precision="4" scale="0"/>
+   </property>
+   <property name="numeTipoAut" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_TIPO_AUT" precision="2" scale="0"/>
+   </property>
+   <property name="numeNumAut" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_NUM_AUT" precision="6" scale="0"/>
+   </property>
+   <property name="numeArtAut" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_ART_AUT" precision="6" scale="0"/>
+   </property>
+   <property name="numeCommaAut" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_COMMA_AUT" precision="6" scale="0"/>
+   </property>
+   <property name="codiPuntoAut" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="6" name="CODI_PUNTO_AUT"/>
+   </property>
+   <property name="annoEseStr" type="java.lang.Short">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="ANNO_ESE_STR" precision="4" scale="0"/>
+   </property>
+   <property name="numeTipoStr" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_TIPO_STR" precision="2" scale="0"/>
+   </property>
+   <property name="numeNumStr" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_NUM_STR" precision="6" scale="0"/>
+   </property>
+   <property name="annoPrimaiscPar" type="java.lang.Short">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="ANNO_PRIMAISC_PAR" precision="4" scale="0"/>
+   </property>
+   <property name="numePrimaiscPar" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_PRIMAISC_PAR" precision="9" scale="0"/>
+   </property>
+   <property name="annoPlPle" type="java.lang.Short">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="ANNO_PL_PLE" precision="4" scale="0"/>
+   </property>
+   <property name="numePlPle" type="java.lang.Short">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_PL_PLE" precision="4" scale="0"/>
+   </property>
+   <property name="descUtente" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="30" name="DESC_UTENTE" not-null="true"/>
+   </property>
+   <property name="textNote" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="4000" name="TEXT_NOTE"/>
+   </property>
+   <property name="orarOperaz" type="timestamp">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="ORAR_OPERAZ" not-null="true"/>
+   </property>
+   <property name="annoEsePar" type="java.lang.Short">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="ANNO_ESE_PAR" precision="4" scale="0"/>
+   </property>
+   <property name="dataOperaz" type="timestamp">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_OPERAZ" not-null="true"/>
+   </property>
+   <bag fetch="subselect" inverse="false" lazy="true" name="croValoriList" table="D_CRO_VALORI">
+    <key>
+     <column name="CRT_CODI_ID" not-null="true" precision="9" scale="0"/>
+     <column name="CRT_TRA_CODI_CODICE" not-null="true" precision="4" scale="0"/>
+    </key>
+    <one-to-many class="it.almavivaitalia.bilancio.commons.bo.CroValoriBO"/>
+   </bag>
+  </class>
+ </hibernate-mapping>

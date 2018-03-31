@@ -1,0 +1,386 @@
+package it.mef.bilancio.demdec.web.spring.controller.fascicolifad;
+
+import it.almavivaitalia.bilancio.commons.manager.UtenteManager;
+import it.almavivaitalia.bilancio.commons.to.EserciziTO;
+import it.almavivaitalia.bsn.sh.manager.exception.ObjectNotFoundException;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.EsitoOperazione_type;
+import it.mef.bilancio.demdec.manager.DocumentiManager;
+import it.mef.bilancio.demdec.manager.InvioAlleFirmeManager;
+import it.mef.bilancio.demdec.manager.IterFirmaDecretoManager;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.manager.MailManager;
+import it.mef.bilancio.demdec.manager.RicercaRedManager;
+import it.mef.bilancio.demdec.servizi.to.DocumentContentTO;
+import it.mef.bilancio.demdec.to.AnagTipoDecretoTO;
+import it.mef.bilancio.demdec.to.DocumentiTO;
+import it.mef.bilancio.demdec.to.DocumentiViewTO;
+import it.mef.bilancio.demdec.to.FascicoliViewTO;
+import it.mef.bilancio.demdec.to.FirmatarioTO;
+import it.mef.bilancio.demdec.to.IterFirmaDecretoTO;
+import it.mef.bilancio.demdec.to.PecMessaggiInviatiTO;
+import it.mef.bilancio.demdec.utils.Constants;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.InvioAlleFirmeForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.NomeFunzioneConstants;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.List;
+
+import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletOutputStream;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(value = ConstantsRequestMapping.INVIO_ALLE_FIRME)
+public class InvioAlleFirmeController extends AbstractDemFormController implements WebConstants, SessionAttributes{
+	
+	private String startView;	
+	private String listaFirmatari;
+	private String listaFirmatariInvio;
+	private String listaFirmatariInvioReadOnly;
+	
+
+
+	@Autowired
+	private ListManager listManager;
+	
+	@Autowired
+	private RicercaRedManager ricercaRedManager;
+	
+	@Autowired
+	private DocumentiManager  documentiManager;
+	
+	@Autowired
+	private InvioAlleFirmeManager  invioAlleFirmeManager;
+	
+	@Autowired
+	private MailManager mailManager;
+	
+	@Autowired
+	private IterFirmaDecretoManager iterFirmaDecretoManager;
+	
+	@Autowired
+	private UtenteManager utenteManager;
+
+	@Override
+	public String startController(Context context) throws Throwable {
+		
+		context.setCurrentNode("DemDec.menu.InvFirma");
+		
+		List<AnagTipoDecretoTO> listaTipiDecreti=listManager.loadAnagTipoDecreto();
+		context.setDataModel(WebConstants.LIST_TIPI_DECRETI, listaTipiDecreti );
+	
+		List<EserciziTO> listEsercizi=listManager.loadEserciziDemCG();
+		context.setDataModel(WebConstants.LIST_ANNO_ESE, listEsercizi );
+		
+		return startView;
+	}
+	
+	
+	public String pulisci(Context context) throws Throwable {
+		
+		InvioAlleFirmeForm form= (InvioAlleFirmeForm) context.getForm();
+		
+		form.setAnnoEse(null);
+		form.setNumero(null);
+		form.setTipoFlusso(null);
+		
+		List<AnagTipoDecretoTO> listaTipiDecreti=listManager.loadAnagTipoDecreto();
+		context.setDataModel(WebConstants.LIST_TIPI_DECRETI, listaTipiDecreti );
+	
+		List<EserciziTO> listEsercizi=listManager.loadEserciziDemCG();
+		context.setDataModel(WebConstants.LIST_ANNO_ESE, listEsercizi );
+		
+		return startView;
+	}
+	
+	
+	public String  ricercaFirmatari(Context context) throws Throwable{
+		
+		InvioAlleFirmeForm form= (InvioAlleFirmeForm) context.getForm();
+		
+		if(!form.isValid()){		
+			return startView;
+		}
+		
+		String tipoFlusso=form.getTipoFlusso();
+		String anno=form.getAnnoEse();
+		String numero=form.getNumero();
+	
+	   Integer anno2=null;
+	   Integer numero2=null;
+	   Integer tipoFlusso2=null;
+	   
+	   if(tipoFlusso==null || tipoFlusso.equals("")){
+		   tipoFlusso2=null;
+	   }
+	   if(anno==null || anno.equals("")){
+		   anno2=null;
+	   }
+	   if(numero==null || numero.equals("")){
+		   numero2=null;
+	   }
+	   
+	   try{
+		   anno2=new Integer(anno);
+		  
+	   }catch (NumberFormatException exc){
+		   
+	   }
+	   try{
+		   numero2=new Integer(numero);
+	   }catch (NumberFormatException exc){
+		   
+	   }
+	   try{
+		   tipoFlusso2=new Integer(tipoFlusso);
+	   }catch (NumberFormatException exc){
+		   
+	   }
+	   
+		List<FirmatarioTO> firmatari=null;
+		List<FascicoliViewTO> fascicoli=listManager.findListaDecretiByTipoNumAnno(anno2, tipoFlusso2, numero2); 
+	//	List<FascicoliTO> fascicoli=ricercaRedManager.findFascicoloByTipoNumAnnoStato(anno2, tipoFlusso2, numero2);
+		FascicoliViewTO fascicoloTo=null;
+		if(fascicoli==null || fascicoli.size()==0){
+			context.addWarning("info.noDataFound");
+			return startView;
+			//firmatari=new ArrayList<FirmatarioTO>();
+		}
+		
+		fascicoloTo=fascicoli.get(0);
+		DocumentiTO to = invioAlleFirmeManager.loadDocumentoByGuidFascicoloETipo(fascicoloTo.getCodiGuidFascicolo(), Constants.TIPO_ATTO_DECRETO);
+		String resp =invioAlleFirmeManager.getEsitoOperazione(to.getCodiGuidFascicolo(), to.getCodiGuidDocumentoOrig());
+		if (!resp.equals(EsitoOperazione_type._COMPLETA)){
+			context.addError("error.no.file.convertito");
+			return startView;
+		}
+		
+		firmatari=listManager.findFirmatari(fascicoloTo.getId());
+		
+		AnagTipoDecretoTO anagTipoTo=listManager.loadAnagTipoDecretoById(tipoFlusso2);
+		
+		context.setDataModel(WebConstants.TIPO, anagTipoTo.getDescSigla() );
+		context.setDataModel(WebConstants.NUMERO, numero2 );
+		context.setDataModel(WebConstants.ANNO, anno2 );
+		context.setDataModel(WebConstants.GUID_FASCICOLO, fascicoloTo.getCodiGuidFascicolo() );
+	
+		context.setDataModel(WebConstants.NUME_ID_FASCICOLO, fascicoloTo.getId() );
+		
+		context.setDataModel(WebConstants.LIST_FIRMATARI, firmatari );
+		
+		return listaFirmatari;
+		
+	}
+	
+	
+	
+	
+	public String  generazioneFirme(Context context) throws Throwable{
+		
+		String guidFascicolo=context.getModel(WebConstants.GUID_FASCICOLO);
+		//String guidDocumento=context.getModel(WebConstants.GUID_DOCUMENTO);
+		Long numeIdFascicolo=(Long)context.getModel(WebConstants.NUME_ID_FASCICOLO);
+		
+		DocumentiTO docTo=invioAlleFirmeManager.loadDocumentoByGuidFascicoloETipo( guidFascicolo,  "AD01"); 		
+		
+		DocumentContentTO docContentTo=documentiManager.generaAttoDecretoConFirma(guidFascicolo, docTo.getCodiGuidDocumento(), numeIdFascicolo, getUtenteInSessione()); 
+		if(docContentTo!=null && docContentTo.getErrore()!=null){
+			context.addError("error.ws.download.documento.fascicolo.atto.decreto", docContentTo.getErrore());
+			return listaFirmatari;
+		}else {
+			context.setDataModel(WebConstants.NUME_ID_DOCUMENTO, docTo.getId().getNumeIdDocumento() );
+			context.setDataModel(WebConstants.GUID_DOCUMENTO, docTo.getCodiGuidDocumento() );			
+			context.setDataModel(WebConstants.DOCUMENTO_INVIO_A_FIRME, docContentTo );		
+			return listaFirmatariInvio;
+		}
+		
+	}
+	
+	
+/*	public String  generazioneFirmeTest(Context context) throws Throwable{
+		String guidFascicolo=context.getModel(WebConstants.GUID_FASCICOLO);
+		//String guidDocumento=context.getModel(WebConstants.GUID_DOCUMENTO);
+		Integer numeIdFascicolo=(Integer)context.getModel(WebConstants.NUME_ID_FASCICOLO);
+		
+		DocumentiTO docTo=invioAlleFirmeManager.loadDocumentoByGuidFascicoloETipo( guidFascicolo,  "AD01"); 		
+		//DocumentContentTO docContentTo=new DocumentContentTO(); //TODO togliere
+	//	DocumentContentTO docContentTo=documentiManager.generaAttoDecretoConFirma(guidFascicolo, docTo.getCodiGuidDocumentoOrig(), numeIdFascicolo, getUtenteInSessione()); //TODO scommentare
+		
+	
+			context.setDataModel(WebConstants.NUME_ID_DOCUMENTO, docTo.getId().getNumeIdDocumento() );
+			context.setDataModel(WebConstants.GUID_DOCUMENTO, docTo.getCodiGuidDocumento() );			
+		//	context.setDataModel(WebConstants.DOCUMENTO_INVIO_A_FIRME, docContentTo );		
+			return listaFirmatariInvio;
+		
+		
+	}*/
+	
+	
+	
+	public void  anteprimaPdf(Context context) throws Throwable {
+
+		byte[] docBytes=null;
+		String type=null;
+		
+		DocumentContentTO docContent=context.getModel(WebConstants.DOCUMENTO_INVIO_A_FIRME);
+		docBytes= docContent.getContent();
+		
+		type=docContent.getMimeType();	
+		context.getResponse().setContentType(type);
+		context.getResponse().setHeader("Content-Disposition","attachment;filename="+docContent.getFileName());
+
+		ServletOutputStream out= context.getResponse().getOutputStream();
+	 
+		out.write(docBytes);
+		out.flush();
+		out.close();
+}
+	
+	
+/*	public String  invioAFirmeTest(Context context) throws Throwable{
+		
+		String guidFascicolo=context.getModel(WebConstants.GUID_FASCICOLO);
+		String guidDocumento=context.getModel(WebConstants.GUID_DOCUMENTO);
+		Long numeIdFascicolo=(Long)context.getModel(WebConstants.NUME_ID_FASCICOLO);
+		Long numeIdDocumento=context.getModel(WebConstants.NUME_ID_DOCUMENTO);
+		
+		DocumentiViewTO documentiViewTO=new DocumentiViewTO();
+		documentiViewTO.setNumeIdFascicolo(numeIdFascicolo);
+		documentiViewTO.setCodiGuidFascicolo(guidFascicolo);
+		documentiViewTO.setCodiGuidDocumento(guidDocumento);	
+		documentiViewTO.setNumeIdDocumento((Integer.valueOf(numeIdDocumento.toString())));
+		context.valorizeAudit(documentiViewTO, NomeFunzioneConstants.INVIO_ALLE_FIRME);
+			
+		
+		IterFirmaDecretoTO ifdTo=invioAlleFirmeManager.firmaTecnicaTest( documentiViewTO, getUtenteInSessione(), null); 
+		return listaFirmatariInvio;
+	}*/
+		
+	/**-trasformazione in pdfA
+	 * -firma tecnica
+	 * -update content sul documentale
+	 * -aggiornamento della tabella d_documenti e inserimento dei record dei firmatari su d_iter_decreto_firma
+	 * -invio e-mail
+	 */
+	public String  invioAFirme(Context context) throws Throwable{
+		
+		String guidFascicolo=context.getModel(WebConstants.GUID_FASCICOLO);
+		String guidDocumento=context.getModel(WebConstants.GUID_DOCUMENTO);
+		Long numeIdFascicolo=(Long)context.getModel(WebConstants.NUME_ID_FASCICOLO);
+		Long numeIdDocumento=context.getModel(WebConstants.NUME_ID_DOCUMENTO);
+		
+		DocumentContentTO docContent=context.getModel(WebConstants.DOCUMENTO_INVIO_A_FIRME);
+				
+		/**-trasformazione in pdfA**/
+		byte[] isADPaginaFirmeByteArray=docContent.getContent();
+		
+
+		ByteArrayInputStream isADPaginaFirmePDFA = new ByteArrayInputStream( invioAlleFirmeManager.toPdfA(isADPaginaFirmeByteArray).getContent());
+
+			
+		DocumentiViewTO documentiViewTO=new DocumentiViewTO();
+		documentiViewTO.setNumeIdFascicolo(numeIdFascicolo);
+		documentiViewTO.setCodiGuidFascicolo(guidFascicolo);
+		documentiViewTO.setCodiGuidDocumento(guidDocumento);
+		documentiViewTO.setNumeIdDocumento(numeIdDocumento.intValue());
+		context.valorizeAudit(documentiViewTO, NomeFunzioneConstants.INVIO_ALLE_FIRME);
+			
+		
+		/** -firma tecnica
+		/** -update content sul documentale
+		/** -cambio stato fascicolo atto decreto, lo setto a "in elaborazione" 
+		/** -aggiornarmento tabella d_documenti e inserimento dei record dei firmatari su d_iter_decreto_firma**/
+		IterFirmaDecretoTO ifdTo= null;
+		try {
+			DocumentContentTO dcTO = invioAlleFirmeManager.firmaTecnica( documentiViewTO, getUtenteInSessione(), isADPaginaFirmePDFA, context.getRequest(), context.getResponse(), 1);
+			ifdTo = invioAlleFirmeManager.inserisciIterDecreto(documentiViewTO, getUtenteInSessione()); 
+			docContent.setContent(dcTO.getContent());
+		} catch ( ObjectNotFoundException onfe) {
+			switch (onfe.getCode()) {
+			case 100:
+				context.addError("error.empty.recipient.to");
+				break;
+			case 777:
+				context.addError("error.ws.download.fascicolo.atto.decreto", onfe.getObject().toString());
+				break;
+			case 888:
+				context.addError("error.ws.pkbox.firma.fascicolo.atto.decreto", onfe.getObject().toString());
+				break;
+			case 999:
+				context.addError("error.ws.upload.fascicolo.atto.decreto", onfe.getObject().toString());
+				break;
+			default:
+				context.addError("error.generic", onfe.getObject().toString());
+				break;
+			}
+			return "listaFirmatariInvio";
+		}catch (Exception e){
+			context.addError("error.generic", e.getMessage());
+			return "listaFirmatariInvio";
+		}
+				
+		/**invio e-mail**/
+	//	String emailProva = "entrate_test2@pec.almaviva.it"; // per testare invio email		
+		String email = utenteManager.findEmailSignatoryNextByStatFirmaAndIdFascicolo( Constants.STATO_FIRMA_IN_FIRMA, numeIdFascicolo);
+		
+		String tipoFirma=ifdTo.getCodiTipoFirma();
+		
+		String codiFunzione=null;
+		if(tipoFirma.equalsIgnoreCase("F")){
+			codiFunzione=NomeFunzioneConstants.FIRMA_DOCUMENTI;
+		}else if(tipoFirma.equalsIgnoreCase("S")){
+			codiFunzione=NomeFunzioneConstants.SIGLA_DOCUMENTI;
+		}
+	
+		MimeMessage message = null;
+		if(ifdTo.getAnagFirmatari().getFlagPec01() == HAVE_PEC) {
+			message = mailManager.invioPecDaFunzione(codiFunzione, getUtenteInSessione(), email);			
+		}else{
+			message = mailManager.invioPeoDaFunzione(codiFunzione, getUtenteInSessione(), email);
+		}
+		
+		if(message != null){
+			PecMessaggiInviatiTO messageToSave = mailManager.createMessageToSave(message, NomeFunzioneConstants.INVIO_ALLE_FIRME);
+			context.valorizeAuditCreated(messageToSave, NomeFunzioneConstants.INVIO_ALLE_FIRME);
+			context.valorizeAuditUpdated(messageToSave, NomeFunzioneConstants.INVIO_ALLE_FIRME);
+			mailManager.salvaMessaggioInviato(messageToSave, getUtenteInSessione());
+			context.addInfo("info.doc.inSignature.and.msg.sent", documentiViewTO.getDescNomeDocumento(), email);
+		}else{
+			context.addInfo("info.doc.inSignature", documentiViewTO.getDescNomeDocumento());
+			context.addWarning("warning.email.invfirme.not.sent", email);
+		}
+		return listaFirmatariInvioReadOnly;
+		
+	}
+	
+		
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+
+
+	public void setListaFirmatari(String listaFirmatari) {
+		this.listaFirmatari = listaFirmatari;
+	}
+
+
+	public void setListaFirmatariInvio(String listaFirmatariInvio) {
+		this.listaFirmatariInvio = listaFirmatariInvio;
+	}
+
+
+	public void setListaFirmatariInvioReadOnly(String listaFirmatariInvioReadOnly) {
+		this.listaFirmatariInvioReadOnly = listaFirmatariInvioReadOnly;
+	}
+
+
+	
+	
+}

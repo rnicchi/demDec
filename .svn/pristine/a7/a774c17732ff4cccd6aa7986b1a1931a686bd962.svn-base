@@ -1,0 +1,487 @@
+package it.mef.bilancio.demdec.web.spring.controller.fascicolifad;
+
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bilancio.commons.to.AnagUfficiTO;
+import it.almavivaitalia.bsn.sh.paginator.Paginator;
+import it.almavivaitalia.bsn.sh.utils.PaginatorUtil;
+import it.almavivaitalia.bsn.sh.utils.ParseUtil;
+import it.almavivaitalia.bsn.sh.utils.StringUtil;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.almavivaitalia.web.sh.utils.ContextHelper;
+import it.mef.bilancio.demdec.manager.GestioneFadManager;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.servizi.client.ResponseDEMBILClient;
+import it.mef.bilancio.demdec.servizi.to.DocumentTO;
+import it.mef.bilancio.demdec.servizi.to.FascicoloSipatrTO;
+import it.mef.bilancio.demdec.to.AbstractDemTO;
+import it.mef.bilancio.demdec.to.AnagTipologiaDecretoTO;
+import it.mef.bilancio.demdec.to.DocumentiRedTO;
+import it.mef.bilancio.demdec.to.DocumentiTO;
+import it.mef.bilancio.demdec.to.FascicoliTO;
+import it.mef.bilancio.demdec.to.SottoFascicoliRedTO;
+import it.mef.bilancio.demdec.to.TipoDocumentoTO;
+import it.mef.bilancio.demdec.web.spring.form.ConsultaFascicoloFadForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.FileUtil;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@RequestMapping(value = ConstantsRequestMapping.CONSULTA_FASCICOLO_F_A_D)
+public class ConsultaFascicoloFadController extends ConsultaFascicoloFadParentController {
+
+	@Autowired
+	private GestioneFadManager gestioneFadManager;
+	@Autowired
+	private ListManager listManager; 
+//	@Autowired 
+//	private DocumentiManager documentiManager;
+	
+	
+	@Override
+	public String startController(Context context) throws Throwable {
+		context.setCurrentNode("DemDec.menu.ConsFAD");
+		context.setDataModel(LIST_ANNO_ESE, listManager.loadEserciziDemCG());
+		context.setDataModel(LIST_ANAG_STATI_FASC, listManager.loadStatiFascicoliFad());
+		context.setDataModel(LIST_TIPI_DECRETI, listManager.loadAnagTipoDecreto());
+		context.setDataModel(LIST_ANAG_UFF, listManager.loadAnagUfficiAttivi());
+		context.removeDataModel(OPEN_DETT_FAD);
+		context.removeDataModel(OPEN_DETT_RED);
+		context.removeDataModel(OPEN_DETT_PATR);
+		return getStartView();
+	}
+    // prova
+	/*
+	public void onSelStrumModale(Context context) throws Throwable{
+		String idFad = getParameter(context, "idFad");
+		if (idFad==null){
+			context.addError("error.generic" );
+		}
+		FascicoliTO to = gestioneFadManager.getFascicoloFad(ParseUtil.getLong(idFad));
+		context.setDataModel(FASCICOLO_SELEZIONATO, to);
+	}
+	*/
+	
+//	@SuppressWarnings("unchecked")
+	// non usato
+	/*
+	public String onApriDocumentiFascicoloFad(Context context) throws Throwable{
+		PaginatorUtil.removePaginator(context, LIST_DOCUMENTI_FAD, DOCUMENTI_FAD_PAGINATOR);
+//		ConsultaFascicoloFadForm form = context.getForm();
+		String rowNum = getParameter(context, "rowNum");
+		if (rowNum==null){
+			context.addError("error.generic" );
+		}
+		
+		return fascicoloFadView;
+	}
+	*/
+	/*
+	public String onApriFascicoloFad(Context context) throws Throwable{
+		PaginatorUtil.removePaginator(context, LIST_SOTTO_FASCICOLI_RED, SOTTO_FASCICOLI_RED_PAGINATOR);
+		PaginatorUtil.removePaginator(context, LIST_SOTTO_FASCICOLI_PAT, SOTTO_FASCICOLI_PAT_PAGINATOR);
+		//ConsultaFascicoloFadForm form = context.getForm();
+		String idFad = getParameter(context, "idFad");
+		if (idFad==null){
+			context.addError("error.generic" );
+		}
+		List<FascicoliTO> listTo = new ArrayList<FascicoliTO>();
+		FascicoliTO to = gestioneFadManager.getFascicoloFad(ParseUtil.getLong(idFad));
+		listTo.add(to);
+		context.setDataModel(FASCICOLO_SELEZIONATO, to);
+		List<AbstractDemTO> fascicoliPat = new ArrayList<AbstractDemTO>();
+		if(to.getCodiGuidFascicolo()!=null){
+			fascicoliPat = gestioneFadManager.getFascicoliPatrimonio(to.getCodiGuidFascicolo()).getListoutputTO();
+		}
+		
+		if (!StringUtil.isEmpty(listTo.get(0))){
+			PaginatorUtil.addPaginator(context, listTo, LIST_SOTTO_FASCICOLI_FAD, Paginator.PAGE_RANGE_5, SOTTO_FASCICOLI_FAD_PAGINATOR);
+		}
+		if (!StringUtil.isEmpty(to.getSottoFascicoliRedList())){
+			PaginatorUtil.addPaginator(context, to.getSottoFascicoliRedList(), LIST_SOTTO_FASCICOLI_RED, Paginator.PAGE_RANGE_5, SOTTO_FASCICOLI_RED_PAGINATOR);
+		}
+		if (to.getCodiGuidFascicolo()!=null&&!StringUtil.isEmpty(fascicoliPat)){
+			PaginatorUtil.addPaginator(context, fascicoliPat, LIST_SOTTO_FASCICOLI_PAT, Paginator.PAGE_RANGE_5, SOTTO_FASCICOLI_PAT_PAGINATOR);
+		}
+		return fascicoloFadView;
+	}
+	*/
+	public String onApriFascicoloFad(Context context) throws Throwable{
+		PaginatorUtil.removePaginator(context, LIST_SOTTO_FASCICOLI_RED, SOTTO_FASCICOLI_RED_PAGINATOR);
+		PaginatorUtil.removePaginator(context, LIST_SOTTO_FASCICOLI_PAT, SOTTO_FASCICOLI_PAT_PAGINATOR);
+		ConsultaFascicoloFadForm form = context.getForm();
+		//GestioneFascicoloFadForm form = (GestioneFascicoloFadForm)context.getForm();
+		//ConsultaFascicoloFadForm formPadre = context.getForm();
+		//GestioneFascicoloFadForm form = (GestioneFascicoloFadForm)formPadre;
+		String idFad=null;
+		
+		
+		if(context.getRequest().getParameterValues("funzione") != null && !context.getRequest().getParameterValues("funzione").equals("")){
+			context.getRequest().setAttribute("nomeFunzione", context.getRequest().getParameterValues("funzione")[0]);
+			if(context.getRequest().getParameterValues("signed") != null && !context.getRequest().getParameterValues("signed").equals("")){
+				context.getRequest().setAttribute("signed", context.getRequest().getParameterValues("signed")[0].replace("'",""));
+			}
+			if(context.getRequest().getParameterValues("idFad") != null && !context.getRequest().getParameterValues("idFad").equals("")){
+				idFad = context.getRequest().getParameterValues("idFad")[0];
+			}
+		}else{
+			idFad = getParameter(context, "idFad");
+			if (idFad==null){
+				context.addError("error.generic" );
+			}else{
+				context.setDataModel(WebConstants.ID_FAD_APERTO, idFad);
+			}
+		}
+		
+		List<FascicoliTO> listTo = new ArrayList<FascicoliTO>();
+		FascicoliTO to = gestioneFadManager.getFascicoloFad(ParseUtil.getLong(idFad));
+		listTo.add(to);
+		context.setDataModel(FASCICOLO_SELEZIONATO, to);
+		///////////////
+		// TIPOLOGIA //
+		///////////////
+		List<AnagTipologiaDecretoTO> listaTipologiaCurr = new ArrayList<AnagTipologiaDecretoTO>();
+		List<AnagTipologiaDecretoTO> listaTipologia = listManager.tipologiaDecretoList(Integer.parseInt(to.getAnagTipoDecreto().getId()));
+		for (AnagTipologiaDecretoTO elem : listaTipologia){
+			if (elem.getId().equals(to.getAnagTipologiaDecreto().getId())){
+				listaTipologiaCurr.add(elem);
+			}
+		}
+		context.setDataModel(LIST_TIPOLOGIA_DECRETO, listaTipologiaCurr);
+		/////////////////////
+		// AMMINISTRAZIONE //
+		/////////////////////
+		// MI IMPOSTO NELLA LISTA SELEZIONATE LA LISTA DELLE AMINISTRAZIONI DAL TO SELEZIONATO
+		List<AnagAmminDemTO> listaAmmSelected=to.getAnagAmminDemList();
+		List<AnagAmminDemTO> listaAmmSelRow=new ArrayList<AnagAmminDemTO>();
+		for(int y=0; y<listaAmmSelected.size(); y++){
+			AnagAmminDemTO elem = listaAmmSelected.get(y);
+			elem.setRowIndex(y);
+			listaAmmSelRow.add(elem);
+		}
+		context.setDataModel(WebConstants.LIST_SELECTED_AMMS, listaAmmSelRow);
+		// ORA DEVO IMPOSTARMI GLI INDICI GIUSTI DELLE SELEZIONATE
+		// PER FARE CIO' MI CARICO LA LISTA DELLE AMMINISTRAZIONI
+		String annoEsercizio=form.getAnnoDecreto()==null?to.getEserciziDem().getId().toString():form.getAnnoDecreto();
+		List<AnagAmminDemTO> listaAmm=listManager.getAmminDemCentraliByAnnoEse(annoEsercizio);
+        // E MI RICAVO GLI ID DALLA LISTA AMMINISTRAZIONI CERCANDO QUELLI SELEZIONATI
+		String[] indexes = new String[listaAmmSelected.size()];
+		for (int i = 0; i<listaAmmSelected.size(); i++){
+			for (int x = 0; x<listaAmm.size(); x++){
+				if(listaAmm.get(x).getDescAmm().equals(listaAmmSelected.get(i).getDescAmm())){
+					indexes[i] = StringUtil.getString(x+1);
+				}
+			}
+        }
+		form.setAmmRows(indexes);
+		context.setDataModel(WebConstants.LIST_ROWS, indexes);
+		
+		/////////////
+		// UFFICIO //
+		/////////////
+		List<AnagUfficiTO> listaUfficiCurr = new ArrayList<AnagUfficiTO>();
+		List<AnagUfficiTO> listaUffici = listManager.loadAnagUfficiAttivi();
+		for (AnagUfficiTO uff : listaUffici){
+			if (uff.getId().equals(to.getUfficioCapofila().getId())){
+				listaUfficiCurr.add(uff);
+			}
+		}
+		context.setDataModel(LIST_ANAG_UFF, listaUfficiCurr);
+		
+		//context.setDataModel(SessionAttributes.LIST_TIPOLOGIA_DECRETO, to.getAnagTipologiaDecreto());
+		//context.setDataModel(SessionAttributes.LIST_ANAG_UFF, to.getUfficioCapofila());
+		
+		//Imposto i campi editabili della form
+		form.setAmministrazione(to.getAmministrazione());
+		//form.setAmministrazioneMod(to.getAmministrazione());
+		form.setAnnoDecreto(to.getEserciziDem().getId().toString());
+		form.setNumeDecreto(to.getNumeNumDecreto().toString());
+		form.setDescDecreto(to.getDescDecreto());
+		form.setNumePat(to.getNumePatrimonio()==null?null:to.getNumePatrimonio().toString());
+		//form.setNumePatMod(to.getNumePatrimonio()==null?null:to.getNumePatrimonio().toString());
+		form.setStato(to.getStatStato().toString());
+		form.setDescStato((String)listManager.loadDecStatiFascicoliFad(to.getStatStato().toString()));
+		form.setTipoDecreto(to.getAnagTipoDecreto().getId());
+		form.setDecTipoDecreto(to.getAnagTipoDecreto().getDescSigla());
+		form.setTipologiaDecreto(to.getAnagTipologiaDecreto().getId().toString());
+		//form.setTipologiaDecretoMod(to.getAnagTipologiaDecreto().getId().toString());
+		form.setUfficio(to.getUfficioCapofila().getId().toString());
+		//form.setUfficioMod(to.getUfficioCapofila().getId().toString());
+		form.setUfficioCreatore(to.getUfficioCreatore().getDescUfficio());
+		form.setDataCreazione(to.getDataCreazioneFascicoloFormatted());
+		form.setCreatoDa(to.getDescUtenteCreatore());
+		form.setDataModifica(to.getDataModificaFascicoloFormatted());
+		form.setModificatoDa(to.getDescUtenteModifica());
+		//
+		List<AbstractDemTO> fascicoliPat = new ArrayList<AbstractDemTO>();
+//		fascicoliPat = gestioneFadManager.getFascicoliPatrimonio(to.getCodiGuidFascicolo()).getListoutputTO();
+		if(to.getNumePatrimonio()!=null){
+			try {
+				fascicoliPat = gestioneFadManager.getFascicoliPatrimonio(to.getCodiGuidFascicolo()).getListoutputTO();
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		/***simulazione da togliere***
+		FascicoloSipatrTO fascPatTo=new FascicoloSipatrTO();
+		fascPatTo.setStatoFascicoloDocumentale("statProva");
+		fascPatTo.setDescrizione("DSDHGS");
+		DocumentTO docTo=new DocumentTO();
+		docTo.setCodiIdRed("SRFGS");
+		docTo.setDescDocumento(new CodeDescriptionTO("sfg","rrgsdfdf"));
+		List<DocumentTO> listdocPatr=new ArrayList<DocumentTO>();
+		listdocPatr.add(docTo);
+		fascPatTo.setDocumenti(listdocPatr);
+		fascicoliPat.add(fascPatTo);
+		
+		to.setNumePatrimonio(new Short("5"));
+		***fine simulazione da togliere***/
+		
+		
+		
+		try {
+			if (!StringUtil.isEmpty(listTo.get(0))){
+				PaginatorUtil.addPaginator(context, listTo, LIST_SOTTO_FASCICOLI_FAD, Paginator.PAGE_RANGE_15, SOTTO_FASCICOLI_FAD_PAGINATOR);
+			}
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (!StringUtil.isEmpty(to.getSottoFascicoliRedList())){
+			PaginatorUtil.addPaginator(context, to.getSottoFascicoliRedList(), LIST_SOTTO_FASCICOLI_RED, Paginator.PAGE_RANGE_15, SOTTO_FASCICOLI_RED_PAGINATOR);
+		}
+		if (to.getNumePatrimonio()!=null&&!StringUtil.isEmpty(fascicoliPat)){
+			PaginatorUtil.addPaginator(context, fascicoliPat, LIST_SOTTO_FASCICOLI_PAT, Paginator.PAGE_RANGE_15, SOTTO_FASCICOLI_PAT_PAGINATOR);
+		}
+		return getFascicoloFadView();
+	}
+	
+	
+	public String onBackToFadInitialPageFromFad(Context context) throws Throwable{
+		context.setDataModel(OPEN_DETT_FAD, "FAD");
+		context.removeDataModel(OPEN_DETT_RED);
+		context.removeDataModel(OPEN_DETT_PATR);
+		return this.onBackToFadInitialPage(context);
+	}
+	
+	public String onScaricaOrigFad(Context context) throws Throwable{
+		ResponseDEMBILClient res = null;
+		DocumentiTO doc = null;
+		String rowNum = context.getCommandParameter("scaricaOrigFad");
+		List<DocumentiTO> listDocAttoDecreto = context.getModel(LIST_DOCUMENTI_FAD);
+		
+		if(!listDocAttoDecreto.isEmpty() && rowNum != null && rowNum != "" ){
+			doc = listDocAttoDecreto.get(Integer.parseInt(rowNum));
+		}
+		res = getDocumentiManager().wsDownloadDocumentoFascicoloAttoDecreto(doc.getCodiGuidFascicolo(), doc.getCodiGuidDocumentoOrig()!=null?doc.getCodiGuidDocumentoOrig():doc.getCodiGuidDocumento());
+		
+		if(res.getEsitoTo().getCodice().equalsIgnoreCase("OK")){
+			FileUtil.downloadFromResponseWs(res, context);
+			
+		}else{
+			context.addError("error.ws.download.fascicolo.atto.decreto", res.getEsitoTo().getDescrizione());
+			return getDocumentiFadView();
+		}
+
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String onApriDocumentiFascicoloRed(Context context) throws Throwable{
+		PaginatorUtil.removePaginator(context, LIST_DOCUMENTI_RED, DOCUMENTI_RED_PAGINATOR);
+//		ConsultaFascicoloFadForm form = context.getForm();
+		String rowNum = getParameter(context, "rowNum");
+		if (rowNum==null){
+			context.addError("error.generic" );
+		}
+		SottoFascicoliRedTO to = ((List<SottoFascicoliRedTO>)context.getModel(LIST_SOTTO_FASCICOLI_RED)).get(Integer.parseInt(rowNum));
+		context.setDataModel(SessionAttributes.SOTTO_FASCICOLO_RED, to);
+		if (!StringUtil.isEmpty(to.getDocumentiRedList())){
+			List<TipoDocumentoTO> listTipoDocumentoIG=listManager.loadTipoDocumentoIG();
+			context.setDataModel(WebConstants.LIST_TIPO_ALLEGATI, listTipoDocumentoIG);
+			// SE L'UTENTE LOGGATO APPARTIENE ALL'UFFICIO II DEVO IMPOSTARE A TRUE LA CONSTANT CHK_MODIFICA_VISIBILITA
+			AnagUfficiTO uffCreatore= getUtenteInSessione().getUtente().getUtenteProfilo(getUtenteInSessione().getProfiloInUso().getCodiProfilo()).getAnagUffici();
+			if (uffCreatore.getId().equals("2")) {
+				context.setDataModel(WebConstants.CHK_MODIFICA_VISIBILITA, true);
+			}else{
+				context.setDataModel(WebConstants.CHK_MODIFICA_VISIBILITA, false);
+			}
+			
+			//imposto il nome del file trasformato
+			for (DocumentiRedTO doc : to.getDocumentiRedList()) {
+				if(doc.getDescFilename()!=null){
+					doc.setDescFilenameTrasf(doc.getDescFilename()+".pdf");
+				}
+			}
+			
+			PaginatorUtil.addPaginator(context, to.getDocumentiRedList(), LIST_DOCUMENTI_RED, Paginator.PAGE_RANGE_15, DOCUMENTI_RED_PAGINATOR);
+			return getDocumentiRedView();
+		}
+		context.addWarning("warning.empty");
+		return getFascicoloFadView();
+	}
+	
+	public String onScaricaOrigRed(Context context) throws Throwable{
+		ResponseDEMBILClient res = null;
+		DocumentiRedTO doc = null;
+		FascicoliTO to = (FascicoliTO)context.getModel(FASCICOLO_SELEZIONATO);
+		String rowNum = context.getCommandParameter("scaricaOrigRed");
+		List<DocumentiRedTO> listDocAttoDecreto = context.getModel(LIST_DOCUMENTI_RED);
+		
+		if(!listDocAttoDecreto.isEmpty() && rowNum != null && rowNum != "" ){
+			doc = listDocAttoDecreto.get(Integer.parseInt(rowNum));
+		}
+		res = getDocumentiManager().wsDownloadDocumentoFascicoloAllegatoIGB(to.getCodiGuidFascicolo(), doc.getId().getCodiGuidDocumento());
+		
+		if(res.getEsitoTo().getCodice().equalsIgnoreCase("OK")){
+			FileUtil.downloadFromResponseWs(res, context);
+			
+		}else{
+			context.addError("error.ws.download.fascicolo.atto.decreto", res.getEsitoTo().getDescrizione());
+			return getDocumentiRedView();
+		}
+
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String onApriDocumentiFascicoloPat(Context context) throws Throwable{
+		PaginatorUtil.removePaginator(context, LIST_DOCUMENTI_PAT, DOCUMENTI_PAT_PAGINATOR);
+//		ConsultaFascicoloFadForm form = context.getForm();
+		String rowNum = getParameter(context, "rowNum");
+		if (rowNum==null){
+			context.addError("error.generic" );
+		}
+		FascicoliTO toFad = (FascicoliTO)context.getModel(FASCICOLO_SELEZIONATO);
+		FascicoloSipatrTO to = ((List<FascicoloSipatrTO>)context.getModel(LIST_SOTTO_FASCICOLI_PAT)).get(Integer.parseInt(rowNum));
+		
+		context.setDataModel(SessionAttributes.SOTTO_FASCICOLO_PAT, to);
+		
+		List<DocumentTO> doc = gestioneFadManager.getDocumentiPatrimonio(toFad.getCodiGuidFascicolo(),to.getIdFascicoloSipatr());
+		if (!StringUtil.isEmpty(doc)){
+			PaginatorUtil.addPaginator(context, doc, LIST_DOCUMENTI_PAT, Paginator.PAGE_RANGE_15, DOCUMENTI_PAT_PAGINATOR);
+			return getDocumentiPatView();
+		}
+		context.addWarning("warning.empty");
+		return getFascicoloFadView();
+	}
+	
+	public String onScaricaOrigPat(Context context) throws Throwable{
+		ResponseDEMBILClient res = null;
+		DocumentTO doc = null;
+		FascicoliTO to = (FascicoliTO)context.getModel(FASCICOLO_SELEZIONATO);
+		String rowNum = context.getCommandParameter("scaricaOrigPat");
+		List<DocumentTO> listDocAttoDecreto = context.getModel(LIST_DOCUMENTI_PAT);
+		
+		if(!listDocAttoDecreto.isEmpty() && rowNum != null && rowNum != "" ){
+			doc = listDocAttoDecreto.get(Integer.parseInt(rowNum));
+		}
+		res = getDocumentiManager().wsDownloadDocumentoFascicoloSIPATRAttoDecreto(to.getCodiGuidFascicolo(), doc.getIdSottoFascicolo(), doc.getIdDocumento());
+		
+		if(res.getEsitoTo().getCodice().equalsIgnoreCase("OK")){
+			FileUtil.downloadFromResponseWs(res, context);
+			
+		}else{
+			context.addError("error.ws.download.fascicolo.atto.decreto", res.getEsitoTo().getDescrizione());
+			return getDocumentiPatView();
+		}
+
+		return null;
+	}
+	
+	
+	public String onBackToFadInitialPage(Context context) throws Throwable{
+		context.removeDataModel(WebConstants.CHK_MODIFICA_FAD);
+		onApriFascicoloFad(context);
+		return getFascicoloFadView();
+	}
+	
+
+	public String onBackToFadInitialPageFromRed(Context context) throws Throwable{
+		context.removeDataModel(OPEN_DETT_FAD);
+		context.setDataModel(OPEN_DETT_RED, "RED");
+		context.removeDataModel(OPEN_DETT_PATR);
+		return this.onBackToFadInitialPage(context);
+	}
+
+	public String onBackToFadInitialPageFromPatr(Context context) throws Throwable{
+		context.removeDataModel(OPEN_DETT_FAD);
+		context.removeDataModel(OPEN_DETT_RED);
+		context.setDataModel(OPEN_DETT_PATR, "PATR");
+		return this.onBackToFadInitialPage(context);
+	}
+
+	public String onRefreshLista(Context context) throws Throwable{
+		PaginatorUtil.removePaginator(context, LIST_DOCUMENTI_FAD,DOCUMENTI_FAD_PAGINATOR);
+		FascicoliTO to = (FascicoliTO)context.getModel(FASCICOLO_SELEZIONATO);
+		to = gestioneFadManager.getFascicoloFad(to.getId());
+		context.removeDataModel(FASCICOLO_SELEZIONATO);
+		context.setDataModel(FASCICOLO_SELEZIONATO, to);
+		
+		if (!StringUtil.isEmpty(to.getDocumentiList())){
+			PaginatorUtil.addPaginator(context, to.getDocumentiList(), LIST_DOCUMENTI_FAD, Paginator.PAGE_RANGE_15, DOCUMENTI_FAD_PAGINATOR);
+		}
+		return getDocumentiFadView();
+	}
+	
+	
+
+	public String onScaricaPdfPat(Context context) throws Throwable{
+		ResponseDEMBILClient res = null;
+		DocumentTO doc = null;
+		FascicoliTO to = (FascicoliTO)context.getModel(FASCICOLO_SELEZIONATO);
+		String rowNum = context.getCommandParameter("scaricaPdfPat");
+		List<DocumentTO> listDocAttoDecreto = context.getModel(LIST_DOCUMENTI_PAT);
+		
+		if(!listDocAttoDecreto.isEmpty() && rowNum != null && rowNum != "" ){
+			doc = listDocAttoDecreto.get(Integer.parseInt(rowNum));
+		}
+		res = getDocumentiManager().wsDownloadDocumentoFascicoloSIPATRAttoDecreto(to.getCodiGuidFascicolo(), doc.getIdSottoFascicolo(), doc.getDocumentoFileOperazione().getIdDocumento());
+		
+		if(res.getEsitoTo().getCodice().equalsIgnoreCase("OK")){
+			FileUtil.downloadFromResponseWs(res, context);
+			
+		}else{
+			context.addError("error.ws.download.fascicolo.atto.decreto", res.getEsitoTo().getDescrizione());
+			return getDocumentiPatView();
+		}
+	
+		return null;
+	}
+
+
+	public String onScaricaPdfRed(Context context) throws Throwable{
+		ResponseDEMBILClient res = null;
+		DocumentiRedTO doc = null;
+		FascicoliTO to = (FascicoliTO)context.getModel(FASCICOLO_SELEZIONATO);
+		String rowNum = context.getCommandParameter("scaricaPdfRed");
+		List<DocumentiRedTO> listDocAttoDecreto = context.getModel(LIST_DOCUMENTI_RED);
+		
+		if(!listDocAttoDecreto.isEmpty() && rowNum != null && rowNum != "" ){
+			doc = listDocAttoDecreto.get(Integer.parseInt(rowNum));
+		}
+		res = getDocumentiManager().wsDownloadDocumentoFascicoloAllegatoIGB(to.getCodiGuidFascicolo(), doc.getCodiGuidDocumentoTrasf());
+		
+		if(res.getEsitoTo().getCodice().equalsIgnoreCase("OK")){
+			FileUtil.downloadFromResponseWs(res, context);
+			
+		}else{
+			context.addError("error.ws.download.fascicolo.atto.decreto", res.getEsitoTo().getDescrizione());
+			return getDocumentiRedView();
+		}
+	
+		return null;
+	}
+
+	
+	
+}

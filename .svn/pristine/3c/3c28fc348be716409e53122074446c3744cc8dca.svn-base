@@ -1,0 +1,30 @@
+package it.almavivaitalia.bilancio.commons.dao.impl;
+
+import java.util.List;
+
+import org.hibernate.Query;
+
+import it.almavivaitalia.bilancio.commons.bo.UtenteProfiloBO;
+import it.almavivaitalia.bilancio.commons.dao.UtenteProfiloDao;
+
+public class UtenteProfiloDaoImpl extends AbstractCommonDaoImpl implements UtenteProfiloDao{
+	
+	@Override
+	public UtenteProfiloBO saveOrUpdate(UtenteProfiloBO o) {
+		getHibernateTemplate().saveOrUpdate(o);
+		return o;
+	}
+
+	@Override
+	public List<UtenteProfiloBO> loadAll() {
+		return getHibernateTemplate().loadAll(UtenteProfiloBO.class);
+	}
+
+	@Override
+	public List<UtenteProfiloBO> loadBySequIdUtente(Integer sequIdUtente) throws Throwable  {
+		Query query = createQuery("from UtenteProfiloBO where id.sequIdUtente=:sequIdUtente");
+		query.setInteger("sequIdUtente", sequIdUtente);
+		
+		return query.list();
+	}
+}

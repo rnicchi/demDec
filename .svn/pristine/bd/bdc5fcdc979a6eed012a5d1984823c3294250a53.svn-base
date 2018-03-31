@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	
+	<definition name=".blank" template="/private/jsp/common/blank.jsp" />
+	<definition name=".header" template="/private//jsp/common/header.jsp" />
+	<definition name=".footer" template="/private//jsp/common/footer.jsp" />
+	<definition name=".info" template="/private//jsp/common/info.jsp"/>
+	<definition name=".menu" template="/private//jsp/common/menu.jsp" />
+	<definition name=".items" template="/private//jsp/common/items.jsp" />
+	<definition name=".message" template="/private//jsp/common/message.jsp" />
+	<definition name=".navigator" template="/private//jsp/common/navigator.jsp"/>
+	
+	<definition name="publicBaseTemplate" template="/public/baseTemplate.jsp">
+		<put-attribute name="header" value=".header" />
+		<put-attribute name="info" value=".info"/>
+		<put-attribute name="message" value=".message"/>
+		<put-attribute name="title" value="label.unassignedPageTitle"/>
+		<put-attribute name="isHelp" value="FALSE"/>
+		<put-attribute name="page"/>
+	</definition>
+	
+	<definition name="baseTemplate" template="/private/jsp/model/baseTemplate.jsp">
+<!--
+ 		
+ 		<put-attribute name="message" value=".message"/>
+ 		<put-attribute name="isHelp" value="TRUE"/>
+ -->	
+ 		<put-attribute name="header" value=".header" />	
+        <put-attribute name="info" value=".info"/>
+		<put-attribute name="menu" value=".menu" />
+		<put-attribute name="navigator" value=".navigator"/>
+		<put-attribute name="message" value=".message"/>
+		<put-attribute name="title" value="label.unassignedPageTitle"/>
+		<put-attribute name="isNoTitle" value="FALSE"/>
+		<put-attribute name="page"/>
+		<put-attribute name="footer" value=".footer"/>
+	</definition>
+	
+
+
+	<definition name="messageTemplate" template="/private/jsp/model/messageTemplate.jsp">
+<!--
+ 		
+ 		<put-attribute name="message" value=".message"/>
+ 		<put-attribute name="isHelp" value="TRUE"/>
+ -->	
+ 		<put-attribute name="header" value=".header" />	
+        <put-attribute name="info" value=".info"/>
+		<put-attribute name="menu" value=".menu" />
+		<put-attribute name="navigator" value=".navigator"/>
+		<put-attribute name="message" value=".message"/>
+		<put-attribute name="title" value="label.unassignedPageTitle"/>
+		<put-attribute name="isNoTitle" value="FALSE"/>
+		<put-attribute name="footer" value=".footer"/>
+	</definition>
+
+
+	<definition name="baseTemplateNoHelp" extends="baseTemplate">
+		<put-attribute name="isHelp" value="FALSE"/>
+	</definition>
+	
+	<definition name="baseTemplateWithoutHeader" extends="baseTemplate">
+		<put-attribute name="header" value="" />
+	</definition>
+	
+	<definition name="itemSelectorBaseTemplateNoHelp" extends="baseTemplateNoHelp">
+		<put-attribute name="header" value="" />
+		
+	</definition>
+	
+	<definition name="baseMultiFormTemplate" template="/private/jsp/model/baseMultiFormTemplate.jsp">
+		<put-attribute name="header" value=".header" />
+		<put-attribute name="info" value=".info"/>
+		<put-attribute name="menu" value=".menu" />
+		<put-attribute name="navigator" value=".navigator"/>
+		<put-attribute name="message" value=".message"/>
+		<put-attribute name="title" value="label.unassignedPageTitle"/>
+		<put-attribute name="page"/>
+		<put-attribute name="footer" value=".footer"/>
+		<put-attribute name="isNoTitle" value="TRUE"/>
+	</definition>
+	
+	<!-- menu -->
+	<definition name=".menuTemplate" template="/private/jsp/model/page/menuTemplate.jsp">
+		<put-attribute name="menu" value=".menu" />
+		<put-attribute name="items" value=".items"/>
+	</definition>
+<!-- 	 da scommentare e impostare bene  -->
+	<definition name="menu.main" extends="baseTemplateNoHelp">
+		<put-attribute name="page" value=".indexMenu" />
+		<put-attribute name="isNoTitle" value="TRUE"/>
+		
+	</definition>
+	
+	<definition name=".indexMenu" template="/private/jsp/index.jsp"/>
+	
+	<definition name=".tabsTemplate" template="/private/jsp/common/tabsTemplate.jsp">
+		<put-attribute name="tabsPage"/>
+		<put-attribute name="page"/>
+	</definition>
+
+	<!-- testPage BEGIN -->
+	<definition name=".testLogin" template="/public/testLogin.jsp" />
+	
+	<definition name="testLogin.main" extends="publicBaseTemplate">
+		<put-attribute name="page" value=".testLogin"/>
+		<put-attribute name="title" value="label.applicationTitle"/>
+	</definition>
+	
+	<!-- testPage END -->
+
+
+
+	<!-- itemSelector BEGIN -->
+	<definition name=".itemSelector" template="/private/jsp/common/itemSelector.jsp" />
+	<definition name="itemSelector.main" extends="itemSelectorBaseTemplateNoHelp">
+		<put-attribute name="page" value=".itemSelector"/>
+		<put-attribute name="title" value="label.itemSelectorPageTitle" />
+	</definition>
+	<!-- itemSelector END -->
+
+
+
+	<!-- message BEGIN -->
+	<definition name="message.main" extends="messageTemplate">
+		<put-attribute name="title" value="label.messagePageTitle" />
+	</definition>
+	<!-- message END -->
+
+	<!-- errorView BEGIN -->
+	<definition name="error.main" extends="messageTemplate">
+			<put-attribute name="title" value="label.errorPageTitle"/>
+	</definition>
+	<!-- errorView END -->
+
+
+
+	<!-- multiItemSelector BEGIN -->
+	<definition name=".multiItemSelector" template="/jsp/common/multiItemSelector.jsp" />
+	<definition name="multiItemSelector.main" extends="itemSelectorBaseTemplateNoHelp">
+		<put-attribute name="page" value=".multiItemSelector"/>
+		<put-attribute name="title" value="label.itemSelectorPageTitle" />
+	</definition>
+	<!-- multiItemSelector END -->
+	
+
+	
+	<!-- BEGIN DEFINIZIONE TEMPLATE GESTIONE 1 TAB -->
+	<definition name=".tabsTemplateFor1Tab" template="/jsp/common/tabsTemplateFor1Tab.jsp">
+		<put-attribute name="labelAction1" />
+	</definition>
+	<!-- END DEFINIZIONE TEMPLATE GESTIONE 1 TAB-->	
+	
+	<!-- BEGIN DEFINIZIONE TEMPLATE GESTIONE 2 TAB -->
+	<definition name=".tabsTemplateFor2Tab" template="/jsp/common/tabsTemplateFor2Tab.jsp">
+		<put-attribute name="tabLabelCode" />
+		<put-attribute name="action1" />
+		<put-attribute name="action2" />
+		<put-attribute name="labelAction1" />
+		<put-attribute name="labelAction2" />		
+	</definition>
+	<!-- END DEFINIZIONE TEMPLATE GESTIONE 2 TAB-->	   
+	
+<definition name="emptyView.main" template="/private/jsp/common/empty.jsp"/>
+
+	<!-- Cambio Profilo BEGIN -->
+	<definition name=".cambioProfilo" template="/private/jsp/common/cambioProfilo.jsp" />
+	
+	<definition name="cambioProfilo.main" extends="baseTemplate">
+		<put-attribute name="page" value=".cambioProfilo"/>
+		<put-attribute name="title" value="label.applicationTitle"/>
+	</definition>
+	
+	<!-- Cambio Profilo END -->
+
+
+
+</tiles-definitions>

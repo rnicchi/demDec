@@ -1,0 +1,139 @@
+package it.mef.bilancio.demdec.web.spring.validator;
+
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bsn.sh.utils.StringUtil;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.to.AnagCdrDemTO;
+import it.mef.bilancio.demdec.to.AnagTipologiaDecretoTO;
+import it.mef.bilancio.demdec.web.spring.form.PredLetterePreRegForm;
+import it.mef.bilancio.demdec.web.spring.form.PredTagliatellaForm;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+
+import java.util.List;
+
+public class PredTagliatellaValidator extends AbstractDemValidator {
+	
+	
+	@SuppressWarnings("unchecked")
+	public boolean onRicercaDecreti(Context context) throws Throwable {
+		//PredLetterePreRegForm form = context.getForm();
+		PredTagliatellaForm form = context.getForm();
+		if(!StringUtil.isEmpty(form.getNumeDecreto())){
+			checkNumeric(context, form.getNumeDecreto(), "label.numeroDecreto");
+		}
+		if(!StringUtil.isEmpty(form.getNumePat())){
+			checkNumeric(context, form.getNumePat(), "label.numeroPatrimonio");
+		}
+		if(!StringUtil.isEmpty(form.getCdr())){
+			AnagCdrDemTO cdr = ((List<AnagCdrDemTO>) context.getModel(SessionAttributes.LIST_ANAG_CDR_DEM)).get(0);
+			if (!cdr.getAnagAmminDem().getId().getAmmin().equalsIgnoreCase(form.getAmministrazione())){
+				context.addError("error.cdr.no.ammin");
+			}
+			if (!form.getAnnoDecreto().equalsIgnoreCase(""+cdr.getId().getFkAnnoEse())){
+				context.addError("error.cdr.no.anno");
+			}
+		}
+
+		if (!StringUtil.isEmpty(form.getAmministrazione())){
+			AnagAmminDemTO amm = ((List<AnagAmminDemTO>)context.getModel(SessionAttributes.LIST_AMMIN_DEM)).get(0);
+			if (!form.getAnnoDecreto().equalsIgnoreCase(""+amm.getId().getFkAnnoEse())){
+				context.addError("error.amm.no.anno");
+			}
+		}
+
+		if (!StringUtil.isEmpty(form.getTipologiaDecreto())){
+			AnagTipologiaDecretoTO tipo = ((List<AnagTipologiaDecretoTO>)context.getModel(SessionAttributes.LIST_TIPOLOGIA_DECRETO)).get(0);
+			if (!form.getTipoDecreto().equalsIgnoreCase(tipo.getAnagTipoDecreto().getId())){
+				context.addError("error.tipologia.no.tipo");
+			}
+		}
+		
+		
+//		if(	!StringUtil.isEmpty(form.getDataArrivoDa())){
+//			checkDate(context, form.getDataArrivoDa(), "label.dataArrivoDa");
+//		}
+//		if(	!StringUtil.isEmpty(form.getDataArrivoA())){
+//			checkDate(context, form.getDataArrivoA(), "label.dataArrivoA");
+//		}
+		
+		return  !context.hasErrors();
+	}
+	
+	
+	public boolean onPredisponi (Context context) throws Throwable {
+		
+		PredTagliatellaForm form=(PredTagliatellaForm) context.getForm();
+		
+	//	if(StringUtil.isEmpty(form.getRadioButtonDecreti()))
+	//		context.addError("error.decreto.notSelected");
+		
+		//checkEmpty(context, form.getRadioButtonDecreti(), "error.decreto.notSelected");
+		
+//		if(!checkEmpty(context, getString(form.getNumeroProtocollo()), "error.decreto.numProt.obbligatorio")){
+//			checkNumeric(context, form.getNumeroProtocollo(), "error.decreto.numProt.obbligatorio");
+//		}
+//	    checkEmpty(context, getString(form.getDecreto().getNumero()), "error.decreto.notSelected");
+		return  !context.hasErrors();
+		
+	}
+		
+		
+		public boolean onStampa (Context context) throws Throwable {
+			
+			PredTagliatellaForm form=(PredTagliatellaForm) context.getForm();
+			
+			if(StringUtil.isEmpty(form.getDescDecreto()))
+			{
+				
+					context.addError("error.decreto.descrizione.required");
+				
+			}
+			
+			if(StringUtil.isEmpty(form.getTipologiaDecreto()))
+			{
+				
+					context.addError("error.decreto.tipologia.required");
+				
+			}
+			
+			if(form.getTipologiaDecreto().equals("Altro") && StringUtil.isEmpty(form.getAltraTipologiaDecreto()))
+				{
+					
+						context.addError("error.decreto.altraTipologia.required");
+					
+				}
+				/*else
+				{
+					context.getForm().setValid(true);
+				}*/
+				
+			if(StringUtil.isEmpty(form.getImpattoIndebitamento()))
+			{
+				
+					context.addError("error.decreto.impIndebitamento.required");
+				
+			}
+			
+			
+//			if(!checkEmpty(context, getString(form.getNumeroProtocollo()), "error.decreto.numProt.obbligatorio")){
+//				checkNumeric(context, form.getNumeroProtocollo(), "error.decreto.numProt.obbligatorio");
+//			}
+//		    checkEmpty(context, getString(form.getDecreto().getNumero()), "error.decreto.notSelected");
+			return  !context.hasErrors();
+			
+		}
+		
+		public boolean onCaricaTipologiaDecretoFadPage(Context context)throws Throwable{
+			PredTagliatellaForm form = context.getForm();
+			checkEmpty(context, form.getTipoDecreto(), "label.tipoDecreto");
+			return !context.hasErrors();
+		}
+
+		public boolean onCaricaAmmin(Context context)throws Throwable{
+			PredTagliatellaForm form = context.getForm();
+			checkEmpty(context, form.getAnnoDecreto(), "label.anno.dec");
+			return !context.hasErrors();
+		}
+		
+
+}

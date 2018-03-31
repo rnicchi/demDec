@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="it" ><![endif]-->
+<!--[if gt IE 8]><!-->
+<html style="" class=" js no-touch svg inlinesvg svgclippaths no-ie8compat" lang="it"><!--<![endif]-->
+<!-- BaseTemplate.jsp -->
+
+	<head>
+	
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		
+		<title>DemDec Dematerializzazione Atto Decreto - rev.  1603240001 (24/03/2016)</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- Fogli di stile CSS -->
+	
+		<link rel="stylesheet" href="css/normalize.css"/>
+		<link rel="stylesheet" href="css/foundation.css"/>
+		<link rel="stylesheet" href="css/style_a.css"/>  
+		
+		<link rel="stylesheet" href="css/firebugR.css"/>
+		<link rel="stylesheet" href="css/modal.css"/>
+		<link rel="stylesheet" href="css/displaytag-table.css"/>  
+		
+	
+	<!-- Modernizr -->
+	<script src="custom.js"> </script>
+	<script>
+	Modernizr.load(
+	{
+		test: Modernizr.mq('only all'),
+	//	nope: 'private/respond.min.js'
+		nope:'respond.min.js'
+		}
+		);
+	</script>
+
+	
+	</head>
+
+  
+  
+
+
+<!--<body style="padding-top: 45px;">-->
+	<body>
+	 
+	
+		<!-- Header/navigazione top bar -->
+		<header class="fixed">
+			
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="sf_eng">
+
+
+  <div class="area_ris_eng">
+    <ul class="menu">
+        <li>
+        	<img src="img/ico_user.png" alt="" class="inline" />
+        	<span class="col_char_user">Angelini Massimo&nbsp;&#8226;&nbsp;Direttore&nbsp;&nbsp;&nbsp;</span>
+        </li>
+        
+	      	<li>
+	        	<img src="img/ico_ch_user.png" alt="" class="inline hidd" />
+	        	<a href="cambioProfilo.do" title="Cambio profilo">Cambio profilo</a>
+	        </li>
+        
+        <li>
+        	<img src="img/ico_uscita.png" alt="" class="inline hidd" />
+        	<a href="uscita.do" title="Esci">Esci</a>
+        </li>
+    </ul>
+  </div>
+  
+</div>
+
+		
+			
+
+
+
+<div id="Cont_logo">
+	<a href="menu.do">
+		<img class="padd_sx_logo" src="img/logo_DEMDEC.jpg" alt="Vai alla home">
+	</a>
+</div>
+
+			
+			
+
+<!-- menu.jsp -->
+<script src="jquery.js"></script>
+
+ 
+		
+
+
+<!-- MENU LATERALE --><nav class="top-bar"><ul class="title-area"><!-- Title Area --><li class="name"><h1 id="logo" class="hide-text"><a href="#">MEF - Ragioneria Generale dello Stato</a></h1></li><!-- Icona e testo per il menu su mobile. Rimuovere la classe "menu-icon" per eliminare l'icona. Rimuovere il testo "Menu" per avere solo l'icona --><li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li></ul><section style="left: 0%;" class="top-bar-section"><ul class="left"><li class="has-dropdown"><a href="#" >Raccolte Provvisorie</a><ul class="dropdown"><li class="title back js-generated"><h5><a href="#">« Indietro</a></h5></li><li><a href="menu.do?cmdGET___actionSelected=ricercaRaccolteProvvisorie&amp;" >Associazione a <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="menu.do?cmdGET___actionSelected=ricercaSospesiRed&amp;" >Chiusura Raccolte Sospese <abbr title="Sistema protocollo Ragioneria Generale dello Stato">RED</abbr></a></li></ul><div class='reader'><ul><li><a href="menu.do?cmdGET___actionSelected=ricercaRaccolteProvvisorie&amp;" >Associazione a <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="menu.do?cmdGET___actionSelected=ricercaSospesiRed&amp;" >Chiusura Raccolte Sospese <abbr title="Sistema protocollo Ragioneria Generale dello Stato">RED</abbr></a></li></ul></div></li><li class="has-dropdown"><a href="#" >Fascicoli <abbr title="Fascicolo Atto Decreto"> FAD</abbr></a><ul class="dropdown"><li class="title back js-generated"><h5><a href="#">« Indietro</a></h5></li><li><a href="menu.do?cmdGET___actionSelected=creaFascicoloFAD&amp;" >Creazione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="menu.do?cmdGET___actionSelected=gestioneFascicoloFAD&amp;" >Gestione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="menu.do?cmdGET___actionSelected=consultaFascicoloFAD&amp;" >Consultazione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="menu.do?cmdGET___actionSelected=predLetterePreReg&amp;" >Predisposizione Lettere di Preregistrazione</a></li><li><a href="menu.do?cmdGET___actionSelected=predisposizioneTagliatella&amp;" >Predisposizione Tagliatella</a></li><li><a href="menu.do?cmdGET___actionSelected=modLetterePreReg&amp;" >Modifica Lettere di Preregistrazione</a></li><li><a href="menu.do?cmdGET___actionSelected=invioPecPartecipazione&amp;" >Invio Pec Partecipazione</a></li></ul><div class='reader'><ul><li><a href="menu.do?cmdGET___actionSelected=creaFascicoloFAD&amp;" >Creazione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="menu.do?cmdGET___actionSelected=gestioneFascicoloFAD&amp;" >Gestione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="menu.do?cmdGET___actionSelected=consultaFascicoloFAD&amp;" >Consultazione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="menu.do?cmdGET___actionSelected=predLetterePreReg&amp;" >Predisposizione Lettere di Preregistrazione</a></li><li><a href="menu.do?cmdGET___actionSelected=predisposizioneTagliatella&amp;" >Predisposizione Tagliatella</a></li><li><a href="menu.do?cmdGET___actionSelected=modLetterePreReg&amp;" >Modifica Lettere di Preregistrazione</a></li><li><a href="menu.do?cmdGET___actionSelected=invioPecPartecipazione&amp;" >Invio Pec Partecipazione</a></li></ul></div></li><li class="has-dropdown"><a href="#" >Workflow Firma</a><ul class="dropdown"><li class="title back js-generated"><h5><a href="#">« Indietro</a></h5></li><li><a href="menu.do?cmdGET___actionSelected=firmaDocumenti&amp;" >Firma</a></li><li><a href="menu.do?cmdGET___actionSelected=invioAlleFirme&amp;" >Invio alle Firme</a></li><li><a href="menu.do?cmdGET___actionSelected=siglaDocumenti&amp;" >Sigla</a></li><li><a href="menu.do?cmdGET___actionSelected=verificaDocumenti&amp;" >Verifica</a></li><li><a href="menu.do?cmdGET___actionSelected=sospensioneFirme&amp;" >Sospensione Firme</a></li><li><a href="menu.do?cmdGET___actionSelected=revocaSospensioneFirme&amp;" >Revoca Sospensione Firme</a></li><li><a href="menu.do?cmdGET___actionSelected=monitoraggioFirma&amp;" >Monitoraggio Firme</a></li></ul><div class='reader'><ul><li><a href="menu.do?cmdGET___actionSelected=firmaDocumenti&amp;" >Firma</a></li><li><a href="menu.do?cmdGET___actionSelected=invioAlleFirme&amp;" >Invio alle Firme</a></li><li><a href="menu.do?cmdGET___actionSelected=siglaDocumenti&amp;" >Sigla</a></li><li><a href="menu.do?cmdGET___actionSelected=verificaDocumenti&amp;" >Verifica</a></li><li><a href="menu.do?cmdGET___actionSelected=sospensioneFirme&amp;" >Sospensione Firme</a></li><li><a href="menu.do?cmdGET___actionSelected=revocaSospensioneFirme&amp;" >Revoca Sospensione Firme</a></li><li><a href="menu.do?cmdGET___actionSelected=monitoraggioFirma&amp;" >Monitoraggio Firme</a></li></ul></div></li><li class="has-dropdown"><a href="#" >Funzioni di Servizio</a><ul class="dropdown"><li class="title back js-generated"><h5><a href="#">« Indietro</a></h5></li><li><a href="menu.do?cmdGET___actionSelected=mail&amp;" >Invio Mail</a></li><li><a href="menu.do?cmdGET___actionSelected=listaMsgInviati&amp;" >Lista Messaggi Inviati</a></li><li><a href="menu.do?cmdGET___actionSelected=gestioneTipologiaDecreto&amp;" >Gestione Tipologia Decreto</a></li><li><a href="menu.do?cmdGET___actionSelected=creaPin&amp;" >Creazione Pin</a></li><li><a href="menu.do?cmdGET___actionSelected=gestioneWorkflowFirme&amp;" >Gestione Workflow Firme</a></li><li><a href="menu.do?cmdGET___actionSelected=delega&amp;" >Delega</a></li><li><a href="menu.do?cmdGET___actionSelected=intCronologico&amp;" >Interrogazione Cronologico</a></li><li><a href="menu.do?cmdGET___actionSelected=testFirme&amp;" >Test Firme</a></li><li><a href="menu.do?cmdGET___actionSelected=gestioneUtenti&amp;" >Gestione Utenti</a></li><li><a href="menu.do?cmdGET___actionSelected=gestioneProfili&amp;" >Gestione Profili</a></li><li><a href="menu.do?cmdGET___actionSelected=rielaborazioneFascicolo&amp;" >Rielaborazione Fascicolo</a></li><li><a href="menu.do?cmdGET___actionSelected=abilitaMail&amp;" >Abilitazione Mail</a></li></ul><div class='reader'><ul><li><a href="menu.do?cmdGET___actionSelected=mail&amp;" >Invio Mail</a></li><li><a href="menu.do?cmdGET___actionSelected=listaMsgInviati&amp;" >Lista Messaggi Inviati</a></li><li><a href="menu.do?cmdGET___actionSelected=gestioneTipologiaDecreto&amp;" >Gestione Tipologia Decreto</a></li><li><a href="menu.do?cmdGET___actionSelected=creaPin&amp;" >Creazione Pin</a></li><li><a href="menu.do?cmdGET___actionSelected=gestioneWorkflowFirme&amp;" >Gestione Workflow Firme</a></li><li><a href="menu.do?cmdGET___actionSelected=delega&amp;" >Delega</a></li><li><a href="menu.do?cmdGET___actionSelected=intCronologico&amp;" >Interrogazione Cronologico</a></li><li><a href="menu.do?cmdGET___actionSelected=testFirme&amp;" >Test Firme</a></li><li><a href="menu.do?cmdGET___actionSelected=gestioneUtenti&amp;" >Gestione Utenti</a></li><li><a href="menu.do?cmdGET___actionSelected=gestioneProfili&amp;" >Gestione Profili</a></li><li><a href="menu.do?cmdGET___actionSelected=rielaborazioneFascicolo&amp;" >Rielaborazione Fascicolo</a></li><li><a href="menu.do?cmdGET___actionSelected=abilitaMail&amp;" >Abilitazione Mail</a></li></ul></div></li><li><a href="menu.do?cmdGET___actionSelected=consultaFascicoloCdc&amp;" >Consultazione<abbr title="Corte dei conti"> Cdc</abbr></a></li><li class="divider"></li><li><a href="help.htm">Help</a></li></ul></section></nav>
+	 <!-- Navigazione: parte sinistra -->
+
+		
+		</header>
+	
+	
+		<!-- Inizio griglia -->
+		<!-- Sezione titoli in evidenza con slideshow -->
+		<div class="container">
+			
+
+
+<!-- 		<div class="spacer">&nbsp;</div>
+		<span class="nascosto">Ti trovi in:</span>
+		<span class="path_N">Home</span>
+ -->
+
+<a id="contenuto"></a>
+<div class="spacer">&nbsp;</div><span class="nascosto">Ti trovi in:</span><span class="path_N"><a href="menu.do">Home</a>&nbsp;&#8250;&nbsp;Fascicoli FAD - Gestione FAD</span> 
+			
+			<!-- Sezione lanci-servizi -->
+			<section id="lanci-servizi">
+			<!-- Inzio large-12 columns -->
+			<div class="large-12 columns">
+			 
+ 			
+
+
+
+
+
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- PageName = documentiFad.jsp -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="application/javascript">
+var jsonData;
+
+/* $(document).ready(function(){
+	//$(this).css({'cursor' : 'wait'});
+	$('body').css({'cursor':'wait'} );
+}); */
+$(document).ready(function() {
+    $("#btnUpload").click(function() {
+        $('body').css("cursor", "wait");
+    });
+   /*  $("#btnDel").click(function() {
+        $('body').css("cursor", "wait");
+    }); */
+    $("#btnIndietro").click(function() {
+        $('body').css("cursor", "wait");
+    });
+});
+</script>
+
+<div class="overlay"></div>
+
+
+
+<form id="multipartForm" action="gestioneFascicoloFAD.do?_APP_CODE_=DemDec&amp;_REQUEST_URI_SRC_=menu.do" method="post" enctype="multipart/form-data">
+
+  <!-- INIZIO MODALE Modifica Metadati Documento Fad -->
+
+
+
+
+
+
+
+
+
+
+
+ <script type="application/javascript">
+
+
+ function myFunction() {
+	
+	    var x = document.getElementById("mySelect").value;
+		var y = x.substring(x.length-1);
+	    
+	    document.getElementById("visibilita").value = y;
+	   
+	    
+	    document.getElementById("visibilitaHidden").value = y;
+	   }
+ 
+function modificaModaleMetadatiDocFad(toOpenDett, idFad){
+ 	
+
+	$("#divErrore").empty();	
+	
+	$.ajax({
+		
+		url: "modaliDocumentiFad.do?cmdPOST___modaleMetadatiDocumentiFad=modaleMetadatiDocumentiFad&idFad="+idFad ,
+		
+	    type: 'POST',
+	    data: {
+	        json: jsonData
+	    },
+	    success: function (response) { 
+	        var trHTMLdett = '';
+	        var trHTMLdettTit = '';
+	    	 
+	        var comboHTML = '';
+	    	   
+	  	  $.each(response, function (i, articleDett) {
+	  		if(articleDett.title=='ERRORE'){
+		  	
+	  			 trHTMLdett='';
+	  			 trHTMLdettTit = '';
+				$("#metadatiFascicoloFad").append("<div class=rowD  align=center><strong>Errore nel recupero dei dati  </strong></div>");
+			}else {
+
+				size2=$("#title_modal_0").length;
+				if( size2>0  ) {	
+					$("#title_modal_0").empty();
+				}
+
+ 		  	    trHTMLdettTit='<div id=title_modal_1 class=bg-tono0><strong>Documento Fad: '+ articleDett.descFilename + '</strong></div>';
+ 		  	    
+ 		  	    $("#title_modal_0").append(trHTMLdettTit);
+ 		  	 	$('#modaleUpdFadTipoDoc').val(articleDett.tipoDocumento.id);
+	 		  	//$('#modaleUpdFadDesc').val(articleDett.textDescrizione);
+	 		  	if(articleDett.anagAmminDem != null) {
+	 		  		$('#modaleUpdFadAmm').val(articleDett.anagAmminDem.amminWithDesc);
+	 		  	}
+	 		  	$("#modaleUpdFadVisibilita").val(articleDett.flagVisibilitaCdc01);
+	 		  	
+	 		  	
+	 		  		 		  	
+	 		  	comboHTML = '<strong>Descrizione: </strong><select id="mySelect" name="modaleUpdFadDesc" onchange="myFunction()"><option value="">-- Selezionare una descrizione --</option>'
+	 		  	
+ 		  		for(var index = 0; index < articleDett.listaDescDocumenti.length; index++){
+ 		  			comboHTML += '<option value="'+ articleDett.listaDescDocumenti[index].id + articleDett.listaDescDocumenti[index].flagVisibilitaCdc + '">' + articleDett.listaDescDocumenti[index].textDescrizione + '</option>';
+ 		  		}
+	 		  	
+	 		  	comboHTML += '</select>';
+	 		  	$('#comboDesc').empty();
+	 		  	$('#comboDesc').append(comboHTML);
+	 		  	$('#modaleUpdFadDesc').val(articleDett.descDocumento.id+ articleDett.descDocumento.flagVisibilitaCdc);
+	 		  	
+	 		   document.getElementById("mySelect").value =articleDett.descDocumento.id + articleDett.descDocumento.flagVisibilitaCdc;
+	 		   document.getElementById("visibilita").value =articleDett.flagVisibilitaCdc01;
+	 		
+
+			}
+	  		
+	 
+	  	});
+
+
+	  	apriPopUpModale(toOpenDett);
+		
+	},
+
+	
+    error: function(){
+    	
+ 			$("#metadatiFascicoloFad").append("<div class=rowD align=center><strong>Errore nel recuperare i dati</strong></div>");
+			 
+			apriPopUpModale(toOpenDett);
+    } 
+
+	});
+
+
+}
+
+
+
+function confermaModaleDett() {
+
+	$('.overlay').fadeOut('fast');
+    $('.box').hide();
+	$('.box_meta').hide();
+}
+
+
+
+</script>
+
+ 
+ 
+ <div>
+	<div id="contModal_0" class="box_meta">
+		<div  id="title_modal_0" > </div>
+		
+		<div>
+			<!-- MODAL TABLE-->
+			<div id="contentD">
+			    <div class="portletContentD" id="metadatiFascicoloFad">
+
+					<!-- <div class="rowD">
+		  				<strong>Tipo: </strong> Metadati Documento FAD 
+		  			</div> -->
+		  			
+		  			
+		  		   
+					
+					
+
+									
+					<div class="rowD" id="comboDesc">
+		  		    	<!-- <strong>Descrizione: </strong> -->
+		  		    	 
+		  		    	
+		  		    	
+		  		    	
+	  		    	</div>
+	  		    	
+	  		    	
+								
+					
+					
+						<div class="rowD">
+						<input id="modaleUpdFadVisibilita" name="modaleUpdFadVisibilita" type="hidden" value=""/>
+			  		    	<strong>Visibilità Corte dei conti: </strong>
+			  		    	<select id="visibilita" name="modaleUpdFadVisibilita" disabled="disabled"> 
+			  		    		<option value="0">Non visibile</option>
+			  		    		<option value="1">Visibile</option>
+			  		    	</select>
+			  		     <input id="visibilitaHidden" name="modaleUpdFadVisibilita" type="hidden" value=""/>
+						</div>							
+							
+					
+				</div>
+			</div>
+			
+			<div class="spacer_sm">&nbsp;</div>
+		</div>
+		
+		<div class="text-center">
+			<input type="submit" name="cmdPOST___modificaMetadatiDocFad" value="Modifica Metadati" class="button small"/>
+			<button type="button" class="button small " onClick="javascript:confermaModaleDett();">Torna alla lista</button>
+		</div>
+		
+		<p class="chiudi">Chiudi X</p>
+	</div>
+</div>
+    
+<!-- END MODALE Metadati Fascicolo Fad-->  
+      
+
+ <!-- INIZIO MODALE Visualizzazione Metadati Documento Fad -->
+
+
+
+
+ <script type="application/javascript">
+
+function visualizzaModaleMetadatiDocFad(toOpenDett, idFad){
+
+	size=$("#divErroreDett").length ;	
+	if( size>0  ) {	
+		$("#divErroreDett").empty();
+	}
+
+	size2=$("#title_modal_3").length ;
+	if( size2>0  ) {	
+		$("#title_modal_3").empty();
+	}
+
+	leng= this.document.getElementById("tabellaDettaglio2").rows.length;
+ 	
+	if(leng>0){				
+		$("#tabellaDettaglio2 tr").remove();		
+	} 
+	
+	$("#divErroreDett").empty();	
+
+
+	$.ajax({
+		
+		 
+		url: "modaliDocumentiFad.do?cmdPOST___modaleMetadatiDocumentiFad=modaleMetadatiDocumentiFad&idFad="+idFad ,
+		
+	    type: 'POST',
+	    data: {
+	        json: jsonData
+	    },
+	    success: function (response) { 
+	        var trHTMLdett = '';
+	        var trHTMLdettTit = '';
+	    	
+
+	  	  $.each(response, function (i, articleDett) {
+	  		if(articleDett.warningCode=='ERRORE'){
+	  			 
+	  			 trHTMLdett='';
+	  			 trHTMLdettTit = '';
+				$("#divErroreDett").append("<div class=rowD  align=center><strong>Errore nel recupero dei dati  </strong></div>");
+			}else {
+				trHTMLdettTit='<div class=bg-tono0 id=title_modal_2><strong>Allegato al Sottofascicolo Atto Decreto</strong></div>';
+		  	
+  trHTMLdett =  '<tr><td><strong>Tipo Documento:&nbsp;</strong></td><td>' + ( (articleDett.tipoDocumento==null || articleDett.tipoDocumento.descDescrizioneDoc==null)?'':articleDett.tipoDocumento.descDescrizioneDoc)+ '</td></tr>'+
+		  		'<tr><td><strong>Descrizione documento: </strong></td><td>' + ( (articleDett.descDocumento == null || articleDett.descDocumento.textDescrizione == null)?'': articleDett.descDocumento.textDescrizione) + '</td></tr>'+
+		  		'<tr><td><strong>Amministrazione: </strong></td><td>' +( (articleDett.fascicoli==null || articleDett.fascicoli.amministrazioneModale==null)?'':articleDett.fascicoli.amministrazioneModale) + '</td></tr>'+
+				'<tr><td><strong>UCB / RTS: </strong></td><td>' +( (articleDett.fascicoli==null || articleDett.fascicoli.ragioneriaModale==null)?'':articleDett.fascicoli.ragioneriaModale) + '</td></tr>'+
+		  	   // '<tr><td><strong>Titolo:  </strong></td><td>' + ( articleDett.numeTitolo==null?'':articleDett.numeTitolo) + '</td></tr>'+
+		//		'<tr><td><strong>Tipo flusso:  </strong></td><td>' + ( articleDett.descTipoFlusso==null?'':articleDett.descTipoFlusso) + '</td></tr>'+
+			   // 	'<tr><td><strong>Metodo firma: </strong></td><td>' + ( (articleDett.anagMetodoFirma == null || articleDett.anagMetodoFirma.descMetodoFirma == null)?'': articleDett.anagMetodoFirma.descMetodoFirma) + '</td></tr>'+
+			  	'<tr><td><strong>Ufficio Creatore: </strong></td><td>' + ( (articleDett.fascicoli == null || articleDett.fascicoli.ufficioCreatore == null || articleDett.fascicoli.ufficioCreatore.descUfficio==null)?'':articleDett.fascicoli.ufficioCreatore.descUfficio) + '</td></tr>'+
+			  	'<tr><td><strong>Utente Creatore: </strong></td><td>' + ( (articleDett.fascicoli == null || articleDett.fascicoli.descUtenteCreatore == null)?'': articleDett.fascicoli.descUtenteCreatore) + '</td></tr>'+
+			  	'<tr><td><strong>Data Creazione:  </strong></td><td>' + ( articleDett.dataArrivoFormatted==null?'':articleDett.dataArrivoFormatted) + '</td></tr>'+
+		  		//'<tr><td><strong>Ufficio capofila: </strong></td><td>' + ( (articleDett.fascicoli == null || articleDett.fascicoli.ufficioCapofila == null || articleDett.fascicoli.ufficioCapofila.descUfficio == null)?'': articleDett.fascicoli.ufficioCapofila.descUfficio) + '</td></tr>'+
+		  		/* '<tr><td><strong>Tipo decreto: </strong></td><td>' + ( (articleDett.fascicoli == null || articleDett.fascicoli.anagTipoDecreto == null ||  articleDett.fascicoli.anagTipoDecreto.descSigla == null)?'': articleDett.fascicoli.anagTipoDecreto.descSigla) + '</td></tr>'+
+		  		'<tr><td><strong>Numero decreto: </strong></td><td>' + ( (articleDett.fascicoli == null || articleDett.fascicoli.numeNumDecreto == null)?'':articleDett.fascicoli.numeNumDecreto) + '</td></tr>'+
+		  		'<tr><td><strong>Tipologia decreto: </strong></td><td>' + ( (articleDett.fascicoli == null || articleDett.fascicoli.anagTipologiaDecreto == null ||  articleDett.fascicoli.anagTipologiaDecreto.descTipologia == null)?'': articleDett.fascicoli.anagTipologiaDecreto.descTipologia) + '</td></tr>'+
+*/				 '<tr><td><strong>Utente modifica: </strong></td><td>' + (articleDett.fkCodiUtenteAgg == null ?'': articleDett.fkCodiUtenteAgg) +'</td></tr>'+
+	           '<tr><td><strong>Data modifica documeto: </strong></td><td>' + (articleDett.dataAggiornamento == null ? '':convertDate(articleDett.dataAggiornamento ) )+ '</td></tr>'+
+		  		//'<tr><td><strong>Modificato Da: </strong></td><td>' + ((articleDett.fascicoli == null || articleDett.fascicoli.descUtenteModifica == null)?'': articleDett.fascicoli.descUtenteModifica) +'</td></tr>'+
+				'<tr><td><strong>Stato Documento:  </strong</td><td>' + ( articleDett.descStatDocumento==null?'':articleDett.descStatDocumento) + '</td></tr>'+
+		  		'<tr><td><strong>Stato Conversione:  </strong></td><td>' + ( articleDett.statConversione==null?'':articleDett.statConversione) + '</td></tr>'+
+			  	'<tr><td><strong>Esito Conversione:  </strong</td><td>' + ( articleDett.statEsitoConversione==null?'':articleDett.statEsitoConversione) + '</td></tr>';
+			
+
+				  	/* 	'<tr><td><strong>Visibilità Cdc: </strong></td><td>' + (articleDett.flagVisibilitaCdc01 == null ?'': articleDett.flagVisibilitaCdc01) +'</td></tr>'+
+		  		'<tr><td><strong>Data presa in carico Cdc:  </strong></td><td>' + ( (articleDett.fascicoli == null || articleDett.fascicoli.dataPresaCaricoCdc == null)?'': articleDett.fascicoli.dataPresaCaricoCdc) + '</td></tr>' +
+		  		'<tr><td><strong>Protocollo ricezione Cdc:  </strong></td><td>' + ( (articleDett.fascicoli == null || articleDett.fascicoli.numeProtRicezioneCdc == null)?'': articleDett.fascicoli.numeProtRicezioneCdc) + '</td></tr>' +
+		  		'<tr><td><strong>Data ricezione Cdc:  </strong></td><td>' + ( (articleDett.fascicoli == null || articleDett.fascicoli.dataRicezioneCdc == null)?'': articleDett.fascicoli.dataRicezioneCdc) + '</td></tr>';
+				 */
+		  		
+		  				  		
+		  		
+				
+  				$("#title_modal_3").append(trHTMLdettTit);	
+  				$("#tabellaDettaglio2").append(trHTMLdett);
+			}
+	  		
+	 
+	  	});
+
+	  	apriPopUpModale(toOpenDett);
+		
+	},
+
+	
+    error: function(){
+    	
+			$("#divErroreDett").append("<div class=rowD align=center><strong>Errore nel recupero dei dati</strong></div>");
+			 
+			apriPopUpModale(toOpenDett);
+    } 
+
+	});
+
+
+}
+
+
+function confermaModaleDett() {
+
+	$('.overlay').fadeOut('fast');
+    $('.box').hide();
+	$('.box_meta').hide();
+}
+
+</script>
+
+ 
+ 
+   <div>
+   
+    <!--<div class="overlay"></div>-->
+      
+    <div id="contModalVis_0" class="box_meta" >
+        
+        <div id="title_modal_3"></div>
+        
+    <div>
+             
+        <div id='divErroreDett'></div>
+       
+            <!--INI SCROLL-->
+             <div class="scroll_table_modal_400" >          
+                            <!-- MODAL TABLE-->             
+          <div class="width100">
+                 <table  class="marg_0px_auto width100" id="tabellaDettaglio2" > 
+                 
+                   		 <caption><span class="nascosto">Tabella Dettaglio</span></caption>  
+                 </table>            
+           </div>
+        </div>
+        <!--END SCROLL-->
+
+        <div class="spacer_sm">&nbsp;</div>
+
+    </div>
+
+     <div class="text-center">
+    
+     <button type="button" class="button small " onClick="javascript:confermaModaleDett();">Torna alla lista</button>
+	
+    </div>
+
+<p class="chiudi">Chiudi X</p>
+
+</div>
+      
+    </div>
+    
+    
+<!-- END MODALE Metadati Fascicolo Fad--> 
+      
+
+
+
+
+<div class="spacer_sm">&nbsp;</div>
+<div class="center padd-bott_5 font_size_riep">
+    <span>&#8226; Tipo: </span>
+    <span class="col_char_user"><strong>DMT</strong></span> 
+  
+    <span>&#8226; Numero:</span>
+    <span class="col_char_user"><strong>3</strong></span> 
+   
+    <span>&#8226; Anno:</span>
+    <span class="col_char_user"><strong>2014</strong></span>    
+</div>
+<div class="spacer_sm_10">&nbsp;</div>
+<div>
+ 	
+ 	<div class="scroll_table_gen">
+		
+<table id="listDocumenti" class="width100">
+<caption>
+				<span class="nascosto"><span class="" style="null">Tabella documenti fascicolo</span></span>
+			</caption>
+<thead>
+<tr>
+<th scope="col">Anteprima</th>
+<th scope="col">Pdf</th>
+<th scope="col">Originale</th>
+<th scope="col">Descrizione</th>
+<th scope="col">Data Creazione</th>
+<th scope="col">Data Modifica</th>
+<th scope="col">Modificato Da</th>
+<th scope="col">Visibilità Cdc</th>
+<th scope="col">Visualizza Metadati</th>
+<th scope="col">Modifica</th>
+<th scope="col">Elimina</th></tr></thead>
+<tbody>
+<tr class="bg_colgroup_1">
+<td class="center"></td>
+<td class="center"><img  src="img/ico_pdf_conv.png" alt="vai"></td>
+<td class="center"><a href="#"><img src="img/ico_download.png" alt=" class="inline" title="aaa"/></a></td>
+<td>Partecipazioni</td>
+<td class="center">18/09/2015</td>
+<td class="center">15/12/2015</td>
+<td>paperino</td>
+<td>Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '0'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+				<a href="javascript: modificaModaleMetadatiDocFad('contModal_0', '0'); " >
+					<img  src="img/upd.png" alt="vai" title="Modifica">
+				</a>
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=0" value="" onclick="return confermaElimina();" id="btnDel1" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr>
+<tr class="bg_colgroup_1">
+<td class="center">
+			
+ 				
+				
+			</td>
+<td class="center">
+				
+				
+					<img  src="img/ico_pdf_conv.png" alt="vai">
+				
+			</td>
+<td class="center">
+				
+				
+				
+				
+				<a href="gestioneFascicoloFAD.do?cmdGET___scaricaOrigFad=1"><img src="img/ico_download.png" alt="" class="inline" title="provaFileName (1).pdf"/></a>
+		
+
+			</td>
+<td>Contratto/i</td>
+<td class="center">22/01/2016</td>
+<td class="center"></td>
+<td></td>
+<td>Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '1'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+				<a href="javascript: modificaModaleMetadatiDocFad('contModal_0', '1'); " >
+					<img  src="img/upd.png" alt="vai" title="Modifica">
+				</a>
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=1" value="" onclick="return confermaElimina();" id="btnDel2" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr>
+<tr class="bg_colgroup_2">
+<td class="center">
+			
+ 				
+				
+			</td>
+<td class="center">
+				
+				
+					<img  src="img/ico_pdf_conv.png" alt="vai">
+
+				
+			</td>
+<td class="center">
+				
+				
+				
+				
+				<a href="gestioneFascicoloFAD.do?cmdGET___scaricaOrigFad=2"><img src="img/ico_download.png" alt="null" class="inline" title="provaFileName (10) (1).pdf" null"/></a>
+		
+
+			</td>
+<td>Atto Decreto</td>
+<td class="center">22/01/2016</td>
+<td class="center"></td>
+<td></td>
+<td>Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '2'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=2" value="" onclick="return confermaElimina();" id="btnDel3" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr>
+<tr class="bg_colgroup_2">
+<td class="center">
+			
+ 				
+				
+			</td>
+<td class="center">
+				
+				
+					<img  src="img/ico_pdf_conv.png" alt="vai">
+				
+			</td>
+<td class="center">
+				
+				
+				
+				
+				<a href="gestioneFascicoloFAD.do?cmdGET___scaricaOrigFad=3"><img src="img/ico_download.png" alt="null" class="inline" title="provaFileName (10).pdf" null"/></a>
+		
+
+			</td>
+<td>Contratto/i</td>
+<td class="center">22/01/2016</td>
+<td class="center"></td>
+<td></td>
+<td>Non Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '3'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+				<a href="javascript: modificaModaleMetadatiDocFad('contModal_0', '3'); " >
+					<img  src="img/upd.png" alt="vai" title="Modifica">
+				</a>
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=3" value="" onclick="return confermaElimina();" id="btnDel4" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr>
+<tr class="bg_colgroup_3">
+<td class="center">
+			
+ 				
+				
+			</td>
+<td class="center">
+				
+				
+					<img  src="img/ico_pdf_conv.png" alt="vai">
+				
+			</td>
+<td class="center">
+				
+				
+				
+				
+				<a href="gestioneFascicoloFAD.do?cmdGET___scaricaOrigFad=4"><img src="img/ico_download.png" alt="null" class="inline" title="provaFileName (11).pdf" null"/></a>
+		
+
+			</td>
+<td>Contratto/i</td>
+<td class="center">22/01/2016</td>
+<td class="center"></td>
+<td></td>
+<td>Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '4'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+				<a href="javascript: modificaModaleMetadatiDocFad('contModal_0', '4'); " >
+					<img  src="img/upd.png" alt="vai" title="Modifica">
+				</a>
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=4" value="" onclick="return confermaElimina();" id="btnDel5" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr>
+<tr class="bg_colgroup_3">
+<td class="center">
+			
+ 				
+				
+			</td>
+<td class="center">
+				
+				
+					<img  src="img/ico_pdf_conv.png" alt="vai">
+				
+			</td>
+<td class="center">
+				
+				
+				
+				
+				<a href="gestioneFascicoloFAD.do?cmdGET___scaricaOrigFad=5"><img src="img/ico_download.png" alt="null" class="inline" title="provaFileName (10) (1).pdf" null"/></a>
+		
+
+			</td>
+<td>Contratto/i</td>
+<td class="center">22/01/2016</td>
+<td class="center"></td>
+<td></td>
+<td>Non Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '5'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+				<a href="javascript: modificaModaleMetadatiDocFad('contModal_0', '5'); " >
+					<img  src="img/upd.png" alt="vai" title="Modifica">
+				</a>
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=5" value="" onclick="return confermaElimina();" id="btnDel6" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr>
+<tr class="bg_colgroup_4">
+<td class="center">
+			
+ 				
+				
+			</td>
+<td class="center">
+				
+				
+					<img  src="img/ico_pdf_conv.png" alt="vai">
+				
+			</td>
+<td class="center">
+				
+				
+				
+				
+				<a href="gestioneFascicoloFAD.do?cmdGET___scaricaOrigFad=6"><img src="img/ico_download.png" alt="null" class="inline" title="provaFileName (1).pdf" null"/></a>
+		
+
+			</td>
+<td>Atto Decreto</td>
+<td class="center">22/01/2016</td>
+<td class="center"></td>
+<td></td>
+<td>Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '6'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=6" value="" onclick="return confermaElimina();" id="btnDel7" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr>
+<tr class="bg_colgroup_4">
+<td class="center">
+			
+ 				
+				
+			</td>
+<td class="center">
+				
+				
+					<img  src="img/ico_pdf_conv.png" alt="vai">
+				
+			</td>
+<td class="center">
+				
+				
+				
+				
+				<a href="gestioneFascicoloFAD.do?cmdGET___scaricaOrigFad=7"><img src="img/ico_download.png" alt="null" class="inline" title="provaFileName (1).pdf" null"/></a>
+		
+
+			</td>
+<td>Contratto/i</td>
+<td class="center">22/01/2016</td>
+<td class="center"></td>
+<td></td>
+<td>Non Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '7'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+				<a href="javascript: modificaModaleMetadatiDocFad('contModal_0', '7'); " >
+					<img  src="img/upd.png" alt="vai" title="Modifica">
+				</a>
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=7" value="" onclick="return confermaElimina();" id="btnDel8" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr>
+<tr class="odd">
+<td class="center">
+			
+ 				
+				
+			</td>
+<td class="center">
+				
+				
+					<img  src="img/ico_pdf_conv.png" alt="vai">
+				
+			</td>
+<td class="center">
+				
+				
+				
+				
+				<a href="gestioneFascicoloFAD.do?cmdGET___scaricaOrigFad=8"><img src="img/ico_download.png" alt="null" class="inline" title="provaFileName (1).pdf" null"/></a>
+		
+
+			</td>
+<td>Appunto/i</td>
+<td class="center">22/01/2016</td>
+<td class="center"></td>
+<td></td>
+<td>Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '8'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+				<a href="javascript: modificaModaleMetadatiDocFad('contModal_0', '8'); " >
+					<img  src="img/upd.png" alt="vai" title="Modifica">
+				</a>
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=8" value="" onclick="return confermaElimina();" id="btnDel9" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr>
+<tr class="even">
+<td class="center">
+			
+ 				
+				
+			</td>
+<td class="center">
+				
+				
+					<img  src="img/ico_pdf_conv.png" alt="vai">
+				
+			</td>
+<td class="center">
+				
+				
+				
+				
+				<a href="gestioneFascicoloFAD.do?cmdGET___scaricaOrigFad=9"><img src="img/ico_download.png" alt="null" class="inline" title="provaFileName (10) (1).pdf" null"/></a>
+		
+
+			</td>
+<td>Atto Decreto</td>
+<td class="center">22/01/2016</td>
+<td class="center"></td>
+<td></td>
+<td>Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '9'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=9" value="" onclick="return confermaElimina();" id="btnDel10" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr>
+<tr class="odd">
+<td class="center">
+			
+ 				
+				
+			</td>
+<td class="center">
+				
+				
+					<img  src="img/ico_pdf_conv.png" alt="vai">
+				
+			</td>
+<td class="center">
+				
+				
+				
+				
+				<a href="gestioneFascicoloFAD.do?cmdGET___scaricaOrigFad=10"><img src="img/ico_download.png" alt="null" class="inline" title="provaFileName (1).pdf" null"/></a>
+		
+
+			</td>
+<td>Atto Decreto</td>
+<td class="center">22/01/2016</td>
+<td class="center"></td>
+<td></td>
+<td>Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '10'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=10" value="" onclick="return confermaElimina();" id="btnDel11" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr>
+<tr class="even">
+<td class="center">
+			
+ 				
+				
+			</td>
+<td class="center">
+				
+				
+					<img  src="img/ico_pdf_conv.png" alt="vai">
+				
+			</td>
+<td class="center">
+				
+				
+				
+				
+				<a href="gestioneFascicoloFAD.do?cmdGET___scaricaOrigFad=11"><img src="img/ico_download.png" alt="null" class="inline" title="provaFileName (1).pdf" null"/></a>
+		
+
+			</td>
+<td>Atto Decreto</td>
+<td class="center">22/01/2016</td>
+<td class="center"></td>
+<td></td>
+<td>Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '11'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=11" value="" onclick="return confermaElimina();" id="btnDel12" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr>
+<tr class="odd">
+<td class="center">
+			
+ 				
+				
+			</td>
+<td class="center">
+				
+				
+					<img  src="img/ico_pdf_conv.png" alt="vai">
+				
+			</td>
+<td class="center">
+				
+				
+				
+				
+				<a href="gestioneFascicoloFAD.do?cmdGET___scaricaOrigFad=12"><img src="img/ico_download.png" alt="null" class="inline" title="provaFileName (1).pdf" null"/></a>
+		
+
+			</td>
+<td>Appunto/i</td>
+<td class="center">22/01/2016</td>
+<td class="center"></td>
+<td></td>
+<td>Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '12'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+				<a href="javascript: modificaModaleMetadatiDocFad('contModal_0', '12'); " >
+					<img  src="img/upd.png" alt="vai" title="Modifica">
+				</a>
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=12" value="" onclick="return confermaElimina();" id="btnDel13" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr>
+<tr class="even">
+<td class="center">
+			
+ 				
+				
+			</td>
+<td class="center">
+				
+				
+					<img  src="img/ico_pdf_conv.png" alt="vai">
+				
+			</td>
+<td class="center">
+				
+				
+				
+				
+				<a href="gestioneFascicoloFAD.do?cmdGET___scaricaOrigFad=13"><img src="img/ico_download.png" alt="null" class="inline" title="provaFileName (1).pdf" null"/></a>
+		
+
+			</td>
+<td>Atto Decreto</td>
+<td class="center">22/01/2016</td>
+<td class="center"></td>
+<td></td>
+<td>Visibile</td>
+<td class="center">
+				<a href="javascript: visualizzaModaleMetadatiDocFad('contModalVis_0', '13'); " >
+					<img  src="img/ico_view_det.png" alt="vaiVis" title="Visualizzazione">
+				</a>
+			</td>
+<td class="center">
+			
+			
+			</td>
+<td class="center">
+				<input type="submit" name="cmdPOST___deleteDocFad?deleteDocFadRiga=13" value="" onclick="return confermaElimina();" id="btnDel14" class="subm_none_del" title="Elimina"/>
+				
+			</td></tr></tbody></table>
+	</div>
+
+	
+
+	
+		<div class="left">
+        	<input type="submit" name="cmdPOST___refreshLista" value="..." class="subm_update posit-butt_up" title="Aggiorna lista"/>
+        </div>
+		<div>&nbsp;</div>
+		<div class="center color_grey">
+			<span>Record totali:</span><span class="col_char_user"><strong>&nbsp;14</strong></span><span>&nbsp;- Pagina&nbsp;<strong>1</strong>&nbsp;di&nbsp;<strong>1</strong></span>
+		</div>
+	
+
+</div> 
+
+<div class="spacer_sm">&nbsp;</div>
+
+
+<div class="large-12 columns">
+<div class="spacer_sm">&nbsp;</div>
+<div class="col_char_user obb_fields">I campi contrassegnati con il simbolo * sono obbligatori</div>
+
+	<fieldset>
+		<legend>Upload</legend>
+  
+		
+			
+		<div class="row">
+			<div class="large-12 columns">
+		
+				<div class="row">
+					<div class="small-4 columns">
+						<label for="tipoDoc" class="" style="null">* Tipo Documento</label>
+	
+						<select id="tipoDoc" name="tipoDoc" onchange="changeTipoDocumento();">
+							<option value="">-- Selezionare un tipo documento --</option>
+	
+							
+								<option value="AD02">Allegato IGB</option>
+							
+								<option value="AD01">Atto Decreto</option>
+							
+						</select>
+	
+					</div>
+				</div>
+			</div>
+		</div>
+  
+  
+	   
+			
+			
+		<div class="row">
+			<div class="left" style="display: none;">
+           		<input type="submit" name="cmdPOST___caricaDescrizioneDocumenti" value="..." id="caricaDesc" class="subm_update posit-butt_up" title="Carica combo Tipologia decreto"/>
+           	</div>
+			<div class="large-6 columns">
+				<label for="desc" class="" style="null">* Descrizione Documento</label>
+				
+				<select id="desc" name="desc" onchange="changeVisibilitaDocumento();">
+					<option value="">-- Selezionare una descrizione --</option>
+
+					
+				</select>
+			</div>
+			
+		</div>
+				
+		
+		
+		
+		
+				<div class="row">
+				
+					<div class="left" style="display: none;">
+		           		<input type="submit" name="cmdPOST___caricaVisibilitaDocumenti" value="..." id="caricaVisibilita" class="subm_update posit-butt_up" title="Carica combo Visibilita decreto"/>
+		           	</div>
+					<div class="small-3 columns left">
+							<label for="descVisibilitaCdcDisabled" class="" style="null">* Visibilità Cdc</label>
+				       		 <select id="descVisibilitaCdcDisabled" name="descVisibilitaCdcDisabled" disabled="disabled">
+				       				
+				        	 </select>
+				        	<input id="descVisibilitaCdc" name="descVisibilitaCdc" type="hidden" value=""/>
+					</div>
+				</div>
+		
+		
+		
+		
+		<div class="row">
+			<div class="large-6 columns">
+				<label for="tipoOperazione" class="" style="null">*Tipo Operazione</label>
+				
+				<select id="tipoOperazione" name="tipoOperazione">
+					
+							
+				</select>
+			</div>
+		
+		</div>
+		
+		<div class="row">
+			<div class="small-5 columns">
+        			
+        			<input id="upFile" name="upFile" class="text_upload" type="text" value=""/> 
+        			
+			</div>
+		</div>
+			
+		<div class="row">
+      		<div class="small-10 columns">
+      	 		<input type="submit" name="cmdPOST___uploadFile" value="Upload" onclick="return confermaUpload();" id="btnUpload" class="button small"/>      	 		
+      	 	</div>
+		</div>
+	</fieldset>
+</div>
+
+		
+<div class="row center">
+	<input type="submit" name="cmdPOST___backToFadInitialPageFromFad?idFad=46" value="Indietro" id="btnIndietro" class="button small"/>
+ 
+</div>
+
+<script type="text/javascript">
+	function confermaUpload(){
+		
+		if(document.getElementById('tipoDoc').value == 'AD01'){
+			var r = confirm('Nel caso in cui sia già presente un documento di tipo Atto Decreto verrà sovrascritto. Procedere?');
+			
+			if ( r == false ){
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+
+	}
+	
+	function confermaElimina(){
+		
+		var r = confirm('Confermi la cancellazione del documento?');
+		
+		if ( r == false ){
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	}
+	
+	function changeTipoDocumento(){
+		$("#caricaDesc").click();
+		
+	}
+	
+	function changeVisibilitaDocumento(){
+		$("#caricaVisibilita").click();
+		
+	}
+	
+	
+	
+	
+</script>
+
+</form>
+
+		
+			</div>
+			<!-- Fine large-12 columns -->
+			</section>
+		<!-- Fine Sezione lanci-servizi -->
+	
+	
+	
+			
+
+
+ 
+ <script type="application/javascript">
+
+function caricaModaleAnteprima(index, listName){
+	size=$("#anteprima").length ;	
+	if( size>0  ) {	
+		$("#anteprima").empty();
+	}
+
+	
+	$.ajax({
+		
+		 
+		url: "modaliAnteprimaDocumenti.do?cmdPOST___modaleAnteprimaDocumenti=modaleAnteprimaDocumenti&index="+index+"&listName="+listName ,
+		
+	    type: 'POST',
+	    data: {
+	        json: jsonData
+	    },
+	    success: function (response) { 
+	        var trHTMLdett = '';
+	
+	  	  $.each(response, function (i, articleDett) {
+		  		trHTMLdett = '<img id="imgPreView" alt="Anteprima documento" src="data:image/jpg;base64,'+articleDett+'">'
+  				$("#anteprima").append(trHTMLdett);
+	  	});
+
+		apriPopUpModale("modale_anteprima");
+		
+	},
+
+	
+    error: function(){
+    	
+			
+    } 
+
+	});
+
+
+}
+
+
+function confermaModalePreView() {
+
+	$('.overlay').fadeOut('fast');
+    $('.box').hide();
+}
+
+</script>
+
+ 
+ 
+   <div>
+   
+    <!--<div class="overlay"></div>-->
+      
+    <div id="modale_anteprima" class="box" >
+        
+        
+         <div class="spacer_sm">&nbsp;</div>
+    <div id="anteprima">
+    
+    	
+             
+        <!--END SCROLL-->
+
+
+    </div>
+
+        <div class="spacer_sm">&nbsp;</div>
+     <div class="text-center">
+    
+     <button type="button" class="button small " onClick="javascript:confermaModalePreView();">Torna alla lista</button>
+	
+    </div>
+
+<p class="chiudi">Chiudi X</p>
+
+</div>
+      
+    </div>
+    
+    
+<!-- END MODALE ANTEPRIMA-->  
+
+
+			
+			
+
+ 
+
+		<!-- footer.jsp -->
+<footer>
+    <div class="row">
+    	<div class="large-12 columns">
+    		<ul class="inline-list left">
+    			<li><a href="jsp/common/accessibilita.jsp">Accessibilità</a></li>
+<!--     			<li><a href="#">Note legali</a></li>
+    			<li><a href="#">Privacy</a></li> -->
+    		</ul>
+    		<p class="right">Copyright 2015 © RGS Ragioneria Generale dello Stato</p>
+    	</div>
+    </div>
+</footer>
+
+	
+		</div>
+		<script src="jquery.js"> </script>
+	
+		<script src="foundation.js"> </script>
+	
+		<script>
+		 $(document).foundation();
+		</script>
+		<script type="text/javascript">
+		 $(window).load(function() {
+		  $('#slideshow').orbit();
+		 });
+		</script>
+
+<!--   INIZIO GESTIONE MODALI --> 	
+	<script type="text/javascript">
+	    function apriPopUpModale(toOpen) {
+	        $('.overlay').fadeIn('fast');
+	        $('#' + toOpen).fadeIn('slow');
+	    }
+	
+	    function selectAll(){
+	    	$('.checkPlut').prop('checked',true);
+	    }
+	    
+	    function unselectAll(){
+	    	$('.checkPlut').prop('checked',false);
+	    }
+	    
+	    function close(){
+	        $('.overlay').fadeOut('fast');
+	        $('.box_pin').hide();
+	    }
+
+	    //conversione di una data dal formato Date nel formato dd/MM/yyyy
+	    function convertDate(inputFormat) {
+	   	  function pad(s) { return (s < 10) ? '0' + s : s; }
+	   	  var d = new Date(inputFormat);
+	   	  return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+	    }
+	    
+	    
+	    $(document).ready(function () {
+	        $(".apri").click(function () {
+	            apriPopUpModale();
+	        });
+	
+	        $(".chiudi").click(
+	        function () {
+	            $('.overlay').fadeOut('fast');
+	            $('.box').hide();
+				$('.box_meta').hide();
+				$('.box_meta_35').hide();
+				
+	
+	        });
+	
+	        //chiusura emergenza
+	        $(".overlay").click(
+	        function () {
+	            $(this).fadeOut('fast');
+	            $('.box').hide();
+				$('.box_meta').hide();
+				$('.box_meta_35').hide();
+				$('.box_pin').hide();
+	        });
+	        
+	         $(".chiudi_pin").click(
+        	function () {
+        	 close();
+        	});
+	        
+	        $("#selectAll").click(function () {
+	            selectAll();
+	        });
+	        
+	        $("#unselectAll").click(function () {
+	            unselectAll();
+	        });
+	        
+	        $("#undo_pin").click(function () {
+	            close();
+	        });
+	        
+	        
+	    });
+	
+	</script>
+	
+<!--   FINE GESTIONE MODALI --> 	
+	
+
+	
+	</body>
+</html>

@@ -1,0 +1,552 @@
+package it.mef.bilancio.demdec.web.spring.controller;
+
+import static it.almavivaitalia.bsn.sh.utils.ReflectionUtilLev2.getInputStreamFromClasspath;
+import it.almavivaitalia.bilancio.commons.to.CodeDescriptionTO;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.almavivaitalia.bsn.sh.paginator.StaticPaginatorImpl;
+import it.almavivaitalia.bsn.sh.utils.ParseUtil;
+import it.almavivaitalia.web.sh.export.FieldFormatter;
+import it.almavivaitalia.web.sh.export.TableModel;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.almavivaitalia.web.sh.utils.ContextHelper;
+import it.almavivaitalia.web.sh.utils.PageMessages;
+import it.almavivaitalia.web.sh.utils.PropertyKey;
+import it.almavivaitalia.web.sh.utils.Util;
+import it.mef.bilancio.demdec.manager.IntCronologicoManager;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.web.spring.form.IntCronologicoForm;
+import it.mef.bilancio.demdec.to.CodeDescriptionTitleTO;
+import it.mef.bilancio.demdec.to.CronologicoSearchTO;
+import it.mef.bilancio.demdec.to.CronologicoTO;
+import it.mef.bilancio.demdec.to.CronologicoTransExcelTO;
+import it.mef.bilancio.demdec.to.CronologicoTransTO;
+import it.mef.bilancio.demdec.to.CronologicoValoriTO;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping (value=ConstantsRequestMapping.INT_CRONOLOGICO)
+public class IntCronologicoController extends  AbstractDemFormController implements WebConstants,SessionAttributes{
+	// View //
+	private String startView;
+	// Manager //
+	@Autowired
+	private ListManager listManager; 
+	@Autowired
+	private IntCronologicoManager cronologicoManager;	
+	// Start Controller //
+	@Override
+	public String startController(Context context) throws Throwable 
+	{	
+		context.setCurrentNode("DemDec.menu.IntCronologico");
+		context.setDataModel(LIST_UTENTI, listManager.loadAllUtenti());
+		context.setDataModel(LIST_FUNZIONI, listManager.loadFunzioni());
+		
+		PageMessages pageMessages = new PageMessages(getMessageSource());
+		
+		ContextHelper.setSessionModel(OBJECT_PAGE_MESSAGES, pageMessages, context.getRequest());
+		
+		/*List<CodeDescriptionTitleTO> list = new ArrayList<CodeDescriptionTitleTO>();
+		list.add(new CodeDescriptionTitleTO("0",  " ", " "));
+		list.add(new CodeDescriptionTitleTO("2",  "bis", "bis"));
+		list.add(new CodeDescriptionTitleTO("3",  "ter", "ter"));
+		list.add(new CodeDescriptionTitleTO("4",  "quat.", "quater"));
+		list.add(new CodeDescriptionTitleTO("5",  "quin.", "quinquies"));
+		list.add(new CodeDescriptionTitleTO("6",  "sexi.", "sexies"));
+		list.add(new CodeDescriptionTitleTO("7",  "sept.", "septies"));
+		list.add(new CodeDescriptionTitleTO("8",  "octi.", "octies"));
+		list.add(new CodeDescriptionTitleTO("9",  "novi.", "novies"));
+		list.add(new CodeDescriptionTitleTO("10", "deci.", "decies"));
+		list.add(new CodeDescriptionTitleTO("11", "unde.", "undecies"));
+		list.add(new CodeDescriptionTitleTO("12", "duod.", "duodecies"));
+		list.add(new CodeDescriptionTitleTO("13", "ter d.", "ter decies"));
+		list.add(new CodeDescriptionTitleTO("14", "qua. d.", "quater decies"));
+		list.add(new CodeDescriptionTitleTO("15", "qui. d.", "quinquies decies"));
+		list.add(new CodeDescriptionTitleTO("16", "sex. d.", "sexies decies"));
+		list.add(new CodeDescriptionTitleTO("17", "sep. d.", "septies decies"));
+		list.add(new CodeDescriptionTitleTO("18", "oct. d.", "octies decies"));
+		list.add(new CodeDescriptionTitleTO("19", "nov. d.", "novies decies"));
+		list.add(new CodeDescriptionTitleTO("20", "vic.", "vicies"));
+		list.add(new CodeDescriptionTitleTO("21", "vic. s.", "vicies semel"));
+		list.add(new CodeDescriptionTitleTO("22", "vic. b.", "vicies bis"));
+		list.add(new CodeDescriptionTitleTO("23", "vic. t.", "vicies ter"));
+		list.add(new CodeDescriptionTitleTO("24", "vic. q.", "vicies quater"));
+		list.add(new CodeDescriptionTitleTO("25", "vic. q.", "vicies quinquies"));
+		list.add(new CodeDescriptionTitleTO("26", "vic. s.", "vicies sexies"));
+		list.add(new CodeDescriptionTitleTO("27", "vic. s.", "vicies septies"));
+		list.add(new CodeDescriptionTitleTO("28", "duod.", "duodetricies"));
+		list.add(new CodeDescriptionTitleTO("29", "unde.", "undetricies"));
+		list.add(new CodeDescriptionTitleTO("30", "tric.", "tricies"));
+		list.add(new CodeDescriptionTitleTO("999","no.no.no.", "nongenti nonaginta novem"));
+		context.setDataModel(SessionAttributes.LIST_TIPO_SUB_AUT, list);
+		context.removeDataModel(SessionAttributes.SHOW_CAP_PG);
+		context.removeDataModel(SessionAttributes.SHOW_AUTOR);
+		context.removeDataModel(SessionAttributes.SHOW_STRUMENTO);
+		context.removeDataModel(SessionAttributes.SHOW_SOTTO_STRUMENTO);
+		context.removeDataModel(SessionAttributes.SHOW_BUTTON_FILTRI);
+		context.removeDataModel(SessionAttributes.SHOW_LABEL_FILTRI);
+		context.removeDataModel(SessionAttributes.SHOW_PL);
+		context.removeDataModel(SessionAttributes.SHOW_PARTITA);*/
+		return startView;
+	}
+	// Utente //
+	public String onSelectorUtente (Context context) throws Throwable {			
+		String view = context.startItemSelector((List<CodeDescriptionTO>)cronologicoManager.loadUtente(),"backFromSelectorUtente", "UtenteFormatter");
+		return view;
+	}
+	public String backFromSelectorUtente (Context context) throws Throwable	{
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		CodeDescriptionTO selected = (CodeDescriptionTO) context.getSelectedItem();
+		if (selected != null) {		
+			form.setUtente(selected.getDescription());
+		}		
+		return startView;
+	}
+	// Applicazione //
+	public String onSelectorApplicazione (Context context) throws Throwable {			
+		String view = context.startItemSelector((List<CronologicoSearchTO>)cronologicoManager.loadApplication(),"backFromSelectorApplicazione", "ApplicazioneFormatter");
+		return view;
+	}
+	public String backFromSelectorApplicazione (Context context) throws Throwable	{
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();		
+		CronologicoSearchTO selected = (CronologicoSearchTO) context.getSelectedItem();
+		if (selected != null) {		
+  		 form.setCodiApplicazione(selected.getSequIdApplication().toString());
+		 form.setDescApplicazione(selected.getCodiApplication());
+		}		
+		return startView;
+	}
+	// Categoria //
+	public String onSelectorCategoria (Context context) throws Throwable {
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();		
+		String view = startView;
+		if (form.isValid()){
+		  if (form.getCodiApplicazione() != null) {
+	        view = context.startItemSelector((List<CronologicoSearchTO>)cronologicoManager.loadCategoria(Integer.valueOf(form.getCodiApplicazione())),"backFromSelectorCategoria", "CategoriaFormatter");
+		  }
+		}
+	    return view;
+	}
+	public String backFromSelectorCategoria (Context context) throws Throwable	{
+	  IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+	  CronologicoSearchTO selected = (CronologicoSearchTO) context.getSelectedItem();
+	  if (selected != null) {		
+		form.setCodiCategoria(selected.getSequIdHelpCategoria().toString());
+		form.setDescCategoria(selected.getCodiHelpCategoria());
+	  }		
+	  return startView;
+	}
+	// Funzione //
+	public String onSelectorFunzione (Context context) throws Throwable {
+	  IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+	  String view = startView;
+	  if (form.isValid()){
+		if (form.getCodiApplicazione() != null && form.getCodiCategoria() != null) {
+	      view = context.startItemSelector((List<CronologicoSearchTO>)cronologicoManager.loadFunzione(Integer.valueOf(form.getCodiApplicazione()),Integer.valueOf(form.getCodiCategoria())),"backFromSelectorFunzione", "FunzioneFormatter");
+		}
+	  }
+	  return view;
+	}
+	public String backFromSelectorFunzione (Context context) throws Throwable {
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		CronologicoSearchTO selected = (CronologicoSearchTO) context.getSelectedItem();
+		if (selected != null) {		
+		  form.setCodiFunzione(selected.getCodiNome());
+		  form.setDescFunzione(selected.getDescDescr());
+		  form.setCodiMenu(selected.getCodiMenu());
+		}		
+		return startView;
+	}
+	// Filtri Filtri Filtri Filtri Filtri Filtri Filtri Filtri //
+	public String onEliminaFiltri (Context context) throws Throwable {
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		form.setFiltroCapPg("0");
+		form.setFiltroAutorizzazione("0");
+		form.setFiltroStrumento("0");
+		form.setFiltroSottoStrumento("0");
+		form.setFiltroPl("0");
+		form.setFiltroPartita("0");
+		context.removeDataModel(SessionAttributes.SHOW_CAP_PG);
+		context.removeDataModel(SessionAttributes.SHOW_AUTOR);
+		context.removeDataModel(SessionAttributes.SHOW_STRUMENTO);
+		context.removeDataModel(SessionAttributes.SHOW_SOTTO_STRUMENTO);
+		context.removeDataModel(SessionAttributes.SHOW_BUTTON_FILTRI);
+		context.removeDataModel(SessionAttributes.SHOW_LABEL_FILTRI);
+		context.removeDataModel(SessionAttributes.OBJECT_CRONOLOGICO);
+		context.removeDataModel(SessionAttributes.SHOW_PL);
+		context.removeDataModel(SessionAttributes.SHOW_PARTITA);
+		form.resetFiltri();
+		return startView;
+	}
+	public String onApriFiltri (Context context) throws Throwable {
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		context.removeDataModel(SessionAttributes.SHOW_CAP_PG);
+		context.removeDataModel(SessionAttributes.SHOW_AUTOR);
+		context.removeDataModel(SessionAttributes.SHOW_STRUMENTO);
+		context.removeDataModel(SessionAttributes.SHOW_SOTTO_STRUMENTO);
+		context.removeDataModel(SessionAttributes.SHOW_LABEL_FILTRI);
+		context.removeDataModel(SessionAttributes.OBJECT_CRONOLOGICO);
+		context.removeDataModel(SessionAttributes.SHOW_PL);
+		context.removeDataModel(SessionAttributes.SHOW_PARTITA);
+		form.resetFiltri();
+		int chk = 0;
+
+		if (form.getFiltroCapPg() != null){
+			context.setDataModel(SessionAttributes.SHOW_CAP_PG,true);
+			chk = 1;
+		}
+		if (form.getFiltroAutorizzazione() != null){
+			context.setDataModel(SessionAttributes.SHOW_AUTOR,true);
+			chk = 1;
+		}
+		if (form.getFiltroStrumento() != null){
+			context.setDataModel(SessionAttributes.SHOW_STRUMENTO,true);
+			chk = 1;
+		}
+		if (form.getFiltroSottoStrumento() != null){
+			context.setDataModel(SessionAttributes.SHOW_SOTTO_STRUMENTO,true);
+			chk = 1;
+		}
+		if (form.getFiltroPl() != null){
+			context.setDataModel(SessionAttributes.SHOW_PL,true);
+			chk = 1;
+		}
+		if (form.getFiltroPartita() != null){
+			context.setDataModel(SessionAttributes.SHOW_PARTITA,true);
+			chk = 1;
+		}
+		if (chk == 1){
+			context.setDataModel(SessionAttributes.SHOW_BUTTON_FILTRI,true);
+		}		
+		return startView;
+	}
+	public String onChiudiFiltri (Context context) throws Throwable {
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		context.removeDataModel(SessionAttributes.SHOW_CAP_PG);
+		context.removeDataModel(SessionAttributes.SHOW_AUTOR);
+		context.removeDataModel(SessionAttributes.SHOW_STRUMENTO);
+		context.removeDataModel(SessionAttributes.SHOW_SOTTO_STRUMENTO);
+		context.removeDataModel(SessionAttributes.SHOW_BUTTON_FILTRI);
+		context.removeDataModel(SessionAttributes.SHOW_LABEL_FILTRI);
+		context.removeDataModel(SessionAttributes.OBJECT_CRONOLOGICO);
+		context.removeDataModel(SessionAttributes.SHOW_PL);
+		context.removeDataModel(SessionAttributes.SHOW_PARTITA);
+		form.resetFiltri();
+		return startView;
+	}
+	// LOV FILTRI CAPITOLO //
+	public String onSelectorCapitolo (Context context) throws Throwable {
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		String view = startView;		
+		view = context.startItemSelector((List<CronologicoTO>)cronologicoManager.loadCapitoli(form.getCapAnno()==""?null:Short.valueOf(form.getCapAnno())),"backFromSelectorCapitolo", "CapitoloFormatter");		
+	    return view;
+	}
+	public String backFromSelectorCapitolo (Context context) throws Throwable {
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		CronologicoTO selected = (CronologicoTO) context.getSelectedItem();
+		if (selected != null) {		
+		  form.setCapAnno(selected.getAnnoEseCap().toString());
+		  form.setCapStp(selected.getNumeStpCap().toString());
+		  form.setCapApp(selected.getNumeAppCap().toString());		
+		}		
+		return startView;
+	}
+	// LOV FILTRO AUT //
+	public String onSelectorTipoAut (Context context) throws Throwable {
+		String view = startView;		
+		view = context.startItemSelector((List<CronologicoTO>)cronologicoManager.loadAutor(),"backFromSelectorTipoAut", "AutorFormatter");		
+	    return view;
+	}
+	public String backFromSelectorTipoAut (Context context) throws Throwable {
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		CronologicoTO selected = (CronologicoTO) context.getSelectedItem();
+		if (selected != null) {		
+		  form.setAutDescTipo(selected.getDescAutor());
+		  form.setAutTipo(selected.getNumeTipoAut().toString());		  
+		}		
+		return startView;
+	}
+	// LOV FILTRI STRUMENTO //
+	public String onSelectorTipoStr (Context context) throws Throwable {
+		String view = startView;		
+		view = context.startItemSelector((List<CronologicoTO>)cronologicoManager.loadStrumenti(),"backFromSelectorTipoStr", "StrFormatter");		
+	    return view;
+	}
+	public String backFromSelectorTipoStr (Context context) throws Throwable {
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		CronologicoTO selected = (CronologicoTO) context.getSelectedItem();
+		if (selected != null) {		
+		  form.setStrTipo(selected.getNumeTipoStr().toString());
+		  form.setStrDescTipo(selected.getDescStrumento().toString());		  
+		}		
+		return startView;
+	}
+	// LOV FILTRI SOTTO STRUMENTO //
+	public String onSelectorTipoSst (Context context) throws Throwable {
+		String view = startView;		
+		view = context.startItemSelector((List<CronologicoTO>)cronologicoManager.loadSottoStrumenti(),"backFromSelectorTipoSst", "SstFormatter");		
+	    return view;
+	}
+	public String backFromSelectorTipoSst (Context context) throws Throwable {
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		CronologicoTO selected = (CronologicoTO) context.getSelectedItem();
+		if (selected != null) {		
+		  form.setSstTipo(selected.getNumeTipoSst().toString());
+		  form.setSstDescTipo(selected.getDescSottoStrumento().toString());		  
+		}		
+		return startView;
+	}
+	// SALVA FILTRI //
+	public String onSalvaFiltri (Context context) throws Throwable {
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		CronologicoTO to = new CronologicoTO();
+		String filtro = "";
+		if (form.getFiltroCapPg() != null){
+			if (form.ctrCapitolo()){
+			  to.setAnnoEseCap(form.getCapAnno()==""?null:Short.valueOf(form.getCapAnno()));
+			  to.setNumeStpCap(form.getCapStp()==""?null:Integer.valueOf(form.getCapStp()));
+			  to.setNumeAppCap(form.getCapApp()==""?null:Integer.valueOf(form.getCapApp()));
+			  to.setNumeEosCap(form.getCapEos()==""?null:Integer.valueOf(form.getCapEos()));
+			  to.setNumeNumCap(form.getCapNume()==""?null:Short.valueOf(form.getCapNume()));
+			  to.setNumePg(form.getNumePg()==""?null:Integer.valueOf(form.getNumePg()));
+			  filtro = "Capitolo/Pg      : "+(form.getCapAnno()==""?"":form.getCapAnno())+" "+
+					                    (form.getCapStp()==""?"":form.getCapStp())+" " +
+					                    (form.getCapApp()==""?"":form.getCapApp())+" " +
+					                    (form.getCapEos()==""?"":form.getCapEos())+" " +
+					                    (form.getCapNume()==""?"":form.getCapNume())+" " +
+					                    (form.getNumePg()==""?"":form.getNumePg())+" <br/> ";
+		   }
+		}
+		if (form.getFiltroAutorizzazione() != null){
+			List<CodeDescriptionTitleTO> list = context.getModel(SessionAttributes.LIST_TIPO_SUB_AUT);
+			if (form.ctrAutorizzazione(list)){
+			  to.setAnnoEseAut(form.getAutAnno()==""?null:Short.valueOf(form.getAutAnno()));
+			  to.setNumeTipoAut(form.getAutTipo()==""?null:Integer.valueOf(form.getAutTipo()));
+			  to.setNumeNumAut(form.getAutNume()==""?null:Integer.valueOf(form.getAutNume()));
+			  to.setNumeArtAut(form.getAutArt()==""?null:Integer.valueOf(form.getAutArt()));
+			  to.setNumeSubArtAut(form.getAutDescSubArt()=="0"?null:Integer.valueOf(form.getAutDescSubArt()));
+			  to.setNumeCommaAut(form.getAutComma()==""?null:Integer.valueOf(form.getAutComma()));
+			  to.setNumeSubCommaAut(form.getAutDescSubComma()=="0"?null:Integer.valueOf(form.getAutDescSubComma()));
+			  to.setCodiPuntoAut(form.getAutPunto()==""?null:form.getAutPunto());
+			  to.setNumeSubPuntoAut(form.getAutDescSubPunto()=="0"?null:Integer.valueOf(form.getAutDescSubPunto()));
+			  filtro = filtro+"Autorizzazione  : "+(form.getAutDescTipo()==""?"":form.getAutDescTipo())+" "+
+	                    (form.getAutNume()==""?"":form.getAutNume())+" " +
+	                    (form.getAutAnno()==""?"":form.getAutAnno())+" " +
+	                    (form.getAutArt()==""?"":form.getAutArt())+" " +
+	                    (form.getAutDescSubArt()=="0"?"":list.get(Integer.valueOf(form.getAutDescSubArt())).getDescription())+" " +
+	                    (form.getAutComma()==""?"":form.getAutComma())+" " +
+	                    (form.getAutDescSubComma()=="0"?"":list.get(Integer.valueOf(form.getAutDescSubComma())).getDescription())+" " +
+	                    (form.getAutPunto()==""?"":form.getAutPunto())+" " +
+	                    (form.getAutDescSubPunto()=="0"?"":list.get(Integer.valueOf(form.getAutDescSubPunto())).getDescription())+" <br/> ";
+			}	                  
+		}
+		if (form.getFiltroStrumento() != null){
+			if (form.ctrStrumento()){
+			  to.setAnnoEseStr(form.getStrAnno()==""?null:Short.valueOf(form.getStrAnno()));
+			  to.setNumeTipoStr(form.getStrTipo()==""?null:Integer.valueOf(form.getStrTipo()));
+			  to.setNumeNumStr(form.getStrNume()==""?null:Integer.valueOf(form.getStrNume()));
+			  filtro = filtro+"Strumento       : "+(form.getStrDescTipo()==""?"":form.getStrDescTipo())+" "+
+	                    (form.getStrNume()==""?"":form.getStrNume())+" " +
+	                    (form.getStrAnno()==""?"":form.getStrAnno())+" <br/> ";
+			}
+		}
+		if (form.getFiltroSottoStrumento() != null){
+			if (form.ctrSottoStrumento()){
+			  to.setAnnoEseSst(form.getSstAnno()==""?null:Short.valueOf(form.getSstAnno()));
+			  to.setNumeTipoSst(form.getSstTipo()==""?null:Integer.valueOf(form.getSstTipo()));
+			  to.setNumeNumSst(form.getSstNume()==""?null:Integer.valueOf(form.getSstNume()));
+			  filtro = filtro+"Sotto Strumento : "+(form.getSstDescTipo()==""?"":form.getSstDescTipo())+" "+
+	                    (form.getSstNume()==""?"":form.getSstNume())+" " +
+	                    (form.getSstAnno()==""?"":form.getSstAnno())+" <br/> ";
+			}
+		}
+		if (form.getFiltroPartita() != null){
+			if (form.ctrPartita()){
+			  to.setAnnoEsePar(form.getParEseAnnoEse()==""?null:Short.valueOf(form.getParEseAnnoEse()));
+			  to.setAnnoPrimaiscPar(form.getParAnno()==""?null:Short.valueOf(form.getParAnno()));
+			  to.setNumePrimaiscPar(form.getParNumero()==""?null:Integer.valueOf(form.getParNumero()));
+			  filtro = filtro+"Partita : "+(form.getParEseAnnoEse()==""?"":form.getParEseAnnoEse())+" "+
+	                    (form.getParAnno()==""?"":form.getParAnno())+" " +
+	                    (form.getParNumero()==""?"":form.getParNumero())+" <br/> ";
+			}
+		}
+		if (form.getFiltroPl() != null){
+			if (form.ctrPl()){
+			  to.setAnnoPlPle(form.getPlAnno()==""?null:Short.valueOf(form.getPlAnno()));
+			  to.setNumePlPle(form.getPlNumero()==""?null:Short.valueOf(form.getPlNumero()));
+			  filtro = filtro+"Provv. Leg : "+(form.getPlAnno()==""?"":form.getPlAnno())+" "+
+	                   	                    (form.getPlNumero()==""?"":form.getPlNumero())+" <br/> ";
+			}
+		} 		
+		context.setDataModel(SessionAttributes.SHOW_LABEL_FILTRI, filtro);
+		context.setDataModel(SessionAttributes.OBJECT_CRONOLOGICO,to);
+		context.removeDataModel(SessionAttributes.SHOW_CAP_PG);
+		context.removeDataModel(SessionAttributes.SHOW_AUTOR);
+		context.removeDataModel(SessionAttributes.SHOW_STRUMENTO);
+		context.removeDataModel(SessionAttributes.SHOW_SOTTO_STRUMENTO);
+		context.removeDataModel(SessionAttributes.SHOW_BUTTON_FILTRI);
+		context.removeDataModel(SessionAttributes.SHOW_PARTITA);
+		context.removeDataModel(SessionAttributes.SHOW_PL);				
+		return startView;
+	}
+	// BOTTONI DI RICERCA //
+	public String onNuovaRicerca (Context context) throws Throwable {
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		form.reset();
+		context.removeDataModel(SessionAttributes.SHOW_CAP_PG);
+		context.removeDataModel(SessionAttributes.SHOW_AUTOR);
+		context.removeDataModel(SessionAttributes.SHOW_STRUMENTO);
+		context.removeDataModel(SessionAttributes.SHOW_SOTTO_STRUMENTO);
+		context.removeDataModel(SessionAttributes.SHOW_PL);
+		context.removeDataModel(SessionAttributes.SHOW_PARTITA);
+		context.removeDataModel(SessionAttributes.SHOW_BUTTON_FILTRI);
+		context.removeDataModel(SessionAttributes.SHOW_LABEL_FILTRI);
+		context.removeDataModel(SessionAttributes.OBJECT_CRONOLOGICO);
+		context.removeDataModel(SessionAttributes.CRONOLOGICO_VIEW_LIST);
+		context.removeDataModel(SessionAttributes.OBJECT_PAGINATOR);			
+		context.removeDataModel(SessionAttributes.LIST_TRANSAZIONI);
+		context.removeDataModel(SessionAttributes.LIST_VALORI);
+		context.removeDataModel(SessionAttributes.INT_SEL_ROW);
+		return startView;
+	}	
+	public String onEseguiRicercaCrono (Context context) throws Throwable {
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		if (form.isValid()){
+		  context.removeDataModel(SessionAttributes.CRONOLOGICO_VIEW_LIST);
+		  context.removeDataModel(SessionAttributes.OBJECT_PAGINATOR);
+		  context.removeDataModel(SessionAttributes.LIST_TRANSAZIONI);				
+		  CronologicoTO to = context.getModel(SessionAttributes.OBJECT_CRONOLOGICO);
+		  java.util.Date dataA = null;
+		  String oraDa = null;
+		  String oraA = null;
+		  if (to == null){
+  			  to = new CronologicoTO();
+		  }
+		  SimpleDateFormat fromUser = new SimpleDateFormat("dd/MM/yyyy");		
+		  if (!form.getDataDa().isEmpty()){
+			  java.util.Date dataDa =  fromUser.parse(form.getDataDa());
+			  to.setDataOperaz(dataDa);			
+		  }
+		  if (form.getOraDa() != ""){
+		      oraDa = form.getOraDa();
+		  }
+		  if (!(form.getDataA().equals(""))){
+			  dataA = fromUser.parse(form.getDataA());
+		  }
+		  if (!(form.getOraA().equals(""))){
+			  oraA = form.getOraA();
+		  }
+		  to.setDescUtente(form.getUtente());	
+		  to.setTraCodiCodice(ParseUtil.getInteger(form.getTraCodiCodice()));
+		  List<CronologicoTransTO> toOut = cronologicoManager.caricaRisultati(to,dataA,oraDa,oraA);
+  		  // Paginator //
+		  if (toOut.size() > 0){
+ 		    context.setDataModel(SessionAttributes.INT_SEL_ROW, -1);
+		    context.setDataModel(SessionAttributes.LIST_TRANSAZIONI, toOut);	
+		    StaticPaginatorImpl paginator =  new StaticPaginatorImpl(toOut, CRONOLOGICO_VIEW_LIST,10);	
+  		    paginator.setList(toOut);		
+		    context.setDataModel(CRONOLOGICO_VIEW_LIST, paginator.update());		
+		    context.setDataModel(OBJECT_PAGINATOR, paginator);
+		   } else {
+			  /*PageMessages pageMessages = new PageMessages(getMessageSource());
+			  ContextHelper.setRequestModel(OBJECT_PAGE_MESSAGES, pageMessages,context.getRequest());*/
+			  ContextHelper.addInfo(context.getRequest(),"info.noDataFound");			
+		   }
+		   // Fine Paginator //
+		}
+		context.setDataModel(SessionAttributes.OBJECT_FORM_CRONO,form);
+		return startView;
+	}
+	// Paginator //
+	public String onPaginator(Context context) throws Throwable { 
+		context.removeDataModel(SessionAttributes.LIST_VALORI);
+		context.removeDataModel(SessionAttributes.INT_SEL_ROW);		
+		return super.onPaginator(context);
+	}	
+	public String onEnableDisablePagin(Context context) throws Throwable {
+		context.removeDataModel(SessionAttributes.LIST_VALORI);
+		context.removeDataModel(SessionAttributes.INT_SEL_ROW);
+		return super.onEnableDisablePagin(context);
+	}	
+	// Fine Paginator //
+	// Apertura Riga Transazione e visualizzazione Valori //
+	public String onApriDettaglioCrono(Context context) throws Throwable {
+		// Mi riprendo il form //
+		IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+		IntCronologicoForm formCached = context.getModel(SessionAttributes.OBJECT_FORM_CRONO);		
+		BeanUtils.copyProperties(formCached, form);
+		// Mi prendo il record delle transazioni //
+		List<CronologicoTransTO> lista= context.getModel(SessionAttributes.LIST_TRANSAZIONI);		
+		String selectedRow = getParameter(context, WebConstants.DETTAGLIO_CRONOLOGICO); 		
+		CronologicoTransTO to=lista.get(ParseUtil.getInteger(selectedRow));
+		List<CronologicoValoriTO> list = cronologicoManager.loadValori(
+				  ParseUtil.getBigDecimal(to.getCodiId()),
+				  ParseUtil.getBigDecimal(to.getCodiTrans()));
+		if (list.size() > 0){
+			context.setDataModel(SessionAttributes.INT_SEL_ROW, selectedRow);
+			context.setDataModel(SessionAttributes.LIST_VALORI, list);
+		}
+		return startView;
+	}
+
+	public String getStartView() {
+		return startView;
+	}
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+	// EXPORT EXCEL LISTA //
+	private List<CronologicoTransExcelTO> preparaExport(Context context) throws Throwable {
+		// Mi riprendo il form //
+    	IntCronologicoForm form = (IntCronologicoForm) context.getForm();
+    	IntCronologicoForm formCached = context.getModel(SessionAttributes.OBJECT_FORM_CRONO);		
+    	BeanUtils.copyProperties(formCached, form);    	
+    	CronologicoTO to = context.getModel(SessionAttributes.OBJECT_CRONOLOGICO);
+    	java.util.Date dataA = null;
+    	String oraDa = null;
+    	String oraA = null;
+    	if (to == null){ to = new CronologicoTO(); }
+    	SimpleDateFormat fromUser = new SimpleDateFormat("dd/MM/yyyy");		
+    	if (!form.getDataDa().isEmpty()){
+    	  java.util.Date dataDa =  fromUser.parse(form.getDataDa());
+    	  to.setDataOperaz(dataDa);			
+    	}
+    	if (form.getOraDa() != ""){ oraDa = form.getOraDa(); }
+    	if (!(form.getDataA().equals(""))){ dataA = fromUser.parse(form.getDataA()); }
+    	if (!(form.getOraA().equals(""))){  oraA = form.getOraA(); }
+    	to.setDescUtente(form.getUtente());
+    	to.setTraCodiCodice(ParseUtil.getInteger(form.getTraCodiCodice()));
+    	return cronologicoManager.caricaRisultatiExcel(to,dataA,oraDa,oraA);
+	}
+    public String onExportExcel(Context context) throws Throwable {
+    	List<CronologicoTransExcelTO> toOut = preparaExport(context); 
+    	List<TableModel> tms = new ArrayList<TableModel>();
+	    LinkedHashMap<PropertyKey, FieldFormatter> map = new LinkedHashMap<PropertyKey, FieldFormatter>();
+	    map = getFieldFormatterMap("ExcelCronoFormatter");
+	    TableModel tm = new TableModel((List<?>) toOut,map, "label.blank", "label.blank");
+	    tms.add(tm);
+	    return context.startExport(tms, SessionAttributes.EXPORT_GENERIC_EXCEL,"ExportCronologico_");
+	}
+    public String onExportPdf(Context context) throws Throwable {
+    	List<CronologicoTransExcelTO> toOut = preparaExport(context); 
+    	List<TableModel> tms = new ArrayList<TableModel>();
+	    LinkedHashMap<PropertyKey, FieldFormatter> map = new LinkedHashMap<PropertyKey, FieldFormatter>();
+	    map = getFieldFormatterMap("ExcelCronoFormatter");
+	    TableModel tm = new TableModel((List<?>) toOut,map, "label.blank", "label.blank");
+	    tms.add(tm);
+	    return context.startExport(tms, SessionAttributes.EXPORT_GENERIC_PDF,"ExportCronologico_");
+	}
+	protected LinkedHashMap<PropertyKey, FieldFormatter> getFieldFormatterMap(
+		String xmlName) throws Throwable {
+		return Util.unMarshallFieldFormatterMap(getInputStreamFromClasspath(WebConstants.FIELD_FORMATTER_PATH+ xmlName + ".xml"));
+	} 
+} // FINE CLASSE

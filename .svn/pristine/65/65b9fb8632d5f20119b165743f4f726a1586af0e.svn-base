@@ -1,0 +1,19 @@
+package it.mef.bilancio.demdec.manager;
+
+import it.almavivaitalia.bilancio.commons.to.UtenteProfiloTO;
+import it.almavivaitalia.bilancio.commons.to.UtenteProfiloTOId;
+
+import java.util.List;
+import java.util.Map;
+
+public interface DelegaManager extends AbstractDemManager {
+	
+	Map<Integer, String> findDeleganti(String tipoFirma) throws Throwable;
+	Map<Integer, String> findDelegati(String tipoFirma) throws Throwable;
+	void saveDelega(UtenteProfiloTO utenteProfilo,Short croTransTo) throws Throwable;
+	Map<Integer, String> findDelegatiAttivi() throws Throwable;
+	List<UtenteProfiloTO> findDelegheByIdUtente(int utenteId) throws Throwable;
+	List<UtenteProfiloTO> findAllDeleghe() throws Throwable;
+	void deleteDelega(UtenteProfiloTOId delega) throws Throwable;
+
+}

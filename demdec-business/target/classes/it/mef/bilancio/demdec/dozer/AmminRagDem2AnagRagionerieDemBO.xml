@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	
+	<mapping>
+		<class-a>it.mef.bilancio.demdec.to.AmminRagDemTO</class-a>
+		<class-b>it.almavivaitalia.bilancio.commons.bo.AnagRagionerieDemBO</class-b>
+</mapping>
+
+
+	<mapping>
+		<class-a>it.mef.bilancio.demdec.to.AmminRagDemTOId</class-a>
+		<class-b>it.almavivaitalia.bilancio.commons.bo.AnagRagionerieDemBOId
+		</class-b>
+
+		<field>
+			<a>annoEse</a>
+			<b>fkAnnoEse</b>
+		</field>
+
+		<field>
+			<a>numeRag</a>
+			<b>numeRag</b>
+		</field>
+	</mapping>
+
+</mappings>

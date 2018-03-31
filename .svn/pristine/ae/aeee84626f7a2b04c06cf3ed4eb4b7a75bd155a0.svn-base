@@ -1,0 +1,20 @@
+package it.mef.bilancio.demdec.dao;
+
+import it.almavivaitalia.bilancio.commons.bo.LettereIgbBO;
+
+import java.math.BigDecimal;
+import java.sql.Blob;
+import java.util.List;
+
+public interface LettereIgbDao extends AbstractDemDao<LettereIgbBO>{
+
+	List<LettereIgbBO> findByLettera(LettereIgbBO lettera) throws Throwable;
+
+	LettereIgbBO getLetteraById(Long idLettera) throws Throwable;
+
+	Blob getBlobByIdLettera(BigDecimal id) throws Throwable;
+
+	LettereIgbBO findByUK(Long fkNumeIdFascicolo, Short annoEse,
+			Integer codiStp, Integer numeApp);
+
+}

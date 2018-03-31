@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class name="it.almavivaitalia.bilancio.commons.bo.AnagTipologiaDecretoBO" table="D_ANAG_TIPOLOGIA_DECRETO">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <comment>Elenco dei tipologie decreto ammesse a sistema, con una descrizione, codice numerico ed associazione a tipo decreto e modello iter.</comment>
+   <id name="id" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_TIPOLOGIA" precision="2" scale="0"/>
+   </id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagModelliIterBO" fetch="select" name="anagModelliIter">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_SEQU_ID_ITER" not-null="true" precision="3" scale="0">
+     <comment>codice nuemerico identificativo del modello di iter firma associato alla tipologia di decreto</comment>
+    </column>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagTipoDecretoBO" fetch="select" name="anagTipoDecreto">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_NUME_TIPO" not-null="true" precision="2" scale="0">
+     <comment>codice nuemerico del tipo decreto associato</comment>
+    </column>
+   </many-to-one>
+   <property name="descTipologia" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="320" name="DESC_TIPOLOGIA" not-null="true">
+     <comment>descrizione della tipologia decreto</comment>
+    </column>
+   </property>
+   <property name="flagNormativo01" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FLAG_NORMATIVO_01" precision="1" scale="0">
+     <comment>Flag indicatore di tipologia di decreto normativo che non apporta variazioni in Bilancio. 0=Non normativo, 1=Normativo</comment>
+    </column>
+   </property>
+  </class>
+ </hibernate-mapping>

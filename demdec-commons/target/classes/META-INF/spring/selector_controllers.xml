@@ -1,0 +1,104 @@
+﻿<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+ 		http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean 
+		id="selectorEserciziController"
+		class="it.almavivaitalia.bilancio.commons.web.spring.controller.SelectorEserciziController"
+		abstract="false" 
+		init-method="init" 
+		parent="abstractFormController">
+		<property name="selectorEserciziManager" ref="selectorEserciziManager"/>
+		<property name="methodMappings">
+			<list>
+				<value>onSelectorEserciziByStatTipoEse#selectorEserciziByStatTipoEse##false</value>
+			</list>
+		</property>			
+	</bean>
+
+	<bean 
+		id="selectorCodiceAggregazioneController"
+		class="it.almavivaitalia.bilancio.commons.web.spring.controller.SelectorCodiceAggregazioneController"
+		abstract="false" 
+		init-method="init" 
+		parent="abstractFormController">
+		<property name="selectorCodiceAggregazioneManager" ref="selectorCodiceAggregazioneManager"/>
+		<property name="methodMappings">
+			<list>
+				<value>onSelectorCodiceAggregazione#selectorCodiceAggregazione##false</value>
+			</list>
+		</property>			
+	</bean>
+	
+	<bean 
+		id="selectorLeggiController"
+		class="it.almavivaitalia.bilancio.commons.web.spring.controller.SelectorLeggiController"
+		abstract="false" 
+		init-method="init" 
+		parent="abstractFormController">
+		<property name="selectorLeggiManager" ref="selectorLeggiManager"/>
+		<property name="methodMappings">
+			<list>
+				<value>onSelectorLeggiByFlagNorma01AndStatTipoEse#selectorLeggiByFlagNorma01AndStatTipoEse##false</value>
+			</list>
+		</property>			
+	</bean>	
+	
+	<bean 
+		id="selectorAutorController"
+		class="it.almavivaitalia.bilancio.commons.web.spring.controller.SelectorAutorController"
+		abstract="false" 
+		init-method="init" 
+		parent="abstractFormController">
+		<property name="selectorAutorManager" ref="selectorAutorManager"/>
+		<property name="methodMappings">
+			<list>
+				<value>onSelectorAutorByAnnoEseNumeTipoNumeNum#selectorAutorByAnnoEseNumeTipoNumeNum##false</value>
+			</list>
+		</property>			
+	</bean>		
+	
+	<bean 
+		id="selectorAttiController"
+		class="it.almavivaitalia.bilancio.commons.web.spring.controller.SelectorAttiController"
+		abstract="false" 
+		init-method="init" 
+		parent="abstractFormController">
+		<property name="selectorAttiManager" ref="selectorAttiManager"/>
+		<property name="methodMappings">
+			<list>
+				<value>onSelectorAtti#selectorAtti##false</value>
+			</list>
+		</property>			
+	</bean>		
+	
+	<bean 
+		id="selectorAmminController"
+		class="it.almavivaitalia.bilancio.commons.web.spring.controller.SelectorAmminController"
+		abstract="false" 
+		init-method="init" 
+		parent="abstractFormController">
+		<property name="selectorAmminManager" ref="selectorAmminManager"/>
+		<property name="methodMappings">
+			<list>
+				<value>onSelectorAmminVarPigStr#selectorAmminVarPigStr##false</value>
+			</list>
+		</property>			
+	</bean>	
+	
+	<bean 
+		id="selectorFondiController"
+		class="it.almavivaitalia.bilancio.commons.web.spring.controller.SelectorFondiController"
+		abstract="false" 
+		init-method="init" 
+		parent="abstractFormController">
+		<property name="selectorFondiManager" ref="selectorFondiManager"/>
+		<property name="methodMappings">
+			<list>
+				<value>onSelectorFondi#selectorFondi##false</value>
+			</list>
+		</property>			
+	</bean>				
+</beans>

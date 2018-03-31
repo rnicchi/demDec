@@ -1,0 +1,40 @@
+<%@ taglib uri="http://almavivaitalia.web.sh/tags" prefix="nssb"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ taglib uri="http://displaytag.sf.net/el" prefix="display-el"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<!-- test login.jsp -->
+
+
+  <fieldset>
+     <div class="row">
+ 
+	  <div class="small-3 columns">
+	   <label for="utente">utente</label>
+	   <form:select path="textUtente">
+			<form:option value="paperino">PAPERINO</form:option>
+			<form:option value="MASSIMO.ANGELINI">MASSIMO ANGELINI</form:option>
+			<form:option value="pluto">PLUTO</form:option>
+			<form:option value="TEST_SCENARI">TEST_SCENARI</form:option>
+			<form:option value="GASTONE">GASTONE</form:option>
+			<form:option value="BILAPASI">BILAPASI</form:option>
+			<form:option value="PROVA">PROVA</form:option>
+		    
+		</form:select>
+	  </div>	
+	  
+  </div>
+
+
+     <div class="row">
+ 	  
+	  <div class="small-3 columns">
+		<nssb:submit controllerCode="submitLoginForm" keyValue="label.login"/></td>
+	  <div class="small-3 columns">
+    </div>
+ 	
+  </fieldset>
+	

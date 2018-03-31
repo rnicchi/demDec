@@ -1,0 +1,84 @@
+package it.mef.bilancio.demdec.utils;
+
+import it.almavivaitalia.bsn.sh.utils.TraceLogger;
+import it.mef.bilancio.demdec.to.CampoFirmaTO;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.itextpdf.text.pdf.PdfCopyFields;
+import com.itextpdf.text.pdf.PdfReader;
+
+public class PdfAttoDecretoConFirme {
+	
+	
+	
+	public static void main(String[] args) throws Throwable {
+		
+		
+		List<CampoFirmaTO> listFields = new ArrayList<CampoFirmaTO>();
+		
+		listFields.add(new CampoFirmaTO("Ufficio Capofila", "DirigenteUfficio_1", "T"));
+		listFields.add(new CampoFirmaTO("Coordinamento Bilancisti","Coordinamento","T"));
+		listFields.add(new CampoFirmaTO("Ispettore", "Ispettore", "T"));
+		listFields.add(new CampoFirmaTO("Ragioniere Generale", "Ragioniere", "V"));
+		listFields.add(new CampoFirmaTO("Ministro MEF", "MinistroMEF", "V"));
+		FileInputStream iSAD = new FileInputStream("c:/appoggio/attodecreto/dim.pdf");
+		InputStream in = createAttoDecretoConFirma("TEST",iSAD,listFields);
+		FileOutputStream out = new FileOutputStream("c:/appoggio/attodecreto/dimConFirme.pdf");
+		byte[] buffer = new byte[1024];
+		int len = in.read(buffer);
+		while (len != -1) {
+		    out.write(buffer, 0, len);
+		    len = in.read(buffer);
+		}
+		out.close();
+		in.close();
+		iSAD.close();	
+
+   		
+		}
+
+	
+	public static ByteArrayInputStream  createAttoDecretoConFirma(String headerPaginaFirma, InputStream isAttoDecreto,List<CampoFirmaTO> listFields) throws Throwable {
+		
+		ByteArrayInputStream bIn=null;
+		ByteArrayOutputStream baos= new ByteArrayOutputStream() ;
+	    PdfCopyFields copy 	= new PdfCopyFields(baos);
+	    
+	    TraceLogger.debugLog("Inizio Elaborazione::", PdfPaginaFirma.class);
+		InputStream inpStr = isAttoDecreto;
+		InputStream isPaginafirme = PdfPaginaFirma.createPdfConFirma(headerPaginaFirma, listFields);
+		try {
+			if (inpStr != null && isPaginafirme!=null) {
+					PdfReader reader = new PdfReader(inpStr);
+					copy.addDocument(reader);
+					System.out.println("pagine atto n. "+reader.getNumberOfPages());
+					PdfReader readerPagina = new PdfReader(isPaginafirme);
+					copy.addDocument(readerPagina);
+					System.out.println("pagine firma n. "+readerPagina.getNumberOfPages());
+					if(copy!=null){
+						copy.close();
+					}
+					bIn = new ByteArrayInputStream(baos.toByteArray());
+			}
+			} catch (Throwable t) {
+							throw t;
+			} finally {
+							if (isPaginafirme != null) {
+								isPaginafirme.close();
+							}
+							if (baos != null) {
+								baos.close();
+							}
+			
+			}
+		return bIn;
+		}
+
+}

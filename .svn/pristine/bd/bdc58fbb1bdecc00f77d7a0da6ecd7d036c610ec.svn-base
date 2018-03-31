@@ -1,0 +1,34 @@
+package it.almavivaitalia.bilancio.commons.to;
+
+public class DescDocumentoTO extends AbstractCommonTO implements java.io.Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	private String id;
+	private String descDescrizioneDoc;
+	//private String codiDescDocumento;
+	
+	
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getDescDescrizioneDoc() {
+		return descDescrizioneDoc;
+	}
+	public void setDescDescrizioneDoc(String descDescrizioneDoc) {
+		this.descDescrizioneDoc = descDescrizioneDoc;
+	}
+	
+//	public String getCodiDescDocumento() {
+//		return codiDescDocumento;
+//	}
+//	public void setCodiDescDocumento(String codiDescDocumento) {
+//		this.codiDescDocumento = codiDescDocumento;
+//	}
+	
+	
+}

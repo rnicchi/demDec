@@ -1,0 +1,311 @@
+package it.mef.bilancio.demdec.utils;
+
+import it.mef.bilancio.demdec.to.CampoFirmaTO;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfAnnotation;
+import com.itextpdf.text.pdf.PdfAppearance;
+import com.itextpdf.text.pdf.PdfBorderDictionary;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfFormField;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPCellEvent;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+
+
+
+public class PdfPaginaFirma {
+
+
+	static private String DICITURA_HEADER_PAGINA_FIRMA="PAGINA DELLE FIRME";
+	
+	public static void main(String[] args) throws Throwable {
+		
+		
+		List<CampoFirmaTO> listFields = new ArrayList<CampoFirmaTO>();
+		
+		listFields.add(new CampoFirmaTO("Firma Tecnica","Tecn_1","T",1));
+		listFields.add(new CampoFirmaTO("Ispettore", "Ispettore", "T",2));
+		listFields.add(new CampoFirmaTO("Ministro della Difesa", "Ministro_120", "V",3));
+		listFields.add(new CampoFirmaTO("Ministro dell'Interno", "Ministro_080", "V",4));
+		listFields.add(new CampoFirmaTO("Ministro degli Esteri", "Ministro_060", "V",5));
+		listFields.add(new CampoFirmaTO("Ministro MEF", "MinistroMEF", "V",6));
+		listFields.add(new CampoFirmaTO("Il Ragioniere Generale dello Stato", "Ragioniere", "V",7));
+		listFields.add(new CampoFirmaTO("Il Capofila", "Capofila", "T",8));
+		InputStream in =createPdfConFirma(DICITURA_HEADER_PAGINA_FIRMA, listFields);
+		FileOutputStream out = new FileOutputStream("c:/appoggio/TestFirme.pdf");
+		byte[] buffer = new byte[1024];
+		int len = in.read(buffer);
+		while (len != -1) {
+		    out.write(buffer, 0, len);
+		    len = in.read(buffer);
+		}
+		out.close();
+		in.close();
+
+	/*	
+	 scrittura		
+			
+		 PdfCopyFields copy
+	         = new PdfCopyFields(new FileOutputStream("c:/appoggio/DocumentoConFirma2.pdf"));
+	     // add a document
+	     PdfReader reader1 = new PdfReader("c:/appoggio/PaginaFirma.pdf");
+	     copy.addDocument(reader1);
+	     // add a document
+	     PdfReader reader2 = new PdfReader("c:/appoggio/Documento.pdf");
+	     copy.addDocument(reader2);
+	     // Close the PdfCopyFields object
+	     copy.close();
+	     reader1.close();
+	     reader2.close();
+
+		
+	*/    		
+		}
+
+
+	
+		
+	public static InputStream  createPdfConFirma(String headerPaginaFirma, List<CampoFirmaTO> listFields) throws Throwable {
+		// step 1
+		
+		System.out.println("INIZIO createPdfConFirma");
+		Document doc = new Document(PageSize.A4);
+		ByteArrayOutputStream out= new ByteArrayOutputStream();
+		PdfWriter writer = PdfWriter.getInstance(doc, out);
+	    writer.setPdfVersion(PdfWriter.VERSION_1_7);
+	    doc.open();
+		createTecnicalSignatureField(writer,Constants.TAG_FIRMA_TEC1);
+		//BaseFont bf = BaseFont.createFont("c:\\windows\\fonts\\courbd.ttf", BaseFont.WINANSI, true);
+	    for (Iterator<CampoFirmaTO> iterator = listFields.iterator(); iterator.hasNext();) {
+			CampoFirmaTO campoFirmaTO = (CampoFirmaTO) iterator.next();
+			if (campoFirmaTO.getTipoFirma().equals("T")){
+			createTecnicalSignatureField(writer,campoFirmaTO.getTagFirma());
+			}
+		}
+		Font font = FontFactory.getFont(BaseFont.COURIER_BOLD);
+		font.setSize(10);
+		addHeader(doc, font, writer,headerPaginaFirma);
+		addVisibleFields(doc, font, writer, listFields);
+		
+		writer.createXmpMetadata();
+		doc.close();
+		ByteArrayInputStream bIn = new ByteArrayInputStream(out.toByteArray());
+		out.close();
+		return bIn;
+
+		
+		
+		
+		
+	}
+	
+
+	
+	
+	private static class SignatureFieldEvent implements PdfPCellEvent {
+		private PdfFormField field;
+		
+		public SignatureFieldEvent(PdfFormField field) {
+			this.field = field;
+		}
+		
+		
+		@Override
+		public void cellLayout(PdfPCell cell, Rectangle position, PdfContentByte[] canvases) {
+			PdfWriter writer = canvases[0].getPdfWriter();
+			field.setWidget(position, PdfAnnotation.HIGHLIGHT_NONE);
+			field.setFlags(PdfAnnotation.FLAGS_PRINT);
+
+			writer.addAnnotation(field);
+			
+		}
+		
+	}
+	
+
+	
+	private static PdfPCell createSignatureFieldCell(PdfWriter writer, Font font, String fieldName) {
+		PdfPCell cell = new PdfPCell();
+		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cell.setMinimumHeight(50);
+		cell.setBorderWidth(0);
+		//modifiche dimensioni
+//		cell.setPadding(30);
+		cell.setPadding(20);
+		
+		PdfFormField field = PdfFormField.createSignature(writer);
+		field.setFieldName(fieldName);
+		field.setFlags(PdfAnnotation.FLAGS_PRINT);
+		field.setMKBorderColor(BaseColor.WHITE);
+		field.setMKBackgroundColor(BaseColor.WHITE);
+		field.setBorderStyle(new PdfBorderDictionary(1,	PdfBorderDictionary.STYLE_SOLID));
+		field.setPage();//to indicate the signature field has to be added to the current page
+	
+		cell.setCellEvent(new SignatureFieldEvent(field));
+		
+		PdfContentByte cb = writer.getDirectContent();
+
+		//modifiche dimensioni
+		//PdfAppearance tp = cb.createAppearance(320, 30);
+		PdfAppearance tp = cb.createAppearance(320, 20);
+		tp.setFontAndSize(font.getBaseFont(), 10);
+		tp.rectangle(1, 1, 500, 500);
+	       
+		field.setDefaultAppearanceString(tp);
+		
+		field.setAppearance(PdfAnnotation.APPEARANCE_NORMAL, tp);
+        return cell;
+	}
+	
+
+	private static void addHeader(Document document,  Font font, PdfWriter writer, String titolo) throws Throwable {
+		PdfPTable tableHeader = new PdfPTable(1);
+		tableHeader.setTotalWidth(300);
+		
+		PdfPCell cell = new PdfPCell(new Phrase(titolo, font));
+		//cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		cell.setMinimumHeight(20);
+		cell.setBorderWidth(0);
+		cell.setPaddingTop(30);
+		tableHeader.addCell(cell);
+		tableHeader.writeSelectedRows(0, -1, document.leftMargin(), PageSize.A4.getHeight()-document.topMargin(), writer.getDirectContent());
+	
+	}
+	
+
+	
+	
+
+	private static void addField(PdfPTable table, Font font, PdfWriter writer, String dicitura, String campoFirma) throws Throwable {
+		
+		// ********* IL ministro
+		PdfPCell cell = new PdfPCell(new Paragraph(dicitura, font));
+		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cell.setBorder(0);
+		//modifiche dimensioni
+		//cell.setPadding(20);
+		cell.setPadding(10);
+
+		table.setWidthPercentage(100);
+		table.setHorizontalAlignment(PdfPTable.ALIGN_CENTER);
+		table.addCell(cell);
+		table.addCell(createSignatureFieldCell(writer, font,campoFirma));
+		
+	}
+
+
+	
+
+	private static void addVisibleFields(Document document, Font font, PdfWriter writer, List<CampoFirmaTO> listFields) throws Throwable {
+		
+	
+
+		PdfPTable table = new PdfPTable(1);
+		table.setWidthPercentage(100);
+		table.setHorizontalAlignment(PdfPTable.ALIGN_CENTER);
+	
+         for (Iterator<CampoFirmaTO> iterator = listFields.iterator(); iterator.hasNext();) {
+			CampoFirmaTO campoFirma = (CampoFirmaTO) iterator.next();
+			if (campoFirma.getTipoFirma().equals("V")){
+			addField(table,font, writer,campoFirma.getDicitura(),campoFirma.getTagFirma());
+			}
+			
+		}
+		
+		
+//		document.add(table);
+		Rectangle page = document.getPageSize();
+		table.setTotalWidth(page.getWidth() - document.leftMargin() - document.rightMargin());
+		table.writeSelectedRows(0, -1, document.leftMargin(), PageSize.A4.getHeight()-(document.topMargin()*4), writer.getDirectContent());
+		//addHeader(document, font, writer, fields);
+		
+		
+	}
+
+	
+	
+	
+	
+	/*
+	private static void addFields(Document document, Font font, PdfWriter writer,Map<String,String> fields) throws Throwable {
+		
+		// ********* IL ministro
+		PdfPCell cellMinistro = new PdfPCell(new Paragraph(fields.get(Constants.DICITURA_MINISTRO), font));
+		cellMinistro.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cellMinistro.setBorder(0);
+		cellMinistro.setPadding(20);
+
+		// ********* dicitura
+		PdfPCell cellDicitura = new PdfPCell(new Paragraph(fields.get(Constants.DICITURA_NOTA), font));
+		cellDicitura.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cellDicitura.setBorder(0);
+		cellDicitura.setPadding(20);
+		cellDicitura.setPaddingLeft(10);
+		cellDicitura.setPaddingRight(10);
+		
+		// ********* IL ragioniere
+		PdfPCell cellRagioniere = new PdfPCell(new Paragraph(fields.get(Constants.DICITURA_RAGIONIERE), font));
+		cellRagioniere.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cellRagioniere.setBorder(0);
+		cellRagioniere.setPadding(20);
+		PdfPTable table = new PdfPTable(1);
+		table.setWidthPercentage(100);
+		table.setHorizontalAlignment(PdfPTable.ALIGN_CENTER);
+		table.addCell(cellMinistro);
+		table.addCell(createSignatureFieldCell(writer, font,fields.get(Constants.FIRMA_MINISTRO)));
+		table.addCell(cellDicitura);
+		table.addCell(cellRagioniere);
+		table.addCell(createSignatureFieldCell(writer, font, fields.get(Constants.FIRMA_RAGIONIERE)));
+		
+//		document.add(table);
+		Rectangle page = document.getPageSize();
+		table.setTotalWidth(page.getWidth() - document.leftMargin() - document.rightMargin());
+		table.writeSelectedRows(0, -1, document.leftMargin(), PageSize.A4.getHeight()-(document.topMargin()*4), writer.getDirectContent());
+		//addHeader(document, font, writer, fields);
+		
+		
+	}
+
+*/
+
+
+	private static void createTecnicalSignatureField(PdfWriter writer, String fieldName) {
+	    PdfFormField field = PdfFormField.createSignature(writer);
+	    field.setWidget(new Rectangle(72, 732, 144, 780), PdfAnnotation.HIGHLIGHT_NONE);
+	    field.setFieldName(fieldName);
+	    field.setFlags(PdfAnnotation.FLAGS_HIDDEN);
+	    field.setPage();
+	    PdfAppearance tp = PdfAppearance.createAppearance(writer, 72, 48);
+	    tp.rectangle(0.5f, 0.5f, 71.5f, 47.5f);
+	    tp.stroke();
+	    field.setAppearance(PdfAnnotation.APPEARANCE_NORMAL, tp);
+	    writer.addAnnotation(field);
+	
+	}
+
+
+	
+			
+
+}

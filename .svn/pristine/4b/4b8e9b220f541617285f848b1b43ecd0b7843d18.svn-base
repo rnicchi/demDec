@@ -1,0 +1,77 @@
+package it.mef.bilancio.demdec.dao.impl;
+
+import org.hibernate.Query;
+import it.almavivaitalia.bilancio.commons.bo.IterFirmaDecretoBO;
+import it.mef.bilancio.demdec.dao.IterFirmaDecretoDao;
+
+public class IterFirmaDecretoDaoImpl extends AbstractDemDaoImpl<IterFirmaDecretoBO> implements
+		IterFirmaDecretoDao {
+
+	/**
+	 * Il metodo restituisce il record della tabella D_ITER_FIRMA_DECRETI al quale deve essere settato il campo STAT_FIRMA a 2 cioè FIRMATO
+	 */
+	@Override
+	public IterFirmaDecretoBO getCurrentIFDByIdFascicolo(
+			long idFascicolo) throws Throwable {
+		
+		Query q = createQuery("FROM  IterFirmaDecretoBO ifd "+
+		"WHERE ifd.fascicoli.id = :idFascicolo "+
+		"AND ifd.statFirma = 1");
+		q.setParameter("idFascicolo", idFascicolo);
+		IterFirmaDecretoBO iterFirmaDecreto = (IterFirmaDecretoBO) q.uniqueResult();
+		return iterFirmaDecreto;
+	}
+
+	/**
+	 * Il metodo restituisce il record della tabella D_ITER_FIRMA_DECRETI al quale deve essere settato il campo STAT_FIRMA a 1 cioè IN_FIRMA
+	 */
+	@Override
+	public IterFirmaDecretoBO getNextIFDByIdFascicoloAndNumeOrderIter(
+			long idFascicolo, Integer numeOrdineFirma) {
+				Query q = createQuery("FROM  IterFirmaDecretoBO ifd "+
+				"WHERE ifd.fascicoli.id = :idFascicolo "+
+				"AND ifd.id.numeOrdineFirma = :numeOrdineFirma "+
+				"AND ifd.statFirma = 0");
+				q.setParameter("idFascicolo", idFascicolo);
+				q.setParameter("numeOrdineFirma", numeOrdineFirma);
+				IterFirmaDecretoBO iterFirmaDecreto = (IterFirmaDecretoBO) q.uniqueResult();
+				return iterFirmaDecreto;
+	}
+	
+	
+	
+	/**
+	 * Il metodo restituisce il record della tabella D_ITER_FIRMA_DECRETI con determinato id fascicolo e determinato stato firma  
+	 */
+	@Override
+	public IterFirmaDecretoBO getCurrentIFDByIdFascicoloEStato(
+			long idFascicolo, String stato) throws Throwable {
+		
+		Query q = createQuery("FROM  IterFirmaDecretoBO ifd "+
+		"WHERE ifd.fascicoli.id = :idFascicolo "+
+		"AND ifd.statFirma = :stato");
+		q.setParameter("idFascicolo", idFascicolo);
+		q.setParameter("stato", stato);
+		IterFirmaDecretoBO iterFirmaDecreto = (IterFirmaDecretoBO) q.uniqueResult();
+		return iterFirmaDecreto;
+	}
+
+	@Override
+	public boolean esisteDecretoConModelloIter(Short idIter) throws Throwable {
+
+		Query q = createQuery("FROM IterFirmaDecretoBO ifd WHERE ifd.anagModelliIter.id = :idIter ");
+		q.setShort("idIter", idIter);
+
+		return q.list().size() > 0;
+	}
+
+	@Override
+	public String findStatoIterFirmaDecretoByIdFascicolo(Integer idFascicolo) throws Throwable {
+		
+		Query query = getNamedQuery("IterFirmaDecretoBO.loadStatoFirmaPerRevocaRichSospensioneByIdFascicolo");		
+		query.setParameter("idFascicolo", idFascicolo); 
+		
+		return (String)query.uniqueResult();
+	}
+
+}

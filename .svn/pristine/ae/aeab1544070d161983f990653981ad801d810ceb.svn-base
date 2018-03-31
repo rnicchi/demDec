@@ -1,0 +1,31 @@
+package it.mef.bilancio.demdec.web.spring.utils;
+
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.servizi.client.ResponseDEMBILClient;
+import it.mef.bilancio.demdec.servizi.to.DocumentContentTO;
+
+import javax.servlet.ServletOutputStream;
+
+public class FileUtil {
+	
+	public static void downloadFromResponseWs(ResponseDEMBILClient respClient, Context context) throws Throwable{
+		
+		byte[] docBytes=null;
+		DocumentContentTO docContent=(DocumentContentTO)respClient.getOutputTO();
+		docBytes= docContent.getContent();
+		
+		context.getResponse().setContentType(docContent.getMimeType());
+		context.getResponse().setHeader("Content-Disposition","attachment;filename="+docContent.getFileName());
+		
+		
+			
+			ServletOutputStream out;
+		
+			out = context.getResponse().getOutputStream();
+			out.write(docBytes);
+				out.flush();
+				out.close();
+ 
+	}
+
+}

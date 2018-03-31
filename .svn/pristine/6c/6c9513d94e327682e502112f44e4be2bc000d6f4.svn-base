@@ -1,0 +1,15 @@
+package it.mef.bilancio.demdec.dao;
+
+import it.almavivaitalia.bilancio.commons.bo.IterFirmaDecretoBO;
+
+
+public interface IterFirmaDecretoDao extends AbstractDemDao<IterFirmaDecretoBO> {
+
+	public IterFirmaDecretoBO getCurrentIFDByIdFascicolo(long idFascicolo) throws Throwable;
+	public IterFirmaDecretoBO getNextIFDByIdFascicoloAndNumeOrderIter(long idFascicolo, Integer numeOrdineFirma);
+	public IterFirmaDecretoBO getCurrentIFDByIdFascicoloEStato(long idFascicolo, String stato) throws Throwable;
+	boolean esisteDecretoConModelloIter(Short idIter) throws Throwable;
+	
+	public String findStatoIterFirmaDecretoByIdFascicolo(Integer idFascicolo) throws Throwable;
+
+}

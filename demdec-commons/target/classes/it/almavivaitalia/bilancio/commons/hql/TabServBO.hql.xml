@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="TabServBO.searchPropertyValueFromTabServ">
+			SELECT p.codi_valore as prop
+  			FROM d_tab_serv_dem p
+ 			WHERE p.codi_parametro = :propertyName
+	</sql-query>
+</hibernate-mapping>

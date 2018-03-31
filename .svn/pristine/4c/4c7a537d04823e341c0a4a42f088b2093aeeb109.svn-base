@@ -1,0 +1,163 @@
+error.msgPrincipale=Operazione non consentita a causa dei seguenti errori:
+
+
+
+error.required=<b>{0}</b>: campo obbligatorio
+error.empty.list=Selezionare almeno un elemento dalla lista.
+error.condizione.maxsize=La condizione {0} prevede la selezione di {1} elementi dalla lista.
+error.dateFormat=Il campo <b>{0}</b> deve essere una data valida.
+error.importiErrati=Gli importi devono avere un formato numerico.
+error.actionNotAllowed=Azione non abilitata.
+error.numberFormat=Il campo <b>{0}</b> deve essere numerico.
+errors.number.format=Il campo <b>{0}</b> deve essere composto al massimo da {1} cifre di cui non più di {2} decimali.
+error.fixedLength=Il campo <b>{0}</b> non può contenere spazi e deve avere una lunghezza fissa di {1} caratteri.
+error.maxLength=Il campo <b>{0}</b> non può contenere spazi e deve avere una lunghezza massima di {1} caratteri.
+error.empty=Il campo <b>{0}</b> non può contenere spazi e deve essere valorizzato.
+error.campo.valorizzato=Il campo <b>{0}</b> deve essere valorizzato.
+error.number.minor.then.zero=Il campo <b>{0}</b> deve essere maggiore o uguale a zero.
+error.number.greater.then.zero=Il campo <b>{0}</b> deve essere minore di zero.
+error.objext.null=Il campo <b>{0}</b> deve essere selezionato.
+error.importo.over=Il campo <b>{0}</b> può essere composto al massimo da <b>18</b> cifre.
+error.importo.intero.over=Il campo <b>{0}</b> deve essere un numero intero e composto al massimo da {1} cifre.
+error.maxLengthImpoNvcpEur=18
+error.objext.capitoli.null=selezionare uno o più capitoli da <b>{0}</b>.
+error.compare=Il campo <b>{0}</b> deve essere minore del campo <b>{1}</b>.
+error.compare.update=Il campo <b>{0}</b> deve essere aggiornato.
+error.empty.select=Selezionare i <b>Valori Originali</b>
+error.userNotAllowed=Utente non autorizzato all'uso dell'applicazione.
+error.userUnknown=Utente non autenticato.
+error.invalidSession=Sessione utente non valida.
+error.applicativo=Si è verificato un errore di sistema.
+error.applicativo.dettaglio=Si è verificato il seguente errore di sistema:<p> <b>{0}</b></p>.
+error.duplicateKey=Si sta cercando di inserire un elemento già presente in base dati.
+error.invalidNavigationNode=Nodo di navigazione non esistente: {0} per il controller attivato da {1}
+error.campo.invalid=Formato campo {0} non valido.
+error.generic={0}
+error.generic1={0} {1}
+error.formatoData=Formato data/ora non valido. Formato data: DD/MM/YYYY. Formato ora: HH:MM
+error.strumentoNull=Occorre selezionare lo strumento.
+error.strumentoAnnoNull=Occorre selezionare l'anno dello strumento.
+error.strumentoTipoNull=Occorre selezionare il tipo strumento.
+error.strumentoNumeroNull=Occorre selezionare il numero dello strumento.
+error.esercizioNull=Occorre selezionare l'esercizio.
+error.annoNull=Occorre selezionare l'anno.
+error.amministrazioneNull=Occorre selezionare l'amministrazione (Stp/App/Eos).
+error.capitoloNull=Occorre selezionare il capitolo.
+error.pigNull=Occorre selezionare il piano di gestione.
+error.tipoAutNull=Occorre selezionare il tipo autorizzazione.
+error.autorizzazioneNull=Occorre selezionare l'autorizzazione.
+error.sottoStrumentoNull=Occorre selezionare il sottostrumento.
+error.tipologia.decreto.null=Occorre selezionare la tipologia decreto.
+error.modello.iter.null=Occorre selezionare il modello iter.
+error.anag.firmatario.null=Occorre selezionare il firmatario.
+error.delete.firmatario.unico=Operazione non valida. Non e' possibile avere un Modello Item senza Firmatari.
+error.capNotExists=Capitolo non valido o soppresso.
+error.capPgNotExists=Piano di gestione non esistente o soppresso.
+error.campiImportoNull=Selezionare almeno un importo
+error.operazionenonconsentita=Operazione non consentita. {0}
+error.selection.null=Selezionare almeno un elemento della lista
+error.selection.doc=Selezionare almeno un documento
+error.selection.tipoAllegato=Per gli elementi selezionati la descrizione del documento deve essere valorizzata
+error.cdr.no.ammin=Il CDR selezionato non è compatibile con l'amministrazione selezionata ricaricare la lista tramite l'apposito pulsante.
+error.cdr.no.anno=Il CDR selezionato non è compatibile con l'anno selezionato ricaricare la lista tramite l'apposito pulsante.
+error.amm.no.anno=L'amministrazione selezionata non è compatibile con l'anno selezionato ricaricare la lista tramite l'apposito pulsante.
+error.tipologia.no.tipo=La tipologia decreto selezionata non è compatibile con il tipo decreto selezionato ricaricare la lista tramite l'apposito pulsante.
+error.inviaAFad.invalid=FAD di destinazione non valido
+error.inviaAFad.inexistent=FAD di destinazione inesistente
+error.stato.invioFad=Lo stato del Fascicolo {0} non permette l&#39;operazione
+error.DecretoInFirma.required=Occorre valorizzare il Decreto in firma
+error.DecretoSospeso.required=Occorre valorizzare il Decreto sospeso
+error.anno.amm=L' esercizio selezionato non corrisponde con quello delle amministrazioni.
+error.anno.cdr=L' esercizio selezionato non corrisponde con quello dei cdr.
+errore.tipologia.decreto.presente=Tipologia Decreto già esistente.
+error.delete.tipologia.decreto.failed=Non è possibile cancellare la Tipologia Decreto: sono presenti fascicoli associati.
+errore.modello.iter.presente=Modello Iter già esistente.
+errore.iter.firma.presente=Firmatario già esistente per il modello iter selezionato.
+errore.delete.modello.iter.failed=Non è possibile cancellare il Modello Iter: sono presenti fascicoli e/o decreti associati.
+errore.delete.firmatario.iter.failed=Non è possibile cancellare un Firmatario per il Modello Iter selezionato: sono presenti fascicoli e/o decreti associati.
+error.decreto.notSelected=Selezionare un decreto
+error.decreto.altraTipologia.required=Se selezionato "Altro" specificare altro tipo
+error.decreto.descrizione.required=Inserire una "Descrizione" per il decreto
+error.decreto.tipologia.required=Inserire un "Tipo" per il decreto
+error.decreto.impIndebitamento.required=Inserire un valore per il campo "Impatto su indebitamento P.A. già definito"
+
+#Menu
+error.functionNotAllowed=Utente non autorizzato all'uso della funzione selezionata.
+error.applicationNotAllowed=Utente non autorizzato all'uso dell'applicazione selezionata.
+error.resourceNotFound=Impossibile raggiungere la risorsa richiesta.
+error.contentType=Tipo file non consentito.
+error.contentType.badFile=File corrotto o non leggibile.
+
+#Mail
+error.invalidAddress=L&#39;indirizzo <b>{0}</b> non risulta valido.
+error.formato.email=Il formato dell&#39;<b>{0}</b> inserito non risulta valido.
+error.empty.recipient.to=E-mail non inviata: destinatario mancante
+#upload
+#error.upload.file.empty=Occorre selezionare un file da caricare.
+error.upload.documenti.stato=Lo stato del documento non consente l''operazione
+
+#crea fad
+err.decreto.normativo.exists=esiste già un decreto normativo sul sistema documentale.
+err.decreto.exists=Non è possibile creare il fascicolo per un decreto normativo: esiste già un decreto con lo stesso numero sul sistema gestionale.
+err.mod.decreto.exists=Non è possibile modificare il fascicolo per un decreto normativo: esiste già un decreto con lo stesso numero sul sistema gestionale.
+err.fad.exists=esite già un fascicolo per il decreto.
+err.decreto.patrimonio.exists=esiste già un decreto sul sistema gestionale collegato a un diverso numero di prelevamento patrimonio.
+err.decreto.patrimonio.not.exists=Fascicolo Patrimonio non esistente.
+err.decreto.gestionale=Il decreto va creato dal sistema gestionale
+#Web Services
+error.ws.download.fascicolo.atto.decreto=Web Service Download Fascicolo Atto Decreto: <b>{0}</b>
+error.ws.get.doc.fascicolo.atto.decreto=Web Service Get Documento Fascicolo Atto Decreto: <b>{0}</b>
+error.ws.download.fascicolo.nonPresente=Operazione di conversione non ancora terminata
+error.ws.pkbox.firma.fascicolo.atto.decreto=Web Service PKBOX: <b>{0}</b>
+error.ws.upload.fascicolo.atto.decreto=Web Service Upload Fascicolo Atto Decreto: <b>{0}</b>
+error.ws.download.documento.fascicolo.atto.decreto=Web Service Download Documento Fascicolo Atto Decreto: <b>{0}</b>
+error.no.file.convertito=Operazione non consentita. Il file non è ancora stato convertito, riprovare in un secondo momento. Se il problema persiste contattare l'assistenza.
+error.no.pdfa.conversione.file=Errore durante la conversione in PDF/A: <b>{0}</b>
+  
+#crea fad
+error.stato.cancellazioneFad=Lo stato del Fascicolo {0} non permette la cancellazione.
+error.cancellaDocumento.empty=Non sono presenti documenti da cancellare
+
+errore.raccolta.null= Selezionare almeno una raccolta.
+
+error.codice.fiscale.mismatch=Il <b>Codice Fiscale</b> digitato non corrisponde a quello dell'utente.
+error.codice.too.short=La lunghezza del codice pin deve essere almeno di {0} caratteri.
+error.ad01.already.exists=Il documento atto decreto è già presente nel fascicolo; per procedere ad un nuovo caricamento è necessario cancellare il precedente.
+
+#gestione utenti
+errore.profilo.utente.mancante=Occorre inserire almeno un profilo
+errore.profilo.utente.cambio=Non è possibile inserire profili differenti per la stessa utenza
+errore.utente.null=Occorre selezionare un utente.
+errore.utente.codice.presente=Codice Utente già esistente
+errore.utente.profilo.ammin.only=Per il profilo selezionato, valorizzare solo Amministrazione
+errore.utente.profilo.ufficio.only=Per il profilo selezionato, valorizzare solo Ufficio
+errore.utente.profilo.ufficio.coorBilancisti=Per il profilo Coordinamento Bilancisti, valorizzare solo Ufficio I
+errore.utente.profilo.ufficio.ministro=Per il profilo Ministro MEF, valorizzare solo Amministrazione MINISTERO DELL'ECONOMIA E DELLE FINANZE
+errore.utente.profilo.ufficio.ministro.proponente=Per il profilo Ministro Proponente, valorizzare solo Amministrazione eccetto MINISTERO DELL'ECONOMIA E DELLE FINANZE
+errore.utente.profilo.nothing=Per il profilo selezionato non occorre valorizzare nessun campo aggiuntivo
+errore.profilo.selezionato=Occorre selezionare almeno un profilo.
+errore.utente.profilo.email=Per il profilo selezionato, valorizzare l'indirizzo email
+errore.profilo.principale.mancante=Occorre selezionare il profilo principale
+
+#gestione profili
+errore.profilo.codice.presente=Codice Profilo già esistente
+errore.delete.utente.failed=Non è stato possibile cancellare l'utente selezionato
+errore.profilo.null=Occorre selezionare un profilo.
+errore.delete.profilo.failed=Non è stato possibile cancellare il profilo selezionato
+errore.profilo.utente.presente = Non è possibile eliminare profili associati ad una utenza
+
+
+error.gestioneFad.modificaMetadati=Lo stato del fascicolo non permette la modifica dei metadati
+
+#Sigla Bollinatura
+error.no.pinencrypted_old=Per siglare o bollinare un documento \u00E9 necessario prima inserire il proprio pin utilizzando l&\#39;apposita funzione <a href\="creaPin.do">Clicca qui</a>
+error.no.pinencrypted=Per siglare o bollinare un documento \u00E9 necessario prima inserire il proprio pin utilizzando l&\#39;apposita funzione <a href\="creaPin.do?&amp;funzione\={0}">Clicca qui</a>
+error.pkbox=PKBOX: {0}
+
+error.no.pinencrypted.test=Per siglare o bollinare un documento \u00E9 necessario prima inserire il proprio pin utilizzando l&\#39;apposita funzione Creazione Pin.
+
+error.delega=E&#39; presente già la delega per l&#39;utente {0}
+
+error.lettera.pec.not.sent=La mail pec per la lettera {0} non è stata inviata per i seguenti motivi: {1}
+error.serverTechnicalError=Problemi tecnici dal server
+error.lettera=Si è verificato un errore per la lettera {0}

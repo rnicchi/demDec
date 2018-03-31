@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="it" ><![endif]-->
+<!--[if gt IE 8]><!-->
+<html style="" class=" js no-touch svg inlinesvg svgclippaths no-ie8compat js no-touch svg inlinesvg svgclippaths no-ie8compat" lang="it"><!--<![endif]--><!-- BaseTemplate.jsp --><head>
+	
+		<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+		<!--<meta charset="utf-8">-->
+		
+		<title>DemDec Dematerializzazione Atto Decreto - rev.  1602190001 (19/02/2016)</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- Fogli di stile CSS -->
+	
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/foundation.css">
+		<link rel="stylesheet" href="css/style_a.css">  
+		
+		<link rel="stylesheet" href="css/firebugR.css">
+		<link rel="stylesheet" href="css/modal.css">
+		<link rel="stylesheet" href="css/displaytag-table.css">  
+		
+		<!-- INIZIO IMPORT PER AVATAR 
+		<link rel="stylesheet" href="/demdec-web/private/avatar/assistente.css"/> 
+		<script type="text/javascript"  src="/demdec-web/private/avatar/js/jquery.min.js"></script>
+		<script type="text/javascript"  src="/demdec-web/private/avatar/js/assistente.js"></script>
+		FINE IMPORT PER AVATAR -->
+		
+	<!-- Modernizr -->
+	<script src="custom.js"> </script>
+	
+	<script>
+	Modernizr.load(
+	{
+		test: Modernizr.mq('only all'),
+	//	nope: 'private/js/respond.min.js'
+		nope:'respond.min.js'
+		}
+		);
+	</script>
+	
+	
+	<link href="css/content.css" type="text/css" rel="stylesheet"><link href="css/search.css" type="text/css" rel="stylesheet"></head>
+
+  
+  
+
+
+<!--<body style="padding-top: 45px;">-->
+	<body style="padding-top: 45px;" onkeyup="gestioneInvio(event)">
+		<div class="nascosto"><a href="#contenuto">Vai direttamente al contenuto</a></div>
+	 
+	
+		<!-- Header/navigazione top bar -->
+		<header class="fixed">
+			
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="sf_eng">
+
+
+  <div class="area_ris_eng">
+    <ul class="menu">
+        <li>
+        	<img src="img/ico_user.png" alt="" class="inline">
+        	<span class="col_char_user">ANGELINI MASSIMO&nbsp;•&nbsp;Direttore&nbsp;&nbsp;&nbsp;</span>
+        </li>
+        
+	      	<li>
+	        	<img src="img/ico_ch_user.png" alt="" class="inline hidd">
+	        	<a href="http://localhost:8080/demdec-web/private/cambioProfilo.do" title="Cambio profilo">Cambio profilo</a>
+	        </li>
+        
+        <li>
+        	<img src="img/ico_uscita.png" alt="" class="inline hidd">
+        	<a href="http://localhost:8080/demdec-web/public/uscita.do" title="Esci">Esci</a>
+        </li>
+    </ul>
+  </div>
+  
+</div>
+
+		
+			
+
+
+
+<div id="Cont_logo">
+	<a href="http://localhost:8080/demdec-web/private/menu.do">
+		<img class="padd_sx_logo" src="img/logo_DEMDEC.jpg" alt="Vai alla home">
+	</a>
+</div>
+
+			
+			
+
+<!-- menu.jsp -->
+<script src="jquery.js"></script>
+
+ 
+		
+
+
+<!-- MENU LATERALE --><nav class="top-bar"><ul class="title-area"><!-- Title Area --><li class="name"><h1 id="logo" class="hide-text"><a href="#">MEF - Ragioneria Generale dello Stato</a></h1></li><!-- Icona e testo per il menu su mobile. Rimuovere la classe "menu-icon" per eliminare l'icona. Rimuovere il testo "Menu" per avere solo l'icona --><li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li></ul><section style="left: 0%;" class="top-bar-section"><ul class="left"><li class="has-dropdown"><a href="#">Raccolte Provvisorie</a><ul class="dropdown"><li class="title back js-generated"><h5><a href="#">« Back</a></h5></li><li class="title back js-generated"><h5><a href="#">« Indietro</a></h5></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=ricercaRaccolteProvvisorie&amp;">Associazione a <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=ricercaSospesiRed&amp;">Chiusura Raccolte Sospese <abbr title="Sistema protocollo Ragioneria Generale dello Stato">RED</abbr></a></li></ul><div class="reader"><ul><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=ricercaRaccolteProvvisorie&amp;">Associazione a <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=ricercaSospesiRed&amp;">Chiusura Raccolte Sospese <abbr title="Sistema protocollo Ragioneria Generale dello Stato">RED</abbr></a></li></ul></div></li><li class="has-dropdown hover"><a href="#"><abbr title="Fascicolo Atto Decreto"> FAD</abbr></a><ul class="dropdown"><li class="title back js-generated"><h5><a href="#">« Back</a></h5></li><li class="title back js-generated"><h5><a href="#">« Indietro</a></h5></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=creaFascicoloFAD&amp;">Creazione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=gestioneFascicoloFAD&amp;">Gestione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=consultaFascicoloFAD&amp;">Consultazione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=predLetterePreReg&amp;">Predisposizione Lettere di Preregistrazione</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=invioPecPartecipazione&amp;">Invio Pec di Partecipazione</a></li></ul><div class="reader"><ul><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=creaFascicoloFAD&amp;">Creazione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=gestioneFascicoloFAD&amp;">Gestione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=consultaFascicoloFAD&amp;">Consultazione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=predLetterePreReg&amp;">Predisposizione Lettere di Preregistrazione</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=invioPecPartecipazione&amp;">Invio Pec di Partecipazione</a></li></ul></div></li><li class="has-dropdown"><a href="#">Workflow Firma</a><ul class="dropdown"><li class="title back js-generated"><h5><a href="#">« Back</a></h5></li><li class="title back js-generated"><h5><a href="#">« Indietro</a></h5></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=invioAlleFirme&amp;">Invio alle Firme</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=firmaDocumenti&amp;">Firma</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=siglaDocumenti&amp;">Sigla</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=verificaDocumenti&amp;">Verifica</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=bollinaDocumenti&amp;">Bollinatura</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=sospensioneFirme&amp;">Sospensione Firme</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=revocaSospensioneFirme&amp;">Revoca Sospensione Firme</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=monitoraggioFirma&amp;">Monitoraggio Firme</a></li></ul><div class="reader"><ul><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=invioAlleFirme&amp;">Invio alle Firme</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=firmaDocumenti&amp;">Firma</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=siglaDocumenti&amp;">Sigla</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=verificaDocumenti&amp;">Verifica</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=bollinaDocumenti&amp;">Bollinatura</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=sospensioneFirme&amp;">Sospensione Firme</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=revocaSospensioneFirme&amp;">Revoca Sospensione Firme</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=monitoraggioFirma&amp;">Monitoraggio Firme</a></li></ul></div></li><li class="has-dropdown"><a href="#">Funzioni di Servizio</a><ul class="dropdown"><li class="title back js-generated"><h5><a href="#">« Back</a></h5></li><li class="title back js-generated"><h5><a href="#">« Indietro</a></h5></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=mail&amp;">Invio Mail</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=listaMsgInviati&amp;">Lista Messaggi Inviati</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=gestioneTipologiaDecreto&amp;">Gestione Tipologia Decreto</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=gestioneWorkflowFirme&amp;">Gestione Workflow Firme</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=creaPin&amp;">Inserimento credenziali</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=intCronologico&amp;">Interrogazione Cronologico</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=gestioneUtenti&amp;">Gestione Utenti</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=gestioneProfili&amp;">Gestione Profili</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=abilitaMail&amp;">Abilitazione Mail</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=rielaborazioneFascicolo&amp;">Rielaborazione Fascicolo</a></li></ul><div class="reader"><ul><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=mail&amp;">Invio Mail</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=listaMsgInviati&amp;">Lista Messaggi Inviati</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=gestioneTipologiaDecreto&amp;">Gestione Tipologia Decreto</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=gestioneWorkflowFirme&amp;">Gestione Workflow Firme</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=creaPin&amp;">Inserimento credenziali</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=intCronologico&amp;">Interrogazione Cronologico</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=gestioneUtenti&amp;">Gestione Utenti</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=gestioneProfili&amp;">Gestione Profili</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=abilitaMail&amp;">Abilitazione Mail</a></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=rielaborazioneFascicolo&amp;">Rielaborazione Fascicolo</a></li></ul></div></li><li><a href="http://localhost:8080/demdec-web/private/menu.do?cmdGET___actionSelected=consultaFascicoloCdc&amp;">Consultazione<abbr title="Corte dei conti"> Cdc</abbr></a></li><li class="divider"></li><li><a href="http://localhost:8080/demdec-web/private/help.htm">Help</a></li></ul></section></nav>
+	 <!-- Navigazione: parte sinistra -->
+
+		
+		</header>
+	
+	
+		<!-- Inizio griglia -->
+		<!-- Sezione titoli in evidenza con slideshow -->
+		<div class="container">
+			
+
+
+<!-- 		<div class="spacer">&nbsp;</div>
+		<span class="nascosto">Ti trovi in:</span>
+		<span class="path_N">Home</span>
+ -->
+
+<a id="contenuto"></a>
+<div class="spacer">&nbsp;</div><span class="nascosto">Ti trovi in:</span><span class="path_N"><a href="http://localhost:8080/demdec-web/private/menu.do">Home</a>&nbsp;›&nbsp;Raccolte Provvisorie - Associazione a FAD</span> 
+			
+			<!-- Sezione lanci-servizi -->
+			<section id="lanci-servizi">
+			<!-- Inzio large-12 columns -->
+			<div class="large-12 columns">
+			 
+			<!-- 
+			 	<h2></h2>
+	   		  -->
+
+	   		 
+ 			
+
+
+
+
+				
+				
+				<form id="__FORM__" action="/demdec-web/private/ricercaRed.do?_APP_CODE_=DemDec&amp;_REQUEST_URI_SRC_=/demdec-web/private/menu.do" method="post">
+					<!--  tiles:insertAttribute name="info" flush="true"/-->
+				    <!--  tiles:insertAttribute name="navigator" flush="true"/-->
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- PageName = documentiFascicolo.jsp -->
+ 
+   
+  
+  
+  
+  
+  
+ 
+
+  <!-- INIZIO MODALE DETT DOCUMENTO -->
+
+
+
+ <script type="application/javascript">
+ //conversione di una data dal formato Date nel formato dd/MM/yyyy
+ function convertDate(inputFormat) {
+	  function pad(s) { return (s < 10) ? '0' + s : s; }
+	  var d = new Date(inputFormat);
+	  return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+ }
+
+function caricaModaleMetadatiDocRed(toOpenDett, rowNum){
+
+	size=$("#divErroreDett").length ;	
+	if( size>0  ) {	
+		$("#divErroreDett").empty();
+	}
+
+	size2=$("#title_modal_0").length ;
+	if( size2>0  ) {	
+		$("#title_modal_0").empty();
+	}
+
+	leng= this.document.getElementById("tabellaDettaglio2").rows.length;
+ 	
+	if(leng>0){				
+		$("#tabellaDettaglio2 tr").remove();		
+	} 
+	
+	$("#divErroreDett").empty();	
+
+
+	$.ajax({
+		
+		 
+		url: "/demdec-web/private/ricercaRedModali.do?cmdPOST___modaleDettaglioDocumento=modaleDettaglioDocumento&idRigaDoc="+rowNum ,
+		
+	    type: 'POST',
+	    data: {
+	        json: jsonData
+	    },
+	    success: function (response) { 
+	        var trHTMLdett = '';
+	        var trHTMLdettTit = '';
+	    	
+
+	  	  $.each(response, function (i, articleDett) {
+	  		if(articleDett.warningCode=='ERRORE'){
+	  			 
+	  			 trHTMLdett='';
+	  			 trHTMLdettTit = '';
+				$("#divErroreDett").append("<div class=rowD  align=center><strong>Errore nel recupero dei dati  </strong></div>");
+			}else {
+				trHTMLdettTit='<div class=bg-tono0 id=title_modal_2><strong>Documento Raccolta Provvisoria</strong></div>';
+		  		/* trHTMLdettTit='<table class="lux tableDati" border="0">'+
+		  					  '<tr><td><div id=title_modal_2 class=bg-tono0><strong>Documentos:</strong> </td>'+
+		  					  '<td><strong>'+ (articleDett.descrizione==null?'':articleDett.descrizione) + '</strong></div></td></tr>'+
+		  					  '</table>'; */
+		  		
+		  		trHTMLdett =
+		  		  //  '<div class=bg-tono0><strong>Documento: '+ (articleDett.descrizione==null?'':articleDett.descrizione) + '</strong></div>'+
+			  		//'<div class=rowD><strong>Esercizio Finanziario: </strong></td><td>' + (articleDett.anagAmminDem.eserciziDem.id==null?'':articleDett.anagAmminDem.eserciziDem.id)  + '</div>'+		
+			  		'<tr><td><strong>Tipo Documento:&nbsp;</strong></td><td>' + (articleDett.tipoDocumento.description==null?'':articleDett.tipoDocumento.description) + '</td></tr>'+	
+			  	// 	'<tr><td><strong>Protocollo Ingresso:&nbsp;</strong></td><td>' + ( (articleDett.protocollo==null || articleDett.protocollo.numeroProtocollo==null)?'':articleDett.protocollo.numeroProtocollo) + '</td></tr>'+			  		
+			  	  //'<tr><td><strong>Data Protocollo Ingresso:&nbsp;</strong></td><td>' + ( (articleDett.protocollo==null || articleDett.protocollo.data==null)?'':convertDate(articleDett.protocollo.data) ) + '</td></tr>'+			  		
+			  		' <tr><td><strong>Protocollo :  </strong></td><td>' + ( articleDett.protocollo==null ?'':articleDett.protocollo.tipo+ ' - '+articleDett.protocollo.numeroProtocollo+' - '+convertDate(articleDett.protocollo.data)) + '</td></tr>'+
+			  		
+			  		'<tr><td><strong>Nome file:&nbsp;</strong></td><td>' + (articleDett.documentoContent.fileName==null?'':articleDett.documentoContent.fileName) + '</td></tr>'+		  		
+			  		'<tr><td><strong>Documento Origine:&nbsp;</strong></td><td>' + (articleDett.documentoFileOrigine==null?'':articleDett.documentoFileOrigine.fileName) + '</td></tr>'+		  		
+			  		'<tr><td><strong>Amministrazione:&nbsp;</strong></td><td>' + (articleDett.amministrazione.description==null?'':articleDett.amministrazione.description) + '</td></tr>'+	
+			  		'<tr><td><strong>UCB / RTS:&nbsp;</strong></td><td>' + ( (articleDett.ucbRts==null || articleDett.ucbRts.description==null)?'':articleDett.ucbRts.description) + '</td></tr>'+	
+			  		'<tr><td><strong>Data Creazione:&nbsp;</strong></td><td>' + (articleDett.dataCreazione==null?'':articleDett.dataCreazione) + '</td></tr>'+				 
+			  		'<tr><td><strong>Data Documento:&nbsp;</strong></td><td>' + (articleDett.dataDocumento==null?'':articleDett.dataDocumento) + '</td></tr>'+
+			  		'<tr><td><strong>Tipo Operazione:&nbsp;</strong></td><td>' + (articleDett.tipoOperazione==null?'':articleDett.tipoOperazione) + '</td></tr>'+	
+					'<tr><td><strong>Esito Operazione:&nbsp;</strong></td><td>' + (articleDett.esitoOperazione==null?'':articleDett.esitoOperazione) + '</td></tr>';	
+
+
+					  	// 	'<tr><td><strong>Descr. Documento:&nbsp;</strong></td><td>'+(articleDett.descDocumento==null?'':articleDett.descDocumento.description )+  '</td></tr>';	 
+									  		   
+  				$("#title_modal_0").append(trHTMLdettTit);	
+  				$("#tabellaDettaglio2").append(trHTMLdett);
+			}
+	  		
+	 
+	  	});
+
+	  	apriPopUpModale(toOpenDett);
+		
+	},
+
+	
+    error: function(){
+    	
+			$("#divErroreDett").append("<div class=rowD align=center><strong>Errore nel recupero dei dati</strong></div>");
+			 
+			apriPopUpModale(toOpenDett);
+    } 
+
+	});
+
+
+}
+
+
+function confermaModaleDett() {
+
+	$('.overlay').fadeOut('fast');
+    $('.box').hide();
+	$('.box_meta_35').hide();
+}
+
+</script>
+
+ 
+ 
+ 
+   <div>
+   
+    <!--<div class="overlay"></div>-->
+      
+    <div id="contModal_2" class="box_meta_35">
+        
+        <div id="title_modal_0"></div>
+        
+    <div>
+             
+        <div id="divErroreDett"></div>
+       
+            <!--INI SCROLL-->
+             <div class="scroll_table_gen">          
+                            <!-- MODAL TABLE-->             
+          <div class="width100">
+                 <table class="marg_0px_auto width100" id="tabellaDettaglio2"> 
+                 
+                   		 <caption><span class="nascosto">Tabella Dettaglio</span></caption>  
+                 </table>            
+           </div>
+        </div>
+        <!--END SCROLL-->
+
+        <div class="spacer_sm">&nbsp;</div>
+
+    </div>
+
+     <div class="text-center">
+    
+     <button type="button" class="button small " onclick="javascript:confermaModaleDett();">Torna alla lista</button>
+	
+    </div>
+
+<p class="chiudi">Chiudi X</p>
+
+</div>
+      
+    </div>
+    
+    
+<!-- END MODALE DETT FASCICOLO-->  
+      
+
+
+
+ 	<script src="/tooltip.js"> </script>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(html: true,
+    		);
+});
+</script> 
+
+  <script type="application/javascript">
+
+$(document).ready(function() {
+
+    $("#btnInvioAFad").click(function() {
+
+        $('body').css("cursor", "wait");
+
+    });
+
+
+    $("#btnInvAFad").click(function() {
+
+        $('body').css("cursor", "wait");
+
+    });
+
+});
+
+</script>
+
+
+ <div class="large-12 columns">
+ <div class="spacer_sm">&nbsp;</div>
+
+
+	<div class="center padd-bott_5 font_size_riep">
+	    <span><strong>• Protocollo:</strong> </span>
+	    <span class="col_char_user"><strong>1234/2015</strong></span> 
+	</div>
+  
+  
+ <input name="origine" value="documentiFascicolo" type="hidden">
+
+  <fieldset>
+  <legend>FAD di destinazione - Selezione Decreto</legend>
+
+ 
+        <div class="row">
+            <div class="small-3 columns left">
+          		<label for="tipoFlusso" class="" style="null">Tipo</label>
+					       		 <select id="tipoFlusso" name="tipoFlusso"> 
+					       		    <option value="" selected="selected">&nbsp;</option> 
+					          				
+										 <option value="22">DMT </option> 
+											
+										 <option value="23">DIM </option> 
+									    		
+					        	 </select> 
+            </div>
+      
+            <div class="small-3 columns left">
+              
+               <label for="numero" class="" style="null">Numero</label> 
+					           <input id="numero" name="numero" maxlength="6" type="text"> 
+            </div>
+            
+             <div class="small-3 columns left">            
+	             <label for="annoEse" class="" style="null">Anno</label>
+	       		 <select id="annoEse" name="annoEse"> 
+	       		 	<option value="" selected="selected">&nbsp;</option>
+	          				
+						 <option value="2016">2016 </option> 
+							
+						 <option value="2015">2015 </option> 
+					    		
+	        	 </select>  
+     		</div>
+     		 <div class="small-3 1columns left padd-top_17">
+             
+               
+              
+               <input name="cmdPOST___inviaAFad" value="Invia a FAD" id="btnInvioAFad" class="button small" type="submit">
+              
+                          
+            </div>
+           </div>
+          
+           
+		  <div class="row">
+		    <div class="small-10 columns">
+		   		 <button type="button" class="button small" onclick="javascript:caricaPopup('contModal_0', 'modaleListaDecretiRaccProvv');"><span class="" style="null">Ricerca</span></button>
+	        	 	
+	        	  <input name="cmdPOST___pulisciDocumentiFascicolo" value="Pulisci" class="button small" type="submit"> 
+	        	  
+		    </div>
+		  </div>
+		  
+		   </fieldset>
+    
+<!--**INIZIO INCLUDE MODALE modaleRicercaFascicoliFAD.jsp -->	
+
+  <!-- INIZIO MODALE Selezione Decreto -->
+
+  
+  
+  
+    
+
+ <script type="application/javascript">
+
+
+ var jsonData;
+
+
+ function caricaPopup(toOpen, funct){  
+	
+	 $("#title_modal").empty();
+
+	 var titoloPag = '';
+	 titoloPag="<strong>FAD di destinazione - Selezione Decreto</strong>";
+	
+	if(funct=='modaleListaDecretiRaccProvv'){
+		 funz="/demdec-web/private/ricercaRedModali.do?cmdPOST___modaleListaDecreti=modaleListaDecreti&tipoFlusso="+this.document.getElementById('tipoFlusso').value+"&numero="+this.document.getElementById('numero').value+"&annoEse="+this.document.getElementById('annoEse').value;
+	}else if(funct=='modaleInvioAFirme'){
+		titoloPag="<strong>Decreti da inviare alla Firma - Ricerca</strong>";
+		 funz="/demdec-web/private/invioAlleFirmeModali.do?cmdPOST___modaleInvioAFirme=modaleInvioAFirme&tipoFlusso="+this.document.getElementById('tipoFlusso').value+"&numero="+this.document.getElementById('numero').value+"&annoEse="+this.document.getElementById('annoEse').value;
+	}else if(funct=='modaleSospensioneFirme'){
+		 funz="/demdec-web/private/sospensioneFirmeModali.do?cmdPOST___modaleSospensioneFirme=modaleSospensioneFirme&tipoFlusso="+this.document.getElementById('tipoFlusso').value+"&numero="+this.document.getElementById('numero').value+"&annoEse="+this.document.getElementById('annoEse').value;
+	}else if(funct=='modaleRevocaSospensioneFirme'){
+		 funz="/demdec-web/private/revocaSospensioneFirmeModali.do?cmdPOST___modaleRevocaSospensioneFirme=modaleRevocaSospensioneFirme&tipoFlusso="+this.document.getElementById('tipoFlusso').value+"&numero="+this.document.getElementById('numero').value+"&annoEse="+this.document.getElementById('annoEse').value;
+	}
+	$("#title_modal").append(titoloPag);
+
+	 	leng= this.document.getElementById("tabellaDecreti2").rows.length;
+	 	
+		if(leng>0){				
+			$("#tabellaDecreti2 tr").remove();		
+		} 
+
+		
+
+		$("#divErrore").empty();		
+		
+		
+		$.ajax({
+			
+		url: funz,
+		
+	    type: 'POST',
+	    data: {
+	        json: jsonData
+	    },
+	    
+	    success: function (response) {
+		      var trHTML = '';
+		  
+		      var radio="";
+		      var trHTML = '';
+		      var hiddenAnno="";
+
+	    	  trHTML='<tr><th scope=col><span class=nascosto>Selezione</span>Sel.</th><th scope=col>Tipo</th><th scope=col>Numero</th><th scope=col>Anno</th><th scope=col>Data apertura</th><th scope=col>Descrizione</th></tr>';
+	     	  $("#tabellaDecreti2").append(trHTML);
+	  
+		  	  $.each(response, function (i, article) {
+			  	
+		  		if(article.descSigla=='ERRORE'){
+		  			trHTML='';
+					$("#divErrore").append("<br><br><label><strong>Errore nel recupero dei dati</strong></label>");
+				}
+		  		else {
+			  		hiddenTipoFlusso="<input type=hidden id=hiddenTipoFlusso"+i+" value="+ article.numeTipoDecreto+" />";
+			  		hiddenAnno="<input type=hidden id=hiddenAnno"+i+" value="+ article.annoEse+" />";
+			  		hiddenNumero="<input type=hidden id=hiddenNumero"+i+" value="+ article.numeNumDecreto+" />";
+			  		radio="<td><label for=radioButton class=nascosto>Seleziona Decreto</label><input id=radioButton name=radioButton type=radio value="+i+"  /></td>";
+			  		
+			  		 trHTML ='<tr>'+hiddenTipoFlusso+ ' '+hiddenNumero+ ' '+hiddenAnno+' '+radio+'<td>' + article.descSigla + '</td><td>' + article.numeNumDecreto + '</td><td>' + article.annoEse + '</td><td>' + article.dataCreazione + '</td><td  class=text-center>' + article.descDecreto + '</td></tr>';
+			  		 $("#tabellaDecreti2").append(trHTML);
+		  		}
+		  	});
+	    
+	  	apriPopUpModale(toOpen);
+
+	    },
+
+	     error: function(){
+		
+	 			$("#divErrore").append("<br><br><label><strong>Errore nel recuperare i dati</strong></label>");
+	 			 
+	 			apriPopUpModale(toOpen);
+	    } 
+	    
+	    
+	});
+
+	}
+
+
+
+/*function confermaModale() {
+
+	if(typeof this.document.getElementById('radioButton')== 'undefined' || typeof this.document.getElementById('radioButton').length == 'undefined'  ){
+		
+		$('.overlay').fadeOut('fast');
+	    $('.box').hide();
+		$('.box_meta_35').hide();
+	}
+
+
+		
+	for (j = 0; j <len; j++) {
+		
+		
+		if (this.document.getElementById('radioButton'+j).checked) {	
+			selezionato = this.document.getElementById('radioButton'+j).value;		
+			var indiceTipoFlusso='hiddenTipoFlusso'+selezionato;
+			var indiceAnno='hiddenAnno'+selezionato;
+			var indiceNumero='hiddenNumero'+selezionato;
+
+			this.document.getElementById('__FORM__').tipoFlusso.value=this.document.getElementById(indiceTipoFlusso).value;
+			this.document.getElementById('__FORM__').annoEse.value=this.document.getElementById(indiceAnno).value;
+			this.document.getElementById('__FORM__').numero.value=this.document.getElementById(indiceNumero).value;
+			
+			$('.overlay').fadeOut('fast');
+		    $('.box').hide();
+			$('.box_meta_35').hide();
+			break;
+		}
+	}
+}*/
+
+
+
+
+
+function confermaModale() {
+/*	if(typeof this.document.documentoForm.radioButton== "undefined" || typeof this.document.documentoForm.radioButton.length == "undefined"  ){
+		
+		$('.overlay').fadeOut('fast');
+	    $('.box').hide();
+		$('.box_meta_35').hide();
+	}*/
+
+
+  if(typeof this.document.getElementById('__FORM__').radioButton!="undefined") {
+			
+			var selezionato =-1;
+			var len=this.document.getElementById('__FORM__').radioButton.length;
+		
+			if(typeof this.document.getElementById('__FORM__').radioButton!="undefined" & typeof this.document.getElementById('__FORM__').radioButton.length=="undefined"){
+				
+				if (this.document.getElementById('__FORM__').radioButton.checked) {
+					selezionato = this.document.getElementById('__FORM__').radioButton.value;		
+					
+					var indiceTipoFlusso='hiddenTipoFlusso'+selezionato;
+					var indiceAnno='hiddenAnno'+selezionato;
+					var indiceNumero='hiddenNumero'+selezionato;
+			
+					this.document.getElementById('__FORM__').tipoFlusso.value=this.document.getElementById(indiceTipoFlusso).value;
+					this.document.getElementById('__FORM__').annoEse.value=this.document.getElementById(indiceAnno).value;
+					this.document.getElementById('__FORM__').numero.value=this.document.getElementById(indiceNumero).value;		
+
+
+					if($("#invFirmeButton")!=null){
+						var buttonHTML = '';	
+				  		buttonHTML="<input type='submit' name='cmdPOST___ricercaFirmatari' value='Conferma' class='button small'  /> ";
+				  		
+				 		$("#invFirmeButton").empty();
+						$("#invFirmeButton").append(buttonHTML);	
+					}
+
+		
+
+				}	
+		    }else {
+			
+					for (j = 0; j <len; j++) {
+						
+						if (this.document.getElementById('__FORM__').radioButton[j].checked) {	
+							selezionato = this.document.getElementById('__FORM__').radioButton[j].value;		
+							var indiceTipoFlusso='hiddenTipoFlusso'+selezionato;
+							var indiceAnno='hiddenAnno'+selezionato;
+							var indiceNumero='hiddenNumero'+selezionato;
+				
+							this.document.getElementById('__FORM__').tipoFlusso.value=this.document.getElementById(indiceTipoFlusso).value;
+							this.document.getElementById('__FORM__').annoEse.value=this.document.getElementById(indiceAnno).value;
+							this.document.getElementById('__FORM__').numero.value=this.document.getElementById(indiceNumero).value;
+
+							if($("#invFirmeButton")!=null){
+								var buttonHTML = '';	
+						  		buttonHTML="<input type='submit' name='cmdPOST___ricercaFirmatari' value='Conferma' class='button small'  /> ";
+						  		
+						 		$("#invFirmeButton").empty();
+								$("#invFirmeButton").append(buttonHTML);	
+							}
+									
+						
+							break;
+						}
+					}
+		
+		    }
+
+  }	
+	$('.overlay').fadeOut('fast');
+    $('.box_30').hide();
+	$('.box_meta_35').hide();
+}
+
+</script>
+
+ 
+    <div>
+
+    
+    <!--<div class="overlay"></div>-->
+  
+    <div id="contModal_0" class="box_30 center">
+    
+        
+			<div id="title_modal"></div>
+		
+        
+        
+        <div>
+        
+        
+        <div id="divErrore"></div>
+       
+            <!--INI SCROLL-->
+            <div class="scroll_table_modal">
+           
+                            <!-- MODAL TABLE-->             
+          
+          <div>
+                    <table class="lux tableDati" id="tabellaDecreti2" border="1"> 
+                    
+                    <caption><span class="nascosto">Tabella Decreti</span></caption>  
+                    <tbody><tr>
+	                    <th scope="col"><span class="nascosto">Selezione</span>Sel.</th>
+	                    <th scope="col">Tipo</th>
+	                    <th scope="col">Numero</th>
+	                    <th scope="col">Anno</th>
+	                    <th scope="col">Data apertura</th>
+	                    <th scope="col">Descrizione</th>
+                    </tr>
+                    <!-- <tr>
+                    <td><label for="chk_1_mod" class="nascosto">Seleziona Decreto</label><input  name="radioButton" type="radio" /></td>
+                    <td>DMT</td>
+                    <td>14211</td>
+                    <td>2015</td>
+                    <td>26/02/2015</td>
+                    <td class="text-left">DIM DI ISTITUZIONE CAP. 1243 PG 25 - DIPARTIM. AFFARI INTERNI E TERRITORIALI - MIN. INTERNO</td>
+                    </tr> -->
+                  
+                  
+                  
+                    </tbody></table>            
+        
+           </div>
+        </div>
+        <!--END SCROLL-->
+
+        <div class="spacer_sm">&nbsp;</div>
+
+
+</div>
+
+
+
+<!--<div class="invia_FAD"><img src="img/ico_send.png" alt=""><a href="#">Invia a Gestione Fascicoli FAD</a></div>-->
+
+    <div class="text-center">
+    
+     <button type="button" class="button small " onclick="javascript:confermaModale();">Conferma</button>
+	<!--<input type="button" class="button small" value="Conferma" onClick="javascript: document.location = '2_add_element_schermo_2.htm';" />-->
+    <!--<button type="submit" class="button small">Pulisci</button>-->
+    </div>
+
+<p class="chiudi">Chiudi X</p>
+
+</div>
+      
+    </div>
+    
+    
+<!-- END MODALE Selezione Decreto--> 
+      
+
+  
+<!-- END INCLUDE MODALE Selezione Decreto   modaleRicercaFascicoliFAD.jsp -->     
+
+  
+<div class="overlay"></div>
+
+
+  <div>
+
+
+	 
+
+		<div class="scroll_table_gen">
+<table id="listDocumentiFascicolo" class="lux tableDati width100">
+<caption><span class="nascosto"><span class="" style="null">Tabella documenti fascicolo</span></span></caption>
+<thead>
+<tr>
+<th scope="col"><input id="selectall" title="Seleziona tutti" type="checkbox"></th>
+<th scope="col">Anteprima</th>
+<th scope="col">Pdf</th>
+<th scope="col">Originale</th>
+<th scope="col">Tipo Documento</th>
+<th scope="col">Amministrazione</th>
+<th scope="col">Data Creazione</th>
+<th scope="col">Descrizione</th>
+<th scope="col">Associato a</th>
+<th scope="col">Visualizza Metadati</th></tr></thead>
+<tbody>
+<tr class="odd">
+<td class="center">	
+				 <label for="selezioniDocumentiFasc1"></label>
+				 <input id="selezioniDocumentiFasc1" name="selezioniDocumentiFasc" class="checkPlut" value="DA746A2B-BF47-ACC2-E053-6646250A356F" type="checkbox"><input name="_selezioniDocumentiFasc" value="on" type="hidden"> 	
+			</td>
+<td class="center">
+			
+ 				
+					<a href="javascript:%20caricaModaleAnteprima('iVBORw0KGgoAAAANSUhEUgAAAlMAAANKCAIAAAAhjVxYAAALzklEQVR42u3coVMiURzAcYLBQCQQNhAMBIOBYDAQDAaDwWAgXDD4BxhoBAPhgoFAMBAuEAgGgvGCwWAwGIgGAsFAIBA2cL9h73b2vAs3V8S7zycwj8fbZWTDdx47WFoBwP+k5CMAQPkAQPkAQPkAQPkAQPkAQPkAQPkAQPkAQPkAQPkAQPkAQPkAUD4AUD4AUD4AUD4AUD4AUD4AUD4AUD4AUD4AUD4AUD4AUD4AUD4AlA8AlA8AlA8AlA8AlA8AlA8AlA8AlA8AlA8AlA8AlA8AlA8AlA8A5QMA5QMA5QMA5QMA5QMA5Vutnp6evv7ir882mUxms1lxJk3T+/v75XJZnIw18b6uNADvUL5ut/tprVwuHx0dZeM/P/z8/DwbRNva7XacZDAYFEMY5yyVSi8vL/nk3d1dkiTNZtOVBuAdyper1WpvdnuxV7u6urq+vp7P53nJumvPz8/xdDQaZalbLBaf11qtVrF8x8fHDw8PxfJNp9OYjAOVD4DNKt/l5WWj0bi5uel0OvV6PdoWIdzZ2en3+71eLwbj8TjGUbWsfGmaxlGxXyyWL5ssli9dizdSPgA2qHzL5bJSqeR37Pb397+sHR4eZnfsomTxajxG1YoneVO+73/Pz992BuUDYLPKlyWt+UO1Wo2d33w+Pz09TZIk8nZ7e5svUz4APnz5Yj+3tbX122WLxWI4HNbr9X6/r3wA/CPlC41GI3/a6/Wm0+l4PM5/itButy8uLmIyqpbdzFM+AD52+SJyu7u7rVbr4OAgHiNvj4+PsdWL8cnJyd7e3mQyiWWxJhoZi8/OzuIM5XK5UqnEYDQaRRdra1G+JEliEDMxH4Nqtbq9vR2DOMr1BmBT/odL1C72aq+vr8XJ2WwWAcv3eTHIf/MAAB+7fACgfACgfACgfACgfACgfACgfAAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKB4DyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAaB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8ACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygeA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKB4DyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAaB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8ACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygeA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKB4DyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAaB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8ACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygeA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKB4DyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAaB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8ACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygeA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKB4DyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAaB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8ACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygeA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAAoHwAoHwAoHwAoHwAoHwAoHwC8l291izkzKZCrqwAAAABJRU5ErkJggg==');">
+						<img src="img/ico_view_det.png" alt="Visualizza Anteprima" title="Visualizza Anteprima">
+					</a>			
+				
+				
+			</td>
+<td class="center">
+			
+ 				
+
+					
+					
+						<img data-toggle="tooltip" title="&lt;img src='data:image/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAlMAAANKCAIAAAAhjVxYAAALzklEQVR42u3coVMiURzAcYLBQCQQNhAMBIOBYDAQDAaDwWAgXDD4BxhoBAPhgoFAMBAuEAgGgvGCwWAwGIgGAsFAIBA2cL9h73b2vAs3V8S7zycwj8fbZWTDdx47WFoBwP+k5CMAQPkAQPkAQPkAQPkAQPkAQPkAQPkAQPkAQPkAQPkAQPkAQPkAUD4AUD4AUD4AUD4AUD4AUD4AUD4AUD4AUD4AUD4AUD4AUD4AUD4AlA8AlA8AlA8AlA8AlA8AlA8AlA8AlA8AlA8AlA8AlA8AlA8AlA8A5QMA5QMA5QMA5QMA5QMA5Vutnp6evv7ir882mUxms1lxJk3T+/v75XJZnIw18b6uNADvUL5ut/tprVwuHx0dZeM/P/z8/DwbRNva7XacZDAYFEMY5yyVSi8vL/nk3d1dkiTNZtOVBuAdyper1WpvdnuxV7u6urq+vp7P53nJumvPz8/xdDQaZalbLBaf11qtVrF8x8fHDw8PxfJNp9OYjAOVD4DNKt/l5WWj0bi5uel0OvV6PdoWIdzZ2en3+71eLwbj8TjGUbWsfGmaxlGxXyyWL5ssli9dizdSPgA2qHzL5bJSqeR37Pb397+sHR4eZnfsomTxajxG1YoneVO+73/Pz992BuUDYLPKlyWt+UO1Wo2d33w+Pz09TZIk8nZ7e5svUz4APnz5Yj+3tbX122WLxWI4HNbr9X6/r3wA/CPlC41GI3/a6/Wm0+l4PM5/itButy8uLmIyqpbdzFM+AD52+SJyu7u7rVbr4OAgHiNvj4+PsdWL8cnJyd7e3mQyiWWxJhoZi8/OzuIM5XK5UqnEYDQaRRdra1G+JEliEDMxH4Nqtbq9vR2DOMr1BmBT/odL1C72aq+vr8XJ2WwWAcv3eTHIf/MAAB+7fACgfACgfACgfACgfACgfACgfAAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKB4DyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAaB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8ACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygeA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKB4DyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAaB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8ACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygeA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKB4DyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAaB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8ACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygeA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKB4DyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAaB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8ACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygeA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKBwDKB4DyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAYDyAaB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8ACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHAMoHgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBgPIBoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAoHwAKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AKB8AygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygcAygeA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGA8gGgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfACgfAAoHwAoHwAoHwAoHwAoHwAoHwC8l291izkzKZCrqwAAAABJRU5ErkJggg==' /&gt;" src="img/ico_pdf_conv.png" alt="Documento Pdf">
+					
+				
+				 
+				
+			</td>
+<td class="center">
+					<a href="http://localhost:8080/demdec-web/private/ricercaRed.do?cmdGET___download=download&amp;tipoDownl=2&amp;idDocumento=DA746A2B-BF47-ACC2-E053-6646250A356F">
+						<img src="img/ico_download.png" alt="Documento Originale" title="Test111.pdf">
+					</a>
+			</td>
+<td>Allegato</td>
+<td class="center">020</td>
+<td>18/02/2016</td>
+<td class="center">
+			 		<label for="tipoAllegatiDA746A2B-BF47-ACC2-E053-6646250A356F"></label>
+			        <select name="tipoAllegatiDA746A2B-BF47-ACC2-E053-6646250A356F">
+						<option selected="selected" value="">&nbsp;</option>		
+						
+							
+									
+									
+												
+														
+															
+																
+															      
+																  
+																 		 <option value="47-Altri Allegati">Altri Allegati</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="48-Appunto/i">Appunto/i</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="49-Contratto/i">Contratto/i</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="50-Decreto già firmato dal Direttore proponente">Decreto già firmato dal Direttore proponente</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="51-Decreto già firmato dal Ministro proponente">Decreto già firmato dal Ministro proponente</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="52-Dichiarazione del responsabile del procedimento">Dichiarazione del responsabile del procedimento</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="101-Lettera di richiesta Amministrazione per il tramite UCB">Lettera di richiesta Amministrazione per il tramite UCB</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="38-Lettera di trasmissione UCB ">Lettera di trasmissione UCB </option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="39-Lettere per bollinatura">Lettere per bollinatura</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="40-Prospetti analitici a corredo delle richieste di amministrazione">Prospetti analitici a corredo delle richieste di amministrazione</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="41-Prospetti excel">Prospetti excel</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="42-Prospetto Riepilogativo (Tagliatella)">Prospetto Riepilogativo (Tagliatella)</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="43-Quietanza/e">Quietanza/e</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="44-Report NSBF disponibiltà Fondo">Report NSBF disponibiltà Fondo</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="45-Report SIE Sistema Entrate">Report SIE Sistema Entrate</option>
+																  	
+															 				 
+														
+															
+																
+															      
+																  
+																 		 <option value="46-Richieste UCB">Richieste UCB</option>
+																  	
+															 				 
+														 
+												
+										
+						
+										           
+						
+						
+			         </select> 
+	      	</td>
+<td class="center">
+						 		<label for="read_100" class="nascosto">Associazione a</label>
+								<textarea cols="45" id="read_100" readonly="readonly"></textarea>								
+			</td>
+<td class="center">				
+					<a href="javascript:%20caricaModaleMetadatiDocRed('contModal_2',%20'1');">
+						<img src="preview_files/ico_view_det.png" alt="Visualizza Metadati">
+					</a>			
+			</td></tr></tbody></table></div>
+  		
+	 
+
+	 
+		<div>&nbsp;</div>
+	     <div class="center color_grey">
+	         <span>Record totali:</span><span class="col_char_user"><strong>&nbsp;1</strong></span><span>&nbsp;- Pagina&nbsp;<strong>1</strong>&nbsp;di&nbsp;<strong>1</strong></span>
+	     </div>    
+	     <div>&nbsp;</div>
+ 	  
+	 
+	
+	
+</div>
+			
+
+ <div class="clear_both">&nbsp;</div>
+	
+    <div class="text-center">
+    	<div class="divPulsanti">
+    		 <input name="cmdPOST___inviaAFad" value="Invia a FAD" id="btnInvAFad" class="button small" type="submit">
+		  <input name="cmdPOST___pulisciRaccolteProvvisorie" value="Torna alla Lista" class="button small" type="submit"> 
+    	</div>
+    </div>
+    
+    
+    
+</div>  
+
+ 
+ <script type="application/javascript">
+
+function caricaModaleAnteprima(preView){
+	
+	this.document.getElementById("imgPreView").src="data:image/jpg;base64,"+preView;
+	
+	apriPopUpModale("modale_anteprima");
+}
+
+
+function confermaModalePreView() {
+
+	$('.overlay').fadeOut('fast');
+    $('.box').hide();
+	$('.box_meta_35').hide();
+}
+
+</script>
+
+ 
+ 
+   <div>
+   
+    <!--<div class="overlay"></div>-->
+      
+    <div id="modale_anteprima" class="box_meta_35">
+        
+        
+    <div>
+    
+    	<img id="imgPreView" alt="Anteprima documento" src="">
+             
+        <!--END SCROLL-->
+
+        <div class="spacer_sm">&nbsp;</div>
+
+    </div>
+
+     <div class="text-center">
+    
+     <button type="button" class="button small " onclick="javascript:confermaModalePreView();">Torna alla lista</button>
+	
+    </div>
+
+<p class="chiudi">Chiudi X</p>
+
+</div>
+      
+    </div>
+    
+    
+<!-- END MODALE ANTEPRIMA-->  
+
+
+				</form>
+		
+			</div>
+			<!-- Fine large-12 columns -->
+			</section>
+		<!-- Fine Sezione lanci-servizi -->
+	
+	
+			
+
+ 
+
+		<!-- footer.jsp -->
+<footer>
+    <div class="row">
+    	<div class="large-12 columns">
+    		<ul class="inline-list left">
+    			<li><a href="http://localhost:8080/demdec-web/private/jsp/common/accessibilita.jsp">Accessibilità</a></li>
+<!--     			<li><a href="#">Note legali</a></li>
+    			<li><a href="#">Privacy</a></li> -->
+    		</ul>
+    		<p class="right">Copyright 2015 © RGS Ragioneria Generale dello Stato</p>
+    	</div>
+    </div>
+</footer>
+
+	
+		</div>
+		<script src="jquery.js"> </script>
+	
+		<script src="foundation.js"> </script>
+
+		<script>
+		 $(document).foundation();
+		</script>
+
+		<script type="text/javascript">
+		 $(window).load(function() {
+		  $('#slideshow').orbit();
+		 });
+		</script>
+		
+		<script type="text/javascript">
+			function gestioneInvio(event) {
+				if (event.keyCode == 13){
+					$('.default').click();
+				}
+				
+			}
+		</script>
+
+<!--   INIZIO GESTIONE MODALI --> 	
+	<script type="text/javascript">
+	    function apriPopUpModale(toOpen) {
+	        $('.overlay').fadeIn('fast');
+	        $('#' + toOpen).fadeIn('slow');
+	        return false;
+	    }
+	
+	    function selectAll(){
+	    	$('.checkPlut').prop('checked',true);
+	    } 
+	    
+   
+        $('#selectall').click(function(event) {   
+            if(this.checked) {
+            	$('.checkPlut').prop('checked',true);
+            }else{
+            	$('.checkPlut').prop('checked',false);        
+            }
+        });
+	        
+	   
+	    
+	    function unselectAll(){
+	    	$('.checkPlut').prop('checked',false);
+	    }
+	    
+	    function close(){
+	        $('.overlay').fadeOut('fast');
+	        $('.box_pin').hide();
+	        $('.box_meta').hide();
+	        $('#pin').val('')
+	        return false;
+	        
+	    }
+
+	    //conversione di una data dal formato Date nel formato dd/MM/yyyy
+	    function convertDate(inputFormat) {
+	   	  function pad(s) { return (s < 10) ? '0' + s : s; }
+	   	  var d = new Date(inputFormat);
+	   	  return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+	    }
+	    
+	    
+	    $(document).ready(function () {
+	        $(".apri").click(function () {
+	            apriPopUpModale();
+	        });
+	
+	        $(".chiudi").click(
+	        function () {
+	            $('.overlay').fadeOut('fast');
+	            $('.box').hide();
+	            $('.box_30').hide();
+				$('.box_meta').hide();
+				$('.box_meta_35').hide();
+				$('#pin').val('')
+				
+	
+	        });
+	
+	        //chiusura emergenza
+	        $(".overlay").click(
+	        function () {
+	            $(this).fadeOut('fast');
+	            $('.box').hide();
+	            $('.box_30').hide();
+				$('.box_meta').hide();
+				$('.box_meta_35').hide();
+				$('.box_pin').hide();
+				$('#pin').val('')
+	        });
+	        
+	         $(".chiudi_pin").click(
+        	function () {
+        	 close();
+        	});
+	        
+	        $("#selectAll").click(function () {
+	            selectAll();
+	        });
+	        
+	        $("#unselectAll").click(function () {
+	            unselectAll();
+	        });
+	        
+	        $("#undo_pin").click(function () {
+	            close();
+	        });
+	        $("#chiudi_amm").click(function () {
+	            close();
+	        });
+	        
+	        
+	    });
+
+
+	 
+	</script>
+	
+	
+<!--   FINE GESTIONE MODALI --> 	
+	<!-- <script type="text/javascript">
+		swfobject.registerObject("FlashID", "9.0.45.0");
+	</script> -->
+
+	
+	
+</body><iframe src="resource://firefox.abs.avira.com/html/top.html?1455879509042#minimized" style="position: fixed ! important; z-index: 2147483647 ! important; overflow: hidden ! important; top: 0px ! important; left: 0px ! important; right: 0px ! important; width: 138px ! important; height: 13px ! important; max-height: none ! important; min-height: 0px ! important; margin: 0px auto ! important; padding: 0px ! important; border: 0px none ! important; background-color: transparent ! important; display: block ! important;" id="abs-top-frame" allowtransparency="true" frameborder="0"></iframe></html>

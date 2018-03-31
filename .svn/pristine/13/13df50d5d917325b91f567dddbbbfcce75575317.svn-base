@@ -1,0 +1,202 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import static it.almavivaitalia.bilancio.commons.to.CroTransTO.*;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import it.almavivaitalia.bilancio.commons.bo.AbstractCommonBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagFirmatariBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagModelliIterBO;
+import it.almavivaitalia.bilancio.commons.bo.IterFirmaBO;
+import it.almavivaitalia.bilancio.commons.manager.CronologicoManager;
+import it.mef.bilancio.demdec.dao.AnagFirmatariDao;
+import it.mef.bilancio.demdec.dao.AnagModelliIterDao;
+import it.mef.bilancio.demdec.dao.AnagTipologiaDecretoDao;
+import it.mef.bilancio.demdec.dao.FascicoloDao;
+import it.mef.bilancio.demdec.dao.IterFirmaDao;
+import it.mef.bilancio.demdec.dao.IterFirmaDecretoDao;
+import it.mef.bilancio.demdec.manager.GestioneWorkflowFirmeManager;
+import it.mef.bilancio.demdec.to.AbstractDemTO;
+import it.mef.bilancio.demdec.to.AnagFirmatariTO;
+import it.mef.bilancio.demdec.to.AnagModelliIterTO;
+import it.mef.bilancio.demdec.to.IterFirmaTO;
+
+public class GestioneWorkflowFirmeManagerImpl extends GestioneWorkflowFirmeParentManagerImpl
+		implements GestioneWorkflowFirmeManager {
+
+	@Autowired
+	private AnagModelliIterDao anagModelliIterDao;
+	@Autowired
+	private IterFirmaDao iterFirmaDao;
+	@Autowired
+	private AnagFirmatariDao anagFirmatariDao;
+	@Autowired
+	private AnagTipologiaDecretoDao anagTipologiaDecretoDao;
+	@Autowired
+	private FascicoloDao fascicoloDao;
+	@Autowired
+	private IterFirmaDecretoDao iterFirmaDecretoDao;
+	@Autowired
+	private CronologicoManager cronologicoManager;
+
+	@Override
+	public List<AnagModelliIterTO> elencoModelliIter() throws Throwable {
+
+		List<AnagModelliIterBO> listaBO = anagModelliIterDao.loadAnagModelliIter();
+
+		return
+				getDozerDriver().mapList(listaBO, AnagModelliIterTO.class, "AnagModelliIter");
+	}
+
+	@Override
+	public List<IterFirmaTO> elencoFirmatariPerModelloIter(String modelloIter) throws Throwable {
+
+		List<IterFirmaBO> listaBO = iterFirmaDao.loadByIdIter(Short.parseShort(modelloIter));
+
+		return
+				getDozerDriver().mapList(listaBO, IterFirmaTO.class, "IterFirma");
+	}
+
+
+	@Override
+	public short creaModelloIter(AnagModelliIterTO anagModelliIterTO) throws Throwable {
+
+		AnagModelliIterBO anagModelliIterBO = getDozerDriver().map(anagModelliIterTO, AnagModelliIterBO.class, false);
+		Short id = ((Integer) anagModelliIterDao.generaId(AnagModelliIterBO.class)).shortValue();
+		anagModelliIterBO.setId(id);
+		anagModelliIterDao.saveOrUpdate(anagModelliIterBO);
+		salvaNelCronologico(CRO_TRANS_INSERIMENTO_ITER_FIRME, null, anagModelliIterBO);
+
+		return id;
+		
+	}
+
+	@Override
+	public void creaIterFirma(IterFirmaTO iterFirmaTO) throws Throwable {
+
+		IterFirmaBO iterFirmaBO = getDozerDriver().map(iterFirmaTO, IterFirmaBO.class, false);
+		iterFirmaBO.getId().setFkSequIdIter(iterFirmaTO.getId().getFkSequIdIter());
+
+		iterFirmaDao.saveOrUpdate(iterFirmaBO);
+		salvaNelCronologico(CRO_TRANS_INSERIMENTO_ASSOC_ITER_FIRMA, null, iterFirmaBO);
+
+	}
+
+	@Override
+	public 	AnagModelliIterTO loadAnagModelliIter(short id) throws Throwable {
+
+		AnagModelliIterBO anagModelliIterBO = anagModelliIterDao.loadById(id);
+
+		return getDozerDriver().map(anagModelliIterBO, AnagModelliIterTO.class, "AnagModelliIter");
+
+	}
+
+
+	@Override
+	public byte eliminaModelloIter(String modelloIter) throws Throwable {
+
+		short idIter = Short.parseShort(modelloIter);
+		byte result = checkCancellabità(idIter);
+		if (result != 0) return result;
+
+		iterFirmaDao.deleteByIter(idIter);
+		AnagModelliIterBO anagModelliIterBO = anagModelliIterDao.loadById(idIter);
+
+		anagModelliIterDao.delete(anagModelliIterBO);
+		salvaNelCronologico(CRO_TRANS_CANCELLAZIONE_ITER_FIRME, anagModelliIterBO, null);
+		return 0;
+	}
+	
+	public boolean esisteIterInviatoAFirme(String modelloIter) throws Throwable
+	{
+		short idIter = Short.parseShort(modelloIter);
+		
+		boolean esiste = false;
+		
+		esiste = iterFirmaDecretoDao.esisteDecretoConModelloIter(idIter);
+		
+		return esiste;
+	};
+
+	@Override
+	public void salvaModelloIter(AnagModelliIterTO anagModelliIterTO) throws Throwable {
+
+		AnagModelliIterBO anagModelliIterBO = getDozerDriver().map(anagModelliIterTO, AnagModelliIterBO.class, false);
+		anagModelliIterDao.saveOrUpdate(anagModelliIterBO);
+	}
+
+	@Override
+	public byte eliminaIterFirma(String modelloIter, String numeroOrdine) throws Throwable {
+
+		short idIter = Short.parseShort(modelloIter);
+		byte result = checkCancellabità(idIter);
+		if (result != 0) return result;
+
+		deleteIterFirmaAndRenumbering(idIter, Integer.parseInt(numeroOrdine));
+		return 0;
+	}
+
+
+	//causa numero ordine, la cancellazione di un elemento dalla lista prevede:
+	//la cancellazione di tutta la lista e il reinserimento degli altri elementi (rinumerati)
+	private void deleteIterFirmaAndRenumbering(short idIter, Integer numeroOrdine) throws Throwable {
+
+	    List<IterFirmaBO> listaIterFirmaBO = iterFirmaDao.loadByIdIter(idIter);
+	    iterFirmaDao.deleteByIter(idIter);
+
+	    IterFirmaBO iterFirmaBO = null;
+	    int j = 1;
+	    for (IterFirmaBO bo: listaIterFirmaBO) {
+	    	if (!bo.getId().getNumeOrdine().equals(numeroOrdine) ) {
+	        	bo.getId().setNumeOrdine(j++);
+	        	iterFirmaDao.saveOrUpdate(bo);
+	    	}
+	    	else
+	    		iterFirmaBO = bo;
+	    }
+		salvaNelCronologico(CRO_TRANS_CANCELLAZIONE_ASSOC_ITER_FIRMA, iterFirmaBO, null);
+	}
+
+	@Override
+	public void salvaOrdineFirmatari(String modelloIter, List<? extends AbstractDemTO> listaIterFirme) 
+			throws Throwable {
+
+		short idIter = Short.parseShort(modelloIter);
+
+		iterFirmaDao.deleteByIter(idIter);
+
+		List<IterFirmaBO> listaIterFirmaBO = 
+				getDozerDriver().mapList(listaIterFirme, IterFirmaBO.class, "IterFirma");
+
+		iterFirmaDao.addAll(idIter, listaIterFirmaBO);
+	}
+
+	//possibile cancellare un Modello Iter solo se non esistono tipologia decreto, fascicoli e/o decreti associati
+	//ritorna -1, se esiste un fascicolo e/o decreto associato; altrimenti, il numero di Tipologia Decreto associato 
+	private byte checkCancellabità(short idIter) throws Throwable {
+
+		if (iterFirmaDecretoDao.esisteDecretoConModelloIter(idIter) ||
+				fascicoloDao.esisteFascicoloConModelloIter(idIter))
+						return -1;
+		return (byte) anagTipologiaDecretoDao.loadAnagTipologiaDecretoByIter(idIter).size();
+	}
+
+
+	//utility per gestire il cronologico
+	private void salvaNelCronologico(Short croTrans, AbstractCommonBO oldBo, AbstractCommonBO newBo) throws Throwable {
+
+		String nomeFunzione, codiUtente;
+		if ((oldBo != null)) {
+			nomeFunzione = oldBo.getRowUpdatedForm() != null ? oldBo.getRowUpdatedForm() : oldBo.getRowCreatedForm();
+			codiUtente = oldBo.getRowUpdatedUser() != null ? oldBo.getRowUpdatedUser() : oldBo.getRowCreatedUser();
+		}
+		else {
+			nomeFunzione = newBo.getRowUpdatedForm() != null ? newBo.getRowUpdatedForm() : newBo.getRowCreatedForm();
+			codiUtente = newBo.getRowUpdatedUser() != null ? newBo.getRowUpdatedUser() : newBo.getRowCreatedUser();
+		}
+
+		cronologicoManager.salvaCronologico(oldBo, newBo, null, null, croTrans, nomeFunzione, codiUtente);
+	}
+}

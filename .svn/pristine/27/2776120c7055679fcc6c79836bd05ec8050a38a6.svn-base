@@ -1,0 +1,46 @@
+<%@page import="it.almavivaitalia.web.sh.utils.ContextHelper"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="nssb"%>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%> 
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%> 
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+
+<!-- PageName = gestioneWorkflowFirme -->
+<nssb:useAttribute id="listaModelliIter" name="<%=SessionAttributes.LIST_ANAG_MODELLI_ITER%>"></nssb:useAttribute>
+
+<div class="spacer_sm">&nbsp;</div>
+<div class="spacer_sm">&nbsp;</div>
+
+<c:if test="${not empty listaModelliIter}">
+	<div class="scroll_table_gen">
+
+		<div class="title_doc"><spring:message code="label.title.lista.modelli.iter"></spring:message></div>
+		<div class="spacer_sm_10">&nbsp;</div>
+
+		<nssb:displaytag-table name="pageScope.listaModelliIter" id="listaModelliIter" class="width100" >
+			<display:caption>
+				<span class="nascosto"> 
+					<strong> <spring:message code="label.title.lista.modelli.iter"></spring:message></strong>
+				</span>
+			</display:caption>
+
+			<nssb:displaytag-column class="center" headerClass="nascosto" title="Selezione" >
+				<label for="radio_${listaModelliIter_rowNum}" class="nascosto">Seleziona</label>
+				<input type="radio" name="selectedModello" value="${listaModelliIter.id}"  id="radio_${listaModelliIter_rowNum}" />
+			</nssb:displaytag-column>
+			<nssb:displaytag-column property="descIter" titleKey="label.modello.iter" />
+
+		</nssb:displaytag-table>
+	</div>
+	<br />
+
+	<div class="center small">
+	   	 <demdec:submit keyValue="label.new" controllerCode="nuovoModelloIter" />
+	   	 <demdec:submit keyValue="label.detail" controllerCode="dettaglioModelloIter" />
+	   	 <demdec:submit keyValue="label.delete" controllerCode="eliminaModelloIter"  
+	   	 				onclick="javascript:return confirm('Conferma cancellazione');"/>
+	</div>
+</c:if>

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class name="it.almavivaitalia.bilancio.commons.bo.AnagCdrDemBO" table="D_ANAG_CDR_DEM">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <comment>E' l'ufficio responsabile della gestione della spesa</comment>
+   <composite-id class="it.almavivaitalia.bilancio.commons.bo.AnagCdrDemBOId" name="id">
+    <key-property name="fkAnnoEse" type="java.lang.Short">
+     <column name="FK_ANNO_ESE" precision="4" scale="0"/>
+    </key-property>
+    <key-property name="fkNumeStp" type="java.lang.Integer">
+     <column name="FK_NUME_STP" precision="2" scale="0"/>
+    </key-property>
+    <key-property name="fkNumeApp" type="java.lang.Integer">
+     <column name="FK_NUME_APP" precision="1" scale="0"/>
+    </key-property>
+    <key-property name="numeCdr" type="java.lang.Short">
+     <column name="NUME_CDR" precision="4" scale="0"/>
+    </key-property>
+   </composite-id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO" fetch="select" insert="false" name="anagAmminDem" update="false">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_ANNO_ESE" not-null="true" precision="4" scale="0">
+     <comment>esercizio finanziario</comment>
+    </column>
+    <column name="FK_NUME_STP" not-null="true" precision="2" scale="0">
+     <comment>stato di previsone</comment>
+    </column>
+    <column name="FK_NUME_APP" not-null="true" precision="1" scale="0">
+     <comment>appendice</comment>
+    </column>
+   </many-to-one>
+   <property name="descCdr" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="720" name="DESC_CDR" not-null="true">
+    	<comment>descrizione del centro di responsabilita</comment>
+    </column>
+   </property>
+  </class>
+ </hibernate-mapping>

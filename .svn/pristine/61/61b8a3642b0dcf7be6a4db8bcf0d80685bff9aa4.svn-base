@@ -1,0 +1,91 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import it.almavivaitalia.bilancio.commons.manager.CronologicoManager;
+import it.almavivaitalia.bilancio.commons.manager.UtenteManager;
+import it.mef.bilancio.demdec.dao.AmminRagDemDao;
+import it.mef.bilancio.demdec.dao.AnagRagionerieDemDao;
+import it.mef.bilancio.demdec.dao.AnagTipologiaDecretoDao;
+import it.mef.bilancio.demdec.dao.AnagUfficiDao;
+import it.mef.bilancio.demdec.dao.DocumentiDao;
+import it.mef.bilancio.demdec.dao.DocumentiRedDao;
+import it.mef.bilancio.demdec.dao.FascicoloDao;
+import it.mef.bilancio.demdec.dao.SottoFascicoliRedDao;
+import it.mef.bilancio.demdec.dao.StrumentoDemDao;
+import it.mef.bilancio.demdec.dao.TipoDocumentoDao;
+import it.mef.bilancio.demdec.dao.VBilDecretiDao;
+import it.mef.bilancio.demdec.manager.GestioneFadManager;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public abstract class GestioneFadGrandParentManagerImpl extends AbstractDemManagerImpl 	implements GestioneFadManager  {
+	
+	@Autowired
+	private FascicoloDao fascicoloDao;
+	@Autowired
+	private StrumentoDemDao strumentoDemDao;
+	@Autowired
+	private UtenteManager utenteManager;
+	@Autowired
+	private VBilDecretiDao vBilDecretiDao;
+	@Autowired
+	private DocumentiRedDao documentiRedDao;
+	@Autowired
+	private SottoFascicoliRedDao sottoFascicoliRedDao;
+	@Autowired
+	private TipoDocumentoDao tipoDocumentoDao;
+	@Autowired
+	private AnagTipologiaDecretoDao anagTipologiaDecretoDao;
+	@Autowired
+	private AnagUfficiDao anagUfficiDao;
+	@Autowired
+	private DocumentiDao documentiDao;
+	@Autowired
+	private AnagRagionerieDemDao anagRagionerieDemDao;
+	@Autowired
+	private AmminRagDemDao amminRagDemDao;
+	@Autowired
+	private CronologicoManager cronologicoManager;
+	
+	public FascicoloDao getFascicoloDao() {
+		return fascicoloDao;
+	}
+	public StrumentoDemDao getStrumentoDemDao() {
+		return strumentoDemDao;
+	}
+	public UtenteManager getUtenteManager() {
+		return utenteManager;
+	}
+	public VBilDecretiDao getvBilDecretiDao() {
+		return vBilDecretiDao;
+	}
+	public DocumentiRedDao getDocumentiRedDao() {
+		return documentiRedDao;
+	}
+	public SottoFascicoliRedDao getSottoFascicoliRedDao() {
+		return sottoFascicoliRedDao;
+	}
+	public TipoDocumentoDao getTipoDocumentoDao() {
+		return tipoDocumentoDao;
+	}
+	public AnagTipologiaDecretoDao getAnagTipologiaDecretoDao() {
+		return anagTipologiaDecretoDao;
+	}
+	public AnagUfficiDao getAnagUfficiDao() {
+		return anagUfficiDao;
+	}
+	public DocumentiDao getDocumentiDao() {
+		return documentiDao;
+	}
+	public AnagRagionerieDemDao getAnagRagionerieDemDao() {
+		return anagRagionerieDemDao;
+	}
+	public AmminRagDemDao getAmminRagDemDao() {
+		return amminRagDemDao;
+	}
+	public CronologicoManager getCronologicoManager() {
+		return cronologicoManager;
+	}
+
+																	
+	
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<mapping>
+		<class-a>it.almavivaitalia.bilancio.commons.bo.FascicoliBO</class-a>
+		<class-b>it.mef.bilancio.demdec.to.FascicoliTO</class-b>
+<!-- 		<field-exclude>
+			<a>sottoFascicoliRedList</a>
+			<b>sottoFascicoliRedList</b>
+		</field-exclude>
+		<field-exclude>
+			<a>anagCdrDemList</a>
+			<b>anagCdrDemList</b>
+		</field-exclude>
+ -->		<field-exclude>
+			<a>iterFirmaDecretoList</a>
+			<b>iterFirmaDecretoList</b>
+		</field-exclude>
+<!-- 		<field-exclude>
+			<a>anagAmminDemList</a>
+			<b>anagAmminDemList</b>
+		</field-exclude>
+		<field-exclude>
+			<a>anagRagionerieDemList</a>
+			<b>anagRagionerieDemList</b>
+		</field-exclude>
+ 		<field-exclude>
+			<a>documentiList</a>
+			<b>documentiList</b>
+		</field-exclude>
+ -->	</mapping>
+	<mapping>
+		<class-a>it.almavivaitalia.bilancio.commons.bo.DocumentiBO</class-a>
+		<class-b>it.mef.bilancio.demdec.to.DocumentiTO</class-b>
+		<field-exclude>
+			<a>fascicoli</a>
+			<b>fascicoli</b>
+		</field-exclude>
+	</mapping> 
+	<mapping>
+		<class-a>it.almavivaitalia.bilancio.commons.bo.SottoFascicoliRedBO</class-a>
+		<class-b>it.mef.bilancio.demdec.to.SottoFascicoliRedTO</class-b>
+		<field-exclude>
+			<a>fascicoli</a>
+			<b>fascicoli</b>
+		</field-exclude>
+	</mapping> 
+	<mapping>
+		<class-a>it.almavivaitalia.bilancio.commons.bo.DocumentiRedBO</class-a>
+		<class-b>it.mef.bilancio.demdec.to.DocumentiRedTO</class-b>
+		<field-exclude>
+			<a>sottoFascicoliRed</a>
+			<b>sottoFascicoliRed</b>
+		</field-exclude>
+	</mapping> 
+	
+	<mapping>
+		<class-a>it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO</class-a>
+		<class-b>it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO</class-b>
+		<field-exclude>
+			<a>anagUfficiList</a>
+			<b>anagUfficiList</b>
+		</field-exclude>
+	</mapping>
+</mappings>

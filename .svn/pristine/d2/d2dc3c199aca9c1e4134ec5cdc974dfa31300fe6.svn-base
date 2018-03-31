@@ -1,0 +1,10 @@
+package it.mef.bilancio.demdec.manager;
+
+import it.almavivaitalia.bilancio.commons.to.EserciziTO;
+import java.util.List;
+
+
+public interface InitManager extends AbstractDemManager {
+	public List<EserciziTO> loadEsercizi() throws Throwable;
+
+}

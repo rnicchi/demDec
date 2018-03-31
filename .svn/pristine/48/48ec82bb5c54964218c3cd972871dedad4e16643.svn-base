@@ -1,0 +1,319 @@
+package it.mef.bilancio.demdec.web.spring.controller.modali;
+
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bilancio.commons.to.AnagUfficiTO;
+import it.almavivaitalia.bilancio.commons.to.CodeDescriptionTO;
+import it.almavivaitalia.bilancio.commons.to.EserciziTO;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.manager.RicercaRedManager;
+import it.mef.bilancio.demdec.servizi.to.DocumentTO;
+import it.mef.bilancio.demdec.servizi.to.ProtocolloTO;
+import it.mef.bilancio.demdec.servizi.to.RaccoltaProvvisoriaRedTO;
+import it.mef.bilancio.demdec.to.AbstractDemTO;
+import it.mef.bilancio.demdec.to.AnagStatoFascicoloTO;
+import it.mef.bilancio.demdec.to.FascicoliViewTO;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.RicercaRedForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+//import it.mef.bilancio.intgen.web.util.editor.TabellaEditor;
+import java.text.SimpleDateFormat;
+
+
+@RequestMapping(value = ConstantsRequestMapping.RICERCA_RED_MODALI)
+public class AssociazioneAFadModaliController  extends AbstractDemFormController implements WebConstants, SessionAttributes {
+	
+	private String startView;	
+	
+	@Autowired
+	private RicercaRedManager ricercaRedManager;
+	
+	@Autowired
+	private ServletContext servletContext;
+	
+	@Autowired
+	private ListManager listManager;
+	
+	public ServletContext getServletContext() {
+		return servletContext;
+	}
+	
+
+	@Override
+	public String startController(Context context) throws Throwable {
+		
+		context.setCurrentNode("DemDec.menu.RicercaProvv");
+		
+		List<EserciziTO> listaAnniEsercizio=listManager.loadEserciziDemCG();
+		List<AnagUfficiTO> listaUfficiAssociatiRed=listManager.loadAnagUffici();
+		List<AnagStatoFascicoloTO> listaStatiFascRed=listManager.loadStatiFascicoliRed();
+		List<AnagAmminDemTO> listaAmm=new ArrayList<AnagAmminDemTO>();
+		
+		context.setDataModel(WebConstants.LIST_ANNO_ESE, listaAnniEsercizio);
+		context.setDataModel(WebConstants.LIST_ANAG_UFF, listaUfficiAssociatiRed);
+		context.setDataModel(WebConstants.LIST_ANAG_STATI_FASC, listaStatiFascRed);
+		context.setDataModel(WebConstants.LIST_AMMIN_DEM, listaAmm);
+		
+		return startView;
+		
+	}
+	
+	/******metodo per visualizzare i metadati di un fascicolo*****/
+
+	//public ResponseEntity<List<RaccoltaProvvisoriaRedTO>> modaleDettaglioFascicolo(Context context) throws IOException {
+	public void modaleDettaglioFascicolo(Context context) throws Throwable {
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+		SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yy");
+		
+		String idFascicolo=form.getIdRed();		//idFascicoloRaccoltaProvvisoria
+		/*Integer idFascicolo2=null;
+		String idFascicolo=form.getIdFascicolo();
+		if(idFascicolo==null || idFascicolo.equals("")){
+				idFascicolo2=null;
+		}
+		try{
+		   idFascicolo2=new Integer(idFascicolo);
+		  
+	   }catch (NumberFormatException exc){
+		   
+	   }
+		RaccoltaProvvisoriaRedTO dettaglioFascicolo= ricercaRedManager.wsDettaglioFascicolo(idFascicolo);*/ //TODO scommentare
+		
+	/*	RaccoltaProvvisoriaRedTO dettaglioFascicolo=new RaccoltaProvvisoriaRedTO();
+		dettaglioFascicolo.setCodiStatoFascicoloDocumentale("Stato prova");
+		
+		CodeDescriptionTO cd=new CodeDescriptionTO();
+		cd.setCode("020");
+		cd.setDescription("Amministr Prova");
+		dettaglioFascicolo.setAmministrazione(cd);
+		dettaglioFascicolo.setDataCreazione("data red prova");//la data red è la data creazione?
+		dettaglioFascicolo.setDataAggiornamento("data arrivo prova");
+		dettaglioFascicolo.setSistemaProduttore("sistema prova");
+		dettaglioFascicolo.setDescrizione("Descrizione documento prova");
+		dettaglioFascicolo.setIdFascicoloRaccoltaProvvisoria("id red prova");
+		dettaglioFascicolo.setTipoFlusso("tipo flusso prova");
+		dettaglioFascicolo.setStatoFascicoloRaccoltaProvvisoria("Stato prova");*/
+		
+		List<RaccoltaProvvisoriaRedTO> listaDettFasc=new ArrayList<RaccoltaProvvisoriaRedTO>();
+		//listaDettFasc.add(dettaglioFascicolo);
+
+		RaccoltaProvvisoriaRedTO errorTo=null;
+		try {
+			List<AbstractDemTO>  listaDettFascWs=context.getModel(SessionAttributes.LIST_RICERCA_RED);
+
+			RaccoltaProvvisoriaRedTO rprTo=null;
+			for (int i=0; i<listaDettFascWs.size(); i++){
+				if (idFascicolo.equals( ((RaccoltaProvvisoriaRedTO)listaDettFascWs.get(i)).getIdFascicoloRaccoltaProvvisoria()) ) {
+					rprTo=(RaccoltaProvvisoriaRedTO)listaDettFascWs.get(i);
+					if(rprTo.getCodiStatoFascicoloDocumentale()!=null){
+						rprTo.setDescStatoFascicoloDocumentale(listManager.loadDescStatiFascicoliRed(rprTo.getCodiStatoFascicoloDocumentale()));
+					}
+					listaDettFasc.add(rprTo);
+					
+				    break;
+				}
+			}
+
+//		    listaDettFasc.add((RaccoltaProvvisoriaRedTO)listaDettFascWs.get(new Integer(idFascicolo)-1));
+		    
+//		    RaccoltaProvvisoriaRedTO rpRedTo=null;
+//		    for (int i = 0; i < listaDettFascWs.size(); i++) {
+//		    	rpRedTo=(RaccoltaProvvisoriaRedTO)listaDettFascWs.get(i);
+//		    	
+//		    	if(rpRedTo.getAmministrazione()==null)
+//		    		rpRedTo.setAmministrazione(new CodeDescriptionTO("",""));
+//		    	if(rpRedTo.getCodiStatoFascicoloDocumentale()==null)
+//		    		rpRedTo.setCodiStatoFascicoloDocumentale("");
+//		    	if(rpRedTo.getDataAggiornamento()==null)
+//		    		rpRedTo.setDataAggiornamento("");
+//				if(rpRedTo.getDataCreazione()==null)
+//		    		rpRedTo.setDataCreazione("");
+//		    	if(rpRedTo.getDescrizione()==null)
+//		    		rpRedTo.setDescrizione("");
+//		    	if(rpRedTo.getIdentificativoRaccoltaProvvisoria()==null)
+//		    		rpRedTo.setIdentificativoRaccoltaProvvisoria("");
+//				if(rpRedTo.getProtocollo()==null)
+//		    		rpRedTo.setProtocollo(new ProtocolloTO("", null, "", ""));
+//		    	if(rpRedTo.getRagioneria()==null)
+//		    		rpRedTo.setRagioneria(new CodeDescriptionTO("",""));
+//		    	if(rpRedTo.getSistemaProduttore()==null)
+//		    		rpRedTo.setSistemaProduttore("");
+//		    	if(rpRedTo.getUtenteCreatore()==null)
+//		    		rpRedTo.setUtenteCreatore(new CodeDescriptionTO("",""));
+//		    	if(rpRedTo.getTipoFlusso()==null)
+//		    		rpRedTo.setTipoFlusso("");
+//		    	if(rpRedTo.getUfficioCreatoreRED()==null)
+//		    		rpRedTo.setUfficioCreatoreRED(new CodeDescriptionTO("",""));
+//		    	if(rpRedTo.getStatoFascicoloRaccoltaProvvisoria()==null)
+//		    		rpRedTo.setStatoFascicoloRaccoltaProvvisoria("");
+//		    	
+//		    	if(rpRedTo.getProtocollo().getData()!=null){
+//		    		rpRedTo.setDataAggiornamento(sdf.format(rpRedTo.getProtocollo().getData()));
+//		    	}
+//		    	
+//		    	
+//		    	
+//			}
+		    
+			   //throw new Exception();
+		}catch (Exception ex){
+			  // errors=new ArrayList<String>() ; 
+			listaDettFasc=new ArrayList<RaccoltaProvvisoriaRedTO> ();
+			errorTo=new RaccoltaProvvisoriaRedTO();
+			errorTo.setTitle("ERRORE");
+			errorTo.setWarningCode("ERRORE");
+			listaDettFasc.add(errorTo);
+		
+		}
+		  
+		context.getResponse().setContentType("application/json");  
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.writeValue(context.getResponse().getOutputStream(), listaDettFasc);
+		   
+		context.getResponse().getOutputStream().flush();
+		context.getResponse().getOutputStream().close();
+		
+	}
+	
+	
+	/******metodo per visualizzare i decreti*****/
+
+	public void modaleListaDecreti(Context context) throws Throwable {
+		
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+
+		String tipoFlusso=form.getTipoFlusso();
+		String anno=form.getAnnoEse();
+		String numero=form.getNumero();
+		
+		
+	
+	    ObjectMapper mapper = new ObjectMapper();
+
+	   Integer anno2=null;
+	   Integer numero2=null;
+	   Integer tipoFlusso2=null;
+	   
+	   if(tipoFlusso==null || tipoFlusso.equals("")){
+		   tipoFlusso2=null;
+	   }
+	   if(anno==null || anno.equals("")){
+		   anno2=null;
+	   }
+	   if(numero==null || numero.equals("")){
+		   numero2=null;
+	   }
+	   
+	   try{
+		   anno2=new Integer(anno);
+		  
+	   }catch (NumberFormatException exc){
+		   
+	   }
+	   try{
+		   numero2=new Integer(numero);
+	   }catch (NumberFormatException exc){
+		   
+	   }
+	   try{
+		   tipoFlusso2=new Integer(tipoFlusso);
+	   }catch (NumberFormatException exc){
+		   
+	   }
+	   
+	   
+	    
+	    FascicoliViewTO fascTo=null;
+	    
+	    context.getResponse().setContentType("application/json");   
+		
+		HttpServletResponse resp=context.getResponse();
+		List<FascicoliViewTO> articles=null;
+		
+	   try {
+		  
+			   articles=ricercaRedManager.findFascicoloByTipoNumAnnoStato(anno2, tipoFlusso2, numero2);
+		 
+	   }catch (Exception ex){
+		  // errors=new ArrayList<String>() ; 
+		   articles=new ArrayList<FascicoliViewTO> ();
+		   fascTo=new FascicoliViewTO();
+		   fascTo.setDescSigla("ERRORE");
+		   articles.add(fascTo);
+	
+	   }
+	   
+	   mapper.writeValue(resp.getOutputStream(), articles);
+	   
+	    resp.getOutputStream().flush();
+	    resp.getOutputStream().close();
+
+
+	}
+	
+	
+	public void modaleDettaglioDocumento(Context context) throws Throwable {
+		
+		List<DocumentTO> listDocTO=null;
+		List<DocumentTO> listDoc=null;
+		DocumentTO docto=null;
+		HttpServletResponse resp=null;
+		ObjectMapper mapper = new ObjectMapper();
+		context.getResponse().setContentType("application/json");    		
+		resp=context.getResponse();
+		 
+		try {
+			
+			listDocTO=context.getModel(WebConstants.LIST_DOC_FASC);
+		//	String rowNum = context.getCommandParameter("idRigaDoc");
+			String rowNum = context.getRequest().getParameter("idRigaDoc");
+			
+		   
+			
+			DocumentTO toDoc=listDocTO.get(Integer.parseInt(rowNum)-1);
+			listDoc=new ArrayList<DocumentTO> ();
+			listDoc.add(toDoc);
+			
+			
+			
+	         
+		 }catch (Exception ex){
+			  // errors=new ArrayList<String>() ; 
+			 listDoc=new ArrayList<DocumentTO> ();
+			 docto=new DocumentTO();
+			 docto.setWarningCode("ERRORE");
+			 listDoc.add(docto);
+		
+		   }
+		
+		mapper.writeValue(resp.getOutputStream(), listDoc);
+		   
+	    resp.getOutputStream().flush();
+	    resp.getOutputStream().close();
+
+	}
+	
+	
+	
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+	
+	
+	
+}

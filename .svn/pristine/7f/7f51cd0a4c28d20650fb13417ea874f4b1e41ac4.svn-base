@@ -1,0 +1,66 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import it.almavivaitalia.bilancio.commons.web.security.Utente;
+import it.mef.bilancio.demdec.manager.TestFirmeManager;
+import it.mef.bilancio.demdec.servizi.pkbox.PKBoxParameter;
+import it.mef.bilancio.demdec.servizi.pkbox.SignDocument;
+import it.mef.bilancio.demdec.servizi.pkbox.SignerParameter;
+import it.mef.bilancio.demdec.servizi.to.DocumentContentTO;
+import it.mef.bilancio.demdec.utils.Constants;
+
+public class TestFirmeManagerImpl extends AbstractDemManagerImpl implements TestFirmeManager{
+
+	@Override
+	public void firma(String pin, Utente utenteInSessione, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Integer maxTranSize) throws Throwable {
+		
+//		String tagFirma = ifd.getAnagFirmatari().getCodiTagFirma();
+//		if (ifd.getAnagFirmatari().getId().equalsIgnoreCase(Constants.TAG_UFFICIO)){
+//			tagFirma += "_"+utenteInSessione.getUtenteProfiloInUso().getAnagUffici().getId();
+//		}else if (ifd.getAnagFirmatari().getId().equalsIgnoreCase(Constants.TAG_MINISTRO)){
+//			tagFirma += "_"+utenteInSessione.getUtenteProfiloInUso().getAnagAmminDem().getId().getAmmin();
+//		}
+//
+//		
+//		
+//		PKBoxParameter pkBoxParam = leggiParametriInputPkbox();
+//	    
+//		/* La chiamata al metodo di firma con utilizzo OTP deve essere effettuata nel seguente modo: */
+//		/* recupero dalla sessione le variabili relative all'utente (alias, name, pin) */
+//		SignerParameter signerParam = SignDocument.getSignerByOAMVariables(httpServletRequest, httpServletResponse);
+//		/* es: https://pkcubecoll.tesoro.it:8443/pkserver/servlet/Deliberahandler */
+//		signerParam.getPkBoxParameter().setPkBoxHandler(pkBoxParam.getPkBoxHandler());
+//		/* es: /SECURE_PIN/securepin-col-sogei.crt*/
+//		signerParam.getPkBoxParameter().setSecurePinFilePath(pkBoxParam.getSecurePinFilePath());
+//		/* es: /SECURE_PIN/opt-col-sogei.properties*/
+//		signerParam.getPkBoxParameter().setOtpPropertiesFilePath(pkBoxParam.getOtpPropertiesFilePath());
+//		/* es: otp-rgs*/
+//		signerParam.getPkBoxParameter().setFirmaBaseKey(pkBoxParam.getFirmaBaseKey());
+//		/* es: 12345678 */
+//		signerParam.getPkBoxParameter().setFirmaBaseKeyPin(pkBoxParam.getFirmaBaseKeyPin());
+//		/* es: totp*/
+//		signerParam.getPkBoxParameter().setProvider(pkBoxParam.getProvider());
+//		
+//		String signLayout = "<Text>%cn% \r\n FIRMATO DIGITALMENTE </Text><FontStyle>1</FontStyle><TextAlign>1</TextAlign>";
+//		signerParam.setSignLayout(signLayout);
+//		DocumentContentTO docContent=(DocumentContentTO)responseDownload.getOutputTO();
+//		/* file da firmare */
+//		signerParam.setFileToBeSigned(docContent.getContent());
+//		/* tag */
+//		signerParam.setTag(tagFirma);
+//		/* pin digitato */
+//		signerParam.setTokenPin(tkPin);
+////		signerParam.setAlias(signerParam.getAlias().substring(0, 16).concat("_FR"));
+//		/* Genero l'OTP con l'oggetto signerParam */
+//		signerParam = SignDocument.generateOTP(signerParam);
+//		/* start transaction per stabilire il numero di firme massime */
+//	
+//		signerParam = SignDocument.startTrans(signerParam, maxTranSize);
+//		signerParam = SignDocument.digestVisibleSign(signerParam);
+
+		
+	}
+
+}

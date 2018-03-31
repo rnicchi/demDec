@@ -1,0 +1,193 @@
+﻿<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+ 		http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+
+	<!-- ========================= ABSTRACT VALIDATOR DEFINITIONS ========================= -->
+	<bean id="abstractDemValidator"
+		class="it.mef.bilancio.demdec.web.spring.validator.AbstractDemValidator"
+		abstract="true">
+		<property name="messageSource" ref="applicationResource" />
+	</bean>
+
+	<!-- ======================= FINE ABSTRACT VALIDETOR DEFINITIONS ======================= -->
+
+
+	<!-- ================================================================================= 
+										MESSAGE SOURCE
+		Classi che formiscono i message source per usare le label dei file di properties
+		
+		Definire tutti i file .properties dell'applicazione nella lista della proprietà
+		"basenames" del bean "messageSource". 
+		
+	 ================================================================================= -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource"
+		lazy-init="true">
+		<property name="basenames">
+			<list>
+				<!-- 
+					definire tutti i file di properties che vengono usati nell' applicazione
+				 -->
+				<value>it.mef.bilancio.demdec.web.resources.applicationResources</value>
+				<!-- <value>it.mef.bilancio.demdec.web.resources.menuResources</value>
+				<value>it.mef.bilancio.demdec.web.resources.navigatorResources</value> -->
+				<value>it.mef.bilancio.demdec.web.resources.infoResources</value>
+				<value>it.mef.bilancio.demdec.web.resources.errorResources</value>
+				<value>it.mef.bilancio.demdec.web.resources.warningResources</value>
+				<value>it.almavivaitalia.web.sh.resources.warningResources</value>
+				<value>${helpResources}</value>
+				<value>it.almavivaitalia.help.web.resources.bsnHelpApplicationResources</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ============================= FINE MESSAGE SOURCE ================================ -->
+
+	<bean id="applicationResource"
+		class="it.almavivaitalia.bsn.sh.utils.ResourceBundleMessageSource"
+		lazy-init="false">
+		<property name="messageSource" ref="messageSource" />
+	</bean>
+	
+	<bean id="applicationContextProvider" class="it.almavivaitalia.web.sh.utils.ApplicationContextProvider"/>
+	
+	<!-- ========================= LOG4J DEFINITION ========================= -->
+	<bean id="log4jInitialization"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<value>classpath:${log4jxml}</value>
+			</list>
+		</property>
+	</bean>
+	<!-- ========================= END LOG4J DEFINITION ========================= -->
+
+	<!-- ========================= TILES ========================= -->
+
+	<bean id="urlBasedViewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles2.TilesView" />
+
+	</bean>
+	<bean id="resourceBundleViewResolver"
+		class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+		<property name="basename" value="views" />
+	</bean>
+	
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				
+				<!-- 
+					definire gli xml di definizione dei TILES 
+				-->
+				<value>/WEB-INF/tiles/tilesCommon.xml</value>
+				<value>/WEB-INF/tiles/tilesApplication.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="urlMapping01" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	<bean id="urlMapping02" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+
+	<!-- COMMON CONTROLLERS -->
+	<bean id="abstractFormController"
+		class="it.almavivaitalia.bilancio.commons.web.spring.controller.AbstractCommonFormController"
+		abstract="true" init-method="init">
+		<property name="messageSource" 			ref="applicationResource" />
+		<property name="itemSelectorRequest" 	value="itemSelector.do" />
+		<property name="idApplication" 			value="20"/>
+		<property name="codiApplication" 		value="DEMDEC"/>
+		<property name="newHelpVersion" 		value="true"/>		
+	</bean>
+	
+	<bean id="abstractDemFormController"
+		class="it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController"
+		abstract="true" 
+		init-method="init"
+		parent="abstractFormController"
+		>
+	</bean>		
+
+	<bean 
+		id="selectorController"
+		class="it.almavivaitalia.bilancio.commons.web.spring.controller.SelectorController"
+		abstract="false" 
+		init-method="init" 
+		parent="abstractFormController">
+		<!--  property name="selectorManager" ref="selectorManager"/-->
+	</bean>
+
+	<bean id="abstractFormAdminController"
+		class="it.almavivaitalia.bilancio.commons.web.spring.controller.AbstractCommonFormAdminController"
+		abstract="true" init-method="init">
+		<property name="messageSource" ref="applicationResource" />
+		<property name="itemSelectorRequest" value="itemSelector.do" />
+		<property name="methodMappings">
+			<list>
+				<value>onSelector#selector</value>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="abstractDemFormAdminController"
+		class="it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormAdminController"
+		abstract="true" 
+		init-method="init"
+		parent="abstractFormAdminController"
+		>
+	</bean>		
+
+	<bean id="itemSelectorController"
+		class="it.almavivaitalia.bilancio.commons.web.spring.controller.CommonItemSelectorController"
+		init-method="init">
+		<property name="itemSelectorRequest" value="itemSelector.do" />
+		<property name="view" value="itemSelectorView" />
+		<property name="formObjectClass"
+			value="it.almavivaitalia.web.sh.form.ItemSelectorForm" />
+		<property name="messageSource" ref="applicationResource" />
+		<property name="methodMappings">
+			<list>
+				<value>onSelect#select</value>
+				<value>onCancel#cancel</value>
+				<value>onMultiSelect#multiSelect</value>
+				<value>onSelectAll#selectAll</value>
+				<value>onRemoveItems#removeItems</value>
+				<value>onRemoveAll#removeAll</value>
+				<value>onShiftUp#shiftUp</value>
+				<value>onShiftDown#shiftDown</value>
+				<value>onExport#export##false</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="abstractMultiActionController"
+		class="it.almavivaitalia.bilancio.commons.web.spring.controller.AbstractMultiActionController"
+		abstract="true">
+		<property name="messageSource" ref="applicationResource" />
+	</bean>
+
+	<bean id="fileExportController"
+		class="it.mef.bilancio.demdec.web.spring.controller.export.FileExportController"
+		parent="abstractFormController">
+		<property name="methodMappings">
+			<list>
+				<value>onExportFromSelector#exportFromSelector</value>
+			</list>
+		</property>
+	</bean>
+	
+	  <!-- WS -->	
+	  <context:component-scan base-package="it.mef.bilancio.demdec.web.services" />
+  
+  <!-- WS END -->	
+	
+	
+</beans>

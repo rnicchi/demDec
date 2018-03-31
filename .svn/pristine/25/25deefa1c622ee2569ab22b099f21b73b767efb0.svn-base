@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 23-dic-2015 15.03.23 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="it.almavivaitalia.bilancio.commons.bo.LettereIgbBO" table="D_LETTERE_IGB">
+        <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+        <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+        <comment>Lettere di preregistrazione IGB</comment>
+        <id name="id" type="big_decimal">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="SEQU_ID_LETTERE_IGB" scale="0" />
+        </id>
+        <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+        <many-to-one name="anagAmminDem" class="it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO" fetch="select">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="FK_ANNO_ESE" precision="4" scale="0">
+                <comment>Esercizio di riferimento</comment>
+            </column>
+            <column name="FK_NUME_STP" precision="2" scale="0">
+                <comment>Stato di previsione</comment>
+            </column>
+            <column name="FK_NUME_APP" precision="1" scale="0">
+                <comment>Appendice</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="fascicoli" class="it.almavivaitalia.bilancio.commons.bo.FascicoliBO" fetch="select">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="FK_NUME_ID_FASCICOLO" precision="10" scale="0" not-null="true">
+                <comment>Progressivo identificativo del decreto</comment>
+            </column>
+        </many-to-one>
+        <property name="numeVersion" type="java.lang.Integer">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="NUME_VERSION" precision="6" scale="0">
+                <comment>Versione del record</comment>
+            </column>
+        </property>
+        <property name="dataLettera" type="date">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="DATA_LETTERA" length="7" not-null="true">
+                <comment>Data della lettera di preregistrazione IGB</comment>
+            </column>
+        </property>
+        <property name="statusLettera" type="string">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="STATUS_LETTERA" length="4">
+                <comment>Stato della lettera</comment>
+            </column>
+        </property>
+        <property name="binaIntLettera" type="blob">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="BINA_INT_LETTERA">
+                <comment>Campo blob contenente il file della lettera</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

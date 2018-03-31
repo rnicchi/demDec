@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>demdec</artifactId>
+		<groupId>it.mef.bilancio.demdec</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>demdec-web</artifactId>
+	<packaging>war</packaging>
+
+	<name>demdec-web</name>
+
+	<repositories>
+		<repository>
+			<id>Springframework milestone</id>
+			<url>http://maven.springframework.org/milestone</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+
+		<!-- PROJECT DEPENDENCY -->
+		<dependency>
+			<groupId>it.mef.bilancio.demdec</groupId>
+			<artifactId>demdec-business</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>it.mef.bilancio.demdec</groupId>
+			<artifactId>demdec-commons</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.servlet</groupId>
+					<artifactId>servlet-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.2.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-annotations</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+
+
+		<!-- Runtime -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-asm</artifactId>
+			<version>3.0.2.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>3.0.2.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.5.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+			<version>20030825.183949</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.4.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.8.0.GA</version>
+		</dependency>
+
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>asm</groupId>
+					<artifactId>asm</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>asm</groupId>
+			<artifactId>asm</artifactId>
+			<version>3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+			<version>2.1.4</version>
+			<classifier>j4</classifier>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.tiles</groupId>
+					<artifactId>tiles-servlet</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-servlet</artifactId>
+			<version>2.1.4</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.tiles</groupId>
+					<artifactId>tiles-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-core</artifactId>
+			<version>2.1.4</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.tiles</groupId>
+					<artifactId>tiles-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-digester</groupId>
+					<artifactId>commons-digester</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-api</artifactId>
+			<version>2.1.4</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+			<version>1.8.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-beanutils</groupId>
+					<artifactId>commons-beanutils</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging-api</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.8.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.retrotranslator</groupId>
+			<artifactId>retrotranslator-runtime</artifactId>
+			<version>1.2.7</version>
+			<exclusions>
+				<exclusion>
+					<groupId>backport-util-concurrent</groupId>
+					<artifactId>backport-util-concurrent</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+<!-- 		<dependency>
+			<groupId>backport-util-concurrent</groupId>
+			<artifactId>backport-util-concurrent</artifactId>
+			<version>3.1</version>
+		</dependency> -->
+
+		<dependency>
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>2.7.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.0</version>
+		</dependency>
+
+	  	<dependency>
+			<groupId>com.ckeditor</groupId>
+			<artifactId>ckeditor-java-core</artifactId>
+			<version>3.5.3</version>
+		</dependency>  
+		
+	 <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+
+		<!--CRYSTAL REPORT  -->
+		<dependency>
+			<groupId>backport-util-concurrent</groupId>
+			<artifactId>backport-util-concurrent</artifactId>
+			<version>2.2</version>
+<!-- 			<type>jar</type>
+			<scope>${lib.scope}</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>com.rsa.asn1</groupId>
+			<artifactId>com.rsa.asn1</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/asn1.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>cecore</groupId>
+			<artifactId>cecore</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/cecore.jar</systemPath>
+		</dependency>		
+		<dependency>
+			<groupId>celib</groupId>
+			<artifactId>celib</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/celib.jar</systemPath>
+		</dependency>		
+		<dependency>
+			<groupId>ceplugins_client</groupId>
+			<artifactId>ceplugins_client</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/ceplugins_client.jar</systemPath>
+		</dependency>	
+		<dependency>
+			<groupId>ceplugins_core</groupId>
+			<artifactId>ceplugins_core</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/ceplugins_core.jar</systemPath>
+		</dependency>	
+		<dependency>
+			<groupId>cereports</groupId>
+			<artifactId>cereports</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/cereports.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>certj</groupId>
+			<artifactId>certj</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/certj.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>cesession</groupId>
+			<artifactId>cesession</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/cesession.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>corbaidl</groupId>
+			<artifactId>corbaidl</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/corbaidl.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>ebus405</groupId>
+			<artifactId>ebus405</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/ebus405.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>freessl201</groupId>
+			<artifactId>freessl201</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/freessl201.jar</systemPath>
+		</dependency>		
+		<dependency>
+			<groupId>jsafe</groupId>
+			<artifactId>jsafe</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/jsafe.jar</systemPath>
+		</dependency>	
+		<dependency>
+			<groupId>logging</groupId>
+			<artifactId>logging</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/logging.jar</systemPath>
+		</dependency>	
+		<dependency>
+			<groupId>MetafileRenderer</groupId>
+			<artifactId>MetafileRenderer</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/MetafileRenderer.jar</systemPath>
+		</dependency>							
+		<dependency>
+			<groupId>rasapp</groupId>
+			<artifactId>rasapp</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/rasapp.jar</systemPath>
+		</dependency>	
+		<dependency>
+			<groupId>rascore</groupId>
+			<artifactId>rascore</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/rascore.jar</systemPath>
+		</dependency>	
+		<dependency>
+			<groupId>serialization</groupId>
+			<artifactId>serialization</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/serialization.jar</systemPath>
+		</dependency>	
+		<dependency>
+			<groupId>SL_plugins</groupId>
+			<artifactId>SL_plugins</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/SL_plugins.jar</systemPath>
+		</dependency>							
+		
+		<dependency>
+			<groupId>sslj</groupId>
+			<artifactId>sslj</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/sslj.jar</systemPath>
+		</dependency>	
+		<dependency>
+			<groupId>webreporting</groupId>
+			<artifactId>webreporting</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/../demdec-web/src/main/webapp/WEB-INF/lib/webreporting.jar</systemPath>
+		</dependency>	
+		
+		<!-- CRYSTAL REPORT  -->
+
+<!-- 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>3.0.2.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-beans</artifactId>
+				</exclusion>
+				<exclusion>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-context</artifactId>
+				</exclusion>
+				<exclusion>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-context-support</artifactId>
+				</exclusion>
+				<exclusion>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-test</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency> -->
+
+ 		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-context-support</artifactId> 
+			<version>3.0.2.RELEASE</version> <exclusions> <exclusion> <groupId>org.springframework</groupId> 
+			<artifactId>spring-context</artifactId> </exclusion> <exclusion> <groupId>org.springframework</groupId> 
+			<artifactId>spring-beans</artifactId> </exclusion> <exclusion> <groupId>org.springframework</groupId> 
+			<artifactId>spring-core</artifactId> </exclusion> </exclusions> </dependency> -->
+		<!-- MAIL -->
+
+		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-core</artifactId> 
+			<version>3.3.2.GA</version> <exclusions> <exclusion> <groupId>org.slf4j</groupId> 
+			<artifactId>slf4j-api</artifactId> </exclusion> </exclusions> </dependency> 
+			<dependency> <groupId>commons-dbcp</groupId> <artifactId>commons-dbcp</artifactId> 
+			<version>20030825.184428</version> </dependency> <dependency> <groupId>xerces</groupId> 
+			<artifactId>xercesImpl</artifactId> <version>2.9.1</version> </dependency> 
+			<dependency> <groupId>net.sf.dozer</groupId> <artifactId>dozer</artifactId> 
+			<version>5.0</version> <exclusions> <exclusion> <groupId>commons-logging</groupId> 
+			<artifactId>commons-logging</artifactId> </exclusion> </exclusions> </dependency> 
+			<dependency> <groupId>commons-lang</groupId> <artifactId>commons-lang</artifactId> 
+			<version>2.4</version> </dependency> <dependency> <groupId>net.sf.retrotranslator</groupId> 
+			<artifactId>retrotranslator-runtime</artifactId> <version>1.2.7</version> 
+			</dependency> <dependency> <groupId>commons-collections</groupId> <artifactId>commons-collections</artifactId> 
+			<version>3.2</version> </dependency> <dependency> <groupId>com.thoughtworks.xstream</groupId> 
+			<artifactId>xstream</artifactId> <version>1.4.3</version> </dependency> PROJECT 
+			DEPENDENCY LIBRARY DEPENDENCY <dependency> <groupId>javax.servlet</groupId> 
+			<artifactId>servlet-api</artifactId> <version>2.5</version> <scope>provided</scope> 
+			</dependency> <dependency> <groupId>javax.servlet</groupId> <artifactId>jsp-api</artifactId> 
+			<version>2.0</version> <scope>provided</scope> </dependency> SPRING <dependency> 
+			<groupId>org.springframework</groupId> <artifactId>spring-webmvc</artifactId> 
+			<version>${org.springframework.version}</version> <exclusions> <exclusion> 
+			<groupId>commons-logging</groupId> <artifactId>commons-logging</artifactId> 
+			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.springframework</groupId> 
+			<artifactId>spring-aspects</artifactId> <version>${org.springframework.version}</version> 
+			<exclusions> <exclusion> <groupId>commons-logging</groupId> <artifactId>commons-logging</artifactId> 
+			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.springframework</groupId> 
+			<artifactId>spring-orm</artifactId> <version>${org.springframework.version}</version> 
+			<exclusions> <exclusion> <groupId>commons-logging</groupId> <artifactId>commons-logging</artifactId> 
+			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.springframework</groupId> 
+			<artifactId>spring-aop</artifactId> <version>${org.springframework.version}</version> 
+			<exclusions> <exclusion> <groupId>commons-logging</groupId> <artifactId>commons-logging</artifactId> 
+			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.springframework</groupId> 
+			<artifactId>spring-jdbc</artifactId> <version>${org.springframework.version}</version> 
+			<exclusions> <exclusion> <groupId>commons-logging</groupId> <artifactId>commons-logging</artifactId> 
+			</exclusion> </exclusions> </dependency> <dependency> <groupId>commons-fileupload</groupId> 
+			<artifactId>commons-fileupload</artifactId> <version>1.2</version> </dependency> 
+			SPRING SECURITY <dependency> <groupId>org.springframework.security</groupId> 
+			<artifactId>spring-security-core</artifactId> <version>3.0.2.RELEASE</version> 
+			</dependency> <dependency> <groupId>org.springframework.security</groupId> 
+			<artifactId>spring-security-config</artifactId> <version>3.0.2.RELEASE</version> 
+			</dependency> <dependency> <groupId>org.springframework.security</groupId> 
+			<artifactId>spring-security-core</artifactId> <version>3.0.2.RELEASE</version> 
+			</dependency> <dependency> <groupId>org.springframework.security</groupId> 
+			<artifactId>spring-security-taglibs</artifactId> <version>3.0.2.RELEASE</version> 
+			</dependency> <dependency> <groupId>org.springframework.security</groupId> 
+			<artifactId>spring-security-web</artifactId> <version>3.0.2.RELEASE</version> 
+			</dependency> SPRING SECURITY SPRING <dependency> <groupId>org.apache.poi</groupId> 
+			<artifactId>poi</artifactId> <version>3.12</version> </dependency> <dependency> 
+			<groupId>displaytag</groupId> <artifactId>displaytag</artifactId> <version>1.2</version> 
+			INIZIO - Esclusione libreria itext per problemi generazione file pdf di help 
+			<exclusions> <exclusion> <groupId>com.lowagie</groupId> <artifactId>itext</artifactId> 
+			</exclusion> </exclusions> FINE - Esclusione libreria itext per problemi 
+			generazione file pdf di help </dependency> INIZIO - Importazione libreria 
+			itext per problemi generazione file pdf di help <dependency> <groupId>com.lowagie</groupId> 
+			<artifactId>itext</artifactId> <version>2.1.7</version> </dependency> INIZIO 
+			- Importazione libreria itext per problemi generazione file pdf di help <dependency> 
+			<groupId>org.codehaus.castor</groupId> <artifactId>castor</artifactId> <version>1.2</version> 
+			<exclusions> <exclusion> <groupId>commons-logging</groupId> <artifactId>commons-logging</artifactId> 
+			</exclusion> </exclusions> </dependency> -->
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<encoding>ISO-8859-1</encoding>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warSourceExcludes>help_img/**,img/help/**</warSourceExcludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="it" ><![endif]-->
+<!--[if gt IE 8]><!-->
+<html style="" class=" js no-touch svg inlinesvg svgclippaths no-ie8compat" lang="it"><!--<![endif]-->
+<!-- BaseTemplate.jsp -->
+
+	<head>
+	
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<!--<meta charset="utf-8">-->
+		
+		<title>DemDec Dematerializzazione Atto Decreto</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- Fogli di stile CSS -->
+	
+		<link rel="stylesheet" href="css/normalize.css"/>
+		<link rel="stylesheet" href="css/foundation.css"/>
+		<link rel="stylesheet" href="css/style_a.css"/>  
+		
+		<link rel="stylesheet" href="css/firebugR.css"/>
+		<link rel="stylesheet" href="css/modal.css"/>
+		<link rel="stylesheet" href="css/displaytag-table.css"/>  
+		
+	
+	<!-- Modernizr -->
+	<script src="custom.js"> </script>
+	<script>
+	Modernizr.load(
+	{
+		test: Modernizr.mq('only all'),
+	//	nope: 'private/js/respond.min.js'
+		nope:'respond.min.js'
+		}
+		);
+	</script>
+
+	
+	</head>
+
+	<body>
+		<div class="nascosto"><a href="#contenuto">Vai direttamente al contenuto</a></div>
+	 
+	
+		<!-- Header/navigazione top bar -->
+		<header class="fixed">
+			
+
+    <div id="sf_eng">
+    
+    
+          <div class="area_ris_eng">
+            <ul class="menu">
+                <li>
+                    <img src="img/ico_user.png" alt="" class="inline" />
+                    <span class="col_char_user">Angelini Massimo&nbsp;&#8226;&nbsp;Direttore&nbsp;&nbsp;&nbsp;</span>
+                </li>
+                
+                    <li>
+                        <img src="img/ico_ch_user.png" alt="" class="inline hidd" />
+                        <a href="/demdec/private/cambioProfilo.do" title="Cambio profilo">Cambio profilo</a>
+                    </li>
+                
+                <li>
+                    <img src="img/ico_uscita.png" alt="" class="inline hidd" />
+                    <a href="uscita.do" title="Esci">Esci</a>
+                </li>
+            </ul>
+          </div>
+      
+    </div>
+
+		
+			
+
+
+
+<div id="Cont_logo">
+	<a href="index_reader.htm">
+		<img class="padd_sx_logo" src="img/logo_DEMDEC.jpg" alt="Vai alla home">
+	</a>
+</div>
+
+			
+			
+
+<!-- menu.jsp -->
+<script src="jquery.js"></script>
+
+ 
+		
+
+
+<!-- MENU LATERALE --><nav class="top-bar"><ul class="title-area"><!-- Title Area --><li class="name"><h1 id="logo" class="hide-text"><a href="#">MEF - Ragioneria Generale dello Stato</a></h1></li><!-- Icona e testo per il menu su mobile. Rimuovere la classe "menu-icon" per eliminare l'icona. Rimuovere il testo "Menu" per avere solo l'icona --><li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li></ul><section style="left: 0%;" class="top-bar-section"><ul class="left"><li class="has-dropdown"><a href="#" >Raccolte Provvisorie</a><ul class="dropdown"><li class="title back js-generated"><h5><a href="#">« Indietro</a></h5></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=ricercaRaccolteProvvisorie&amp;" >Associazione a <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=ricercaSospesiRed&amp;" >Chiusura Raccolte Sospese <abbr title="Sistema protocollo Ragioneria Generale dello Stato">RED</abbr></a></li></ul><div class='reader'><ul><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=ricercaRaccolteProvvisorie&amp;" >Associazione a <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=ricercaSospesiRed&amp;" >Chiusura Raccolte Sospese <abbr title="Sistema protocollo Ragioneria Generale dello Stato">RED</abbr></a></li></ul></div></li><li class="has-dropdown"><a href="#" >Fascicoli <abbr title="Fascicolo Atto Decreto"> FAD</abbr></a><ul class="dropdown"><li class="title back js-generated"><h5><a href="#">« Indietro</a></h5></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=creaFascicoloFAD&amp;" >Creazione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=gestioneFascicoloFAD&amp;" >Gestione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=consultaFascicoloFAD&amp;" >Consultazione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=invioAlleFirme&amp;" >Invio alle Firme</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=sospensioneFirme&amp;" >Sospensione Firme</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=revocaSospensioneFirme&amp;" >Revoca Sospensione Firme</a></li></ul><div class='reader'><ul><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=creaFascicoloFAD&amp;" >Creazione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=gestioneFascicoloFAD&amp;" >Gestione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=consultaFascicoloFAD&amp;" >Consultazione <abbr title="Fascicolo Atto Decreto">FAD</abbr></a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=invioAlleFirme&amp;" >Invio alle Firme</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=sospensioneFirme&amp;" >Sospensione Firme</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=revocaSospensioneFirme&amp;" >Revoca Sospensione Firme</a></li></ul></div></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=firmaDocumenti&amp;" >Firma</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=siglaDocumenti&amp;" >Sigla</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=verificaDocumenti&amp;" >Verifica</a></li><li class="has-dropdown"><a href="#" >Funzioni di Servizio</a><ul class="dropdown"><li class="title back js-generated"><h5><a href="#">« Indietro</a></h5></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=mail&amp;" >Invio Mail</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=listaMsgInviati&amp;" >Lista Messaggi Inviati</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=gestioneTipologiaDecreto&amp;" >Gestione Tipologia Decreto</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=creaPin&amp;" >Creazione Pin</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=gestioneWorkflowFirme&amp;" >Gestione Workflow Firme</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=intCronologico&amp;" >Interrogazione Cronologico</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=gestioneUtenti&amp;" >Gestione Utenti</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=gestioneProfiloUtente&amp;" >Gestione Profilo Utente</a></li></ul><div class='reader'><ul><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=mail&amp;" >Invio Mail</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=listaMsgInviati&amp;" >Lista Messaggi Inviati</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=gestioneTipologiaDecreto&amp;" >Gestione Tipologia Decreto</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=creaPin&amp;" >Creazione Pin</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=gestioneWorkflowFirme&amp;" >Gestione Workflow Firme</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=intCronologico&amp;" >Interrogazione Cronologico</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=gestioneUtenti&amp;" >Gestione Utenti</a></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=gestioneProfiloUtente&amp;" >Gestione Profilo Utente</a></li></ul></div></li><li><a href="/demdec/private/menu.do?cmdGET___actionSelected=consultaFascicoloCdc&amp;" >Consultazione<abbr title="Corte dei conti"> Cdc</abbr></a></li><li class="divider"></li><li><a href="help.htm">Help</a></li></ul></section></nav>
+	 <!-- Navigazione: parte sinistra -->
+
+		
+		</header>
+	
+	
+		<!-- Inizio griglia -->
+		<!-- Sezione titoli in evidenza con slideshow -->
+		<div class="container">
+			
+<a id="contenuto"></a>
+<div class="spacer">&nbsp;</div><span class="nascosto">Ti trovi in:</span><span class="path_N"><a href="/demdec/private/menu.do">Home</a>&nbsp;&#8250;&nbsp;Gestione FAD</span> 
+			
+			<!-- Sezione lanci-servizi -->
+			<section id="lanci-servizi">
+			<!-- Inzio large-12 columns -->
+			<div class="large-12 columns">
+			 
+			<!-- 
+			 	<h2>Ricerca Fascicoli FAD</h2>
+	   		  -->
+
+				
+				<form id="__FORM__" action="/demdec/private/gestioneFascicoloFAD.do?_APP_CODE_=DemDec&amp;_REQUEST_URI_SRC_=/demdec/private/menu.do" method="post">
+					<!--  tiles:insertAttribute name="info" flush="true"/-->
+				    <!--  tiles:insertAttribute name="navigator" flush="true"/-->
+						
+  
+
+<div class="row">
+	<!--<div class="large-12 columns">-->
+	<div class="spacer_sm">&nbsp;</div>
+	<div class="col_char_user obb_fields">I campi contrassegnati con il simbolo * sono obbligatori</div>
+		<fieldset>
+			<div class="row">
+				<div class="small-3 columns">
+					<label for="tipoDecreto">Tipo Decreto</label>
+					<select id="tipoDecreto" name="tipoDecreto">
+						<option value="">&nbsp;</option>
+						
+							<option value="22">DMT </option>
+							<option value="23">DIM </option>
+						
+					</select>
+				</div>
+                
+			  <div class="small-3 columns left">
+					<label for="numeDecreto">Numero Decreto</label>
+					<input id="numeDecreto" name="numeDecreto" type="text" value="" maxlength="6"/>
+				</div>
+                
+			  <div class="small-3 columns left">
+					<label for="annoDecreto">* Anno Decreto</label>
+		       		 <select id="annoDecreto" name="annoDecreto"> 
+		          				
+							 <option value="2014">2014 </option> 
+						    		
+		        	 </select>  
+				</div>
+                
+			</div>
+			<div class="row">
+			
+			   <div class="left">
+            <input type="submit" name="cmdPOST___caricaTipologiaDecreto" value="..." class="subm_update posit-butt_up" title="Carica combo Tipologia decreto"/>
+            </div>
+			
+			
+				<div class="small-5 columns">
+
+					<label for="tipologiaDecreto">Tipologia Decreto</label>
+					
+						
+						<select id="tipologiaDecreto" name="tipologiaDecreto">
+									<option value="">-- Selezionare una tipologia --</option>
+									
+								</select>
+				</div>
+			</div>
+					<div class="row">
+			    <div class="left">
+			    <input type="submit" name="cmdPOST___caricaAmministrazioni" value="..." class="subm_update posit-butt_up" title="Carica Amministrazioni"/>
+			   </div>
+			    <div class="small-10 columns">
+				    <label for="amministrazione">Amministrazione</label>
+				  
+				    	
+				    			<select id="amministrazione" name="amministrazione">
+				    				<option value="">-- Selezionare un'amministrazione --</option>
+
+				    				
+				    				
+				    				
+				    			</select>
+				    
+			    </div>
+			</div>
+  
+			<div class="row">
+			    <div class="small-4 columns">
+				    <label for="ufficio">Ufficio Capofila</label>
+	    			<select id="ufficio" name="ufficio">
+	    				<option value="">-- Selezionare un ufficio --</option>
+   					  <option value="1">Ufficio I</option>
+   					  <option value="2">Ufficio II</option>
+   					  <option value="3">Ufficio III</option>
+   					  <option value="4">Ufficio IV</option>
+   					  <option value="5">Ufficio V</option>
+   					  <option value="6">Ufficio VI</option>
+   					  <option value="7">Ufficio VII</option>
+   					  <option value="8">Ufficio VIII</option>
+   					  <option value="9">Ufficio IX</option>
+   					  <option value="10">Ufficio X</option>
+   					  <option value="11">Ufficio XI</option>
+   					  <option value="12">Ufficio XII</option>
+   					  <option value="13">Ufficio XIII</option>
+	    				
+	    			</select>
+			    </div>
+			
+			  <div class="small-3 columns left">
+					<label for="numePat">Numero Patrimonio</label>
+					<input id="numePat" name="numePat" type="text" value="" maxlength="5"/>
+				</div>
+            
+			  <div class="small-3 columns left">
+					<label for="stato">Stato Lavorazione</label>
+					<select id="stato" name="stato">
+						<option value="">-- Selezionare uno stato --</option>
+						
+							<option value="0">Aperto </option>
+						
+							<option value="2">In firma </option>
+						
+							<option value="3">Sospeso per integrazione </option>
+						
+					</select>
+				</div> 
+            
+            </div>
+            
+			<div class="row">
+				<div class="small-3 columns">
+					<label for="dataArrivoDa">(da) Data Arrivo </label>
+					<input id="dataArrivoDa" name="dataArrivoDa" placeholder="gg/mm/aaaa" type="text" value="" maxlength="10"/>
+				</div>
+                
+				<div class="small-3 columns left">
+					<label for="dataArrivoA">(a) Data Arrivo </label>
+					<input id="dataArrivoA" name="dataArrivoA" placeholder="gg/mm/aaaa" type="text" value="" maxlength="10"/>
+				</div>
+                
+                
+                
+			</div>
+            
+			<div class="row">
+				<div class="small-10 columns">
+					<input type="submit" name="cmdPOST___eseguiRicerca" value="Cerca" class="button small"/>
+					&nbsp;
+					<input type="submit" name="cmdPOST___nuovaRicerca" value="Pulisci" class="button small"/>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+<!--</div>-->
+
+
+
+				</form>
+		
+			</div>
+			<!-- Fine large-12 columns -->
+			</section>
+		<!-- Fine Sezione lanci-servizi -->
+	
+<footer>
+    <div class="row">
+    	<div class="large-12 columns">
+    		<ul class="inline-list left">
+    			<li><a href="#">Accessibilità</a></li>
+    			<li><a href="#">Note legali</a></li>
+    			<li><a href="#">Privacy</a></li>
+    		</ul>
+    		<p class="right">Copyright 2015 © RGS Ragioneria Generale dello Stato</p>
+    	</div>
+    </div>
+</footer>
+
+	
+		</div>
+		<script src="jquery.js"> </script>
+	
+		<script src="foundation.js"> </script>
+
+		<script>
+		 $(document).foundation();
+		</script>
+
+		<script type="text/javascript">
+		 $(window).load(function() {
+		  $('#slideshow').orbit();
+		 });
+		</script>
+		
+		<script type="text/javascript">
+			function gestioneInvio(event) {
+				if (event.keyCode == 13){
+					$('.default').click();
+				}
+				
+			}
+		</script>
+
+<!--   INIZIO GESTIONE MODALI --> 	
+	<script type="text/javascript">
+	    function apriPopUpModale(toOpen) {
+	       
+	        $('.overlay').fadeIn('fast');
+	        $('#' + toOpen).fadeIn('slow');
+	        return false;
+	    }
+	
+	    function selectAll(){
+	    	$('.checkPlut').prop('checked',true);
+	    }
+	    
+	    function unselectAll(){
+	    	$('.checkPlut').prop('checked',false);
+	    }
+	    
+	    function close(){
+	        $('.overlay').fadeOut('fast');
+	        $('.box_pin').hide();
+	        return false;
+	        
+	    }
+	    
+	    
+	    $(document).ready(function () {
+	        $(".apri").click(function () {
+	            apriPopUpModale();
+	        });
+	
+	        $(".chiudi").click(
+	        function () {
+	            $('.overlay').fadeOut('fast');
+	            $('.box').hide();
+	            $('.box_30').hide();
+				$('.box_meta').hide();
+				
+	
+	        });
+	
+	        //chiusura emergenza
+	        $(".overlay").click(
+	        function () {
+	            $(this).fadeOut('fast');
+	            $('.box').hide();
+	            $('.box_30').hide();
+				$('.box_meta').hide();
+				$('.box_pin').hide();
+	        });
+	        
+	         $(".chiudi_pin").click(
+        	function () {
+        	 close();
+        	});
+	        
+	        $("#selectAll").click(function () {
+	            selectAll();
+	        });
+	        
+	        $("#unselectAll").click(function () {
+	            unselectAll();
+	        });
+	        
+	        $("#undo_pin").click(function () {
+	            close();
+	        });
+	        
+	        
+	    });
+	
+	</script>
+	
+	
+<!--   FINE GESTIONE MODALI --> 	
+	
+
+	
+	</body>
+</html>

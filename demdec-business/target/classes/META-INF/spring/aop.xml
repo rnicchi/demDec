@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd 
+">
+	
+	<tx:advice id="txAdvice1" transaction-manager="txManager">
+		<tx:attributes>
+			<!-- tx:method name="get*" read-only="true" rollback-for="ObjectNotFoundException"/-->
+			<!-- tx:method name="*" rollback-for="Throwable" no-rollback-for="ObjectNotFoundException"/-->
+			<!-- The Exception(s) that will not trigger rollback; comma-delimited. For example, 'com.foo.MyBusinessException,ServletException' -->
+			<tx:method propagation="REQUIRES_NEW" name="*" no-rollback-for="com.hobject.exception.DuplicateKeyException" rollback-for="java.lang.Throwable"  />
+			
+		</tx:attributes>
+	</tx:advice>
+	
+	<tx:advice id="txAdvice2" transaction-manager="txManager">
+		<tx:attributes>
+			<!-- tx:method name="get*" read-only="true" rollback-for="ObjectNotFoundException"/-->
+			<!-- tx:method name="*" rollback-for="Throwable" no-rollback-for="ObjectNotFoundException"/-->
+			<!-- The Exception(s) that will not trigger rollback; comma-delimited. For example, 'com.foo.MyBusinessException,ServletException' -->
+			<tx:method propagation="REQUIRES_NEW" name="*" no-rollback-for="com.hobject.exception.DuplicateKeyException" rollback-for="java.lang.Throwable"  />
+			
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut id="managerMethod" expression="
+				(execution(* it.almavivaitalia.bilancio.commons.manager.*.*Impl.*(..))) 	or
+				(execution(* it.mef.bilancio.demdec.manager.*.*Impl.*(..))) 				or 
+				(execution(* it.mef.bilancio.demdec.manager.*.*.*Impl.*(..))) 			or
+				(execution(* it.mef.bilancio.demdec.manager.*.*.*.*Impl.*(..))) 			or
+				(execution(* it.mef.bilancio.demdec.manager.*.*.*(..))) 		 			
+				"/>
+
+				
+
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="managerMethod"/>
+		<aop:aspect id="managerException" ref="exceptionManager">
+			<aop:after-throwing pointcut-ref="managerMethod" throwing="throwable" method="newManageManagerException" />
+		</aop:aspect>
+		<aop:aspect id="log" ref="logManager">
+			<aop:pointcut id="daoOperation" expression="(execution(* it.mef.bilancio.demdec.dao.*.*(..)))"/>
+			<aop:before pointcut-ref="daoOperation" method="debugInizio"/>
+			<aop:after pointcut-ref="daoOperation" method="debugFine"/>
+		</aop:aspect>
+		
+	</aop:config>
+
+</beans>

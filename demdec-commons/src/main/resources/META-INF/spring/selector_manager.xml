@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd 
+">
+
+	<bean 
+		id="selectorEserciziManager" 
+		class="it.almavivaitalia.bilancio.commons.manager.impl.SelectorEserciziManagerImpl" 
+		parent="abstractManager" 
+		lazy-init="false">
+		<property name="selectorEserciziDao" ref="selectorEserciziDao"/>		
+	</bean>		
+
+	<bean 
+		id="selectorCodiceAggregazioneManager" 
+		class="it.almavivaitalia.bilancio.commons.manager.impl.SelectorCodiceAggregazioneManagerImpl" 
+		parent="abstractManager" 
+		lazy-init="false">
+		<property name="selectorCodiceAggregazioneDao" ref="selectorCodiceAggregazioneDao"/>		
+	</bean>		
+	
+	<bean 
+		id="selectorLeggiManager" 
+		class="it.almavivaitalia.bilancio.commons.manager.impl.SelectorLeggiManagerImpl" 
+		parent="abstractManager" 
+		lazy-init="false">
+		<property name="selectorLeggiDao" ref="selectorLeggiDao"/>		
+	</bean>		
+	
+	<bean 
+		id="selectorAutorManager" 
+		class="it.almavivaitalia.bilancio.commons.manager.impl.SelectorAutorManagerImpl" 
+		parent="abstractManager" 
+		lazy-init="false">
+		<property name="selectorAutorDao" ref="selectorAutorDao"/>		
+	</bean>		
+	
+	<bean 
+		id="selectorAttiManager" 
+		class="it.almavivaitalia.bilancio.commons.manager.impl.SelectorAttiManagerImpl" 
+		parent="abstractManager" 
+		lazy-init="false">
+		<property name="selectorAttiDao" ref="selectorAttiDao"/>		
+	</bean>	
+	
+	<bean 
+		id="selectorAmminManager" 
+		class="it.almavivaitalia.bilancio.commons.manager.impl.SelectorAmminManagerImpl" 
+		parent="abstractManager" 
+		lazy-init="false">
+		<property name="selectorAmminDao" ref="selectorAmminDao"/>		
+	</bean>		
+	
+	<bean 
+		id="selectorFondiManager" 
+		class="it.almavivaitalia.bilancio.commons.manager.impl.SelectorFondiManagerImpl" 
+		parent="abstractManager" 
+		lazy-init="false">
+		<property name="selectorFondiDao" ref="selectorFondiDao"/>		
+	</bean>				
+</beans>

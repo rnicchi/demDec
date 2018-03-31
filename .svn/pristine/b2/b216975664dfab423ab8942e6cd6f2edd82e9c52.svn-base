@@ -1,0 +1,86 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import it.almavivaitalia.bilancio.commons.to.DescDocumentoTO;
+import it.mef.bilancio.demdec.dao.AnagTipoDecretoDao;
+import it.mef.bilancio.demdec.dao.AnagTipoFlussoDao;
+import it.mef.bilancio.demdec.dao.DescDocumentoDao;
+import it.mef.bilancio.demdec.dao.InvioAlleFirmeDao;
+import it.mef.bilancio.demdec.dao.TipoDocumentoDao;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.to.AnagTipoDecretoTO;
+import it.mef.bilancio.demdec.to.AnagTipoFlussoTO;
+import it.mef.bilancio.demdec.to.FascicoliViewTO;
+import it.mef.bilancio.demdec.to.TipoDocumentoTO;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public abstract class  AbstractListManagerImpl extends StaticListManagerImpl implements ListManager {
+	
+	
+	@Autowired
+	private AnagTipoDecretoDao anagTipoDecretoDao;
+	
+	@Autowired
+	private InvioAlleFirmeDao invioAlleFirmeDao;
+	
+	@Autowired
+	private AnagTipoFlussoDao anagTipoFlussoDao;
+	
+	@Autowired
+	private TipoDocumentoDao tipoDocumentoDao;
+	
+	@Autowired
+	private DescDocumentoDao descDocumentoDao;
+	
+	
+	@Override
+	public List<FascicoliViewTO> findListaDecretiByTipoNumAnno(Integer anno, Integer tipo, Integer numDec)  throws Throwable{
+		return invioAlleFirmeDao.findListaDecretiByTipoNumAnno(anno, tipo, numDec);
+	 
+	}
+
+	@Override
+	public AnagTipoDecretoTO loadAnagTipoDecretoById(Integer id) throws Throwable {
+		return getDozerDriver().map(anagTipoDecretoDao.loadAnagTipoDecretoById(id), AnagTipoDecretoTO.class, "AnagTipoDecreto");
+	}
+	
+	@Override
+	public List<AnagTipoFlussoTO> loadAnagTipoFlusso() throws Throwable {
+		return getDozerDriver().mapList(anagTipoFlussoDao.loadAnagTipoFlusso(),AnagTipoFlussoTO.class,"AnagTipoFlusso");
+	}
+	
+	
+	@Override
+	public List<TipoDocumentoTO> loadTipoDocumentoIG() throws Throwable{
+		
+		return getDozerDriver().mapList(tipoDocumentoDao.loadTipoDocumentoIG(),TipoDocumentoTO.class,"TipoDocumento");
+		
+	}
+	
+	@Override
+	public List<DescDocumentoTO> loadDescDocumentoByTipo(String tipo) throws Throwable{
+		
+		return getDozerDriver().mapList(descDocumentoDao.loadByTipoDocumento(tipo), DescDocumentoTO.class, "DescDocumento");
+		
+	}
+	
+	@Override
+	public List<TipoDocumentoTO> loadTipoDocumentoAD() throws Throwable{
+		
+		return getDozerDriver().mapList(tipoDocumentoDao.loadTipoDocumentoAD(),TipoDocumentoTO.class,"TipoDocumento");
+		
+	}
+
+	@Override
+	public List<FascicoliViewTO> findSospFirmeListaDecretiByTipoNumAnno(Integer anno, Integer tipo, Integer numDec) throws Throwable {	
+		return invioAlleFirmeDao.findSospFirmeListaDecretiByTipoNumAnno(anno, tipo, numDec);
+	}
+	
+	
+	@Override
+	public List<FascicoliViewTO> findRevSospFirmeListaDecretiByTipoNumAnno(Integer anno, Integer tipo, Integer numDec) throws Throwable {	
+		return invioAlleFirmeDao.findRevSospFirmeListaDecretiByTipoNumAnno(anno, tipo, numDec);
+	}
+}

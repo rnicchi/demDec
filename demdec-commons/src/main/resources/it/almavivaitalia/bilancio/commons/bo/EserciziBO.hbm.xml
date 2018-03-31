@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class dynamic-update="true" name="it.almavivaitalia.bilancio.commons.bo.EserciziBO"   table="D_ESERCIZI">
+   <meta attribute="extends" inherit="false">AbstractSbfjBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <id name="id" type="java.lang.Short">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="ANNO_ESE" precision="4" scale="0"/>
+    <!-- <generator class="sequence">
+     <param name="sequence">S_ESERCIZI</param>
+    </generator> -->
+   </id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->   
+   <property name="statTipoEse" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="1" name="STAT_TIPO_ESE" not-null="true"/>
+   </property>
+   <property name="statStatus" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="1" name="STAT_STATUS" not-null="true"/>
+   </property>
+   <property name="dataPresdlb" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_PRESDLB"/>
+   </property>
+   <property name="dataApprdlb" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_APPRDLB"/>
+   </property>
+   <property name="dataAperdlf" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_APERDLF"/>
+   </property>
+   <property name="dataPresdlf" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_PRESDLF"/>
+   </property>
+   <property name="dataApprdlf" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_APPRDLF"/>
+   </property>
+   <property name="numeLegvig" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_LEGVIG" not-null="true" precision="2" scale="0"/>
+   </property>
+   <property name="dataFineincl" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_FINEINCL"/>
+   </property>
+   <property name="flagEntrate01" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FLAG_ENTRATE_01" precision="1" scale="0"/>
+   </property>
+   <property name="flagProp01" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FLAG_PROP_01" precision="1" scale="0"/>
+   </property>
+   <property name="flagIbe01" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FLAG_IBE_01" precision="1" scale="0"/>
+   </property>
+   <property name="flagRev201" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FLAG_REV2_01" precision="1" scale="0"/>
+   </property>
+   <property name="flagRev101" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FLAG_REV1_01" precision="1" scale="0"/>
+   </property>
+   <property name="statFibc" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="1" name="STAT_FIBC" not-null="true"/>
+   </property>  
+   <property name="numeDlbPres" type="java.lang.Short">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_DLB_PRES" precision="3" scale="0"/>
+   </property>
+   <property name="codiTipoattoEmer" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="3" name="CODI_TIPOATTO_EMER"/>
+   </property>
+   <property name="dataEsclDmc" type="date">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="7" name="DATA_ESCL_DMC"/>
+   </property>
+  </class>
+ </hibernate-mapping>

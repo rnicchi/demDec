@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+  FOR SECURITY INTEGRATION !!! 
+-->
+<beans default-lazy-init="false">
+    <bean id="it.mef.bilancio.common.business.spring.applicationContext"
+         class="org.springframework.context.support.ClassPathXmlApplicationContext">
+        <constructor-arg>
+           <list>
+                <value>propertyConfigurer.xml</value>
+                <value>applicationContext.xml</value>
+           </list>
+        </constructor-arg>
+    </bean>
+</beans>
+

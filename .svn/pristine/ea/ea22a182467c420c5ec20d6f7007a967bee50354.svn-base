@@ -1,0 +1,198 @@
+
+
+/**
+ * InterfacciaRaccoltaProvvisoriaDEMBIL.java
+ *
+ * This file was auto-generated from WSDL
+ * by the Apache Axis2 version: 1.5.1  Built on : Oct 19, 2009 (10:59:00 EDT)
+ */
+
+    package it.gov.mef.demdec.servizi.dembil;
+
+    /*
+     *  InterfacciaRaccoltaProvvisoriaDEMBIL java interface
+     */
+
+    public interface InterfacciaRaccoltaProvvisoriaDEMBIL {
+          
+
+        /**
+          * Auto generated method signature
+          * 
+                    * @param richiesta_downloadDocumentoFascicoloRaccoltaProvvisoria
+                
+                    * @param accessoApplicativo125
+                
+             * @throws it.gov.mef.demdec.servizi.dembil.GenericFault : 
+             * @throws it.gov.mef.demdec.servizi.dembil.SecurityFault : 
+         */
+
+         
+                     public it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Risposta_downloadDocumentoFascicoloRaccoltaProvvisoria downloadDocumentoFascicoloRaccoltaProvvisoria(
+
+                        it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Richiesta_downloadDocumentoFascicoloRaccoltaProvvisoria richiesta_downloadDocumentoFascicoloRaccoltaProvvisoria,it.gov.mef.demdec.servizi.dembil.common.AccessoApplicativo accessoApplicativo125)
+                        throws java.rmi.RemoteException
+             
+          ,it.gov.mef.demdec.servizi.dembil.GenericFault
+          ,it.gov.mef.demdec.servizi.dembil.SecurityFault;
+
+        
+
+        /**
+          * Auto generated method signature
+          * 
+                    * @param richiesta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria
+                
+                    * @param accessoApplicativo126
+                
+             * @throws it.gov.mef.demdec.servizi.dembil.GenericFault : 
+             * @throws it.gov.mef.demdec.servizi.dembil.SecurityFault : 
+         */
+
+         
+                     public it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Risposta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria(
+
+                        it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Richiesta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria richiesta_modifyMetadatiDocumentoFascicoloRaccoltaProvvisoria,it.gov.mef.demdec.servizi.dembil.common.AccessoApplicativo accessoApplicativo126)
+                        throws java.rmi.RemoteException
+             
+          ,it.gov.mef.demdec.servizi.dembil.GenericFault
+          ,it.gov.mef.demdec.servizi.dembil.SecurityFault;
+
+        
+
+        /**
+          * Auto generated method signature
+          * 
+                    * @param richiesta_changeStatoFascicoloRaccoltaProvvisoria
+                
+                    * @param accessoApplicativo127
+                
+             * @throws it.gov.mef.demdec.servizi.dembil.GenericFault : 
+             * @throws it.gov.mef.demdec.servizi.dembil.SecurityFault : 
+         */
+
+         
+                     public it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Risposta_changeStatoFascicoloRaccoltaProvvisoria changeStatoFascicoloRaccoltaProvvisoria(
+
+                        it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Richiesta_changeStatoFascicoloRaccoltaProvvisoria richiesta_changeStatoFascicoloRaccoltaProvvisoria,it.gov.mef.demdec.servizi.dembil.common.AccessoApplicativo accessoApplicativo127)
+                        throws java.rmi.RemoteException
+             
+          ,it.gov.mef.demdec.servizi.dembil.GenericFault
+          ,it.gov.mef.demdec.servizi.dembil.SecurityFault;
+
+        
+
+        /**
+          * Auto generated method signature
+          * 
+                    * @param richiesta_modifyMetadatiFascicoloRaccoltaProvvisoria
+                
+                    * @param accessoApplicativo128
+                
+             * @throws it.gov.mef.demdec.servizi.dembil.GenericFault : 
+             * @throws it.gov.mef.demdec.servizi.dembil.SecurityFault : 
+         */
+
+         
+                     public it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Risposta_modifyMetadatiFascicoloRaccoltaProvvisoria modifyMetadatiFascicoloRaccoltaProvvisoria(
+
+                        it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Richiesta_modifyMetadatiFascicoloRaccoltaProvvisoria richiesta_modifyMetadatiFascicoloRaccoltaProvvisoria,it.gov.mef.demdec.servizi.dembil.common.AccessoApplicativo accessoApplicativo128)
+                        throws java.rmi.RemoteException
+             
+          ,it.gov.mef.demdec.servizi.dembil.GenericFault
+          ,it.gov.mef.demdec.servizi.dembil.SecurityFault;
+
+        
+
+        /**
+          * Auto generated method signature
+          * 
+                    * @param richiesta_getFascicoloRaccoltaProvvisoria
+                
+                    * @param accessoApplicativo129
+                
+             * @throws it.gov.mef.demdec.servizi.dembil.GenericFault : 
+             * @throws it.gov.mef.demdec.servizi.dembil.SecurityFault : 
+         */
+
+         
+                     public it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Risposta_getFascicoloRaccoltaProvvisoria getFascicoloRaccoltaProvvisoria(
+
+                        it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Richiesta_getFascicoloRaccoltaProvvisoria richiesta_getFascicoloRaccoltaProvvisoria,it.gov.mef.demdec.servizi.dembil.common.AccessoApplicativo accessoApplicativo129)
+                        throws java.rmi.RemoteException
+             
+          ,it.gov.mef.demdec.servizi.dembil.GenericFault
+          ,it.gov.mef.demdec.servizi.dembil.SecurityFault;
+
+        
+
+        /**
+          * Auto generated method signature
+          * 
+                    * @param richiesta_addDocumentoFascicoloRaccoltaProvvisoria
+                
+                    * @param accessoApplicativo130
+                
+             * @throws it.gov.mef.demdec.servizi.dembil.GenericFault : 
+             * @throws it.gov.mef.demdec.servizi.dembil.SecurityFault : 
+         */
+
+         
+                     public it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Risposta_addDocumentoFascicoloRaccoltaProvvisoria addDocumentoFascicoloRaccoltaProvvisoria(
+
+                        it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Richiesta_addDocumentoFascicoloRaccoltaProvvisoria richiesta_addDocumentoFascicoloRaccoltaProvvisoria,it.gov.mef.demdec.servizi.dembil.common.AccessoApplicativo accessoApplicativo130)
+                        throws java.rmi.RemoteException
+             
+          ,it.gov.mef.demdec.servizi.dembil.GenericFault
+          ,it.gov.mef.demdec.servizi.dembil.SecurityFault;
+
+        
+
+        /**
+          * Auto generated method signature
+          * 
+                    * @param richiesta_removeDocumentoFascicoloRaccoltaProvvisoria
+                
+                    * @param accessoApplicativo131
+                
+             * @throws it.gov.mef.demdec.servizi.dembil.GenericFault : 
+             * @throws it.gov.mef.demdec.servizi.dembil.SecurityFault : 
+         */
+
+         
+                     public it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Risposta_removeDocumentoFascicoloRaccoltaProvvisoria removeDocumentoFascicoloRaccoltaProvvisoria(
+
+                        it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Richiesta_removeDocumentoFascicoloRaccoltaProvvisoria richiesta_removeDocumentoFascicoloRaccoltaProvvisoria,it.gov.mef.demdec.servizi.dembil.common.AccessoApplicativo accessoApplicativo131)
+                        throws java.rmi.RemoteException
+             
+          ,it.gov.mef.demdec.servizi.dembil.GenericFault
+          ,it.gov.mef.demdec.servizi.dembil.SecurityFault;
+
+        
+
+        /**
+          * Auto generated method signature
+          * 
+                    * @param richiesta_createFascicoloRaccoltaProvvisoria
+                
+                    * @param accessoApplicativo132
+                
+             * @throws it.gov.mef.demdec.servizi.dembil.GenericFault : 
+             * @throws it.gov.mef.demdec.servizi.dembil.SecurityFault : 
+         */
+
+         
+                     public it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Risposta_createFascicoloRaccoltaProvvisoria createFascicoloRaccoltaProvvisoria(
+
+                        it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Richiesta_createFascicoloRaccoltaProvvisoria richiesta_createFascicoloRaccoltaProvvisoria,it.gov.mef.demdec.servizi.dembil.common.AccessoApplicativo accessoApplicativo132)
+                        throws java.rmi.RemoteException
+             
+          ,it.gov.mef.demdec.servizi.dembil.GenericFault
+          ,it.gov.mef.demdec.servizi.dembil.SecurityFault;
+
+        
+
+        
+       //
+       }
+    

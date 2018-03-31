@@ -1,0 +1,337 @@
+package it.mef.bilancio.demdec.servizi.client;
+
+import it.almavivaitalia.bilancio.commons.to.CodeDescriptionTO;
+import it.almavivaitalia.bsn.sh.manager.exception.ApplicationException;
+import it.almavivaitalia.bsn.sh.utils.DateUtil;
+import it.almavivaitalia.bsn.sh.utils.StringUtil;
+import it.almavivaitalia.bsn.sh.utils.TraceLogger;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.CodiceDescrizione_type;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.DataRange_type;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.DocumentoContent_type;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.DocumentoMetadataAttoDecreto_type;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Guid;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.ParametriOperazione_type0;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Protocollo_type;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.RichiestaOperazioneDocumentale_type;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.StatoFascicoloDocumentale_type;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.TipoDocumento_type;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.TipoEstrazione_type;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.TipoOperazione_type;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Tipo_type1;
+import it.mef.bilancio.demdec.servizi.to.DocumentContentTO;
+import it.mef.bilancio.demdec.servizi.to.DocumentTO;
+import it.mef.bilancio.demdec.servizi.to.ProtocolloTO;
+import it.mef.bilancio.demdec.to.AmminTO;
+import it.mef.bilancio.demdec.utils.Constants;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.UUID;
+
+import javax.activation.DataHandler;
+
+import org.apache.axiom.attachments.ByteArrayDataSource;
+
+public class UtilRequestClient implements Constants {
+	
+	public static CodiceDescrizione_type createCodiceDescrizione (String codi,String descrizione){
+	CodiceDescrizione_type codiDesc = null;
+	if (!StringUtil.isEmpty(codi)){	
+		codiDesc = new CodiceDescrizione_type();
+		codiDesc.setCodice(codi);
+		codiDesc.setDescrizione(descrizione);
+	}
+	return codiDesc;
+	}	
+
+	public static CodiceDescrizione_type createCodiceDescrizione (CodeDescriptionTO codeDescription){
+		return createCodiceDescrizione(codeDescription.getCode(),codeDescription.getDescription());
+		}	
+
+	
+	public static CodiceDescrizione_type createCodiceDescrizioneAmministrazione (List<AmminTO> listAmm) throws ApplicationException{
+	
+	CodiceDescrizione_type codiDesc = null;
+	if (listAmm == null || listAmm.size()==0){
+		throw new ApplicationException("Nessuna amministrazione");
+	}else{
+		if (listAmm.size()==1){
+			codiDesc=createCodiceDescrizione (listAmm.get(0).getNumeStp()+listAmm.get(0).getNumeApp(),listAmm.get(0).getDescAmm());
+		} else{
+			codiDesc=createCodiceDescrizione (Constants.CODI_MULTI_AMMIN,Constants.CODI_MULTI_AMMIN);
+		}
+	}
+	return codiDesc;
+	}	
+
+/*	public static DataRange_type createDataRange(String dataDa,String dataA){
+
+		DataRange_type dataRange = null;
+		try {
+			if (!StringUtil.isEmpty(dataDa)) {
+				dataRange = new DataRange_type();
+				dataRange.setData( DateUtil.getDate(dataDa));
+				if (!StringUtil.isEmpty(dataA)) {
+					dataRange.setDataA(DateUtil.getDate(dataA));
+				} else {
+					dataRange.setDataA(DateUtil.getDate("31/12/9999"));
+				}
+			}
+		} catch (Exception e) {
+			TraceLogger.errorLog("Errore createDataRange", UtilRequestClient.class, e);
+		}
+		return dataRange;
+		
+	}*/
+
+	public static DataRange_type createDataRange(String dataDa,String dataA){
+
+		DataRange_type dataRange = null;
+		if (!StringUtil.isEmpty(dataDa)||!StringUtil.isEmpty(dataA)){
+			try {
+				dataRange = new DataRange_type();
+				dataRange.setData(!StringUtil.isEmpty(dataDa)?DateUtil.getDate(dataDa):DateUtil.getDate("01/01/0001"));
+				dataRange.setDataA(!StringUtil.isEmpty(dataA)?DateUtil.getDate(dataA):null);
+			} catch (Exception e) {
+				TraceLogger.errorLog("Errore createDataRange", UtilRequestClient.class, e);
+			}
+		}
+		return dataRange;
+		
+	}
+
+
+	
+	public static Guid createGuid (String stringGuid){
+		
+		Guid guid = null;
+		if (!StringUtil.isEmpty(stringGuid)){
+			guid = new Guid();
+			guid.setGuid(stringGuid);
+		}
+		return guid;
+		}	
+
+	
+	public static Guid createGuid (){
+		
+		Guid guid = new Guid();
+		guid.setGuid(UUID.randomUUID().toString());
+		return guid;
+		}	
+
+
+	
+	public static TipoDocumento_type createTipoDocumento (String codi,String descrizione){
+		TipoDocumento_type codiDesc = null;
+		if (!StringUtil.isEmpty(codi)){	
+			codiDesc = new TipoDocumento_type();
+			codiDesc.setCodice(codi);
+			if (!StringUtil.isEmpty(descrizione)){	
+				codiDesc.setDescrizione(descrizione);
+			}	}
+
+		return codiDesc;
+		}	
+	
+	
+
+	
+	
+	
+	
+	public static DocumentoContent_type  createDocumentContentType (DocumentContentTO  documentoContent){
+		DocumentoContent_type documentoContent_type = null;
+		if (!StringUtil.isEmpty(documentoContent)) {
+			 documentoContent_type = new DocumentoContent_type();
+			 documentoContent_type.setContent(new DataHandler(new ByteArrayDataSource(documentoContent.getContent())));
+			 documentoContent_type.setDescrizione(documentoContent.getDescrizione());
+			 documentoContent_type.setFileName(documentoContent.getFileName());
+			 if(!StringUtil.isEmpty(documentoContent.getFirmato())){
+				 documentoContent_type.setFirmato(documentoContent.getFirmato().booleanValue());
+			 }	 
+			 documentoContent_type.setMimeType(documentoContent.getMimeType());
+			 if (documentoContent.getHash()== null || documentoContent.getHash().length == 0)
+				 //calcolo hash  "SHA-1"
+				 documentoContent_type.setHash(new DataHandler(new ByteArrayDataSource(createHash(documentoContent.getContent()))));
+			 else 
+				 //prendo  hash da TO
+				 documentoContent_type.setHash(new DataHandler(new ByteArrayDataSource(documentoContent.getHash())));
+							 
+			
+		}	
+		return documentoContent_type;
+		}	
+
+	
+	
+	
+	
+	
+	public static Protocollo_type  createProocolloType (ProtocolloTO  protocollo){
+		Protocollo_type protocollo_type = null;
+		if (!StringUtil.isEmpty(protocollo)) {
+			protocollo_type = new Protocollo_type();
+			protocollo_type.setAoo(protocollo.getAoo());
+			protocollo_type.setData(protocollo.getData());
+			Tipo_type1 tipo = new Tipo_type1();
+			tipo.setTipo_type0(protocollo.getTipo());
+			protocollo_type.setTipo(tipo);
+			protocollo_type.setNumeroProtocollo(protocollo.getNumeroProtocollo());
+				
+		}	
+		return protocollo_type;
+		}	
+
+	
+	
+	
+	
+	
+
+	
+	
+	public static byte[] createHash (byte[] inputBytes){
+	
+		// algorithm can be "MD5", "SHA-1", "SHA-256"
+		MessageDigest digest=null;
+		try {
+			digest = MessageDigest.getInstance("SHA-1");
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		digest.update(inputBytes);
+		byte[] hashedBytes = digest.digest();
+		return hashedBytes;
+	
+		
+	}
+
+	
+	public static TipoEstrazione_type  createTipoEstrazioneType (String tipoEstrazione){
+		TipoEstrazione_type tipoEstrazione_type=TipoEstrazione_type.NONE;
+		if (tipoEstrazione != null){
+			if (tipoEstrazione.equals(TipoEstrazione_type._DATA)){
+				tipoEstrazione_type=TipoEstrazione_type.DATA;
+			}
+			if (tipoEstrazione.equals(TipoEstrazione_type._METADATA)){
+				tipoEstrazione_type=TipoEstrazione_type.METADATA;
+			}
+		}
+		return tipoEstrazione_type;
+		}	
+
+		
+	
+	
+	public static DocumentoMetadataAttoDecreto_type  createDocumentoMetadataAttoDecretoType (DocumentTO  documento){
+		DocumentoMetadataAttoDecreto_type documentoMetadataAttoDecreto_type = null;
+		try {
+		if (!StringUtil.isEmpty(documento)) {
+			documentoMetadataAttoDecreto_type = new DocumentoMetadataAttoDecreto_type();
+			documentoMetadataAttoDecreto_type.setDataAnnullamento(DateUtil.getDate(documento.getDataAnnullamento()));
+			documentoMetadataAttoDecreto_type.setDataChiusura(DateUtil.getDate(documento.getDataChiusura()));
+			documentoMetadataAttoDecreto_type.setDataDocumento(DateUtil.getDate(documento.getDataDocumento())); // passiamo la data upload
+			documentoMetadataAttoDecreto_type.setNote(documento.getNote());
+			documentoMetadataAttoDecreto_type.setProtocollo(createProocolloType(documento.getProtocollo()));
+		    documentoMetadataAttoDecreto_type.setAmministrazione(createCodiceDescrizione(documento.getAmministrazione())); // V 
+		    documentoMetadataAttoDecreto_type.setRagioneria(createCodiceDescrizione(documento.getUcbRts())); //  la passiamo solo quando stp!=0
+			}	
+		} catch (Exception e) {
+			TraceLogger.errorLog("Errore createDocumentoMetadataAttoDecretoType", UtilRequestClient.class, e);
+		}
+		return documentoMetadataAttoDecreto_type;
+		}	
+
+	
+	
+	
+	
+	
+	public static RichiestaOperazioneDocumentale_type createRichiestaOperazioneDocumentaleType(String idDocumentoOperazione,String tipoOperazione,Hashtable<String, String>  parametriOperazione){
+		RichiestaOperazioneDocumentale_type richiestaOperazioneDocumentale_type = null;
+		if(!StringUtil.isEmpty(tipoOperazione)){
+			try {
+					richiestaOperazioneDocumentale_type = new RichiestaOperazioneDocumentale_type();
+			
+					richiestaOperazioneDocumentale_type.setIdDocumentoOperazione(createGuid(idDocumentoOperazione));
+					
+					if (tipoOperazione.equals(TipoOperazione_type._CONVERSIONE)){
+						richiestaOperazioneDocumentale_type.setTipoOperazione(TipoOperazione_type.CONVERSIONE);
+					}
+					if (tipoOperazione.equals(TipoOperazione_type._FIRMA_AUTOMATICA)){
+						richiestaOperazioneDocumentale_type.setTipoOperazione(TipoOperazione_type.FIRMA_AUTOMATICA);
+					}
+					if (tipoOperazione.equals(TipoOperazione_type._FIRMA_IMMAGINE)){
+						richiestaOperazioneDocumentale_type.setTipoOperazione(TipoOperazione_type.FIRMA_IMMAGINE);
+					}
+					if (tipoOperazione.equals(TipoOperazione_type._TIMBRO)){
+						richiestaOperazioneDocumentale_type.setTipoOperazione(TipoOperazione_type.TIMBRO);
+					}
+					 
+					if (tipoOperazione.equals(TipoOperazione_type._PLACEHOLDER)){
+						richiestaOperazioneDocumentale_type.setTipoOperazione(TipoOperazione_type.PLACEHOLDER);
+					}
+					 
+					ParametriOperazione_type0[] parametri = new ParametriOperazione_type0[parametriOperazione.size()];
+					Enumeration<String> e=parametriOperazione.keys();
+					int i = 0;
+					while(e.hasMoreElements()){
+						String key = (String) e.nextElement();
+						ParametriOperazione_type0 parametriOperazione_type = new ParametriOperazione_type0();
+						parametriOperazione_type.setChiave(key);
+						parametriOperazione_type.setValore(parametriOperazione.get(key));
+						parametri[i++]=parametriOperazione_type;
+						}
+					richiestaOperazioneDocumentale_type.setParametriOperazione(parametri);
+			} catch (Exception e) {
+				TraceLogger.errorLog("Errore createRichiestaOperazioneDocumentaleType", UtilRequestClient.class, e);
+			}
+		}	
+		return richiestaOperazioneDocumentale_type;
+	}
+	
+	public static StatoFascicoloDocumentale_type createStatoFascicoloDocumentale(String stato){
+		if (stato.equalsIgnoreCase(StatoFascicoloDocumentale_type._APERTO)){
+			return StatoFascicoloDocumentale_type.APERTO;
+		}
+		if (stato.equalsIgnoreCase(StatoFascicoloDocumentale_type._INSERITO)){
+			return StatoFascicoloDocumentale_type.INSERITO;
+		}
+		if (stato.equalsIgnoreCase(StatoFascicoloDocumentale_type._IN_ELABORAZIONE)){
+			return StatoFascicoloDocumentale_type.IN_ELABORAZIONE;
+		}
+		return StatoFascicoloDocumentale_type.CHIUSO;
+		
+	}
+	
+	
+/*	
+	public static TipoOperazione_type  createTipoOperazioneType (String tipoOperazione){
+		TipoOperazione_type tipoOperazione_type=null;
+		if(!StringUtil.isEmpty(tipoOperazione)){
+			if (tipoOperazione.equals(TipoOperazione_type._CONVERSIONE)){
+				tipoOperazione_type=TipoOperazione_type.CONVERSIONE;
+			}
+			if (tipoOperazione.equals(TipoOperazione_type._FIRMA_AUTOMATICA)){
+				tipoOperazione_type=TipoOperazione_type.FIRMA_AUTOMATICA;
+			}
+			if (tipoOperazione.equals(TipoOperazione_type._FIRMA_IMMAGINE)){
+				tipoOperazione_type=TipoOperazione_type.FIRMA_IMMAGINE;
+			}
+			if (tipoOperazione.equals(TipoOperazione_type._TIMBRO)){
+				tipoOperazione_type=TipoOperazione_type.TIMBRO;
+			}
+	 }
+		return tipoOperazione_type;
+		}	
+
+*/	
+
+	
+	
+}

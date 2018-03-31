@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<sql-query name="DocumentiBO.loadAllDocumentsToSignByLoggedUser">
+	
+		SELECT d.DESC_FILENAME as descNomeDocumento, d.fk_nume_id_fascicolo as numeIdFascicolo, d.CODI_GUID_DOCUMENTO as codiGuidDocumento, 
+		d.CODI_GUID_FASCICOLO as codiGuidFascicolo, f.DESC_SIGLA as descSigla, f.NUME_NUM_DECRETO as numeNumDecreto, f.FK_ANNO_ESE as annoEse, 
+		CASE  (SELECT TO_CHAR(COUNT(*)) FROM D_FASCICOLI_AMM E WHERE 
+		D.FK_NUME_ID_FASCICOLO = E.FK_NUME_ID_FASCICOLO) 
+		WHEN '0' THEN 'NON ASSOCIATA'
+		ELSE (select LISTAGG(AMM.DESC_AMM_R, ' - ') WITHIN GROUP (ORDER BY AMM.DESC_AMM_R) from D_FASCICOLI_AMM FAMM,D_ANAG_AMMIN_DEM AMM
+				WHERE FAMM.FK_NUME_ID_FASCICOLO = D.FK_NUME_ID_FASCICOLO
+				AND AMM.fk_anno_ese = FAMM.fk_anno_ese
+				AND AMM.nume_stp = FAMM.fk_nume_stp
+				AND AMM.nume_app = FAMM.fk_nume_app )
+		END AS descAmm, d.NUME_id_documento as numeIdDocumento,
+			(SELECT F.desc_descrizione_doc FROM D_TIPO_DOCUMENTO F
+				WHERE  F.codi_tipo_documento = D.fk_codi_tipo_documento) AS codiTipoDocumento,
+				'ALLA FIRMA' AS statFirma        
+	 
+			FROM d_iter_firma_decreto a, d_documenti d, d_fascicoli f
+	   
+			WHERE 
+			a.fk_nume_id_fascicolo = d.fk_NUME_id_fascicolo 
+			AND
+			a.fk_nume_id_fascicolo = f.nume_id_fascicolo 
+			AND
+  			f.stat_stato = '2' 
+  			AND
+			D.FK_CODI_TIPO_DOCUMENTO = 'AD01'
+			AND
+			a.fk_codi_firmatario = (SELECT CODI_FIRMATARIO FROM D_ANAG_FIRMATARI B WHERE B.fk_sequ_id_profilo = :profile
+			AND a.codi_tipo_firma = b.codi_tipo_firma)
+			AND a.codi_tipo_firma in ('F')
+			AND  
+			(((a.fk_nume_stp = :stp 
+			AND
+			a.fk_nume_app = :app AND a.fk_nume_cdr IS NULL)
+<!-- 			AND
+			(a.fk_nume_cdr = :cdr OR a.fk_nume_cdr IS NULL)) --> 
+			OR (a.fk_nume_stp IS NULL AND a.fk_nume_app IS NULL AND
+			a.fk_nume_cdr IS NULL AND a.fk_codi_ufficio IS NULL))
+			OR 
+			a.fk_codi_ufficio = :uff)  
+			AND	a.stat_firma = 1
+			ORDER BY f.FK_ANNO_ESE, f.NUME_NUM_DECRETO, f.DESC_SIGLA
+		
+  			<return-scalar column="descNomeDocumento" 		type="string"/>
+  			<return-scalar column="codiTipoDocumento" 	type="string"/>
+  			<return-scalar column="statFirma" 		type="string"/>
+  			<return-scalar column="numeIdDocumento" 		type="integer"/>
+  			<return-scalar column="descAmm" 	type="string"/>
+  			<return-scalar column="numeIdFascicolo" 	type="long"/>
+  			<return-scalar column="codiGuidDocumento" 	type="string"/>
+  			<return-scalar column="codiGuidFascicolo" 	type="string"/>
+  			<return-scalar column="descSigla" 	type="string"/>
+  			<return-scalar column="numeNumDecreto" 	type="long"/>
+  			<return-scalar column="annoEse" 	type="long"/>
+  			
+  			
+  			<query-param name="profile" type="integer" /> 
+  			<query-param name="stp" type="integer"/>
+  			<query-param name="app" type="integer"/>
+  			<query-param name="uff" type="string"/>
+	</sql-query>
+	
+	<sql-query name="DocumentiBO.loadAllDocumentsToSignOrVerifyByLoggedUser">
+	
+		SELECT d.DESC_FILENAME as descNomeDocumento, d.fk_nume_id_fascicolo as numeIdFascicolo, d.CODI_GUID_DOCUMENTO as codiGuidDocumento, 
+		d.CODI_GUID_FASCICOLO as codiGuidFascicolo, f.DESC_SIGLA as descSigla, f.NUME_NUM_DECRETO as numeNumDecreto, f.FK_ANNO_ESE as annoEse,
+		CASE  (SELECT TO_CHAR(COUNT(*)) FROM D_FASCICOLI_AMM E WHERE 
+		D.FK_NUME_ID_FASCICOLO = E.FK_NUME_ID_FASCICOLO) 
+		WHEN '0' THEN 'NON ASSOCIATA'
+		ELSE (select LISTAGG(AMM.DESC_AMM, ' - ') WITHIN GROUP (ORDER BY AMM.DESC_AMM) from D_FASCICOLI_AMM FAMM,D_ANAG_AMMIN_DEM AMM
+				WHERE FAMM.FK_NUME_ID_FASCICOLO = D.FK_NUME_ID_FASCICOLO
+				AND AMM.fk_anno_ese = FAMM.fk_anno_ese
+				AND AMM.nume_stp = FAMM.fk_nume_stp
+				AND AMM.nume_app = FAMM.fk_nume_app )
+				END AS descAmm, d.NUME_id_documento as numeIdDocumento,
+			(SELECT F.desc_descrizione_doc FROM D_TIPO_DOCUMENTO F
+				WHERE  F.codi_tipo_documento = D.fk_codi_tipo_documento) AS codiTipoDocumento,
+				'ALLA FIRMA' AS statFirma        
+	 
+			FROM d_iter_firma_decreto a, d_documenti d, d_fascicoli f
+	   
+			WHERE 
+			a.fk_nume_id_fascicolo = d.fk_NUME_id_fascicolo 
+			AND
+			a.fk_nume_id_fascicolo = f.nume_id_fascicolo 
+			AND
+  			f.stat_stato = '2' 
+  			AND
+			D.FK_CODI_TIPO_DOCUMENTO = 'AD01'
+			AND
+			a.fk_codi_firmatario = (SELECT CODI_FIRMATARIO FROM D_ANAG_FIRMATARI B WHERE B.fk_sequ_id_profilo = :profile
+			AND a.codi_tipo_firma = b.codi_tipo_firma)
+			AND a.codi_tipo_firma = :signOrVerify  
+			AND 
+			(((a.fk_nume_stp = :stp 
+			AND
+			a.fk_nume_app = :app AND a.fk_nume_cdr IS NULL)
+<!-- 			AND
+			(a.fk_nume_cdr = :cdr OR a.fk_nume_cdr IS NULL)) --> 
+			OR (a.fk_nume_stp IS NULL AND a.fk_nume_app IS NULL AND
+			a.fk_nume_cdr IS NULL AND a.fk_codi_ufficio IS NULL))
+			OR 
+			a.fk_codi_ufficio = :uff)  
+			AND	a.stat_firma = 1
+			ORDER BY f.FK_ANNO_ESE, f.NUME_NUM_DECRETO, f.DESC_SIGLA
+		
+  			<return-scalar column="descNomeDocumento" 		type="string"/>
+  			<return-scalar column="codiTipoDocumento" 	type="string"/>
+  			<return-scalar column="statFirma" 		type="string"/>
+  			<return-scalar column="numeIdDocumento" 		type="integer"/>
+  			<return-scalar column="descAmm" 	type="string"/>
+  			<return-scalar column="numeIdFascicolo" 	type="long"/>
+  			<return-scalar column="codiGuidDocumento" 	type="string"/>
+  			<return-scalar column="codiGuidFascicolo" 	type="string"/>
+  			<return-scalar column="descSigla" 	type="string"/>
+  			<return-scalar column="numeNumDecreto" 	type="long"/>
+  			<return-scalar column="annoEse" 	type="long"/>
+  			
+  			<query-param name="profile" type="integer" />
+  			<query-param name="stp" type="integer"/>
+  			<query-param name="app" type="integer"/>
+  			<query-param name="uff" type="string"/>
+  			<query-param name="signOrVerify" type="string" />
+  			 
+	</sql-query>
+				
+			
+			
+	<sql-query name="DocumentiBO.loadAllSignedOrVerifyedADByLoggedUser">
+	    SELECT d.DESC_FILENAME as descNomeDocumento, d.fk_nume_id_fascicolo as numeIdFascicolo, d.CODI_GUID_DOCUMENTO as codiGuidDocumento, 
+					d.CODI_GUID_FASCICOLO as codiGuidFascicolo, f.DESC_SIGLA as descSigla, f.NUME_NUM_DECRETO as numeNumDecreto, f.FK_ANNO_ESE as annoEse, f.STAT_STATO AS statFirma,
+					CASE  (SELECT TO_CHAR(COUNT(*)) FROM D_FASCICOLI_AMM E 
+					WHERE D.FK_NUME_ID_FASCICOLO = E.FK_NUME_ID_FASCICOLO) 
+					WHEN '0' THEN 'NON ASSOCIATA'
+					ELSE (select LISTAGG(AMM.DESC_AMM_R, ' - ') WITHIN GROUP (ORDER BY AMM.DESC_AMM_R) from D_FASCICOLI_AMM FAMM,D_ANAG_AMMIN_DEM AMM
+						WHERE FAMM.FK_NUME_ID_FASCICOLO = D.FK_NUME_ID_FASCICOLO
+						AND AMM.fk_anno_ese = FAMM.fk_anno_ese
+						AND AMM.nume_stp = FAMM.fk_nume_stp
+						AND AMM.nume_app = FAMM.fk_nume_app )
+						END AS descAmm, d.NUME_id_documento as numeIdDocumento,
+						(SELECT F.desc_descrizione_doc FROM D_TIPO_DOCUMENTO F
+						WHERE  F.codi_tipo_documento = D.fk_codi_tipo_documento) AS codiTipoDocumento
+
+			FROM d_iter_firma_decreto a, d_documenti d, d_fascicoli f
+	   
+			WHERE 
+			a.fk_nume_id_fascicolo = d.fk_NUME_id_fascicolo 
+			AND
+			a.fk_nume_id_fascicolo = f.nume_id_fascicolo 
+			<!--  AND
+  			f.stat_stato = '2' -->
+  			AND
+			D.FK_CODI_TIPO_DOCUMENTO = 'AD01'
+			AND
+			a.fk_codi_firmatario = (SELECT CODI_FIRMATARIO FROM D_ANAG_FIRMATARI B WHERE B.fk_sequ_id_profilo = :profile
+			AND a.codi_tipo_firma = b.codi_tipo_firma)
+			AND a.codi_tipo_firma = :signOrVerify  
+			<!--AND 
+			(((a.fk_nume_stp = :stp 
+			AND
+			a.fk_nume_app = :app AND a.fk_nume_cdr IS NULL)
+ 			AND
+			(a.fk_nume_cdr = :cdr OR a.fk_nume_cdr IS NULL))  
+			OR (a.fk_nume_stp IS NULL AND a.fk_nume_app IS NULL AND
+			a.fk_nume_cdr IS NULL AND a.fk_codi_ufficio IS NULL))
+			OR 
+			a.fk_codi_ufficio = :uff)  -->
+			AND	a.stat_firma = 2
+			ORDER BY a.ROW_UPDATED_DTTM desc, f.FK_ANNO_ESE, f.NUME_NUM_DECRETO, f.DESC_SIGLA
+			
+			<return-scalar column="descNomeDocumento" 		type="string"/>
+  			<return-scalar column="codiTipoDocumento" 	type="string"/>
+  			<return-scalar column="statFirma" 		type="string"/>
+  			<return-scalar column="numeIdDocumento" 		type="integer"/>
+  			<return-scalar column="descAmm" 	type="string"/>
+  			<return-scalar column="numeIdFascicolo" 	type="long"/>
+  			<return-scalar column="codiGuidDocumento" 	type="string"/>
+  			<return-scalar column="codiGuidFascicolo" 	type="string"/>
+  			<return-scalar column="descSigla" 	type="string"/>
+  			<return-scalar column="numeNumDecreto" 	type="long"/>
+  			<return-scalar column="annoEse" 	type="long"/>
+			
+			<query-param name="profile" type="integer" />
+			<query-param name="signOrVerify" type="string" />
+		
+	</sql-query>
+</hibernate-mapping>

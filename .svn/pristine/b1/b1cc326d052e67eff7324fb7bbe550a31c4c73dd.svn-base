@@ -1,0 +1,82 @@
+package it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio;
+
+import java.util.Date;
+import java.util.List;
+
+import it.almavivaitalia.bsn.sh.paginator.Paginator;
+import it.almavivaitalia.bsn.sh.utils.DateUtil;
+import it.almavivaitalia.bsn.sh.utils.PaginatorUtil;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.almavivaitalia.web.sh.utils.ContextHelper;
+import it.mef.bilancio.demdec.manager.MailManager;
+import it.mef.bilancio.demdec.to.PecMessaggiInviatiTO;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.ListMsgSentForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(value = ConstantsRequestMapping.LISTA_MSG_INVIATI)
+public class ListEmailSentController extends AbstractDemFormController{
+	
+	private String listView;
+	
+	public String getListView() {
+		return listView;
+	}
+
+	public void setListView(String listView) {
+		this.listView = listView;
+	}
+	
+	@Autowired
+	private MailManager mailManagerImpl;
+	
+	
+	/**
+	 * Il metodo restituisce la lista di messaggi inviati nella data odierna reimpostandone il valore nel campo di ricerca
+	 * nel caso in cui la lista non sia vuota viene applicata la paginazione, se la lista risulta vuota non viene applicata la paginazione e viene anche
+	 * rimossa se presente in sessione la lista derivata da una ricerca precedente.
+	 */
+	@Override
+	public String startController(Context context) throws Throwable {
+		context.setCurrentNode("DemDec.menu.LisMail");
+		List<PecMessaggiInviatiTO> listaMsgInviati = mailManagerImpl.listaMessaggiInviati();
+		if (listaMsgInviati.size() > 0){
+			  PaginatorUtil.addPaginator(listaMsgInviati, SessionAttributes.LIST_SENT_MSG, Paginator.PAGE_RANGE_5, context);
+           } else {
+        	   PaginatorUtil.removePaginator(context, SessionAttributes.LIST_SENT_MSG);
+              ContextHelper.addWarning(context.getRequest(),"warning.noRecord.trovati");           
+           }
+		ListMsgSentForm form = (ListMsgSentForm)context.getForm();
+		form.setFilterDate(DateUtil.getDateString(new Date(), "dd/MM/yyyy"));
+		return listView;
+	}
+	
+	/**
+	 * Il metodo restituisce la lista di messaggi inviati in una certa data, nel caso in cui il campo di ricerca non viene valorizzato chiama il metodo startController
+	 */
+	public String filteredListByDate(Context context)  throws Throwable {
+		
+		ListMsgSentForm form = (ListMsgSentForm)context.getForm();
+		if(form.getFilterDate() != null && form.getFilterDate() != "" ){
+			if(form.isValid()){
+				List<PecMessaggiInviatiTO> listSentMessageByDate = mailManagerImpl.listSentMessageByDate(DateUtil.getDate(form.getFilterDate()));
+				if (listSentMessageByDate.size() > 0){
+					PaginatorUtil.addPaginator(listSentMessageByDate, SessionAttributes.LIST_SENT_MSG, Paginator.PAGE_RANGE_5, context);
+		           } else {
+		        	   PaginatorUtil.removePaginator(context, SessionAttributes.LIST_SENT_MSG);
+		        	   ContextHelper.addWarning(context.getRequest(),"warning.noRecord.trovati");           
+		           }
+		           
+			}
+		}else{
+			return startController(context);
+		}
+		return listView;
+		
+	}
+	
+}

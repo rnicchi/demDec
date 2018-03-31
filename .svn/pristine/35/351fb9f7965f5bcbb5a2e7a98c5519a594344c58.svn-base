@@ -1,0 +1,80 @@
+package it.mef.bilancio.demdec.dao.impl;
+
+import it.almavivaitalia.bilancio.commons.bo.AnagStatoFascicoloBO;
+import it.mef.bilancio.demdec.dao.AnagStatoFascicoloDao;
+
+import java.util.List;
+
+import org.hibernate.Query;
+
+public class AnagStatoFascicoloDaoImpl extends AbstractDemDaoImpl<AnagStatoFascicoloBO> implements AnagStatoFascicoloDao {
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AnagStatoFascicoloBO> loadStatiFascicolo(String tipoFascicolo) {
+		Query query=createQuery("FROM AnagStatoFascicoloBO a where a.codiTipoFascicolo = :tipoFascicolo");
+		return (List<AnagStatoFascicoloBO>)query.setString("tipoFascicolo", tipoFascicolo).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AnagStatoFascicoloBO> loadStatiFascicoloModifica(String tipoFascicolo) {
+		Query query=createQuery("FROM AnagStatoFascicoloBO a where a.codiTipoFascicolo = :tipoFascicolo and a.id in (0,2,3)");
+		return (List<AnagStatoFascicoloBO>)query.setString("tipoFascicolo", tipoFascicolo).list();
+	}
+
+	@Override
+	public String loadDecStatiFascicoloFad(String id) {
+		Query query=createQuery("select a.descStato FROM AnagStatoFascicoloBO a where a.codiTipoFascicolo = 'FAD' and a.id = :id");
+		return (String) query.setString("id", id).uniqueResult();
+	}
+	
+	
+	@Override
+	public String loadDescStatiFascicoloRed(String id) {
+		Query query=createQuery("select a.descStato FROM AnagStatoFascicoloBO a where a.codiTipoFascicolo = 'RED' and a.id = :id");
+		return (String) query.setString("id", id).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AnagStatoFascicoloBO> loadStatiFascicoloFad() {
+		Query query=createQuery("FROM AnagStatoFascicoloBO a where a.codiTipoFascicolo = 'FAD'");
+		return (List<AnagStatoFascicoloBO>)query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AnagStatoFascicoloBO> loadStatiFascicoloRed() {
+		// TODO Auto-generated method stub
+	//	String q="SELECT a.desc_stato FROM d_anag_stato_fascicolo a Where codi_tipo_fascicolo = 'RED'";
+		Query query=createQuery("FROM AnagStatoFascicoloBO a where a.codiTipoFascicolo = 'RED'");
+		
+		List<AnagStatoFascicoloBO> list=query.list(); 
+		
+		return list;
+		/*List<AnagStatoFascicoloTO> listaTO=new ArrayList<AnagStatoFascicoloTO>();
+		
+		Iterator<AnagStatoFascicoloBO> iter=list.iterator();
+		AnagStatoFascicoloTO to=null;
+		it.almavivaitalia.bilancio.commons.bo.AnagStatoFascicoloBO bo=null;
+		while (iter.hasNext()) {
+			to=new AnagStatoFascicoloTO();
+			
+			//to.setId(new AnagAmminDemTOId());
+			
+			bo=(it.almavivaitalia.bilancio.commons.bo.AnagStatoFascicoloBO)iter.next();
+			to.setStatStato(bo.getId());
+			to.setDescStato(bo.getDescStato());
+			to.setCodiTipoFascicolo(bo.getCodiTipoFascicolo());
+//			to.setNumeStp(bo.getId().getNumeStp());
+//			to.setDescAmm( bo.getDescAmm());
+			
+			listaTO.add(to);
+		}
+		
+		return listaTO;*/
+
+	}
+
+}

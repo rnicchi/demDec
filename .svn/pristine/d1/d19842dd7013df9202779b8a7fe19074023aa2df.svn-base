@@ -1,0 +1,113 @@
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@page import="it.almavivaitalia.web.sh.utils.BaseSessionAttributes"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.WebConstants"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<!-- PageName = delega.jsp -->
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#btnDel").click(function() {
+        $('body').css("cursor", "wait");
+    });
+});
+
+
+	function loadDeleganti(){
+		$("#deleganti").click();
+		
+		}
+	
+	function loadDelegati(){
+		$("#delegati").click();
+		
+		}
+	
+</script>
+	
+<tiles:useAttribute name="action"/>
+<demdec:useAttribute id="tipiFirma" name="<%=SessionAttributes.LIST_TIPI_FIRMA%>"/>
+<demdec:useAttribute id="deleganti" name="<%=SessionAttributes.LIST_DELEGANTI%>"/>
+<demdec:useAttribute id="delegati" name="<%=SessionAttributes.LIST_DELEGATI%>"/>
+<demdec:useAttribute id="delegatiAttivi" name="<%=SessionAttributes.LIST_DELEGATI_ATTIVI%>"/>
+<demdec:useAttribute id="deleghe" name="<%=SessionAttributes.LIST_DELEGHE%>"/>
+
+
+<div class="spacer_sm">&nbsp;</div>
+<div class="col_char_user obb_fields"><spring:message code="label.required.fields"></spring:message></div>
+<div class="spacer_sm">&nbsp;</div>
+
+<div class="container_field">
+	<div class="row">
+		<div class="small-4 columns">
+			<label for="tipoFirma"><spring:message code="label.tipo.firma"/></label>	
+			<form:select path="tipoFirma"  onchange="loadDeleganti();">
+				<form:option value=""><spring:message code="label.selection"/></form:option>
+				<form:options items="${tipiFirma}"/>
+			</form:select>
+			<div class="left" style="display: none;">
+           		<demdec:submit styleId="deleganti" keyValue="button.load" controllerCode="loadDeleganti" titleKey="label.carica.visibilita" styleClass="subm_update posit-butt_up"  />
+           	</div>
+		</div>
+		<div class="small-4 columns">
+			<label for="delegante"><spring:message code="label.delegante"/></label>
+			<form:select path="delegante"  onchange="loadDelegati();">
+				<form:option value=""><spring:message code="label.selection"/></form:option>
+				<form:options items="${deleganti}"/>
+			</form:select>
+			<div class="left" style="display: none;">
+           		<demdec:submit styleId="delegati" keyValue="button.load" controllerCode="loadDelegati" titleKey="label.carica.visibilita" styleClass="subm_update posit-butt_up"  />
+           	</div>
+		</div>
+		<div class="small-4 columns">
+			<label for="delegato"><spring:message code="label.delegato"/></label>
+			<form:select path="delegato">
+				<form:option value=""><spring:message code="label.selection"/></form:option>
+				<form:options items="${delegati}"/>
+			</form:select>
+		</div>
+	</div>
+	<demdec:buttons>
+		<div class="center">
+    		<demdec:submit keyValue="button.delega" controllerCode="delega" styleClass="button small" styleId="delega"/>
+    	</div>
+    </demdec:buttons>  
+</div>
+
+<div class="spacer_sm">&nbsp;</div>
+
+	<div class="container_field">
+		<div class="row">
+			<div class="small-3 columns">
+				<label for="delegatoFind"><spring:message code="label.delegato.find"/></label>
+				<form:select path="delegatoFind">
+					<form:option value=""><spring:message code="label.selection"/></form:option>
+					<form:options items="${delegatiAttivi}"/>
+				</form:select>
+				<demdec:submit keyValue="button.eseguiRicerca" controllerCode="loadDeleghe" styleClass="button small" styleId="find"/>
+			</div>
+		</div>
+		<c:if test="${not empty deleghe}">
+			<fieldset>
+			<div class="title_doc"><spring:message code="label.title.list.deleghe"></spring:message></div>
+				
+					<demdec:displaytag-table name="pageScope.deleghe" id="deleghe" class="width100">
+						<display:caption><span class="nascosto"><spring:message code="label.caption.list.deleghe"/></span></display:caption>
+						<demdec:displaytag-column property="utente.persCognome" titleKey="label.cognome" title="cognome" class="center"/>
+						<demdec:displaytag-column property="utente.persNome" titleKey="label.nome" title="nome" class="center"/>
+						<demdec:displaytag-column property="descProfilo" titleKey="label.profilo" title="profilo" class="center"/>
+						<demdec:displaytag-column titleKey="label.delete" class="center">
+							<demdec:submit styleId="btnDel" styleClass="subm_none_del" keyValue="label.empty" titleKey="label.delete" controllerCode="deleteDelega?id=${deleghe.id.sequIdUtente};${deleghe.id.sequIdProfilo};${deleghe.id.progressivo}" onclick="return confermaElimina();"/>
+						</demdec:displaytag-column>
+					</demdec:displaytag-table>
+				
+			</fieldset>
+		</c:if>
+	</div>
+           	

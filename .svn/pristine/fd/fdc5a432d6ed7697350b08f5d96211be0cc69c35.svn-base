@@ -1,0 +1,29 @@
+package it.mef.bilancio.demdec.web.spring.validator;
+
+import static it.almavivaitalia.bsn.sh.utils.StringUtil.getString;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.web.spring.form.RielaborazioneFascicoloForm;
+
+public class RielaborazioneFascicoloValidator extends AbstractDemValidator{
+	
+	public boolean onEseguiRielaborazione(Context context) throws Throwable {
+		
+		RielaborazioneFascicoloForm form = (RielaborazioneFascicoloForm) context.getForm();
+		checkEmpty(context, getString(form.getIdFascicolo()),"label.rielabFascicolo.numDecreto" );
+		checkEmpty(context, getString(form.getTipoElab()),"label.rielabFascicolo.tipoElaborazione" );
+		
+		if(form.getTipoElab().equals("4")){
+			checkEmpty(context, getString(form.getIdFascicoloArrivo()),"label.rielabFascicolo.numDecretoArrivo" );
+		}
+		
+		return !context.hasErrors();	
+	}
+	
+	public boolean onLoadListaDecreti(Context context) throws Throwable {
+		
+//		RielaborazioneFascicoloForm form = (RielaborazioneFascicoloForm) context.getForm();
+//		checkEmpty(context, getString(form.getAnnoDecreto()),"label.decreto.anno" );
+		return !context.hasErrors();
+	}
+
+}

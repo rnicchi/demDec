@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="IterFirmaDecretoBO.loadStatoFirmaPerRevocaRichSospensioneByIdFascicolo">
+	
+	SELECT  
+	  CASE
+	      WHEN caso1 is not null then caso1
+	  else
+	      case when caso2 is not null then caso2
+	  else 
+	      case when caso3 is not null then caso3
+	  else 
+	      case when caso4 is not null then caso4
+	  else 'error'
+	  end
+	  end
+	  end
+	  end as risultato
+	from (
+	        select distinct 
+	        DECODE ( (select count(*) from d_iter_firma_decreto where FK_NUME_ID_FASCICOLO = :idFascicolo), 0, 'NORECORD'
+	                                                                                                        
+	                ) as caso1,
+	        DECODE ( (select max(stat_firma) from d_iter_firma_decreto where FK_NUME_ID_FASCICOLO = :idFascicolo), 3, 'MAX3'
+	                ) as caso2,
+	        DECODE ( 
+	                 (select count(*) from d_iter_firma_decreto where FK_NUME_ID_FASCICOLO = :idFascicolo and stat_firma = 1), 1, 'RECORD1'
+	                ) as caso3,
+	        DECODE (
+	                 (select count(*) from d_iter_firma_decreto where FK_NUME_ID_FASCICOLO = :idFascicolo), 
+	                 (select count(*) from d_iter_firma_decreto where FK_NUME_ID_FASCICOLO = :idFascicolo and stat_firma = 2), 'TUTTI2'
+	                ) as caso4
+	                
+	        from d_iter_firma_decreto	        
+		)  
+		
+		<query-param name="idFascicolo" type="integer" />
+ 		<return-scalar column="risultato"  type="string"/>
+	</sql-query>
+</hibernate-mapping>

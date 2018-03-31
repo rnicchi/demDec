@@ -1,0 +1,67 @@
+package it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import it.almavivaitalia.bilancio.commons.manager.UtenteManager;
+import it.almavivaitalia.bilancio.commons.web.security.Utente;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.manager.MailManager;
+import it.mef.bilancio.demdec.to.PecMessaggiInviatiTO;
+import it.mef.bilancio.demdec.utils.Constants;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.CreaPinForm;
+import it.mef.bilancio.demdec.web.spring.form.MailForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+@RequestMapping(value = ConstantsRequestMapping.CREA_PIN)
+public class CreaPinController  extends AbstractDemFormController{
+	
+	private String startView;
+	
+	@Autowired
+	private UtenteManager utenteManager;
+	
+	public String getStartView() {
+		return startView;
+	}
+
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+	
+	@Override
+	public String startController(Context context) throws Throwable {
+		context.setCurrentNode("DemDec.menu.Servizi.CreaPin");
+		return startView;
+	}
+	
+	public String onCreaPin(Context context) throws Throwable {
+		
+		CreaPinForm form= context.getForm();
+		Utente user = getUtenteInSessione(); 
+		Boolean validCF= utenteManager.checkCodFiscaleUtente(user.getUtente().getId(),form.getCodiceFiscale());
+		
+		if (!form.getCodiceFiscale().isEmpty()&&!validCF){
+			context.addError("error.codice.fiscale.mismatch", "");
+		}
+
+		if (form.isValid()&&validCF) {
+			context.addInfo("info.create.pin.success", "");
+			utenteManager.saveUserPin(user.getUtente().getId(),form.getCodiceFiscale(),form.getPin());
+			//			System.out.println(utenteManager.findDeencryptedPinbyId(user.getUtente().getId()));
+			form.setCodiceFiscale("");
+		} 
+
+		return startView;
+	}
+	
+}

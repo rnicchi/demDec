@@ -1,0 +1,206 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBOId;
+import it.almavivaitalia.bilancio.commons.bo.AnagUfficiBO;
+import it.almavivaitalia.bilancio.commons.bo.ProfiloBO;
+import it.almavivaitalia.bilancio.commons.bo.UtenteBO;
+import it.almavivaitalia.bilancio.commons.bo.UtenteProfiloBO;
+import it.almavivaitalia.bilancio.commons.bo.UtenteProfiloBOId;
+import it.almavivaitalia.bilancio.commons.dao.ProfiloDao;
+import it.almavivaitalia.bilancio.commons.dao.UtenteDao;
+import it.almavivaitalia.bilancio.commons.dao.UtenteProfiloDao;
+import it.almavivaitalia.bilancio.commons.to.UtenteProfiloTO;
+import it.almavivaitalia.bilancio.commons.to.UtenteTO;
+import it.mef.bilancio.demdec.enums.TipoResponse;
+import it.mef.bilancio.demdec.manager.GestioneUtentiManager;
+import it.mef.bilancio.demdec.to.ManagerResponseTO;
+
+public class GestioneUtentiManagerImpl extends AbstractDemManagerImpl implements GestioneUtentiManager{
+
+	@Autowired
+	private ProfiloDao profiloDao;
+	@Autowired
+	private UtenteDao utenteDao;
+	@Autowired
+	private UtenteProfiloDao utenteProfiloDao;
+
+	@Override
+	public ManagerResponseTO<UtenteTO> caricaUtenteByCodiceUtente(String codiceUtente) throws Throwable {
+
+		//UtenteBO utenteBO = utenteDao.loadByCodiUtente(codiceUtente);
+		
+//		int codUt=Integer.parseInt(codiceUtente);
+		
+		UtenteBO utenteBO = utenteDao.loadByPrimaryKey(Long.valueOf(codiceUtente));
+		
+//		List<UtenteProfiloBO> listUtPr = utenteProfiloDao.loadBySequIdUtente(codUt);
+		
+	//	UtenteBO utenteBO = null;
+		
+		if (utenteBO == null)
+			return new ManagerResponseTO<UtenteTO>(TipoResponse.ERROR, "errore.utente.codice.presente");
+		return new ManagerResponseTO<UtenteTO>(TipoResponse.INFO, "info.utente.codice.presente", (UtenteTO) getDozerDriver().map(utenteBO, UtenteTO.class, "Utente"));
+	}
+
+	@Override
+	public ManagerResponseTO<UtenteTO> creaUtente(UtenteTO utenteTO) throws Throwable {
+
+		UtenteBO utenteBO = utenteDao.loadByCodiUtente(utenteTO.getCodiUtente());
+		if (utenteBO != null)
+			return new ManagerResponseTO<UtenteTO>(TipoResponse.ERROR, "errore.utente.codice.presente", utenteTO);
+
+		try {
+			utenteBO = getUtenteBO(utenteTO);
+			utenteDao.saveOrUpdate(utenteBO);
+			for (UtenteProfiloBO utenteProfiloBo: utenteBO.getUtenteProfiloList())
+				utenteProfiloDao.saveOrUpdate(utenteProfiloBo);
+		}
+		catch (Throwable t) {
+			return new ManagerResponseTO<UtenteTO>(TipoResponse.WARN, "warning.noinsert");
+		}
+		return  new ManagerResponseTO<UtenteTO>(TipoResponse.INFO, "info.insert.success", 
+							(UtenteTO) getDozerDriver().map(utenteBO, UtenteTO.class, "Utente"));
+
+	}
+
+	@Override
+	public ManagerResponseTO<UtenteTO> salvaUtente(UtenteTO utenteTO) throws Throwable {
+
+		UtenteBO utenteBO = utenteDao.loadByCodiUtente(utenteTO.getCodiUtente());
+
+		try {
+			utenteBO = saveUtenteBO(utenteBO, utenteTO);
+		}
+		catch (Throwable t) {
+			return new ManagerResponseTO<UtenteTO>(TipoResponse.WARN, "warning.noupdate");
+		}
+		return  new ManagerResponseTO<UtenteTO>(TipoResponse.INFO, "info.update.success", 
+							(UtenteTO) getDozerDriver().map(utenteBO, UtenteTO.class, "Utente"));
+	}
+
+	@Override
+	public ManagerResponseTO<UtenteTO> eliminaUtente(String selectedCodiUtente) {
+
+		try {
+			utenteDao.delete(selectedCodiUtente.toString());
+		} catch (Throwable t) {
+			return new ManagerResponseTO<UtenteTO>(TipoResponse.ERROR, "errore.delete.utente.failed");
+		}
+		return new ManagerResponseTO<UtenteTO>(TipoResponse.INFO, "info.delete.utente.success");
+	}
+
+	@Override
+	public List<UtenteTO> caricaTuttiUtenti() throws Throwable {
+		return getDozerDriver().mapList(utenteDao.loadAllOrdByCodiUtente(), UtenteTO.class, "Utente");
+	}
+
+	//copia i campi del TO nel BO e crea un nuovo id
+	private UtenteBO getUtenteBO(UtenteTO utenteTo) {
+
+		UtenteBO utenteBO = 
+				(UtenteBO) getDozerDriver().map(utenteTo, UtenteBO.class, "Utente");
+
+		utenteBO.setId(utenteDao.newId());
+
+		List<UtenteProfiloBO> lista = getListaAssociazioneUtenteProfiloBO(utenteBO, utenteTo);	//Dozer non è di aiuto
+		utenteBO.setUtenteProfiloList(lista);
+
+		return utenteBO;
+	}
+
+	//copia i campi del TO nel BO, mantenendo inalterato id; e aggiorna la lista dei Profili
+	private UtenteBO saveUtenteBO(UtenteBO utenteBO, UtenteTO utenteTo) throws Throwable {
+
+		utenteBO.setPersCognome(utenteTo.getPersCognome());
+		utenteBO.setPersNome(utenteTo.getPersNome());
+		utenteBO.setIndiEmail(utenteTo.getIndiEmail());
+		utenteBO.setCodiUtenteNsbf(utenteTo.getCodiUtenteNsbf());
+		utenteBO.setCodiCodiceFiscale(utenteTo.getCodiCodiceFiscale());
+		utenteBO.setCodiCodiceFisFirma(utenteTo.getCodiCodiceFisFirma());
+		utenteBO.setCodiPinFirma(utenteTo.getCodiPinFirma());
+
+		//non posso cancellare associazioni Utente-Profilo tramite UtenteBo, perché Hibernate esegue un Update a null della chiave
+		//Decido di cancellare prima i profili e poi inserire i nuovi (altra opzione è modificare i valori dei profili già presenti: oneroso)
+		utenteDao.deleteProfili(utenteBO);
+
+		//creo una nuova lista associazione Utente-Profilo dal TO
+		List<UtenteProfiloBO> lista = getListaAssociazioneUtenteProfiloBO(utenteBO, utenteTo);
+		utenteDao.insertProfili(utenteBO, lista);
+		utenteDao.saveOrUpdate(utenteBO);
+
+		return utenteBO;
+	}
+
+
+	//copia i campi del TO nel BO e crea un nuovo id
+	private UtenteProfiloBO getUtenteProfiloBO(UtenteProfiloTO utenteProfiloTO, UtenteBO utenteBo, ProfiloBO profiloBo, int progressivo) {
+
+		UtenteProfiloBO utenteProfiloBo =
+					(UtenteProfiloBO) getDozerDriver().map(utenteProfiloTO, UtenteProfiloBO.class, "Utente");
+		UtenteProfiloBOId utenteProfiloBOId = 
+				new UtenteProfiloBOId(new BigDecimal(utenteBo.getId()), new BigDecimal(profiloBo.getId()), new BigDecimal(progressivo));
+		utenteProfiloBo.setId(utenteProfiloBOId);
+		utenteProfiloBo.setUtente(utenteBo);
+		utenteProfiloBo.setProfilo(profiloBo);
+
+		if (utenteProfiloTO.getAnagUffici() != null) {
+			AnagUfficiBO uffBo = new AnagUfficiBO();
+			uffBo.setId(utenteProfiloTO.getAnagUffici().getId());
+			//uffBo.setDescUfficio(utenteProfiloTO.getAnagUffici().getDescUfficio());
+			utenteProfiloBo.setAnagUffici(uffBo);
+		}
+
+		if (utenteProfiloTO.getAnagAmminDem() != null) {
+			AnagAmminDemBO ammBo = new AnagAmminDemBO();
+			AnagAmminDemBOId ammBoId = new AnagAmminDemBOId();
+			ammBoId.setFkAnnoEse(utenteProfiloTO.getAnagAmminDem().getId().getFkAnnoEse());
+			ammBoId.setNumeStp(utenteProfiloTO.getAnagAmminDem().getId().getNumeStp());
+			ammBoId.setNumeApp(utenteProfiloTO.getAnagAmminDem().getId().getNumeApp());
+			ammBo.setId(ammBoId);
+
+			utenteProfiloBo.setAnagAmminDem(ammBo);
+		}
+
+		utenteProfiloBo.setFlagFirma01(1);
+		utenteProfiloBo.setFlagModifica01(1);
+
+		copyAudit(utenteProfiloTO, utenteProfiloBo);
+
+		return utenteProfiloBo;
+	}
+
+	
+	//ricava la lista di associazioni Utente-Profilo per il BO a partire dal TO
+	private List<UtenteProfiloBO> getListaAssociazioneUtenteProfiloBO(UtenteBO utenteBo, UtenteTO utenteTo) {
+		
+		//creo una nuova lista associazione Utente-Profilo dal TO
+		List<UtenteProfiloBO> lista = new ArrayList<UtenteProfiloBO>();
+
+		if (utenteTo.getUtenteProfiloList() == null || utenteTo.getUtenteProfiloList().size() == 0) return lista;
+
+		//imposto il Profilo, che deve essere uguale per tutte le associazioni Utente-Profilo di un utente
+	//	Integer idProfilo = utenteTo.getUtenteProfiloList().get(0).getProfilo().getId();
+	//	ProfiloBO profiloBo = profiloDao.loadById(ProfiloBO.class, idProfilo);
+		for (int i=0; i < utenteTo.getUtenteProfiloList().size(); i++) {
+			
+			Integer idProfilo = utenteTo.getUtenteProfiloList().get(i).getProfilo().getId();
+			ProfiloBO profiloBo = profiloDao.loadById(ProfiloBO.class, idProfilo);
+
+			UtenteProfiloBO utenteProfiloBO = getUtenteProfiloBO(
+					utenteTo.getUtenteProfiloList().get(i), 
+					utenteBo,
+					profiloBo,
+					i+1	//il progressivo parte da 1
+			);
+			lista.add(utenteProfiloBO);
+		}
+		return lista;
+	}
+}

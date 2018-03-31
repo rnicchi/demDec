@@ -1,0 +1,201 @@
+package it.mef.bilancio.demdec.web.spring.controller.fascicolifad;
+
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bilancio.commons.to.CodeDescriptionTO;
+import it.almavivaitalia.bilancio.commons.utils.DateUtil;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.manager.GestioneFadManager;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.manager.UploadDecManager;
+import it.mef.bilancio.demdec.servizi.client.UtilRequestClient;
+import it.mef.bilancio.demdec.servizi.to.DocumentContentTO;
+import it.mef.bilancio.demdec.servizi.to.DocumentTO;
+import it.mef.bilancio.demdec.to.AmminRagDemTO;
+import it.mef.bilancio.demdec.to.FascicoliTO;
+import it.mef.bilancio.demdec.to.TipoDocumentoTO;
+import it.mef.bilancio.demdec.utils.Constants;
+import it.mef.bilancio.demdec.web.spring.form.GestioneFascicoloFadForm;
+
+import java.util.ArrayList;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+//@RequestMapping(value = ConstantsRequestMapping.GESTIONE_FASCICOLO_F_A_D)
+public class GestioneFascicoloFadGrandParentController extends ConsultaFascicoloFadController {
+    
+	@Autowired
+	private ListManager listManager; 
+	
+	@Autowired
+	private GestioneFadManager gestioneFadManager;
+	
+	@Autowired
+	private UploadDecManager uploadDecManager;
+
+	private static ArrayList<String> allowedContentType;
+	
+	private String fascicoloFadView;
+	private String selezioneAmmFadView;
+	private String documentiFadView;
+	private String documentiRedView;
+	
+	static{ // configurazione con tika parsers
+		
+		allowedContentType = new ArrayList<String>();
+        allowedContentType.add("application/pdf");
+        allowedContentType.add("application/jpeg");
+        allowedContentType.add("application/pjpeg");
+//      allowedContentType.add("application/xml");
+        allowedContentType.add("application/x-tika-ooxml"); // nuovo office
+        allowedContentType.add("application/x-tika-msoffice"); // vecchio office
+        allowedContentType.add("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        allowedContentType.add("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        allowedContentType.add("application/msword");
+        allowedContentType.add("application/vnd.ms-excel");
+        allowedContentType.add("application/rtf");
+        allowedContentType.add("image/x-ms-bmp");
+        allowedContentType.add("image/tiff");
+        allowedContentType.add("image/gif");
+        allowedContentType.add("image/jpeg");
+        
+	}
+	
+	
+	
+	
+
+	
+	public void setDocumentiFadView(String documentiFadView) {
+		this.documentiFadView = documentiFadView;
+	}
+
+	
+	public void setFascicoloFadView(String fascicoloFadView) {
+		this.fascicoloFadView = fascicoloFadView;
+	}
+	
+	public void setSelezioneAmmFadView(String selezioneAmmFadView) {
+		this.selezioneAmmFadView = selezioneAmmFadView;
+	}
+	
+	public void setDocumentiRedView(String documentiRedView) {
+		this.documentiRedView = documentiRedView;
+	}
+
+
+
+	public ListManager getListManager() {
+		return listManager;
+	}
+
+
+
+	public GestioneFadManager getGestioneFadManager() {
+		return gestioneFadManager;
+	}
+
+
+
+	public UploadDecManager getUploadDecManager() {
+		return uploadDecManager;
+	}
+
+
+
+	public static ArrayList<String> getAllowedContentType() {
+		return allowedContentType;
+	}
+
+
+
+//	public static HashMap<String, String> getContentTypeExtensions() {
+//		return contentTypeExtensions;
+//	}
+
+
+
+	public String getFascicoloFadView() {
+		return fascicoloFadView;
+	}
+
+
+
+	public String getSelezioneAmmFadView() {
+		return selezioneAmmFadView;
+	}
+
+
+
+	public String getDocumentiFadView() {
+		return documentiFadView;
+	}
+
+
+
+	public String getDocumentiRedView() {
+		return documentiRedView;
+	}
+
+
+	protected DocumentTO popolaDocumentTO( Context context,FascicoliTO fascicoloTO,AnagAmminDemTO amm,GestioneFascicoloFadForm form,String fileName, String contentType) throws Throwable{
+			
+			DocumentTO docTo= new DocumentTO();
+	//		DocumentFileTO docFile= new DocumentFileTO();
+	//		docTo.setIdDocumento("2");// potrebbero restituirlo loro il GUID
+			
+			docTo.setIdFascicolo(fascicoloTO/*.getId()*/.getCodiGuidFascicolo().toString());// me lo passa gestione FAD come querystring o lo prendo dalla combo
+			
+			TipoDocumentoTO descDocTo=uploadDecManager.loadTipoDocById(form.getTipoDoc()); //((List<TipoDocumentoTO>)listManager.loadTipoDocumentoAD()).get(Integer.parseInt(form.getTipoDoc()));//gestioneFadManager.loadDescDocById(Integer.parseInt(form.getTipoDoc()));
+			CodeDescriptionTO descDoc= new CodeDescriptionTO();
+			descDoc.setCode(descDocTo.getId());
+			descDoc.setDescription(descDocTo.getDescDescrizioneDoc());
+			docTo.setTipoDocumento(descDoc);
+			docTo.setAttivo(true);
+			docTo.setCondivisibile(true);
+			docTo.setDaInviare(true);
+			DocumentContentTO dc= new DocumentContentTO();
+			dc.setContent(form.getUpFile().getBytes());
+			dc.setDescrizione(form.getDesc());//TODO
+			dc.setFileName(fileName);
+			dc.setMimeType(contentType);
+			dc.setHash(UtilRequestClient.createHash(form.getUpFile().getBytes()));
+			docTo.setDocumentoContent(dc);
+			
+			
+			CodeDescriptionTO ammDescTo= new CodeDescriptionTO();
+			
+			if(amm != null){
+				ammDescTo.setCode(amm.getId().getAmmin());
+				ammDescTo.setDescription(amm.getDescAmm());
+			}
+			else {
+				ammDescTo.setCode("999");
+				ammDescTo.setDescription("999");
+			}
+			docTo.setAmministrazione(ammDescTo);
+			docTo.setDataDocumento(DateUtil.getSysDate(Constants.DATE_SEPARATOR));
+			
+			CodeDescriptionTO ucbRts= new CodeDescriptionTO();
+			
+			if(amm != null){
+				AmminRagDemTO rag = gestioneFadManager.findAmminRagDemByAnagAmminDemTO(amm);
+				String r=StringUtils.leftPad(rag.getId().getNumeRag(), 4,Constants.PADDING_CHAR );
+				ucbRts.setCode(r);
+				ucbRts.setDescription(r);
+			}
+			else{
+				ucbRts.setCode("");
+				ucbRts.setDescription("");
+			}
+			
+			docTo.setUcbRts(ucbRts);
+	//		docTo.setDescrizione("upload");
+			
+			context.valorizeAudit(docTo, "gestioneFascicoloFAD");
+			return docTo;
+		}
+	
+	
+
+}

@@ -1,0 +1,57 @@
+package it.mef.bilancio.demdec.web.spring.controller.fascicolifad;
+
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(value = ConstantsRequestMapping.CONSULTA_FASCICOLO_F_A_D)
+public abstract class ConsultaFascicoloFadParentController extends RicercaFascicoloFadController {
+
+	
+	private String fascicoloFadView;
+	
+	private String documentiPatView;
+	
+	private String documentiRedView;
+	
+	private String documentiFadView;
+	
+	public void setFascicoloFadView(String fascicoloFadView) {
+		this.fascicoloFadView = fascicoloFadView;
+	}
+	
+
+	public String getFascicoloFadView() {
+		return fascicoloFadView;
+	}
+
+
+	public String getDocumentiPatView() {
+		return documentiPatView;
+	}
+
+
+	public String getDocumentiFadView() {
+		return documentiFadView;
+	}
+
+
+	public void setDocumentiPatView(String documentiPatView) {
+		this.documentiPatView = documentiPatView;
+	}
+
+	public void setDocumentiRedView(String documentiRedView) {
+		this.documentiRedView = documentiRedView;
+	}
+
+	public String getDocumentiRedView() {
+		return this.documentiRedView;
+	}
+
+	public void setDocumentiFadView(String documentiFadView) {
+		this.documentiFadView = documentiFadView;
+	}
+
+	
+	
+}

@@ -1,0 +1,400 @@
+
+package it.mef.bilancio.demdec.dao.impl;
+
+import it.almavivaitalia.bilancio.commons.bo.AnagTipoDecretoBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagTipologiaDecretoBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagUfficiBO;
+import it.almavivaitalia.bilancio.commons.bo.EserciziDemBO;
+import it.almavivaitalia.bilancio.commons.bo.FascicoliBO;
+import it.mef.bilancio.demdec.dao.FascicoloDao;
+import it.mef.bilancio.demdec.to.FascicoliFadSearhTO;
+import it.mef.bilancio.demdec.to.FascicoliViewTO;
+import it.mef.bilancio.demdec.to.GestioneFadTO;
+
+import java.util.List;
+
+import org.hibernate.CacheMode;
+import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
+public class FascicoloDaoImpl extends AbstractDemDaoImpl<FascicoliBO> implements FascicoloDao {
+	
+	
+	FascicoloDaoImpl() {
+		super(FascicoliBO.class);
+	}
+
+
+	@Override
+	public FascicoliBO findFascicoloByAnnoTipoNum(Integer anno, Integer tipo,Integer numDec ) {
+		
+		String q=
+//				"Select "+
+//				 "anagTipologiaDecreto.id, "+
+//			     " ufficioCapofila.id, "
+////			     + " fkNumeRag, "+
+////			     +" fkNumeCdr, "+
+//			     +" numeTitolo,  "+
+//			     "  numePatrimonio, "+
+//			    " descDecreto   "+
+			     " from FascicoliBO  "+
+			     " where eserciziDem.id = :anno AND "+
+			     " anagTipoDecreto.id = :tipo "+
+			     " AND numeNumDecreto = :numDec  ";
+		
+		Query query = createQuery(q);
+		query.setParameter("anno", anno.shortValue())
+		.setParameter("tipo", tipo)
+		.setParameter("numDec", numDec);
+		return (FascicoliBO) query.uniqueResult();
+		
+		
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FascicoliViewTO> findFascicoloByTipoNumAnnoStato(Integer anno, Integer tipo, Integer numDec ) {
+//		SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+		
+		String q="SELECT nume_id_fascicolo as id, codi_guid_fascicolo as codiGuidFascicolo, desc_sigla as descSigla, to_char(nume_num_decreto) as numeNumDecreto, to_char(fk_anno_ese) as annoEse, "
+				+ " to_char(fk_nume_tipo_decreto) as numeTipoDecreto, to_char(data_creazione_fascicolo,'DD/MM/YYYY') as dataCreazione, desc_decreto as descDecreto, "+
+				" to_char(stat_stato) as statStato, to_char(fk_nume_tipologia_decreto) as numeTiplogiaoDecreto "+  
+  			    "FROM d_fascicoli "+
+  			    "WHERE 1=1 ";  
+  			   
+		if(tipo!=null)
+			    q+=" and fk_nume_tipo_decreto =:tipo ";    //il tipo se selezionato
+		
+		if(numDec!=null)
+  			    q+=" and nume_num_decreto =:numero ";       //il numero se digitato
+		
+		if(anno!=null)
+  			    q+=" and fk_anno_ese =:anno	";   //l'anno se digitato
+  		
+		q+=" and stat_stato IN (0,3,5) and nume_patrimonio is null ";
+		//q+=" ORDER BY fk_anno_ese, fk_nume_tipo_decreto, nume_num_decreto";
+		q+=" ORDER BY to_number(annoEse) desc, to_number(numeNumDecreto) asc, descSigla asc ";
+		
+		SQLQuery query= getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(q);
+		query.addScalar("id", Hibernate.LONG)
+		 	  .addScalar("codiGuidFascicolo", Hibernate.STRING)
+		      .addScalar("descSigla", Hibernate.STRING)
+			  .addScalar("numeNumDecreto", Hibernate.STRING)
+			  .addScalar("annoEse", Hibernate.SHORT)
+			  .addScalar("numeTipoDecreto", Hibernate.STRING)
+			  .addScalar("dataCreazione", Hibernate.STRING)
+			  .addScalar("descDecreto", Hibernate.STRING)
+			  .addScalar("statStato", Hibernate.STRING)
+			  .addScalar("numeTiplogiaoDecreto", Hibernate.STRING);
+		if(tipo!=null)
+			query.setParameter("tipo", tipo);		
+		if(numDec!=null)
+			query.setParameter("numero", numDec);
+		if(anno!=null)
+			query.setParameter("anno", anno);
+		
+		return (List<FascicoliViewTO>)query.setResultTransformer(Transformers.aliasToBean(FascicoliViewTO.class )).setCacheMode(CacheMode.GET).list();
+/*		List<FascicoliTO> listaTO=new ArrayList<FascicoliTO>();
+		Iterator iter=query.list().iterator();
+		FascicoliTO to=null;
+		 Object[] objArray=null;
+		 
+		while (iter.hasNext()){
+			to=new FascicoliTO();
+			objArray= (Object[])iter.next();
+			to.setDescSigla((String)objArray[0]);
+			to.setNumeNumDecreto(((BigDecimal)objArray[1]).toString());
+			to.setAnnoEse(((BigDecimal)objArray[2]).toString());
+			to.setNumeTipoDecreto(((BigDecimal)objArray[3]).toString());			
+			to.setDataCreazione(sdf.format(   ((Date)objArray[4])));
+			to.setDescDecreto((objArray[5]).toString());
+			
+			listaTO.add(to);
+		}
+		return listaTO;
+*/		
+	}
+
+	@Override
+	public List<?> findFascicoliByTipologiaDecreto(Integer idAnagTipologiaDecreto) throws Throwable {
+
+		String q= "from FascicoliBO where anagTipologiaDecreto.id = :anagTipologiaDecreto ";		
+		Query query = createQuery(q);
+		query.setInteger("anagTipologiaDecreto", idAnagTipologiaDecreto);
+		return query.list();
+	}
+
+
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FascicoliBO> findFascicoliFadStatusZero()	throws Throwable {
+	String q=
+		  " from FascicoliBO bo "+
+		     " where statStato = 0  "
+		     + "order by bo.eserciziDem.id, bo.anagTipoDecreto.id, bo.numeNumDecreto";
+	
+	Query query = createQuery(q);
+	return (List<FascicoliBO> ) query.list();
+
+	}
+	
+	
+	@Override
+	public void updateFascicolo (FascicoliBO bo) throws Throwable{
+		saveOrUpdate(bo);
+	}
+	
+	
+	@Override
+	public void saveFascicolo (FascicoliBO bo, GestioneFadTO to) throws Throwable{
+		
+		bo.setId((Long) generaId(FascicoliBO.class)); 
+		
+		AnagTipoDecretoBO tipo=loadById(AnagTipoDecretoBO.class, to.getTipoDec());
+		bo.setAnagTipoDecreto(tipo);
+		
+		EserciziDemBO esercizidem = loadById(EserciziDemBO.class, to.getAnnoDec().shortValue());
+		bo.setEserciziDem(esercizidem);
+		
+		AnagTipologiaDecretoBO tipologia = loadById(AnagTipologiaDecretoBO.class, to.getTipologiaDec());
+		bo.setAnagTipologiaDecreto(tipologia);
+		
+		bo.setUfficioCapofila(loadById(AnagUfficiBO.class, to.getUfficio()));
+		bo.setUfficioCreatore(loadById(AnagUfficiBO.class, to.getUfficioCreatore()));
+		bo.setDescSigla(tipo.getDescSigla());
+		
+		saveOrUpdate(bo);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FascicoliBO> findFascicoliFad(FascicoliFadSearhTO to)
+			throws Throwable {
+		
+		Criteria cri = getSession().createCriteria(FascicoliBO.class);
+		cri.add(Restrictions.eq("eserciziDem.id", to.getAnnoDecreto()));
+		addCreateEq(cri,"anagTipoDecreto.id", to.getTipoDecreto());
+		addCreateEq(cri,"numeNumDecreto", to.getNumeDecreto());
+		addCreateEq(cri,"anagTipologiaDecreto.id", to.getTipologiaDecreto());
+		addCreateEq(cri, "ufficioCapofila.id", to.getUfficio());
+		addCreateEq(cri,"numePatrimonio", to.getNumePat());
+		addCreateEq(cri, "statStato", to.getStato());
+		addCreate(cri,"dataCreazioneFascicolo", to.getDataArrivoDa(),"ge");
+		addCreate(cri,"dataCreazioneFascicolo", to.getDataArrivoDa(),"le");
+		addCreateEq(cri,"flagVisibilitaCdc01", to.getFlagVisibilitaCdc01());
+		
+		if (to.getNumeStp()!=null){
+			cri.createCriteria("anagAmminDemList")
+			    .add(Restrictions.eq("id.fkAnnoEse", to.getAnnoDecreto()))
+			    .add(Restrictions.eq("id.numeStp", to.getNumeStp()))
+			    .add(Restrictions.eq("id.numeApp", to.getNumeApp()));
+		}
+		
+		if (to.getCdr()!=null){
+			cri.createCriteria("anagCdrDemList")
+		    .add(Restrictions.eq("id.fkAnnoEse", to.getAnnoDecreto()))
+		    .add(Restrictions.eq("id.fkNumeStp", to.getNumeStp()))
+		    .add(Restrictions.eq("id.fkNumeApp", to.getNumeApp()))
+		    .add(Restrictions.eq("id.numeCdr", to.getCdr()));
+			
+		}
+		
+		// AGGIUNGO ORDINAMENTO LISTA
+		cri.addOrder(Order.desc("eserciziDem.id"))
+			.addOrder(Order.asc("numeNumDecreto"))
+			.addOrder(Order.asc("anagTipoDecreto.id"));
+		
+		return cri.list();
+		
+/*		Query query = getNamedQuery("Fascicoli.getFascicoliFAD");
+		query.setShort("annoEse", to.getAnnoDecreto());
+		query.setString("numeDec", null);
+		query.setString("numeStp", null);
+		query.setString("numeApp", null);
+		query.setString("cdr", null);
+		query.setString("uff", null);
+		query.setString("numeTipoDec", null);
+		query.setString("numeTipoloDec", null);
+		query.setString("stato", null);
+		query.setString("numePat", null);
+		query.setString("dataDa", null);
+		query.setString("dataA", null);
+		return (List<FascicoliBO>)query.setResultTransformer(Transformers.aliasToBean(FascicoliBO.class)).list();
+*/
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FascicoliBO> findFascicoliGestioneFad(FascicoliFadSearhTO to)
+			throws Throwable {
+		
+		Criteria cri = getSession().createCriteria(FascicoliBO.class);
+		cri.add(Restrictions.eq("eserciziDem.id", to.getAnnoDecreto()));
+		addCreateEq(cri,"anagTipoDecreto.id", to.getTipoDecreto());
+		addCreateEq(cri,"numeNumDecreto", to.getNumeDecreto());
+		addCreateEq(cri,"anagTipologiaDecreto.id", to.getTipologiaDecreto());
+		addCreateEq(cri, "ufficioCapofila.id", to.getUfficio());
+		addCreateEq(cri,"numePatrimonio", to.getNumePat());
+		addCreateEq(cri, "statStato", to.getStato());
+		addCreate(cri,"dataCreazioneFascicolo", to.getDataArrivoDa(),"ge");
+		addCreate(cri,"dataCreazioneFascicolo", to.getDataArrivoDa(),"le");
+		addCreateEq(cri,"flagVisibilitaCdc01", to.getFlagVisibilitaCdc01());
+		
+		cri.add(Restrictions.disjunction().add(Restrictions.eq("statStato", "0"))
+				.add(Restrictions.eq("statStato", "2"))
+				.add(Restrictions.eq("statStato", "3")));
+		
+		if (to.getNumeStp()!=null){
+			cri.createCriteria("anagAmminDemList")
+			    .add(Restrictions.eq("id.fkAnnoEse", to.getAnnoDecreto()))
+			    .add(Restrictions.eq("id.numeStp", to.getNumeStp()))
+			    .add(Restrictions.eq("id.numeApp", to.getNumeApp()));
+		}
+		
+		if (to.getCdr()!=null){
+			cri.createCriteria("anagCdrDemList")
+		    .add(Restrictions.eq("id.fkAnnoEse", to.getAnnoDecreto()))
+		    .add(Restrictions.eq("id.fkNumeStp", to.getNumeStp()))
+		    .add(Restrictions.eq("id.fkNumeApp", to.getNumeApp()))
+		    .add(Restrictions.eq("id.numeCdr", to.getCdr()));
+			
+		}
+		
+		// AGGIUNGO ORDINAMENTO LISTA
+		cri.addOrder(Order.desc("eserciziDem.id"))
+			.addOrder(Order.asc("numeNumDecreto"))
+			.addOrder(Order.asc("anagTipoDecreto.id"));
+		
+		return cri.list();
+		
+/*		Query query = getNamedQuery("Fascicoli.getFascicoliFAD");
+		query.setShort("annoEse", to.getAnnoDecreto());
+		query.setString("numeDec", null);
+		query.setString("numeStp", null);
+		query.setString("numeApp", null);
+		query.setString("cdr", null);
+		query.setString("uff", null);
+		query.setString("numeTipoDec", null);
+		query.setString("numeTipoloDec", null);
+		query.setString("stato", null);
+		query.setString("numePat", null);
+		query.setString("dataDa", null);
+		query.setString("dataA", null);
+		return (List<FascicoliBO>)query.setResultTransformer(Transformers.aliasToBean(FascicoliBO.class)).list();
+*/
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FascicoliBO> findFascicoliFadCdc(FascicoliFadSearhTO to) throws Throwable {
+		
+		Criteria cri = getSession().createCriteria(FascicoliBO.class);
+		cri.add(Restrictions.eq("eserciziDem.id", to.getAnnoDecreto()));
+		addCreateEq(cri,"anagTipoDecreto.id", to.getTipoDecreto());
+		addCreateEq(cri,"numeNumDecreto", to.getNumeDecreto());
+		addCreateEq(cri,"anagTipologiadecreto.id", to.getTipologiaDecreto());
+		addCreateEq(cri, "ufficioCapofila.id", to.getUfficio());
+		addCreateEq(cri,"numePatrimonio", to.getNumePat());
+		addCreateEq(cri, "statStato", to.getStato());
+		addCreate(cri,"dataCreazioneFascicolo", to.getDataArrivoDa(),"ge");
+		addCreate(cri,"dataCreazioneFascicolo", to.getDataArrivoDa(),"le");
+		addCreateEq(cri,"flagVisibilitaCdc01", to.getFlagVisibilitaCdc01());		
+		addCreateEq(cri,"numeProtRicezioneCdc", (to.getNumeProtEntrataCdc()==null || to.getNumeProtEntrataCdc().equals(""))?null:to.getNumeProtEntrataCdc());
+		addCreateEq(cri,"dataRicezioneCdc", to.getDataProtEntrataCdc());
+		addCreateEq(cri,"dataPresaCaricoCdc", to.getDataPresaInCaricoCdc());
+		addCreateEq(cri,"numeProtRegistrazioneCdc", (to.getNumeProtUscitaCdc()==null || to.getNumeProtUscitaCdc().equals(""))?null:to.getNumeProtUscitaCdc());
+		addCreateEq(cri,"dataRegistrazioneCdc", to.getDataProtUscitaCdc());
+		
+		if (to.getNumeStp()!=null){
+			cri.createCriteria("anagAmminDemList")
+			    .add(Restrictions.eq("id.fkAnnoEse", to.getAnnoDecreto()))
+			    .add(Restrictions.eq("id.numeStp", to.getNumeStp()))
+			    .add(Restrictions.eq("id.numeApp", to.getNumeApp()));
+		}
+		
+		if (to.getCdr()!=null){
+			cri.createCriteria("anagCdrDemList")
+		    .add(Restrictions.eq("id.fkAnnoEse", to.getAnnoDecreto()))
+		    .add(Restrictions.eq("id.fkNumeStp", to.getNumeStp()))
+		    .add(Restrictions.eq("id.fkNumeApp", to.getNumeApp()))
+		    .add(Restrictions.eq("id.numeCdr", to.getCdr()));
+			
+		}
+		
+		
+		// AGGIUNGO ORDINAMENTO LISTA
+	     cri.addOrder(Order.desc("eserciziDem.id"))
+	     	.addOrder(Order.asc("numeNumDecreto"))
+	     	.addOrder(Order.asc("anagTipoDecreto.id"));
+				
+		return cri.list();
+		
+
+	}
+
+
+	@Override
+	public boolean esisteFascicoloConModelloIter(Short idIter) throws Throwable {
+
+		String q = "SELECT count(*) as conta " +
+				" from D_FASCICOLI fasc inner join D_ANAG_TIPOLOGIA_DECRETO decr " +
+				" on FASC.FK_NUME_TIPOLOGIA_DECRETO=DECR.NUME_TIPOLOGIA ";
+
+		if(idIter != null)
+			    q += "where decr.fk_sequ_id_iter=:idIter";  
+
+
+		SQLQuery query = getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(q);
+		query.addScalar("conta", Hibernate.INTEGER);
+		if(idIter!=null)
+			query.setParameter("idIter", idIter);		
+
+		return (Integer) query.uniqueResult() > 0;
+	}
+	
+	
+	private void addCreateEq(Criteria cri, String nomeProperty, Object value){
+		if (value != null){
+			cri.add(Restrictions.eq(nomeProperty, value));
+		}
+	}
+	
+	private void addCreate(Criteria cri, String nomeProperty, Object value, String oper){
+		if (value != null){
+			if (oper.equalsIgnoreCase("ge")){
+				cri.add(Restrictions.ge(nomeProperty, value));
+			} else if (oper.equalsIgnoreCase("le")){
+				cri.add(Restrictions.le(nomeProperty, value));
+			}
+		}
+	}
+
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<FascicoliBO> findFascicoliFadByAnno(String anno) throws Throwable {
+
+		String q= " from FascicoliBO  ";
+		
+		if(anno != null && !"".equals(anno)){
+	      q += " where eserciziDem.id = :anno ";
+		}
+		Query query = createQuery(q);
+		if(anno != null && !"".equals(anno)){
+			query.setParameter("anno", Short.parseShort(anno));
+		}
+		return (List<FascicoliBO>)query.list();
+	}
+
+		
+		
+
+	
+}

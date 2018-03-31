@@ -1,0 +1,24 @@
+package it.mef.bilancio.demdec.dao.impl;
+
+import java.util.List;
+
+import org.hibernate.Query;
+
+import it.almavivaitalia.bilancio.commons.bo.DescDocumentoBO;
+import it.mef.bilancio.demdec.dao.DescDocumentoDao;
+
+
+public class DescDocumentoDaoImpl extends AbstractDemDaoImpl<DescDocumentoBO> implements DescDocumentoDao {
+	
+	public List<DescDocumentoBO> loadByTipoDocumento(String tipo) throws Throwable {
+		
+		Query query=createQuery("from DescDocumentoBO where codiTipoDocumento =:tipo order by textDescrizione");
+		query.setParameter("tipo", tipo);
+		
+		@SuppressWarnings("unchecked")
+		List<DescDocumentoBO> list=query.list(); 
+		
+		return list;
+	}
+	
+}

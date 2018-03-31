@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<sql-query name="ControlliBO.listaControlliAutor">
+		<return-scalar column="legAnnoEse" 		type="short"/>
+		<return-scalar column="legAttNumeTipo" 	type="integer"/>
+		<return-scalar column="descSigla" 		type="string"/>
+		<return-scalar column="legNumeNum" 		type="integer"/>
+		<return-scalar column="numeArt" 		type="integer"/>
+		<return-scalar column="numeSubArt" 		type="short"/>
+		<return-scalar column="numeComma" 		type="integer"/>
+		<return-scalar column="numeSubComma" 	type="short"/>
+		<return-scalar column="codiPunto" 		type="string"/>
+		<return-scalar column="numeSubPunto" 	type="short"/>
+		
+		<return-scalar column="fkFrmCodiNome" 	type="string"/>
+		<return-scalar column="numeId" 			type="integer"/>
+		<return-scalar column="eseAnnoEse" 		type="short"/>
+		<return-scalar column="attNumeTipo" 	type="integer"/>
+		<return-scalar column="numeNum" 		type="integer"/>
+		
+		<query-param name="numeControllo" type="integer" />
+		
+		 select a.leg_anno_ese         as legAnnoEse,
+                 a.leg_att_nume_tipo    as legAttNumeTipo,
+                 b.desc_sigla           as descSigla, 
+                 a.leg_nume_num         as legNumeNum,
+                 a.nume_art             as numeArt,
+                 a.nume_sub_art         as numeSubArt,
+                 a.nume_comma           as numeComma,
+                 a.nume_sub_comma       as numeSubComma,
+                 a.codi_punto           as codiPunto,
+                 a.nume_sub_punto       as numeSubPunto,
+                 a.fk_frm_codi_nome     as fkFrmCodiNome,
+                 a.nume_id              as numeId,
+                 0                      as eseAnnoEse,
+                 0                      as attNumeTipo,
+                 0                      as numeNum
+            FROM d_controlli a , d_atti b
+           WHERE a.leg_att_nume_tipo = b.nume_tipo
+             AND a.nume_controllo = :numeControllo
+             AND a.leg_anno_ese &lt;&gt; 0
+       ORDER BY  a.leg_anno_ese,
+                 a.leg_nume_num,
+                 a.leg_att_nume_tipo, 
+                 a.nume_art,
+                 a.nume_sub_art,
+                 a.nume_comma,
+                 a.nume_sub_comma,
+                 a.codi_punto,
+                 a.nume_sub_punto
+	  		
+	</sql-query>
+	
+	<sql-query name="ControlliBO.listaControlliDecreti">
+		<return-scalar column="legAnnoEse" 		type="short"/>
+		<return-scalar column="legAttNumeTipo" 	type="integer"/>
+		<return-scalar column="descSigla" 		type="string"/>
+		<return-scalar column="legNumeNum" 		type="integer"/>
+		<return-scalar column="numeArt" 		type="integer"/>
+		<return-scalar column="numeSubArt" 		type="short"/>
+		<return-scalar column="numeComma" 		type="integer"/>
+		<return-scalar column="numeSubComma" 	type="short"/>
+		<return-scalar column="codiPunto" 		type="string"/>
+		<return-scalar column="numeSubPunto" 	type="short"/>
+		
+		<return-scalar column="fkFrmCodiNome" 	type="string"/>
+		<return-scalar column="numeId" 			type="integer"/>
+		<return-scalar column="eseAnnoEse" 		type="short"/>
+		<return-scalar column="attNumeTipo" 	type="integer"/>
+		<return-scalar column="numeNum" 		type="integer"/>
+		
+		<query-param name="numeControllo" type="integer" />
+		
+		select 	a.ese_anno_ese 			as eseAnnoEse,
+				a.att_nume_tipo 		as attNumeTipo,
+				b.desc_sigla 			as descSigla,
+				a.nume_num				as numeNum,
+				 0         				as legAnnoEse,
+                 0    					as legAttNumeTipo,
+                 0         				as legNumeNum,
+                 0             			as numeArt,
+                 0         				as numeSubArt,
+                 0           			as numeComma,
+                 0       				as numeSubComma,
+                 0           			as codiPunto,
+                 0       				as numeSubPunto,
+                 a.fk_frm_codi_nome     as fkFrmCodiNome,
+                 a.nume_id              as numeId
+        FROM 
+        	d_controlli a, 
+        	d_atti b
+        WHERE 
+        	a.att_nume_tipo = b.nume_tipo
+            AND a.nume_controllo = :numeControllo
+            AND a.ese_anno_ese &lt;&gt; 0
+       ORDER BY  a.ese_anno_ese,a.att_nume_tipo,a.nume_num
+	  		
+	</sql-query>	
+	
+</hibernate-mapping>

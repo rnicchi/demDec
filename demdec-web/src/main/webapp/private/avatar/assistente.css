@@ -1,0 +1,84 @@
+/********** Assistente virtuale **********/
+
+#boxAvatar {
+	position: fixed;
+	top: 127px;
+	right: -273px;
+	width: 333px;
+	height: 261px;
+	background: url(../avatar/bg_boxAssistente.png) no-repeat left top;
+	z-index: 999;
+}
+#boxAvatar .grip {
+	width: 36px;
+	height: 34px;
+	display: block;
+	float: left;
+	margin: 15px 0 0 21px;
+	padding: 0px;
+	cursor: pointer;
+}
+#boxAvatar .grip img {
+	border: 1px solid;
+	border-top-color: #6d6d6d;
+	border-right-color: #fff;
+	border-bottom-color: #fff;
+	border-left-color: #6d6d6d;
+}
+#boxAvatar .video {
+	width: 250px;
+	height: 200px;
+	margin: 14px 0 0 73px;
+	border: 1px solid;
+	border-top-color: #6d6d6d;
+	border-right-color: #fff;
+	border-bottom-color: #fff;
+	border-left-color: #6d6d6d;
+}
+#boxAvatar object {
+	background-image: url(../avatar/bg_assistente.jpg);
+	background-repeat: no-repeat;
+}
+#boxAvatar #button {
+	margin: 4px 0 0 60px;
+	padding: 0;
+	text-align: center;
+}
+#boxAvatar button {
+	border: none;
+	background-color: transparent;
+	padding: 0;
+	margin: 0;
+}
+#boxAvatar #button img {
+	display: block;
+}
+#boxAvatar #txtNonUdenti {
+	position: absolute;
+	width: 240px;
+	height: 200px;
+	z-index: 1;
+	background-color: #fff;
+	overflow: scroll;
+	cursor: pointer;
+	/*top: -9999px;*/
+	right: -270px;
+	font-size: 0.85em;
+	line-height: 1.4em;
+	padding: 0 5px;
+}
+#boxAvatar .nonUdenti {
+	position: relative;
+	top: -17px;
+	left: 72px;
+	cursor: pointer;
+	width: 13px;
+}
+#boxAvatar #txtNoScript {
+	position: relative;
+	top: -200px;
+	left: -80px;
+	text-decoration: underline;
+	cursor: help;
+	font-weight: bold;
+}

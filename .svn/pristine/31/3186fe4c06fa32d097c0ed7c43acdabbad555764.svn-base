@@ -1,0 +1,797 @@
+/**
+ * 
+ */
+package it.mef.bilancio.demdec.web.spring.controller.raccolteprovvisorie;
+
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTOId;
+import it.almavivaitalia.bilancio.commons.to.AnagUfficiTO;
+import it.almavivaitalia.bilancio.commons.to.CodeDescriptionTO;
+import it.almavivaitalia.bilancio.commons.to.DescDocumentoTO;
+import it.almavivaitalia.bilancio.commons.to.EserciziTO;
+import it.almavivaitalia.bilancio.commons.to.UtenteProfiloTO;
+import it.almavivaitalia.bilancio.commons.web.security.Utente;
+import it.almavivaitalia.bsn.sh.paginator.Paginator;
+import it.almavivaitalia.bsn.sh.utils.PaginatorUtil;
+import it.almavivaitalia.web.sh.utils.ApplicationContextProvider;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.almavivaitalia.web.sh.utils.ContextHelper;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.Esito_type;
+import it.mef.bilancio.demdec.manager.InitManager;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.manager.RicercaRedManager;
+import it.mef.bilancio.demdec.servizi.client.ParametriInput;
+import it.mef.bilancio.demdec.servizi.client.ResponseDEMBILClient;
+import it.mef.bilancio.demdec.servizi.to.DocumentContentTO;
+import it.mef.bilancio.demdec.servizi.to.DocumentTO;
+import it.mef.bilancio.demdec.servizi.to.RaccoltaProvvisoriaRedTO;
+import it.mef.bilancio.demdec.to.AbstractDemTO;
+import it.mef.bilancio.demdec.to.AnagRagionerieDemTO;
+import it.mef.bilancio.demdec.to.AnagRagionerieDemTOId;
+import it.mef.bilancio.demdec.to.AnagStatoFascicoloTO;
+import it.mef.bilancio.demdec.to.AnagTipoDecretoTO;
+import it.mef.bilancio.demdec.to.AnagTipoFlussoTO;
+import it.mef.bilancio.demdec.to.FascicoliViewTO;
+import it.mef.bilancio.demdec.to.InvioFadTO;
+import it.mef.bilancio.demdec.to.RicercaRedTO;
+import it.mef.bilancio.demdec.to.SottoFascicoliRedTO;
+import it.mef.bilancio.demdec.to.SottoFascicoliRedTOId;
+import it.mef.bilancio.demdec.utils.Constants;
+import it.mef.bilancio.demdec.utils.MyComparatorRaccProvvRedToAnnoProtNumProt;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.RicercaRedForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.NomeFunzioneConstants;
+import it.mef.bilancio.demdec.web.spring.utils.RecuperoUtil;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.ServletOutputStream;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+
+
+/**
+ * @author utente
+ *
+ */
+@RequestMapping(value = ConstantsRequestMapping.RICERCA_RACCOLTE_PROVVISORIE)
+public class AssociazioneAFadController extends AbstractDemFormController implements WebConstants, SessionAttributes{
+		
+	private String startView;	
+	private String raccolteProvvisorie;
+	private String documentiFascicolo;
+	
+	@Autowired
+	private RicercaRedManager ricercaRedManager;
+	
+	@Autowired
+	private ListManager listManager;
+	
+	@Override
+	public String startController(Context context) throws Throwable {
+		
+		context.setCurrentNode("DemDec.menu.RicercaProvv");
+		
+		List<EserciziTO> listaAnniEsercizio=listManager.loadEserciziDemCG();
+		List<AnagUfficiTO> listaUfficiAssociatiRed=null;
+		
+		Utente user = getUtenteInSessione();
+		 
+		UtenteProfiloTO utProfTo=user.getUtenteProfiloInUso();
+		
+	//	UtenteProfiloTO utProfTo=	((UtenteTO) ContextHelper.getModel(OBJECT_USER, context.getRequest())).getUtenteProfilo(user.getProfiloInUso().getCodiProfilo());
+		
+		
+		if(utProfTo.getAnagUffici()!=null){
+				String idUfficio=utProfTo.getAnagUffici().getId();
+				
+				/** se l'ufficio di appartenenza è 1 o 2 carico nella combo tutti gli uffici, altrimenti solo l'ufficio di appartenenza**/
+				switch (Integer.valueOf(idUfficio)) {		
+					case 1:
+						listaUfficiAssociatiRed=listManager.loadAnagUffici();
+						break;
+					case 2:
+						listaUfficiAssociatiRed=listManager.loadAnagUffici();
+						break;				
+					default:
+						listaUfficiAssociatiRed=new ArrayList<AnagUfficiTO> ();
+						AnagUfficiTO uffTo=new AnagUfficiTO();
+						uffTo.setId(idUfficio);
+						uffTo.setDescUfficio(utProfTo.getAnagUffici().getDescUfficio());
+						listaUfficiAssociatiRed.add(uffTo);
+						break;
+				}
+		
+		}else{
+			listaUfficiAssociatiRed=listManager.loadAnagUffici();
+		}
+		
+		List<AnagStatoFascicoloTO> listaStatiFascRed=listManager.loadStatiFascicoliRed();
+		List<AnagTipoFlussoTO> listAnagTipoFlusso=listManager.loadAnagTipoFlusso();
+		
+		List<AnagAmminDemTO> listaAmm=new ArrayList<AnagAmminDemTO>();
+		
+		context.setDataModel(WebConstants.LIST_ANNO_ESE, listaAnniEsercizio);
+		context.setDataModel(WebConstants.LIST_ANAG_UFF, listaUfficiAssociatiRed);
+		context.setDataModel(WebConstants.LIST_ANAG_STATI_FASC, listaStatiFascRed);
+		context.setDataModel(WebConstants.LIST_AMMIN_DEM, listaAmm);
+		context.setDataModel(WebConstants.LIST_ANAG_TIPO_FLUSSO, listAnagTipoFlusso);
+		
+		return startView;
+		
+	}
+	
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+
+
+	public void setRaccolteProvvisorie(String raccolteProvvisorie) {
+		this.raccolteProvvisorie = raccolteProvvisorie;
+	}
+	
+	public void setDocumentiFascicolo(String documentiFascicolo) {
+		this.documentiFascicolo = documentiFascicolo;
+	}
+
+	
+	public String onCaricaAmministrazioni(Context context) throws Throwable {
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+		String annoEsercizio=form.getAnnoEse();
+		Utente ut=getUtenteInSessione();
+		String idProfilo=ut.getProfiloInUso().getId().toString();
+		List<AnagAmminDemTO> listaAmm=null;
+		
+		if (form.isValid()){
+			if(idProfilo.equals(PROFILO_DIRIGENTE_UFFICIO) || idProfilo.equals(PROFILO_BILANCISTA)){
+			     listaAmm=listManager.getAmminDemByAnnoEseUtenteAndProfilo(annoEsercizio, ut.getUtente().getId().toString(), ut.getProfiloInUso().getId().toString());
+			}else{
+				 listaAmm=listManager.getAmminDemByAnnoEse(annoEsercizio);
+			}
+			
+			context.setDataModel(WebConstants.LIST_AMMIN_DEM, listaAmm);
+			form.setAnnoEse(annoEsercizio);
+		}
+		return startView;
+	}
+	
+	
+	
+	
+	public String pulisciRicercaRed(Context context) throws Throwable {
+		
+		RicercaRedForm form= (RicercaRedForm) context.getForm();		
+		form.setAmministrazione(null);
+		form.setAnnoEse(null);
+		form.setDataArrivoA(null);
+		form.setDataArrivoDa(null);
+		form.setDataRedA(null);
+		form.setDataRedDa(null);
+		form.setIdRed(null);
+		form.setListaRedDaSospendere(null);
+		form.setListaRedSospesi(null);
+		form.setListaTipoAllegati(null);
+		form.setNumero(null);
+		form.setProtocolloRed(null);
+		form.setRigaDoc(null);
+		form.setRigaFasc(null);
+		form.setSelezioniDocumentiFasc(null);
+		form.setStato(null);
+		form.setTipoAllegati(null);
+		form.setTipoDownl(null);
+		form.setTipoFlusso(null);
+		form.setUfficioAssociatoRed(null);
+		form.setValid(false);
+				
+		return startView;
+	}
+	
+	
+	
+	
+	public  String  pulisciRaccolteProvvisorie(Context context) throws Throwable {
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+		
+		List<AbstractDemTO> respListTo=context.getModel( WebConstants.LIST_RACC_PROVV);
+		if( respListTo.size()>0) {
+		    PaginatorUtil.addPaginator(respListTo, SessionAttributes.LIST_RICERCA_RED, Paginator.PAGE_RANGE_15, context); 
+		}else {
+			  	PaginatorUtil.removePaginator(context, SessionAttributes.LIST_RICERCA_RED);
+			  	ContextHelper.addWarning(context.getRequest(),"warning.noRecord.trovati");    
+		}
+		
+		String origine=context.getRequest().getParameter("origine");
+		
+		if(origine==null || !origine.equalsIgnoreCase("documentiFascicolo")) {
+			form.setTipoFlusso(null);
+			form.setNumero(null);
+			form.setAnnoEse(null);
+		}
+		
+		return raccolteProvvisorie;
+	}
+	
+	
+	
+	
+	
+	public String ricercaRed(Context context) throws Throwable {
+		
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+		
+		if(!form.isValid()){		
+			return startView;
+		}
+		
+		context.getRequest().getSession().removeAttribute("ricercaRedTo");
+		
+		RicercaRedTO ricercaRedTO=new RicercaRedTO();
+	
+		ricercaRedTO.setIdRed(form.getIdRed());
+		ricercaRedTO.setAmministrazione(form.getAmministrazione());
+		ricercaRedTO.setAnnoEse(form.getAnnoEse());
+		ricercaRedTO.setDataArrivoA(form.getDataArrivoA());
+		ricercaRedTO.setDataArrivoDa(form.getDataArrivoDa());
+		ricercaRedTO.setDataRedDa(form.getDataRedDa());
+		ricercaRedTO.setDataRedA(form.getDataRedA());
+		ricercaRedTO.setProtocolloRed(form.getProtocolloRed());
+		ricercaRedTO.setStato(form.getStato());
+		ricercaRedTO.setTipoFlusso(form.getTipoFlusso());
+		ricercaRedTO.setUfficioAssociatoRed(form.getUfficioAssociatoRed());
+		
+		context.getRequest().getSession().setAttribute("ricercaRedTo", ricercaRedTO);
+	
+		ApplicationContext applContext=ApplicationContextProvider.getApplicationContext();
+		InitManager inMan =(InitManager )applContext.getBean("initManager");
+		ParametriInput paramInp= inMan.leggiParametriInputDemBil();
+		
+		ResponseDEMBILClient respClient=ricercaRedManager.wsRicercaRed(paramInp, ricercaRedTO); 
+				
+		String codiceEsito=respClient.getEsitoTo().getCodice();
+		//if(true) {
+		List<AbstractDemTO> respListTo=null;
+		//if(true){
+		if(codiceEsito.equalsIgnoreCase("OK")) { 
+		
+			respListTo=respClient.getListoutputTO();
+			
+	    	
+	    	if (respListTo == null || respListTo.size() == 0) {
+				context.addWarning("warning.empty");
+				return startView; 
+			}
+	    	
+	    	Collections.sort(respListTo, new  MyComparatorRaccProvvRedToAnnoProtNumProt());
+	    	
+	    	RaccoltaProvvisoriaRedTO rprTo=null;
+	    	List<RaccoltaProvvisoriaRedTO> respListToNew=new ArrayList<RaccoltaProvvisoriaRedTO>();
+	    	for (int i = 0; i < respListTo.size(); i++) {
+	    		rprTo=(RaccoltaProvvisoriaRedTO)respListTo.get(i);
+	    		if(rprTo.getCodiStatoFascicoloDocumentale()!=null){
+					rprTo.setDescStatoFascicoloDocumentale(listManager.loadDescStatiFascicoliRed(rprTo.getCodiStatoFascicoloDocumentale()));
+					respListToNew.add(rprTo);
+				}
+			}
+	    	
+	    	
+	    	/***togliere ***
+	    	for (int i = 0; i < respListToNew.size(); i++) {
+	    		((RaccoltaProvvisoriaRedTO)respListToNew.get(i)).setDescrizione("Documento/allegato raccolta provvisoria");
+	    		
+			}
+	    	***fine togliere ***/
+	      
+		    List<AnagTipoDecretoTO> listaTipiDecreti=listManager.loadAnagTipoDecreto();
+	
+			context.setDataModel(WebConstants.LIST_TIPI_DECRETI, listaTipiDecreti );
+		
+			List<EserciziTO> listEsercizi=listManager.loadEserciziDemCG();
+			context.setDataModel(WebConstants.LIST_ANNO_ESE, listEsercizi );
+			
+			context.setDataModel(WebConstants.LIST_RACC_PROVV, respListTo );
+			
+			form.setAnnoEse("");
+			
+			if( respListTo.size()>0) {
+				    PaginatorUtil.addPaginator(respListToNew, SessionAttributes.LIST_RICERCA_RED, Paginator.PAGE_RANGE_15, context); 
+			}else {
+				  	PaginatorUtil.removePaginator(context, SessionAttributes.LIST_RICERCA_RED);
+				  	ContextHelper.addWarning(context.getRequest(),"warning.noRecord.trovati"); 
+			}
+				
+			return raccolteProvvisorie;
+			
+		}else if (codiceEsito.equalsIgnoreCase("ERRORE_DATI_NON_PRESENTI")){
+			context.addWarning("warning.empty");
+			return startView;
+		}else {
+			context.addError("error.generic", respClient.getEsitoTo().getDescrizione()); 
+			return startView;
+		}
+		
+		
+	
+		
+	}
+	
+
+	/*private String streamToString(InputStream in) throws IOException
+	{
+	  StringBuffer out = new StringBuffer();
+	  byte[] b = new byte[4096];
+	  for (int n; (n = in.read(b)) != -1;) {
+	    out.append(new String(b, 0, n));
+	  }
+	  return out.toString();
+	}*/
+	
+	
+	
+
+	
+	
+	public String apriDocumentiFascicolo(Context context) throws Throwable{
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy");
+		List<RaccoltaProvvisoriaRedTO> listaRaccolteProvv=context.getModel(SessionAttributes.LIST_RICERCA_RED);
+		String idFascicoloRaccoltaProvvisoria = getParameter(context, "idRed");
+		
+		RaccoltaProvvisoriaRedTO rprto=RecuperoUtil.recuperaRaccProvvTo(listaRaccolteProvv, idFascicoloRaccoltaProvvisoria);
+		
+		context.setDataModel(WebConstants.ID_FASC_RACC_PROVV, idFascicoloRaccoltaProvvisoria);
+		
+		String numDataProtocollo=rprto.getProtocollo().getNumeroProtocollo()+"/"+sdf.format(rprto.getProtocollo().getData());
+		context.setDataModel("numDataProtocollo", numDataProtocollo);
+		
+		ApplicationContext applContext=ApplicationContextProvider.getApplicationContext();
+		InitManager inMan =(InitManager )applContext.getBean("initManager");
+		ParametriInput paramInp= inMan.leggiParametriInputDemBil();
+
+		ResponseDEMBILClient resp= ricercaRedManager.wsDocumentiFascicolo(paramInp, rprto);
+		RaccoltaProvvisoriaRedTO rp=(RaccoltaProvvisoriaRedTO)resp.getOutputTO();
+		DocumentTO docTo=null;
+		List<DocumentTO> listDocTO=new ArrayList<DocumentTO> ();
+	
+		String codiceEsito=resp.getEsitoTo().getCodice();
+		
+		//if(true){
+		if(codiceEsito.equalsIgnoreCase("OK")) { 
+			
+			if(rp.getCodiStatoFascicoloDocumentale().equalsIgnoreCase("INSERITO")) {
+				ContextHelper.addWarning(context.getRequest(),"warning.raccolteProvvisorie.statoInserito");   
+				return raccolteProvvisorie;
+			}
+				
+			
+			List<FascicoliViewTO> fascicoliAssociati=null;   
+			for (int i = 0; i < rp.getDocumenti().size(); i++) {
+				docTo=(DocumentTO)  rp.getDocumenti().get(i);
+			
+				docTo.setAmministrazione(rp.getAmministrazione());
+				docTo.setUcbRts(rp.getRagioneria());
+				if(docTo.getTipoDocumento()!=null && docTo.getTipoDocumento().getDescription()!=null 
+							&& docTo.getTipoDocumento().getDescription().equalsIgnoreCase(Constants.DOC_PRINCIPALE)){
+					docTo.setProtocollo(rp.getProtocollo());
+				}
+				
+				/** inserimento, nella lista, dei fad a cui ogni documento è già associato **/
+				fascicoliAssociati=ricercaRedManager.findFascicoliAssociati(docTo.getIdDocumentoRaccoltaProvvisoria());				
+				//TODO togliere questo blocco
+//				FascicoliViewTO toProva=null;
+//				for (int s = 0; s < 3; s++) {
+//					toProva=new FascicoliViewTO();
+//					toProva.setDescSigla("DMT");
+//					toProva.setAnnoEse(new Short("2014"));
+//					toProva.setNumeNumDecreto("123456");
+//					fascicoliAssociati.add(toProva);
+//				}
+				//TODO fine togliere questo blocco
+				String fascAss="";
+				if(fascicoliAssociati!=null){
+					for (int w = 0; w < fascicoliAssociati.size(); w++) {
+						fascAss+=(fascicoliAssociati.get(w).getDescSigla()+" - "+fascicoliAssociati.get(w).getNumeNumDecreto()+" - "+fascicoliAssociati.get(w).getAnnoEse()+"\n");
+					}
+					docTo.setFascicoliAssociati(fascAss);
+				}
+				
+				/***blocco da togliere***
+					if(i==0)
+						docTo.getTipoDocumento().setCode("RP01");
+					else
+						docTo.getTipoDocumento().setCode("RP02");
+				***fine blocco da togliere***/
+				
+				listDocTO.add(docTo);
+			}
+			
+			//TODO commentare
+//			for (int k = 1; k <26; k++) {
+//				listDocTO.add((DocumentTO)Util.copyBean(listDocTO.get(0)));	
+//			}
+//			//TODO commentare
+//			for (int k = 0; k <26; k++) {
+//				
+//				listDocTO.get(k).setIdDocumento(""+k);	
+//			}
+			
+			List<DescDocumentoTO> listDescDocumento=listManager.loadDescDocumentoByTipo("IG01");
+			List<DescDocumentoTO> listDescDocumento2=listManager.loadDescDocumentoByTipo("IG02");
+			
+		
+			String[] listaTipoAlleg=new String[ rp.getDocumenti().size()];//inserire la dimensione della lista che arriva dal servizio web
+			for (int j = 0; j < listaTipoAlleg.length; j++) {
+				listaTipoAlleg[j]="tipoAllegati"+j;
+			}
+			
+			form.setListaTipoAllegati(listaTipoAlleg); 
+			
+			List<AnagTipoDecretoTO> listaTipiDecreti=listManager.loadAnagTipoDecreto();
+			context.setDataModel(WebConstants.LIST_TIPI_DECRETI, listaTipiDecreti );
+			context.setDataModel(WebConstants.LIST_TIPO_ALLEGATI_RP01, listDescDocumento);
+			context.setDataModel(WebConstants.LIST_TIPO_ALLEGATI_RP02, listDescDocumento2);
+	
+			List<EserciziTO> listEsercizi=listManager.loadEserciziDemCG();
+			context.setDataModel(WebConstants.LIST_ANNO_ESE, listEsercizi );
+			
+			context.setDataModel(WebConstants.LIST_DOC_FASC, listDocTO );
+	
+			
+			if( listDocTO.size()>0) {
+			    	PaginatorUtil.addPaginator(listDocTO, SessionAttributes.LIST_DOCUMENTI_FASCICOLO, Paginator.PAGE_RANGE_15, context); 
+			}else {
+				  	PaginatorUtil.removePaginator(context, SessionAttributes.LIST_DOCUMENTI_FASCICOLO);
+				  	ContextHelper.addWarning(context.getRequest(),"warning.noRecord.trovati");  
+				  	return raccolteProvvisorie;
+			}
+		}
+		else{
+			context.addError("error.generic", resp.getEsitoTo().getDescrizione());
+			return raccolteProvvisorie;
+		}
+		return documentiFascicolo;
+	
+	}
+	
+	
+	
+	public String pulisciDocumentiFascicolo(Context context) throws Throwable{
+		RicercaRedForm form= (RicercaRedForm) context.getForm();		
+		
+		List<AbstractDemTO> respListTo=context.getModel( WebConstants.LIST_DOC_FASC);
+		if( respListTo.size()>0) {
+		    PaginatorUtil.addPaginator(respListTo, SessionAttributes.LIST_DOCUMENTI_FASCICOLO, Paginator.PAGE_RANGE_15, context); 
+		}else {
+			  	PaginatorUtil.removePaginator(context, SessionAttributes.LIST_DOCUMENTI_FASCICOLO);
+			  	ContextHelper.addWarning(context.getRequest(),"warning.noRecord.trovati");    
+		}
+		
+		form.setTipoFlusso(null);
+		form.setNumero(null);
+		form.setAnnoEse(null);
+		
+		return documentiFascicolo;
+	}
+	
+	
+	
+	public String inviaAFad(Context context) throws Throwable {
+	   RicercaRedForm form= (RicercaRedForm) context.getForm();
+	
+	   if (!form.isValid()){
+		   return ritornaErrore(context);
+	   }
+	   
+       String idFascicoloRaccoltaProvvisoria=(String)context.getModel(WebConstants.ID_FASC_RACC_PROVV);
+    
+       List<RaccoltaProvvisoriaRedTO>  listaRaccProvvWs=context.getModel(WebConstants.LIST_RACC_PROVV);
+    
+       RaccoltaProvvisoriaRedTO raccProvvisoriaRedTO=RecuperoUtil.recuperaRaccProvvTo(listaRaccProvvWs, idFascicoloRaccoltaProvvisoria);
+	
+	   SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+	
+		
+	   Integer anno2=Integer.valueOf(form.getAnnoEse());
+	   Integer numero2=Integer.valueOf(form.getNumero());
+	   Integer tipo2=Integer.valueOf(form.getTipoFlusso());
+	   
+	   List<FascicoliViewTO> fascicoli=ricercaRedManager.findFascicoloByTipoNumAnnoStato(anno2, tipo2, numero2);
+	   //fascicoli
+	   if(fascicoli==null || fascicoli.size()==0){
+		   fascicoli=ricercaRedManager.findFascicoloByTipoNumAnno(anno2, tipo2, numero2);
+		   if(fascicoli==null || fascicoli.size()==0){
+			   context.addError("error.inviaAFad.inexistent");
+			   return ritornaErrore(context);
+		   }else{
+			   context.addError("error.stato.invioFad", ricercaRedManager.getTipoDecretoById(tipo2).getDescSigla()+" n."+numero2+" del "+anno2);
+			   return ritornaErrore(context);
+		   }
+		}
+	   
+	  
+			String [] selezioniDocumentiFascicolo=form.getSelezioniDocumentiFasc();
+			List<DocumentTO> listDocTO=context.getModel(WebConstants.LIST_DOC_FASC);
+			List<DocumentTO> listDocTOtoSend=new ArrayList<DocumentTO>();//sarà la lista dei documenti da inviare, selezionati sulla maschera dei documenti
+			
+			String tipoAllegato=null;
+			
+			for (int j = 0; j < listDocTO.size(); j++) {
+				tipoAllegato=context.getRequest().getParameter("tipoAllegati"+listDocTO.get(j).getIdDocumentoRaccoltaProvvisoria());				
+				listDocTO.get(j).setDescDocumento(new CodeDescriptionTO(tipoAllegato==null?"":tipoAllegato,""));								
+			}
+			
+			
+			
+				 
+				int indexSeparator=0;
+				String tipoDoc=null;
+				String descrDoc=null;
+				/**con questo ciclo riempio la lista dei documenti da inviare**/
+				for (int i = 0; i < selezioniDocumentiFascicolo.length; i++) {
+					    //qui recupero il tipo di allegato scelto nella combo box della riga selezionata nella tabella dei documenti
+						tipoAllegato=context.getRequest().getParameter("tipoAllegati"+selezioniDocumentiFascicolo[i]);
+						indexSeparator=tipoAllegato.indexOf("-");
+						if(indexSeparator>-1){
+							tipoDoc=tipoAllegato.substring(0,indexSeparator);
+							descrDoc=tipoAllegato.substring(indexSeparator+1);
+							DocumentTO toSend=RecuperoUtil.recuperaDocumentTo(listDocTO, selezioniDocumentiFascicolo[i],"2");
+							toSend.setDescDocumento(new CodeDescriptionTO(tipoDoc,descrDoc));
+							
+							listDocTOtoSend.add(toSend);
+						}
+				}
+			
+			
+		
+			
+			List<InvioFadTO> listInvioFadTo=new ArrayList<InvioFadTO>();
+			
+			InvioFadTO ifTo=null;                       
+			
+			for (DocumentTO documentTO : listDocTOtoSend) {
+					ifTo=new InvioFadTO();
+					ifTo.setIdDocumentoRaccoltaProvvisoria(documentTO.getDocumentoContent().getIdDocumento());//TODO verificare se è corretto è nella risposta del ws getFascicoloRaccoltaProvvisoria				
+					ifTo.setIdFascicoloRaccoltaProvvisoria(documentTO.getIdFascicolo());//TODO verificare se è corretto 
+					ifTo.setIdFascicoloAttoDecreto(fascicoli.size()>0?fascicoli.get(0).getCodiGuidFascicolo():"" );//TODO verificare se è corretto, è il GUID del fascicolo.
+					ifTo.setIdDocumento(documentTO.getIdDocumento());
+					ifTo.setIdDocumentoRaccoltaProvvisoria(documentTO.getIdDocumentoRaccoltaProvvisoria());
+					
+					ifTo.setTipoDocumento(documentTO.getTipoDocumento().getCode().equalsIgnoreCase("RP01")?"IG01":"IG02");
+					ifTo.setDescrizione(documentTO.getDescDocumento().getDescription());
+					listInvioFadTo.add(ifTo);
+					
+	//				documentTO.setIdDocumento(null);
+					documentTO.setIdSottoFascicolo(fascicoli.size()>0?String.valueOf(fascicoli.get(0).getId()):null);	//???		
+					documentTO.setStatDocumento(0);			
+					documentTO.setCodiIdRed(raccProvvisoriaRedTO.getIdentificativoRaccoltaProvvisoria());		
+					context.valorizeAudit(documentTO, NomeFunzioneConstants.ASSOCIAZIONE_RED_FAD);
+			}
+			
+			
+			SottoFascicoliRedTO sfRedTo=new SottoFascicoliRedTO();
+			SottoFascicoliRedTOId sfRedToId =new SottoFascicoliRedTOId();
+										
+			/**recupero i parametri di input per il web service**/
+			ApplicationContext applContext=ApplicationContextProvider.getApplicationContext();
+			InitManager inMan =(InitManager )applContext.getBean("initManager");
+			ParametriInput paramInp= inMan.leggiParametriInputDemBil();
+			int contSuccess=0;
+			if (selezioniDocumentiFascicolo.length>0) {
+				/**riempio il to del sottofascicolo da inserire**/			
+					sfRedToId.setCodiIdRed(raccProvvisoriaRedTO.getIdentificativoRaccoltaProvvisoria());
+				//	sfRedTo.setNumeProtocollo(recuperaDocumentTo(listDocTOtoSend,selezioniDocumentiFascicolo[0]).getProtocollo().getNumeroProtocollo());
+					if(raccProvvisoriaRedTO.getProtocollo()!=null) {
+						sfRedTo.setNumeProtocollo(raccProvvisoriaRedTO.getProtocollo().getNumeroProtocollo());
+						sfRedTo.setCodiAooProtocollo(raccProvvisoriaRedTO.getProtocollo().getAoo());
+						sfRedTo.setDescTipoProtocollo(raccProvvisoriaRedTO.getProtocollo().getTipo());
+						sfRedTo.setDataProtocollo(raccProvvisoriaRedTO.getProtocollo().getData());
+					}
+					
+					sfRedTo.setDescTipoFlusso(raccProvvisoriaRedTO.getTipoFlusso()   );
+										
+					//TODO verificare perchè la data aggiornamento arriva null
+				//	sfRedToId.setDataAggiornamento(sdf.parse(raccoProvvisoriaRedTO.getDataAggiornamento()));
+				
+					sfRedTo.setDataArrivo(sdf.parse(raccProvvisoriaRedTO.getDataCreazione()));			
+					sfRedTo.setDataRed(raccProvvisoriaRedTO.getProtocollo().getData());				
+					sfRedTo.setDescOggettoRed(raccProvvisoriaRedTO.getDescrizione());
+									
+					sfRedToId.setFkNumeIdFascicolo(fascicoli.size()>0?new Long(fascicoli.get(0).getId()):null);
+
+					sfRedTo.setStatStato(0);			
+					sfRedTo.setId(sfRedToId);
+					
+					sfRedTo.setCodiGuidFascicolo(fascicoli.size()>0?fascicoli.get(0).getCodiGuidFascicolo():"");				
+					sfRedTo.setCodiGuidSFascicolo(raccProvvisoriaRedTO.getIdFascicoloRaccoltaProvvisoria());
+					
+					sfRedTo.setDescUfficioAss(raccProvvisoriaRedTO.getUfficioCreatoreRED().getDescription());
+					sfRedTo.setDescUtenteAss(raccProvvisoriaRedTO.getUtenteCreatore().getDescription());
+					sfRedTo.setDescTipoFlusso(raccProvvisoriaRedTO.getTipoFlusso());
+					
+					sfRedTo.setRowCreatedDttm(new Date());
+					
+					AnagAmminDemTO anagAmmDemTo=new AnagAmminDemTO();
+					
+					anagAmmDemTo.setDescAmm(raccProvvisoriaRedTO.getAmministrazione().getDescription());
+					anagAmmDemTo.setDescAmmR(raccProvvisoriaRedTO.getAmministrazione().getDescription());//TODO verificare
+					
+					anagAmmDemTo.setId(new AnagAmminDemTOId(anno2.shortValue(), new Integer(raccProvvisoriaRedTO.getAmministrazione().getCode().substring(0, 2)), new Integer(raccProvvisoriaRedTO.getAmministrazione().getCode().substring(2, 3))));
+					sfRedTo.setAnagAmminDem(anagAmmDemTo);					
+					
+					AnagRagionerieDemTO anagRagDemTo=new AnagRagionerieDemTO((new AnagRagionerieDemTOId(anno2.shortValue(), new Short(raccProvvisoriaRedTO.getRagioneria().getCode()))));
+					anagRagDemTo.setDescRag(raccProvvisoriaRedTO.getRagioneria().getDescription());
+					sfRedTo.setAnagRagionerieDem(anagRagDemTo);
+							//					sfRedTo.setFkNumeRag(new Short(raccProvvisoriaRedTO.getRagioneria().getCode()));
+					
+					
+					/***assegnazione campi di audit***/
+					context.valorizeAudit(sfRedTo, NomeFunzioneConstants.ASSOCIAZIONE_RED_FAD);
+					sfRedTo.setRowUpdatedDttm(null);
+					sfRedTo.setRowUpdatedUser(null);
+					sfRedTo.setRowUpdatedForm(null);
+					ResponseDEMBILClient respClient=null;
+					ResponseDEMBILClient respClientChangeStato=null;
+					
+					
+					String codiceEsito=null;
+					/**Invio a Fad**/
+					for (int i=0; i<listDocTOtoSend.size(); i++) {
+						 context.valorizeAudit( listDocTOtoSend.get(i), NomeFunzioneConstants.ASSOCIAZIONE_RED_FAD);
+						 respClient=ricercaRedManager.wsInvioFAD(paramInp, listInvioFadTo.get(i), sfRedTo,  listDocTOtoSend.get(i)); 
+						 codiceEsito=respClient.getEsitoTo().getCodice();
+						 if(codiceEsito.equalsIgnoreCase(Esito_type._OK)){
+							 	contSuccess++;
+						 }else{
+								context.addError("error.generic", respClient.getEsitoTo().getDescrizione());
+						 }
+					}
+				
+					
+					//if(true) {
+					
+					InvioFadTO toChange=new InvioFadTO();
+					
+					if(contSuccess>0) {
+						toChange.setIdFascicoloRaccoltaProvvisoria(idFascicoloRaccoltaProvvisoria);
+						toChange.setStatoFascicolo(Constants.STATO_FAD_IN_ELABORAZIONE);
+						/**chiamo il servizio web per aggiornare lo stato fascicolo sul documentale**/
+						respClientChangeStato=ricercaRedManager.wsCambioStatoFascicolo(paramInp, toChange);
+						String codiceEsito2=respClientChangeStato.getEsitoTo().getCodice();
+						if(!codiceEsito2.equalsIgnoreCase(Esito_type._OK)) {
+							context.addError("error.generic", "Errore ws cambio stato fascicolo: "+respClientChangeStato.getEsitoTo().getDescrizione());
+							return documentiFascicolo;
+						}
+					} 
+					else{
+						/** l'errore è già stato aggiunto al context **/
+						//context.addError("error.generic", respClient.getEsitoTo().getDescrizione());
+						return documentiFascicolo;
+					}
+			}
+				
+			
+			/***inserisco, nella textarea dei fad a cui il documento è già associato, il fad a cui ho appena associato***/
+			List<DocumentTO> listDocumTO=context.getModel(SessionAttributes.LIST_DOCUMENTI_FASCICOLO);
+			List<FascicoliViewTO> fascicoliAssociati=null;  
+			//DocumentTO docTo=null;
+			for (int i = 0; i < listDocumTO.size(); i++) {
+				
+				/** inserimento, nella lista, dei fad a cui ogni documento è già associato **/
+				fascicoliAssociati=ricercaRedManager.findFascicoliAssociati(listDocumTO.get(i).getIdDocumentoRaccoltaProvvisoria());				
+
+				String fascAss="";
+				if(fascicoliAssociati!=null){
+					for (int w = 0; w < fascicoliAssociati.size(); w++) {
+						fascAss+=(fascicoliAssociati.get(w).getDescSigla()+" - "+fascicoliAssociati.get(w).getNumeNumDecreto()+" - "+fascicoliAssociati.get(w).getAnnoEse()+"\n");
+					}
+					listDocumTO.get(i).setFascicoliAssociati(fascAss);
+				}
+				
+			}
+			
+			if( listDocumTO.size()>0) {
+		    	PaginatorUtil.addPaginator(listDocumTO, SessionAttributes.LIST_DOCUMENTI_FASCICOLO, Paginator.PAGE_RANGE_15, context); 
+			}else {
+				  	PaginatorUtil.removePaginator(context, SessionAttributes.LIST_DOCUMENTI_FASCICOLO);
+				  	ContextHelper.addWarning(context.getRequest(),"warning.noRecord.trovati");  
+				  	return raccolteProvvisorie;
+			}
+			/***/
+			
+			
+			context.addInfo("info.update.success");
+			context.addInfo("info.doc.sent", ""+contSuccess);
+		
+			
+		return documentiFascicolo;
+		
+		
+	} 
+	
+	
+	public String download(Context context)  throws   Throwable{
+		
+		List<DocumentTO> listDocFsc=context.getModel(WebConstants.LIST_DOC_FASC);
+		String tipoDownload=context.getRequest().getParameter("tipoDownl");
+		//String rigaDocumento=context.getRequest().getParameter("rigaDoc");
+		String idDocumento=context.getRequest().getParameter("idDocumento");
+		
+		DocumentTO to=RecuperoUtil.recuperaDocumentTo(listDocFsc, idDocumento, tipoDownload);
+				
+		ApplicationContext applContext=ApplicationContextProvider.getApplicationContext();
+		InitManager inMan =(InitManager )applContext.getBean("initManager");
+		ParametriInput paramInp= inMan.leggiParametriInputDemBil();
+		
+		String idDoc=tipoDownload.equals("1")?to.getIdDocumento():to.getIdDocumentoRaccoltaProvvisoria();
+		ResponseDEMBILClient respClient=ricercaRedManager.wsDownloadDocumento(paramInp, to.getIdFascicolo(), idDoc);
+	
+		String codiceEsito=respClient.getEsitoTo().getCodice();
+		
+		String type=null;
+		DocumentContentTO docContent=null;
+		if(codiceEsito.equalsIgnoreCase("OK")) {
+			docContent=(DocumentContentTO)respClient.getOutputTO();
+					
+		}else {
+			context.addError("error.generic", respClient.getEsitoTo().getDescrizione()); 
+			return documentiFascicolo;
+		}
+		
+		type=docContent.getMimeType();
+	
+		context.getResponse().setContentType(type);		
+		context.getResponse().setHeader("Content-Disposition","attachment;filename="+docContent.getFileName());
+ 	
+		ServletOutputStream out;	
+		out = context.getResponse().getOutputStream();
+		out.write(docContent.getContent());
+
+		out.flush();
+		out.close();
+		
+		return null;
+ 
+	}
+	
+	private String ritornaErrore(Context context) throws Throwable{
+		List<DocumentTO> listDocTO=context.getModel(SessionAttributes.LIST_DOCUMENTI_FASCICOLO);
+		int indexSeparator=0;
+		String tipoDoc=null;
+		String descrDoc=null;
+		CodeDescriptionTO codDesTo=null;
+		String tipoAllegato = "";
+		for (int i = 0; i < listDocTO.size(); i++) {
+		    //qui recupero il tipo di allegato scelto nella combo box della riga selezionata nella tabella dei documenti
+			tipoAllegato=context.getRequest().getParameter("tipoAllegati"+listDocTO.get(i).getIdDocumentoRaccoltaProvvisoria());
+			indexSeparator=tipoAllegato.indexOf("-");
+			if(indexSeparator>-1){
+				tipoDoc=tipoAllegato.substring(0,indexSeparator);
+				descrDoc=tipoAllegato.substring(indexSeparator+1);
+				codDesTo=new CodeDescriptionTO();
+				codDesTo.setCode(tipoDoc);
+				codDesTo.setDescription(descrDoc);
+				listDocTO.get(i).setDescDocumento(codDesTo);	
+			}
+		}
+		
+		if( listDocTO.size()>0) {
+	    	PaginatorUtil.addPaginator(listDocTO, SessionAttributes.LIST_DOCUMENTI_FASCICOLO, Paginator.PAGE_RANGE_15, context); 
+		}else {
+			  	PaginatorUtil.removePaginator(context, SessionAttributes.LIST_DOCUMENTI_FASCICOLO);
+			  	ContextHelper.addWarning(context.getRequest(),"warning.noRecord.trovati");  
+			  //	return raccolteProvvisorie;
+		}
+		return documentiFascicolo;
+	}
+
+}

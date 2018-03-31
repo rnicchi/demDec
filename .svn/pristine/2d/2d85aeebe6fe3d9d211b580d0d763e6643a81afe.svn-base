@@ -1,0 +1,125 @@
+
+  <!-- INIZIO MODALE Visualizzazione Metadati Documento Fad -->
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping"%>
+
+ <script type="application/javascript">
+
+
+function visualizzaModaleMetadatiDocFad(toOpenDett, idFad){
+	size=$("#metadatiVisFascicoloFad").length ;	
+	if( size>0  ) {	
+		$("#metadatiVisFascicoloFad").empty();
+	}
+	
+
+
+	$("#divErrore").empty();	
+	
+	$.ajax({
+		
+		url: "<%=request.getContextPath()%><%=ConstantsRequestMapping.MODALI_DOCUMENTI_FAD%>?cmdPOST___modaleMetadatiDocumentiFad=modaleMetadatiDocumentiFad&idFad="+idFad ,
+		
+	    type: 'POST',
+	    data: {
+	        json: jsonData
+	    },
+	    success: function (response) { 
+	        var trHTMLdett = '';
+	        var trHTMLdettTit = '';
+	    	 
+
+	    	   
+	  	  $.each(response, function (i, articleDett) {
+	  		if(articleDett.title=='ERRORE'){
+		  	
+	  			 trHTMLdett='';
+	  			 trHTMLdettTit = '';
+				$("#metadatiVisFascicoloFad").append("<div class=rowD  align=center><strong>Errore nel recupero dei dati  </strong></div>");
+			}else {
+
+				size2=$("#title_modalVis_0").length;
+				if( size2>0  ) {	
+					$("#title_modalVis_0").empty();
+				}
+
+				trHTMLdettTit='<div id=title_modal_1 class=bg-tono0><strong>Documento Fad: '+ (articleDett.descFilename==null?'':articleDett.descFilename) + '</strong></div>';
+ 		  	    
+		  		trHTMLdett =  '<div class=rowD><strong>Tipo Documento: </strong>' + (articleDett.tipoDocumento.id==null?'':articleDett.tipoDocumento.id)+ '</div>'+
+		  		' <div class=rowD><strong>Descrizione: </strong>' + (articleDett.textDescrizione==null?'':articleDett.textDescrizione)+ '</div>'+
+		  		' <div class=rowD><strong>Amministrazione: </strong>' + ( articleDett.anagAmminDem.amminWithDesc==null?'':articleDett.anagAmminDem.amminWithDesc) + '</div>'+
+		  	    <%--' <div class=rowD><strong>UCB / RTS: </strong>' + ( articleDett.anagRagionerieDem.descRag==null?'':articleDett.anagRagionerieDem.descRag) + '</div>'+--%>
+		  	    <%--' <div class=rowD><strong>Titolo:  </strong>' + ( articleDett.numeTitolo==null?'':articleDett.numeTitolo) + '</div>'+--%>
+			  	' <div class=rowD><strong>Data Arrivo DEMBIL:  </strong>' + ( articleDett.dataArrivoFormatted==null?'':articleDett.dataArrivoFormatted) + '</div>'+
+			  	' <div class=rowD><strong>Stato Conversione:  </strong>' + ( articleDett.statConversione==null?'':articleDett.statConversione) + '</div>'+
+			  	' <div class=rowD><strong>Esito Conversione:  </strong>' + ( articleDett.statEsitoConversione==null?'':articleDett.statEsitoConversione) + '</div>';<%--+
+			  	' <div class=rowD><strong>Metodo Firma:  </strong>' + ( articleDett.anagMetodoFirma.descMetodoFirma==null?'':articleDett.anagMetodoFirma.descMetodoFirma) + '</div>'+
+			  	' <div class=rowD><strong>Ufficio Associato: </strong>' + ( articleDett.fascicoli.ufficioCreatore.descUfficio==null?'':articleDett.fascicoli.ufficioCreatore.descUfficio) + '</div>'+
+		  		' <div class=rowD><strong>Data Creazione:  </strong>' + ( articleDett.fascicoli.dataCreazioneFascicoloFormatted==null?'': articleDett.fascicoli.dataCreazioneFascicoloFormatted) + '</div>'+
+		  		' <div class=rowD><strong>Utente Assegnatario: </strong>' + ( articleDett.fascicoli.descUtenteCreatore==null?'':articleDett.fascicoli.descUtenteCreatore) + '</div>';--%>
+				
+	  			$("#title_modalVis_0").append(trHTMLdettTit);
+ 	  			$("#metadatiVisFascicoloFad").append(trHTMLdett);
+			}
+	  		
+	 
+	  	});
+
+
+	  	apriPopUpModale(toOpenDett);
+		
+	},
+
+	
+    error: function(){
+    	
+ 			$("#metadatiVisFascicoloFad").append("<div class=rowD align=center><strong>Errore nel recuperare i dati</strong></div>");
+			 
+			apriPopUpModale(toOpenDett);
+    } 
+
+	});
+
+
+}
+
+
+
+function confermaModaleDett() {
+
+	$('.overlay').fadeOut('fast');
+    $('.box').hide();
+	$('.box_meta').hide();
+}
+
+
+
+</script>
+
+ 
+ <%--**INIZIO MODALE--%>
+ <div>
+	<div id="contModalVis_0" class="box_meta">
+		<div  id="title_modalVis_0" > </div>
+		
+		<div>
+			<!-- MODAL TABLE-->
+			<div id="contentD">
+				<div class="portletContentD" id="metadatiVisFascicoloFad">
+										
+				</div>
+			</div>
+			
+			<div class="spacer_sm">&nbsp;</div>
+		</div>
+		
+		<div class="text-center">
+			<button type="button" class="button small " onClick="javascript:confermaModaleDett();">Torna alla lista</button>
+		</div>
+		
+		<p class="chiudi">Chiudi X</p>
+	</div>
+</div>
+    
+<!-- END MODALE Metadati Fascicolo Fad-->  
+      
+

@@ -1,0 +1,77 @@
+info.msgPrincipale=
+info.logout.success=E' stato eseguita l'uscita dall'applicazione.
+info.esci.success=E' stato eseguita l'uscita dall'applicazione.
+info.update.success=Aggiornamento effettuato correttamente.
+info.insert.success=Inserimento effettuato correttamente.
+info.noDataFound=Nessun elemento trovato
+info.importiNotaNotFound=Importi di nota non presenti
+info.rendiconto.requiredFields=* Campi di ricerca con operatori logici 'BETWEEN' e 'OR'. Immettere i valori separati da virgole o gli intervalli di valori separati da trattino.
+info.delete.success=Cancellazione effettuata correttamente.
+#### FONDI SPECIALI #### INIZIO ####
+## NUOVO FONDO ##
+info.aperturaNuovoFondo.ok=Schedulazione inserita con successo
+info.aperturaNuovoFondo.modifica=Schedulazione modificata con successo
+info.aperturaNuovoFondo.annulla=Schedulazione annullata
+info.aperturaNuovoFondo.trovata=Schedulazione gia' presente
+info.aperturaNuovoFondo.effettuato=Caricamento partite DLS effettuato il <b>{0}</b> alle {1}
+info.aperturaNuovoFondo.programmato=Caricamento partite DLS programmato per il {0}
+#### FONDI SPECIALI #### FINE ####
+## Partite ##
+info.Partite.dbk=Inserimento variazioni effettuato con successo.
+
+## TRASFORMAZIONE ACCANTONAMENTI ##
+info.trasformazione.accantonamenti.eseguito.competenza=Consultare il log <b>TRASFORMAZIONE_SST_COMPETENZA_PASS.log</b> per visualizzare eventuali errori in fase di trasformazione
+info.trasformazione.accantonamenti.eseguito.cassa=Consultare il log <b>TRASFORMAZIONE_SST_CASSA_PASS.log</b> per visualizzare eventuali errori in fase di trasformazione
+info.upload.success=Upload effettuato correttamente
+
+## MAIL ##
+info.funzione.non.autorizzata=La funzione non \u00E8 autorizzata ad inviare e-mail.
+info.msg.sent.succes=Il messagggio \u00E8 stato inviato correttamente
+
+## VERIFICA ##
+info.doc.verified=Il documento {0} \u00E8 stato verificato correttamente.
+info.doc.verified.and.msg.sent=Il documento {0} \u00E8 stato verificato correttamente. L&\#39 e-mail di avvenuta firma del documento \u00E8 stata inviata al destinatario {1}.
+
+## FIRMA ##
+info.doc.signed=Il documento {0} \u00E8 stato firmato correttamente.
+info.doc.signed.and.msg.sent=Il documento {0} \u00E8 stato firmato correttamente. L&\#39 e-mail di avvenuta firma del documento \u00E8 stata inviata al destinatario {1}.
+
+## SIGLA ##
+info.doc.initialed=Il documento {0} \u00E8 stato siglato correttamente.
+info.doc.initialed.and.msg.sent=Il documento {0} \u00E8 stato siglato correttamente. L&\#39 e-mail di avvenuta firma del documento \u00E8 stata inviata al destinatario {1}.
+
+#Creazione Fad
+info.crea.fad.success=Creazione FAD effettuata correttamente.
+
+#Gestione Tipologia Decreto
+info.create.tipologia.decreto.success=Creazione Tipologia Decreto effettuata correttamente.
+info.delete.tipologia.decreto.success=Cancellazione Tipologia Decreto effettuata correttamente.
+info.update.tipologia.decreto.success=Modifica Tipologia Decreto effettuata correttamente.
+
+## INVIO ALLE FIRME ##
+info.doc.inSignature=Il documento \u00E8 stato inviato alle firme
+info.doc.inSignature.and.msg.sent=Il documento \u00E8 stato inviato alle firme ed \u00E8 stata inviata l&\#39 e-mail di notifica al primo firmatario. 
+
+## SOSPENSIONE FIRME ##
+info.doc.signingSuspended.and.msg.sent=La firma del documento \u00E8 stata sospesa. L&\#39 e-mail di sospensione firma del documento \u00E8 stata inviata
+info.doc.signingSuspended=La firma del documento \u00E8 stata sospesa
+
+## REVOCA SOSPENSIONE FIRME ##
+info.doc.suspensionSignaturesRevoked.and.msg.sent=La sospensione della firma del documento \u00E8 stata revocata. L&\#39 e-mail di revoca sospensione firma del documento \u00E8 stata inviata
+info.doc.suspensionSignaturesRevoked=La sospensione della firma del documento \u00E8 stata revocata
+
+## CREA PIN  ##
+info.create.pin.success=Codice Pin creato correttamente.
+
+#Gestione Workflow Firme
+info.create.modello.iter.success=Creazione Modello Iter effettuata correttamente.
+info.delete.modello.iter.success=Cancellazione Modello Iter effettuata correttamente.
+info.update.modello.iter.success=Modifica Modello Iter effettuata correttamente.
+info.delete.firmatario.iter.success=Cancellazione Firmatario effettuata correttamente.
+info.save.ordine.iter.success=Modifica elenco Firmatari effettuata correttamente.
+
+#Associazione a FAD
+info.doc.sent=Documenti inviati: {0}
+
+info.delete.utente.success=Cancellazione Utente effettuata correttamente
+info.utente.codice.presente=Utente recuperato correttamente

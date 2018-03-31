@@ -1,0 +1,161 @@
+/**
+ * 
+ */
+package it.mef.bilancio.demdec.web.spring.validator;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import it.almavivaitalia.bsn.sh.utils.StringUtil;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.manager.RicercaRedManager;
+import it.mef.bilancio.demdec.to.FascicoliTO;
+import it.mef.bilancio.demdec.to.FascicoliViewTO;
+import it.mef.bilancio.demdec.web.spring.form.RicercaRedForm;
+
+/**
+ * @author utente
+ *
+ */
+public class RicercaRedValidator extends AbstractDemValidator {
+
+	@Autowired
+	private RicercaRedManager ricercaRedManager;
+	
+	public boolean ricercaRed(Context context) throws Throwable {
+		
+		RicercaRedForm form = (RicercaRedForm)context.getForm();
+//		boolean res=true;
+		
+//		String annoEsercizio=form.getAnnoEse();
+//		String protocolloRed=form.getProtocolloRed();
+//		String amministrazione=form.getAmministrazione();
+		String dataRedDa=form.getDataRedDa();
+		String dataRedA=form.getDataRedA();
+		String dataArrivoDa=form.getDataArrivoDa();
+		String dataArrivoA=form.getDataArrivoA();
+		
+		
+		if(	!dataRedDa.equals("")){
+			checkDate(context, dataRedDa, "label.dataRedDa");
+		}
+		if(	!dataRedA.equals("")){
+			checkDate(context, dataRedA, "label.dataRedA");
+		}
+		if(	!dataArrivoDa.equals("")){
+			checkDate(context, dataArrivoDa, "label.dataArrivoDa");
+		}
+		if(	!dataArrivoA.equals("")){
+			checkDate(context, dataArrivoA, "label.dataArrivoA");
+		}
+		
+		return  !context.hasErrors();
+	}
+	
+	
+	public boolean inviaAFad(Context context) throws Throwable {
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+		
+		
+		String [] checkboxes=form.getSelezioniDocumentiFasc();
+		
+		if(checkboxes!=null && checkboxes.length==0){
+			context.addError("error.selection.doc");
+		}
+		
+		
+		String  tipoAllegato=null;
+		if(checkboxes!=null) {
+			for (int i = 0; i < checkboxes.length; i++) {
+				    tipoAllegato=context.getRequest().getParameter("tipoAllegati"+checkboxes[i]);			
+					if (tipoAllegato==null || tipoAllegato.equals("")){
+						//context.addError("error.generic", "Per gli elementi selezionati il tipo allegato deve essere valorizzato");	
+						context.addError( "error.selection.tipoAllegato");	
+						break;				
+					}			
+			}
+		}
+		
+		
+		String tipo=form.getTipoFlusso();
+		String numero=form.getNumero();
+		String annoEse=form.getAnnoEse();
+		Integer anno2=null;
+		   Integer numero2=null;
+		   Integer tipo2=null;		   
+		   if(tipo==null || tipo.equals("")){
+			   tipo2=null;
+		   }
+		   if(annoEse==null || annoEse.equals("")){
+			   anno2=null;
+		   }
+		   if(numero==null || numero.equals("")){
+			   numero2=null;
+		   }		   
+		   try{
+			   anno2=new Integer(annoEse);
+			  
+		   }catch (NumberFormatException exc){			   
+		   }
+		   try{
+			   numero2=new Integer(numero);
+		   }catch (NumberFormatException exc){			   
+		   }
+		   try{
+			   tipo2=new Integer(tipo);
+		   }catch (NumberFormatException exc){			   
+		   }
+		
+		if(   StringUtil.isEmpty(tipo)   ||  StringUtil.isEmpty(numero) || StringUtil.isEmpty(annoEse) ) {			
+			context.addError( "error.inviaAFad.invalid");
+		} else {
+			 List<FascicoliViewTO> fascicoli=ricercaRedManager.findFascicoloByTipoNumAnnoStato(anno2, tipo2, numero2);
+				
+			 if(fascicoli==null || fascicoli.size()==0){
+				 	context.addError("error.inviaAFad.inexistent");
+				 	//return 	documentiFascicolo; 
+			 }
+		}
+		
+		
+//		
+//		Enumeration enumer=context.getRequest().getParameterNames();
+//		String nomePar=null;
+//		while(enumer.hasMoreElements()){
+//		 nomePar=(String)enumer.nextElement();
+//		 System.out.println(nomePar);
+//		}
+//		
+//		int indice=0;
+//		String valCheckbox=context.getRequest().getParameter("selezioniDocumentiFasc"+indice);
+//		String tipoAllegato=null;
+//		while(valCheckbox!=null){
+//			tipoAllegato=context.getRequest().getParameter("tipoAllegati"+valCheckbox);
+//			if (tipoAllegato==null || tipoAllegato.equals("")){
+//				//context.addError("error.generic", "Per gli elementi selezionati il tipo allegato deve essere valorizzato");	
+//				context.addError( "error.selection.tipoAllegato");	
+//				break;				
+//			}	
+//			indice++;
+//			valCheckbox=context.getRequest().getParameter("selezioniDocumentiFasc"+indice);
+//			
+//		}
+		
+		return  !context.hasErrors();
+	
+	}
+	
+	
+	public boolean onCaricaAmministrazioni(Context context) throws Throwable {
+		RicercaRedForm form= (RicercaRedForm) context.getForm();
+		String annoEse=form.getAnnoEse();
+		if(annoEse==null || annoEse.equalsIgnoreCase("") ){
+			context.addError( "error.esercizioNull");	
+		}
+		
+		return  !context.hasErrors();
+	}
+	
+	
+}

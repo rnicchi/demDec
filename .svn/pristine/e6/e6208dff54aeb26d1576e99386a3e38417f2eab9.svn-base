@@ -1,0 +1,67 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagFirmatariBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagRagionerieDemBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagRagionerieDemBOId;
+import it.almavivaitalia.bilancio.commons.bo.DescDocumentoBO;
+import it.almavivaitalia.bilancio.commons.bo.DocumentiBO;
+import it.almavivaitalia.bilancio.commons.bo.DocumentiBOId;
+import it.almavivaitalia.bilancio.commons.bo.FascicoliBO;
+import it.almavivaitalia.bilancio.commons.bo.TipoDocumentoBO;
+import it.almavivaitalia.bilancio.commons.manager.CronologicoManager;
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bilancio.commons.to.AnagUfficiTO;
+import it.almavivaitalia.bilancio.commons.to.CroTransTO;
+import it.almavivaitalia.bilancio.commons.to.CronoValoriTO;
+import it.almavivaitalia.bsn.sh.utils.TraceLogger;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.EsitoOperazione_type;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.TipoOperazione_type;
+import it.mef.bilancio.demdec.dao.AmminRagDemDao;
+import it.mef.bilancio.demdec.dao.AnagFirmatariDao;
+import it.mef.bilancio.demdec.dao.AnagRagionerieDemDao;
+import it.mef.bilancio.demdec.dao.DocumentiDao;
+import it.mef.bilancio.demdec.dao.FascicoloDao;
+import it.mef.bilancio.demdec.dao.TipoDocumentoDao;
+import it.mef.bilancio.demdec.manager.AttivazioneMailManager;
+import it.mef.bilancio.demdec.manager.UploadDecManager;
+import it.mef.bilancio.demdec.servizi.client.DEMBILConstants;
+import it.mef.bilancio.demdec.servizi.client.InterfacciaAttoDecretoDEMBILClient;
+import it.mef.bilancio.demdec.servizi.client.ParametriInput;
+import it.mef.bilancio.demdec.servizi.client.RequestDEMBILClient;
+import it.mef.bilancio.demdec.servizi.client.ResponseDEMBILClient;
+import it.mef.bilancio.demdec.servizi.client.UtilRequestClient;
+import it.mef.bilancio.demdec.servizi.to.DocumentFileTO;
+import it.mef.bilancio.demdec.servizi.to.DocumentTO;
+import it.mef.bilancio.demdec.servizi.to.EsitoTO;
+import it.mef.bilancio.demdec.to.AmminRagDemTO;
+import it.mef.bilancio.demdec.to.AnagFirmatariTO;
+import it.mef.bilancio.demdec.to.DocumentiTO;
+import it.mef.bilancio.demdec.to.FascicoliTO;
+import it.mef.bilancio.demdec.to.TipoDocumentoTO;
+import it.mef.bilancio.demdec.utils.Constants;
+import it.mef.bilancio.demdec.utils.FileUtil;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.List;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.sax.BodyContentHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class AttivazioneMailManagerImpl extends AbstractDemManagerImpl implements AttivazioneMailManager	{
+	
+	@Autowired
+	private AnagFirmatariDao  anagFirmatariDao;
+	
+	
+	
+	@Override
+	public List<AnagFirmatariTO> loadDestinatariMail(Integer flag)  throws Throwable {
+		
+		return getDozerDriver().mapList(anagFirmatariDao.loadDestinatariMail(flag) ,AnagFirmatariTO.class,"AnagFirmatari");
+	}
+}

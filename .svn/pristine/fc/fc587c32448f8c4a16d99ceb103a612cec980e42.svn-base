@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd 
+">
+
+	<bean id="sessionFactory" lazy-init="false"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="${datasource.oracle}" />
+		<property name="mappingResources">
+			<list>								
+				
+				
+<!-- ======================================================================================
+								Commons HBM 
+					Sono gli hbm comuni che devono sempre
+					essere definiti. Servono per il login,
+					per la navigazione e per il menu
+======================================================================================== -->	
+
+				<value>it/almavivaitalia/bilancio/commons/bo/ActionBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/ItemBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/MenuBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/ProfiloBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/UtenteBO.hbm.xml</value>									
+				<value>it/almavivaitalia/bilancio/commons/bo/UtenteProfiloBO.hbm.xml</value>									
+
+				<value>it/almavivaitalia/bilancio/commons/bo/AnagAmminDemBO.hbm.xml</value>									
+				<value>it/almavivaitalia/bilancio/commons/bo/AnagCdrDemBO.hbm.xml</value>									
+				<value>it/almavivaitalia/bilancio/commons/bo/AnagFirmatariBO.hbm.xml</value>									
+				<value>it/almavivaitalia/bilancio/commons/bo/AnagMetodoFirmaBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/AnagModelliIterBO.hbm.xml</value>	
+				<value>it/almavivaitalia/bilancio/commons/bo/AmminRagDemBO.hbm.xml</value>								
+				<value>it/almavivaitalia/bilancio/commons/bo/AnagRagionerieDemBO.hbm.xml</value>									
+				<value>it/almavivaitalia/bilancio/commons/bo/AnagStatoFascicoloBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/AnagTipoDecretoBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/AnagTipoFlussoBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/AnagTipologiaDecretoBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/AnagUfficiBO.hbm.xml</value>									
+				<value>it/almavivaitalia/bilancio/commons/bo/EserciziDemBO.hbm.xml</value>
+
+				<value>it/almavivaitalia/bilancio/commons/bo/FascicoliBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/DocumentiBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/DescDocumentoBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/DocumentiRedBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/IterFirmaBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/IterFirmaDecretoBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/MailTestiBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/PecMessaggiInviatiBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/PecNotificheBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/SospesiRedBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/SottoFascicoliRedBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/TipoDocumentoBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/AnagAmminUfficiBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/LettereIgbBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/LettereTestiBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/LettereTestiPersBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/AnagTipologiaTagliaBO.hbm.xml</value>
+				
+
+				<!-- CRONOLOGICO -->
+				<value>it/almavivaitalia/bilancio/commons/bo/CroCodiciBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/CroDatiBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/CroTransBO.hbm.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/bo/CroValoriBO.hbm.xml</value>
+				
+				<value>it/almavivaitalia/bilancio/commons/bo/MonitoraggioFirmaBO.hbm.xml</value>
+ 				
+ <!--
+-->				
+<!-- ======================================================================================
+						In questa sezione vanno definiti SOLO gli 
+						HBM necessari per la funzione della
+						web application
+======================================================================================== -->
+<!-- ======================================================================================
+									COMMONS NAMED QUERIES
+======================================================================================== -->				
+				<value>it/almavivaitalia/bilancio/commons/hql/ActionBO.hql.xml</value>				
+				<value>it/almavivaitalia/bilancio/commons/hql/IterFirmaDecretoBO.hql.xml</value>	
+				<value>it/almavivaitalia/bilancio/commons/hql/TabServBO.hql.xml</value>	
+				<value>it/almavivaitalia/bilancio/commons/hql/DocumentiBO.hql.xml</value>
+				<value>it/almavivaitalia/bilancio/commons/hql/UtenteBO.hql.xml</value>			
+				<value>it/almavivaitalia/bilancio/commons/hql/FascicoliBO.hql.xml</value>			
+ 
+<!--					<value>it/almavivaitalia/bilancio/commons/hql/VociMenuBO.hql.xml</value>  -->				
+				
+<!-- ======================================================================================
+									NAMED QUERIES
+						In questa sezione vanno definiti gli XML che 
+						contengono le named queries definiti 
+						come xxx.hql.xml
+======================================================================================== -->
+
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+			</props>
+		</property>
+	</bean>	
+
+	<bean id="abstractCommonDao" lazy-init="true" abstract="true" parent="abstractDao" class="it.almavivaitalia.bilancio.commons.dao.impl.AbstractCommonDaoImpl"/>
+	<bean id="abstractDemDao"  			class="it.mef.bilancio.demdec.dao.impl.AbstractDemDaoImpl"				parent="abstractCommonDao" 		lazy-init="true" abstract="true" 		/>
+	
+<!-- ======================================================================================
+					Commons DAO 
+		Sono i DAO comuni che devono sempre
+		essere definiti. Servono per il login,
+		per la navigazione e per il menu
+======================================================================================== -->
+	
+	<bean id="actionDao" 				class="it.almavivaitalia.bilancio.commons.dao.impl.ActionDaoImpl"		parent="abstractCommonDao" 		lazy-init="false"/>
+	<bean id="itemDao" 					class="it.almavivaitalia.bilancio.commons.dao.impl.ItemDaoImpl"			parent="abstractCommonDao" 		lazy-init="false"/>
+	<bean id="menuDao" 					class="it.almavivaitalia.bilancio.commons.dao.impl.MenuDaoImpl"			parent="abstractCommonDao" 		lazy-init="false"/>
+	<bean id="profiloDao" 				class="it.almavivaitalia.bilancio.commons.dao.impl.ProfiloDaoImpl"		parent="abstractCommonDao" 		lazy-init="false"/>
+	<bean id="utenteDao" 				class="it.almavivaitalia.bilancio.commons.dao.impl.UtenteDaoImpl"		parent="abstractCommonDao" 		lazy-init="false"/>
+	<bean id="tabServDao" 				class="it.almavivaitalia.bilancio.commons.dao.impl.TabServDaoImpl"		parent="abstractCommonDao" 		lazy-init="false"/>
+	<bean id="eserciziDao" 				class="it.almavivaitalia.bilancio.commons.dao.impl.EserciziDaoImpl" 	parent="abstractCommonDao" 		lazy-init="false"/>
+	<bean id="fascicoloDao" 			class="it.mef.bilancio.demdec.dao.impl.FascicoloDaoImpl" 	            parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="strumentoDemDao" 			class="it.mef.bilancio.demdec.dao.impl.StrumentoDemDaoImpl" 			parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="pecMessaggiInviatiDao"	class="it.mef.bilancio.demdec.dao.impl.PecMessaggiInviatiDaoImpl" 		parent="abstractDemDao"			lazy-init="true"/>
+	<bean id="mailTestiDao"				class="it.mef.bilancio.demdec.dao.impl.MailTestiDaoImpl" 				parent="abstractDemDao"			lazy-init="true"/>
+	<bean id="eserciziDemDao" 			class="it.mef.bilancio.demdec.dao.impl.EserciziDemDaoImpl" 				parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="anagAmminDemDao" 			class="it.mef.bilancio.demdec.dao.impl.AnagAmminDemDaoImpl" 			parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="anagUfficiDao" 			class="it.mef.bilancio.demdec.dao.impl.AnagUfficiDaoImpl" 				parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="anagStatoFascicoloDao" 	class="it.mef.bilancio.demdec.dao.impl.AnagStatoFascicoloDaoImpl" 		parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="anagCdrDemDao" 		    class="it.mef.bilancio.demdec.dao.impl.AnagCdrDemDaoImpl" 				parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="amminRagDemDao" 		    class="it.mef.bilancio.demdec.dao.impl.AmminRagDemDaoImpl" 				parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="iterFirmaDecretoDao"		class="it.mef.bilancio.demdec.dao.impl.IterFirmaDecretoDaoImpl"			parent="abstractDemDao" 		lazy-init="true"/>
+	<bean id="anagTipoDecretoDao" 		class="it.mef.bilancio.demdec.dao.impl.AnagTipoDecretoDaoImpl" 			parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="documentiDao"				class="it.mef.bilancio.demdec.dao.impl.DocumentiDaoImpl"				parent="abstractDemDao" 		lazy-init="true"/>
+	<bean id="sospesoRedDao" 			class="it.mef.bilancio.demdec.dao.impl.SospesoRedDaoImpl"				parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="anagTipologiaDecretoDao"	class="it.mef.bilancio.demdec.dao.impl.AnagTipologiaDecretoDaoImpl"		parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="sottoFascicoliRedDao"		class="it.mef.bilancio.demdec.dao.impl.SottoFascicoliRedDaoImpl"		parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="invioAlleFirmeDao"		class="it.mef.bilancio.demdec.dao.impl.InvioAlleFirmeDaoImpl"		    parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="anagTipoFlussoDao"		class="it.mef.bilancio.demdec.dao.impl.AnagTipoFlussoDaoImpl"		    parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="documentiRedDao"		    class="it.mef.bilancio.demdec.dao.impl.DocumentiRedDaoImpl"		        parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="anagModelliIterDao"		class="it.mef.bilancio.demdec.dao.impl.AnagModelliIterDaoImpl"		    parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="tipoDocumentoDao"		    class="it.mef.bilancio.demdec.dao.impl.TipoDocumentoDaoImpl"		    parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="vBilDecretiDao"		    class="it.mef.bilancio.demdec.dao.impl.VBilDecretiDaoImpl"  			parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="anagRagionerieDemDaoImpl" class="it.mef.bilancio.demdec.dao.impl.AnagRagionerieDemDaoImpl"  		parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="iterFirmaDao"		    	class="it.mef.bilancio.demdec.dao.impl.IterFirmaDaoImpl"  				parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="anagFirmatariDao"		   	class="it.mef.bilancio.demdec.dao.impl.AnagFirmatariDaoImpl"  			parent="abstractDemDao"			lazy-init="false"/>
+	
+	<bean id="croDatiDao" 				class="it.almavivaitalia.bilancio.commons.dao.impl.CroDatiDaoImpl"		parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="croTransDao" 				class="it.almavivaitalia.bilancio.commons.dao.impl.CroTransDaoImpl"		parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="croCodiciDao" 			class="it.almavivaitalia.bilancio.commons.dao.impl.CroCodiciDaoImpl"	parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="croValoriDao" 			class="it.almavivaitalia.bilancio.commons.dao.impl.CroValoriDaoImpl"	parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="croFunzCampiDao" 			class="it.almavivaitalia.bilancio.commons.dao.impl.CroFunzCampiDaoImpl"	parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="utenteProfiloDao" 		class="it.almavivaitalia.bilancio.commons.dao.impl.UtenteProfiloDaoImpl" parent="abstractCommonDao" 	lazy-init="false"/>
+	<bean id="descDocumentoDao" 		class="it.mef.bilancio.demdec.dao.impl.DescDocumentoDaoImpl" 			parent="abstractDemDao" 		lazy-init="false"/>
+	<bean id="profiloActionDao" 		class="it.almavivaitalia.bilancio.commons.dao.impl.ProfiloActionDaoImpl" parent="abstractCommonDao" 	lazy-init="false"/>
+	<bean id="monitoraggioFirmaDao"		class="it.mef.bilancio.demdec.dao.impl.MonitoraggioFirmaDaoImpl"  	    parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="intCronologicoDao" 		class="it.mef.bilancio.demdec.dao.impl.IntCronologicoDaoImpl" 			parent="abstractCommonDao" 		lazy-init="false"/>
+	<bean id="lettereTestiDao"		    class="it.mef.bilancio.demdec.dao.impl.LettereTestiDaoImpl"  	        parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="lettereIgbDao"		    class="it.mef.bilancio.demdec.dao.impl.LettereIgbDaoImpl"  	        	parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="lettereTestiPersDao"		class="it.mef.bilancio.demdec.dao.impl.LettereTestiPersDaoImpl"    	    parent="abstractDemDao"			lazy-init="false"/>
+
+	<bean id="anagTipologiaTagliaDao"	class="it.mef.bilancio.demdec.dao.impl.AnagTipologiaTagliaDaoImpl"		parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="partecipazioniDao"		class="it.mef.bilancio.demdec.dao.impl.PartecipazioniDaoImpl"    	    parent="abstractDemDao"			lazy-init="false"/>
+	<bean id="riepilogoAdDemDao" 		class="it.mef.bilancio.demdec.dao.impl.RiepilogoAdDemDaoImpl" 			parent="abstractDemDao" 		lazy-init="false"/>
+<!--  <bean id="selectorDao" 		class="it.almavivaitalia.bilancio.commons.dao.impl.SelectorDaoImpl" 	parent="abstractDao" 		lazy-init="false"/> 	
+	
+-->
+<!-- DAOs 	
+======================================================================================= -->
+	
+</beans>

@@ -1,0 +1,90 @@
+info.msgPrincipale=
+info.logout.success=E' stato eseguita l'uscita dall'applicazione.
+info.esci.success=E' stato eseguita l'uscita dall'applicazione.
+info.update.success=Aggiornamento effettuato correttamente.
+info.insert.success=Inserimento effettuato correttamente.
+info.noDataFound=Nessun elemento trovato
+info.importiNotaNotFound=Importi di nota non presenti
+info.rendiconto.requiredFields=* Campi di ricerca con operatori logici 'BETWEEN' e 'OR'. Immettere i valori separati da virgole o gli intervalli di valori separati da trattino.
+info.delete.success=Cancellazione effettuata correttamente.
+info.success=Operazione eseguita con successo.
+info.upload.success=Caricamento eseguito con successo.
+## MAIL ##
+info.funzione.non.autorizzata=La funzione non \u00E8 autorizzata ad inviare e-mail.
+info.msg.sent.succes=Il messaggio \u00E8 stato inviato correttamente
+
+## VERIFICA ##
+info.doc.verified=Il decreto {0} \u00E8 stato verificato correttamente.
+info.doc.verified.and.msg.sent=Il decreto {0} \u00E8 stato verificato correttamente. L&\#39 e-mail di notifica \u00E8 stata inviata a\: {1}.
+
+## FIRMA ##
+info.doc.signed=Il decreto {0} \u00E8 stato firmato correttamente.
+info.doc.signed.and.msg.sent=Il decreto {0} \u00E8 stato firmato correttamente. L&\#39 e-mail di notifica \u00E8 stata inviata a\: {1}.
+
+## SIGLA ##
+info.doc.initialed=Il decreto {0} \u00E8 stato siglato correttamente.
+info.doc.initialed.and.msg.sent=Il decreto {0} \u00E8 stato siglato correttamente. L&\#39 e-mail di notifica \u00E8 stata inviata a\: {1}.
+
+## BOLLINA ##
+info.doc.bollinato=Il decreto {0} \u00E8 stato bollinato correttamente.
+info.doc.bollinato.and.msg.sent=Il decreto {0} \u00E8 stato bollinato correttamente. L&\#39 e-mail di notifica \u00E8 stata inviata a\: {1}.
+
+
+#Creazione Fad
+info.crea.fad.success=Creazione FAD effettuata correttamente.
+
+#Gestione Tipologia Decreto
+info.create.tipologia.decreto.success=Creazione Tipologia Decreto effettuata correttamente.
+info.delete.tipologia.decreto.success=Cancellazione Tipologia Decreto effettuata correttamente.
+info.update.tipologia.decreto.success=Modifica Tipologia Decreto effettuata correttamente.
+
+## INVIO ALLE FIRME ##
+info.doc.inSignature=Il documento \u00E8 stato inviato alle firme
+info.doc.inSignature.and.msg.sent=Il documento \u00E8 stato inviato alle firme ed \u00E8 stata inviata l&\#39 e-mail di notifica al primo firmatario. 
+
+## SOSPENSIONE FIRME ##
+info.doc.signingSuspended.and.msg.sent=La firma del documento \u00E8 stata sospesa. L&\#39 e-mail di sospensione firma del documento \u00E8 stata inviata
+info.doc.signingSuspended=La firma del documento \u00E8 stata sospesa
+
+## REVOCA SOSPENSIONE FIRME ##
+info.doc.suspensionSignaturesRevoked.and.msg.sent=La sospensione della firma del documento \u00E8 stata revocata. L&\#39 e-mail di revoca sospensione firma del documento \u00E8 stata inviata
+info.doc.suspensionSignaturesRevoked=La sospensione della firma del documento \u00E8 stata revocata
+
+## CREA PIN  ##
+info.create.pin.success=Codice PIN criptato correttamente.
+info.revoca.pin.success=Revoca PIN effettuata correttamente.
+
+#Gestione Workflow Firme
+info.create.modello.iter.success=Creazione Modello Workflow effettuata correttamente.
+info.delete.modello.iter.success=Cancellazione Modello Workflow effettuata correttamente.
+info.update.modello.iter.success=Modifica Modello Workflow effettuata correttamente.
+info.delete.firmatario.iter.success=Cancellazione Firmatario effettuata correttamente.
+info.save.ordine.iter.success=Modifica elenco Firmatari effettuata correttamente.
+
+#Associazione a FAD
+info.doc.sent=Documenti inviati: {0}
+
+info.delete.utente.success=Cancellazione Utente effettuata correttamente
+info.utente.codice.presente=Utente recuperato correttamente
+
+
+info.delete.profilo.success=Cancellazione Profilo effettuata correttamente
+
+info.delega.success=Operazione eseguita con successo.
+
+## RIELABORAZIONE FASCICOLO ##
+info.rielab.riapertura.success=Riapertura Fascicolo effettuata con successo
+info.rielab.sosp.success=Sospensione Fascicolo effettuata con successo
+info.rielab.revsosp.success=Revoca Sospensione Fascicolo effettuata con successo
+info.rielab.trasporto.success=Trasporto Variazioni Fascicolo effettuata con successo
+info.rielab.fascicolo.notFound=Nessun fascicolo trovato
+info.rielab.fascicolo.arrivo.notFound=Nessun fascicolo di arrivo trovato
+
+## ABILITAZIONE MAIL ##
+info.abilitazionemail.abilita=Abilitazione effettuata con successo
+info.abilitazionemail.disabilita=Disabilitazione effettuata con successo
+
+##INVIO PEC DI PARTECIPAZIONE##
+testoMailPec=SI COMUNICA CHE IN DATA {0} CON DECRETO n.{1} REGISTRATO DALLA CORTE DEI CONTI IN DATA {2} REGISTRAZIONE N.{3} DELL&\#39UFFICIO {4} SONO STATE APPORTATE AL BILANCIO PER L&\#39ESERCIZIO FINANZIARIO {5} LE VARIAZIONI COME DALL&\#39UNITA COPIA DEL DECRETO STESSO.
+oggettoMailPec=VARIAZIONI APPORTATE AL BILANCIO ESERCIZIO FINANZIARIO {0}
+valoreMancante=<b>***</b>

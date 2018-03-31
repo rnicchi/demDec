@@ -1,0 +1,73 @@
+<%@page import="it.almavivaitalia.web.sh.utils.ContextHelper"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="nssb"%>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%> 
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%> 
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+
+<!-- PageName = modificaTipologiaDecreto -->
+<nssb:useAttribute id="listaTipologiaDecreto" name="<%=SessionAttributes.LIST_ANAG_TIPOLOGIA_DECRETO%>"></nssb:useAttribute>
+<nssb:useAttribute id="listaModelliIter" name="<%=SessionAttributes.LIST_ANAG_MODELLI_ITER%>"></nssb:useAttribute>
+
+<div class="spacer_sm">&nbsp;</div>
+<div class="spacer_sm">&nbsp;</div>
+
+<c:if test="${not empty listaTipologiaDecreto}">
+	<div class="scroll_table_gen">
+
+		<div class="title_doc"><spring:message code="label.title.lista.tipologia.decreto"></spring:message></div>
+		<div class="spacer_sm">&nbsp;</div>
+		<div class="spacer_sm">&nbsp;</div>
+
+		<nssb:displaytag-table name="pageScope.listaTipologiaDecreto" id="listaTipologiaDecreto" class="width100" >
+			<display:caption>
+				<span class="nascosto"><strong> <spring:message code="label.title.lista.tipologia.decreto"></spring:message></strong></span>
+			</display:caption>
+
+			<nssb:displaytag-column>
+				<c:choose>
+					<c:when test="${listaTipologiaDecreto.id eq param.selectedTipologia }">
+						<input type="radio" name="selectedTipologia" value="${listaTipologiaDecreto.id}" checked="checked" />
+					</c:when>
+					<c:otherwise>
+						<input type="radio" name="selectedTipologia" value="${listaTipologiaDecreto.id}" />
+					</c:otherwise>
+				</c:choose>
+			</nssb:displaytag-column>
+			<nssb:displaytag-column titleKey="label.tipologia.decreto">
+				<c:choose>
+					<c:when test="${listaTipologiaDecreto.id eq param.selectedTipologia }">
+						<input class="obj_modify" type="text" name="descTipologia" value="<c:out value="${listaTipologiaDecreto.descTipologia}"/>" maxlength="80"/>
+					</c:when>
+					<c:otherwise>
+						<c:out value="${listaTipologiaDecreto.descTipologia}"/>
+					</c:otherwise>
+				</c:choose>
+			</nssb:displaytag-column>
+			<nssb:displaytag-column titleKey="label.modello.iter">
+				<c:choose>
+					<c:when test="${listaTipologiaDecreto.id eq param.selectedTipologia }">
+						<form:select class="obj_modify" path="modelloIter" >
+							<form:option value="" />
+							<c:forEach var="msg" items="${listaModelliIter}">
+								<form:option value="${msg.id}" >${msg.descIter} </form:option>
+							</c:forEach> 
+						</form:select> 
+					</c:when>
+					<c:otherwise>
+						<c:out value="${listaTipologiaDecreto.anagModelliIter.descIter}"/>
+					</c:otherwise>
+				</c:choose>
+			</nssb:displaytag-column>
+		</nssb:displaytag-table>
+	</div>
+	<br/><br/>
+	<div class="center small">
+	   	 <demdec:submit keyValue="label.confirm" controllerCode="confermaModificaDecreto" />
+	   	 <demdec:submit keyValue="label.back" controllerCode="back" />
+	</div>
+
+</c:if>

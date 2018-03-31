@@ -1,0 +1,64 @@
+package it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio;
+
+import java.util.List;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import it.almavivaitalia.bilancio.commons.manager.UtenteManager;
+import it.almavivaitalia.bilancio.commons.web.security.Utente;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.manager.AttivazioneMailManager;
+import it.mef.bilancio.demdec.manager.MailManager;
+import it.mef.bilancio.demdec.to.AnagFirmatariTO;
+import it.mef.bilancio.demdec.to.PecMessaggiInviatiTO;
+import it.mef.bilancio.demdec.utils.Constants;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.AbilitaInvioMailForm;
+import it.mef.bilancio.demdec.web.spring.form.CreaPinForm;
+import it.mef.bilancio.demdec.web.spring.form.MailForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+@RequestMapping(value = ConstantsRequestMapping.ABILITA_MAIL)
+public class AbilitaInvioMailController  extends AbstractDemFormController{
+	
+	private String startView;
+	
+	@Autowired
+	private AttivazioneMailManager attivazioneMailManager;
+	
+	public String getStartView() {
+		return startView;
+	}
+
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+	
+	@Override
+	public String startController(Context context) throws Throwable {
+		AbilitaInvioMailForm form= context.getForm();
+//		context.setCurrentNode("DemDec.menu.Servizi.CreaPin");
+		
+		List<AnagFirmatariTO> list=attivazioneMailManager.loadDestinatariMail(Constants.HAVE_PEO);
+		
+		
+		context.setDataModel(SessionAttributes.LIST_ANAG_FIRMATARI, list);
+		return startView;
+	}
+	
+	
+	
+	
+	
+	
+}

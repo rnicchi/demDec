@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+         xmlns:beans="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd
+                    http://www.springframework.org/schema/security
+                    http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+    <global-method-security secured-annotations="enabled" pre-post-annotations="enabled" jsr250-annotations="enabled">
+        <!-- AspectJ pointcut expression that locates our "post" method and applies security that way
+        <protect-pointcut expression="execution(* bigbank.*Service.post*(..))" access="ROLE_TELLER"/>
+        -->
+    </global-method-security>
+	
+	
+	<!-- filter none disabilita il preAuthenticatedProcessingFilterEntryPoint per il path specificato  
+		 access specifica quale ruolo ha accesso al path specificato -->
+    <http use-expressions="true" entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
+    	<intercept-url pattern="/*" filters="none" />
+    	<intercept-url pattern="/index.html" filters="none" />
+    	<intercept-url pattern="/login" filters="none" />
+    	<intercept-url pattern="/login.*" filters="none" />
+    	<intercept-url pattern="/login/*" filters="none" />
+    	<intercept-url pattern="**/js/**" filters="none" />
+    	<intercept-url pattern="**/css/**" filters="none" />
+    	<intercept-url pattern="**/img/**" filters="none" />
+    	<intercept-url pattern="**/model/**" filters="none" />
+        <intercept-url pattern="/*" filters="none" />
+        <intercept-url pattern="/index.html" filters="none"/>
+        <intercept-url pattern="/login" filters="none"/>
+        <intercept-url pattern="/login.*" filters="none"/>
+        <intercept-url pattern="/login/*" filters="none"/>
+        <intercept-url pattern="/**/js/**" filters="none"/>
+        <intercept-url pattern="/**/css/**" filters="none"/>
+        <intercept-url pattern="/**/img/**" filters="none"/>
+        <intercept-url pattern="/**/model/**" filters="none"/>
+        <intercept-url pattern="/public/**" filters="none"/>
+        <intercept-url pattern="/private/js/**" filters="none"/>
+        <intercept-url pattern="/private/model/**" filters="none"/>
+        <intercept-url pattern="/private/common/**" filters="none"/>
+        <intercept-url pattern="/public/**" access="permitAll"/>
+     	<intercept-url pattern="/private/**"  access="isAuthenticated()"/>
+     	
+   <!-- <intercept-url pattern="/oam*" access="permitAll" />
+        <intercept-url pattern="/esci*" access="permitAll" />
+     	<intercept-url pattern="/invalid*" access="permitAll" />
+        <intercept-url pattern="/secure/menu*" access="isAuthenticated()" />
+        
+
+        <intercept-url pattern="/secure/main/**" access="hasAnyRole('ROLE_168', 'ROLE_169')" />
+        <intercept-url pattern="/secure/interrogazioniModello/**" access="hasRole('ROLE_169')" />
+        <intercept-url pattern="/secure/gestModello/**" access="hasRole('ROLE_168')" />
+        <intercept-url pattern="/secure/calcolo/**" access="hasRole('ROLE_168')" />
+        <intercept-url pattern="/secure/export/**" access="hasRole('ROLE_168')" />
+ -->     
+        <!--  
+        <intercept-url pattern="/secure/main/**" access="hasAnyRole('ROLE_87', 'ROLE_175')" />
+        <intercept-url pattern="/secure/interrogazioniModello/**" access="hasRole('ROLE_175')" />
+        <intercept-url pattern="/secure/gestModello/**" access="hasRole('ROLE_87')" />
+        <intercept-url pattern="/secure/calcolo/**" access="hasRole('ROLE_87')" />
+        <intercept-url pattern="/secure/export/**" access="hasRole('ROLE_87')" />
+         -->
+    
+        <form-login login-page="/public/invalidSession.jsp" 
+                     authentication-failure-url="/public/invalidSession.jsp" />
+   
+      
+<!--
+    Uncomment to enable X509 client authentication support
+        <x509 />
+-->
+        <!-- Uncomment to limit the number of sessions a user can have -->
+        <session-management session-authentication-error-url="/public/invalidSession.jsp"/>
+        
+         <custom-filter position="PRE_AUTH_FILTER" ref="authenticationFilter"/>
+          
+    </http>
+
+    
+    <beans:bean id="authenticationFilter"
+            class="it.almavivaitalia.bilancio.commons.web.security.filters.PreAuthenticationFilter">
+        <beans:property name="authenticationManager" ref="authenticationManager"/>
+        <beans:property name="continueFilterChainOnUnsuccessfulAuthentication" value="true"/>
+    </beans:bean>
+
+    <beans:bean id="userService" class="it.almavivaitalia.bilancio.commons.web.security.AuthenticationService"/>
+
+    <beans:bean id="preAuthenticatedProcessingFilterEntryPoint"
+            class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
+
+    <beans:bean id="preauthAuthProvider"
+            class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider" >
+        <beans:property name="preAuthenticatedUserDetailsService" ref="userService"/>
+        <beans:property name="order" value="1"/>
+    </beans:bean>
+
+
+     <authentication-manager alias="authenticationManager">
+    	<authentication-provider ref='preauthAuthProvider'/>
+  	</authentication-manager>
+    
+ <!-- Automatically receives AuthenticationEvent messages -->
+   <beans:bean id="loggerListener" class="org.springframework.security.authentication.event.LoggerListener"/>
+</beans:beans>

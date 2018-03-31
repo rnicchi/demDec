@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://mef.gov.it.v1.demdec.internal/servizi/Common/HeaderAccessoApplicativo" xmlns:ns1="http://mef.gov.it.v1.demdec.internal/servizi/Common/HeaderAccessoApplicativo" xmlns:SOAP_ENV="http://schemas.xmlsoap.org/soap/envelope/" targetNamespace="http://mef.gov.it.v1.demdec.internal/servizi/Common/HeaderAccessoApplicativo" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://schemas.xmlsoap.org/soap/envelope/" schemaLocation="soapenv.xsd"/>
+	<xsd:element name="AccessoApplicativo">
+		<xsd:complexType>
+			<xsd:attribute name="Applicazione" type="xsd:string" use="required"/>
+			<xsd:attribute name="Servizio" type="xsd:string"/>
+			<xsd:attribute name="Client" type="xsd:string"/>
+			<xsd:attribute name="Utente" type="xsd:string" use="required"/>
+			<xsd:attribute name="Password" type="xsd:string" use="required"/>
+			<xsd:attribute name="OrgID" type="xsd:string"/>
+			<xsd:attribute name="TipoUtente" type="xsd:string"/>
+			<xsd:attribute ref="SOAP_ENV:actor" use="required" fixed="http://mef.gov.it.v1.demdec.internal/servizi/Common/HeaderAccessoApplicativo"/>
+			<xsd:attribute ref="SOAP_ENV:mustUnderstand" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

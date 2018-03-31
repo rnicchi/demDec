@@ -1,0 +1,61 @@
+<%@page import="it.almavivaitalia.web.sh.utils.ContextHelper"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.SessionAttributes"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="nssb"%>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%> 
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%> 
+<%@page import="it.almavivaitalia.bsn.sh.paginator.Paginator"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+
+
+
+
+<!-- PageName = mieiDocumentiBollinati.jsp -->
+<nssb:useAttribute id="paginator"     name="<%=SessionAttributes.OBJECT_PAGINATOR%>"/> 
+
+<nssb:useAttribute id="listMySignedDocuments" name="<%=SessionAttributes.LIST_MY_SIGNED_AD%>"/>
+
+<tiles:useAttribute name="action"/>
+
+<div>&nbsp;</div>
+<c:if test="${not empty listMySignedDocuments}">
+
+    <div class="title_doc"><spring:message code="label.title.list.AD.bollinati"></spring:message></div>
+	<div class="spacer_sm">&nbsp;</div>
+	<nssb:displaytag-table name="pageScope.listMySignedDocuments" id="listMySignedDocuments" class="lux width100">
+		<display:caption><span class="nascosto"><spring:message code="label.caption.list.AD.bollinati"/></span></display:caption>
+		<nssb:displaytag-column titleKey="label.tipo.file.pdf" title="label.tipo.file.pdf" style="text-align:center">
+			<demdec:linkButton styleClass="padd_sx_logo" action="${action}" imageKey="ico.download.pdf" parameter="download" parameterValue="${listMySignedDocuments_rowNum -1}" title="${listMySignedDocuments.descNomeDocumento}"/>
+		</nssb:displaytag-column>
+		<nssb:displaytag-column property="decreto" titleKey="label.decreto" title="label.decreto" style="text-align:center"/>
+		<nssb:displaytag-column property="fascicoli.descDecreto" titleKey="label.desc.decreto" title="label.desc.decreto" style="text-align:center"/>
+		<nssb:displaytag-column property="fascicoli.anagTipologiaDecreto.descTipologia" titleKey="label.tipologiaDecreto" title="label.tipologiaDecreto" style="text-align:center"/>
+		<nssb:displaytag-column property="descAmm" titleKey="label.amministrazione" title="label.amministrazione" style="text-align:center"/>
+	</nssb:displaytag-table>
+</c:if>
+
+<c:if test="${paginator ne null}">
+	 <div>&nbsp;</div>
+     <div class="center color_grey">
+         <nssb:paginator controllerCode="<%=Paginator.PARAMETER_PAGINATOR%>"
+         				 paginatorSessionName="<%=SessionAttributes.OBJECT_PAGINATOR%>"
+                         paginatorName="<%=Paginator.PAGINATOR_NAME%>"
+                         controllerCodeEnableDisablePagin="<%=Paginator.PARAMETER_ENABLE_DISABLE_PAGIN%>" 
+         />
+     </div>                       
+   
+
+    <div>&nbsp;</div>
+
+ </c:if>    
+    <div class="clear_both">&nbsp;</div>
+	    <div class="text-center">
+	    	<demdec:buttons>
+	    		<demdec:submit keyValue="button.back" controllerCode="back" styleClass="button small"/>
+	    	 </demdec:buttons>
+	    </div>
+    
+   
+   

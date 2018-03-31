@@ -1,0 +1,357 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagRagionerieDemBO;
+import it.almavivaitalia.bilancio.commons.bo.AnagRagionerieDemBOId;
+import it.almavivaitalia.bilancio.commons.bo.DescDocumentoBO;
+import it.almavivaitalia.bilancio.commons.bo.DocumentiBO;
+import it.almavivaitalia.bilancio.commons.bo.DocumentiBOId;
+import it.almavivaitalia.bilancio.commons.bo.FascicoliBO;
+import it.almavivaitalia.bilancio.commons.bo.TipoDocumentoBO;
+import it.almavivaitalia.bilancio.commons.manager.CronologicoManager;
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bilancio.commons.to.CroTransTO;
+import it.almavivaitalia.bilancio.commons.to.CronoValoriTO;
+import it.almavivaitalia.bsn.sh.utils.TraceLogger;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.EsitoOperazione_type;
+import it.gov.mef.demdec.servizi.dembil.interfacciadocumentaledembiltypes_1.TipoOperazione_type;
+import it.mef.bilancio.demdec.dao.AmminRagDemDao;
+import it.mef.bilancio.demdec.dao.AnagRagionerieDemDao;
+import it.mef.bilancio.demdec.dao.DocumentiDao;
+import it.mef.bilancio.demdec.dao.FascicoloDao;
+import it.mef.bilancio.demdec.dao.TipoDocumentoDao;
+import it.mef.bilancio.demdec.manager.UploadDecManager;
+import it.mef.bilancio.demdec.servizi.client.DEMBILConstants;
+import it.mef.bilancio.demdec.servizi.client.InterfacciaAttoDecretoDEMBILClient;
+import it.mef.bilancio.demdec.servizi.client.ParametriInput;
+import it.mef.bilancio.demdec.servizi.client.RequestDEMBILClient;
+import it.mef.bilancio.demdec.servizi.client.ResponseDEMBILClient;
+import it.mef.bilancio.demdec.servizi.client.UtilRequestClient;
+import it.mef.bilancio.demdec.servizi.to.DocumentFileTO;
+import it.mef.bilancio.demdec.servizi.to.DocumentTO;
+import it.mef.bilancio.demdec.servizi.to.EsitoTO;
+import it.mef.bilancio.demdec.to.AmminRagDemTO;
+import it.mef.bilancio.demdec.to.DocumentiTO;
+import it.mef.bilancio.demdec.to.FascicoliTO;
+import it.mef.bilancio.demdec.to.TipoDocumentoTO;
+import it.mef.bilancio.demdec.utils.Constants;
+import it.mef.bilancio.demdec.utils.FileUtil;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.sax.BodyContentHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class UploadDecManagerImpl extends AbstractDemManagerImpl
+		implements UploadDecManager {
+	
+	@Autowired
+	private FascicoloDao  fascicoloDao;
+	
+	@Autowired
+	private TipoDocumentoDao tipoDocumentoDao;
+	
+	@Autowired
+	private DocumentiDao documentiDao;
+	
+	@Autowired
+	private AnagRagionerieDemDao anagRagionerieDemDao;
+	
+	@Autowired
+	private AmminRagDemDao amminRagDemDao;
+	
+	@Autowired
+	private CronologicoManager cronologicoManager;
+	
+	@Override
+	public void caricaPdf( String originalFilename, InputStream is  /*CommonsMultipartFile file,JProspettiTO selected*/) throws Throwable {
+		TraceLogger.infoLog("Begin upload", UploadDecManagerImpl.class);
+		TraceLogger.infoLog("Original Filename "+originalFilename, UploadDecManagerImpl.class);
+		
+		final String pdfPath = "C:\\Sources";/*getParametro(selected.getStampe().getReport().getCodiReportPath());*/
+//		final String stp=it.almavivaitalia.bilancio.commons.utils.StringUtil.leftPad(selected.getId().getCodiAggr1(),2,"0");
+//		final String app=selected.getId().getCodiAggr2();
+		final String fileName=originalFilename;//selected.getStampe().getId()+"_"+stp+app+".pdf";
+		
+		TraceLogger.infoLog("Composed file name "+fileName, UploadDecManagerImpl.class);
+		TraceLogger.infoLog("Directory "+ pdfPath, UploadDecManagerImpl.class);
+		
+		FileUtil.saveFile(pdfPath+"/"+fileName, is);
+    	
+		TraceLogger.infoLog("End upload", UploadDecManagerImpl.class);
+	}
+
+	@Override
+	public String checkGuessedFileType( ArrayList<String> allowedContentType, String originalFilename, InputStream is) throws Throwable{
+
+//	    InputStream stream = file.getInputStream();
+	    AutoDetectParser parser = new AutoDetectParser();
+	    BodyContentHandler handler = new BodyContentHandler(-1); // limite settato in caratteri, -1 nessun limite
+	    Metadata metadata = new Metadata();
+//	    metadata.se
+	    String contentType;
+	    try {
+	        parser.parse(is, handler, metadata);
+//	        System.out.println( handler.toString());
+//	        System.out.println(metadata.get(Metadata.CONTENT_TYPE));
+	         contentType= metadata.get(Metadata.CONTENT_TYPE);
+	         TraceLogger.infoLog("contentType :"+contentType, UploadDecManagerImpl.class);
+	     // meno accurato e dà problemi con le librerie
+//	        Tika tika= new Tika();
+//	      System.out.println(tika.detect(stream));
+	        
+//	        Creata una lista con i ContentType consentiti
+	         
+//	        Con tika ci prendiamo il contentType del documento allegato
+//	        Tika tika = new Tika();
+//	        String contentType = tika.detect(attachment.getData());
+	         
+//	        Verifichiamo se presente nella lista dei contentType consentiti
+	        if(!allowedContentType.contains(contentType)){
+	            TraceLogger.infoLog("contentType not Allowed : "+contentType, UploadDecManagerImpl.class);
+	        	return Constants.NOT_ALLOWED;
+	        }
+	        
+	    }
+	    catch (Exception e){
+	    	TraceLogger.errorLog("File non parsabile da Tika", UploadDecManagerImpl.class, e);
+	    	return Constants.BAD_FILE;
+	    }
+	    
+	    finally {
+	        is.close();
+	    }
+        return contentType;
+	}
+	
+//	@Override  //configurazione con tika parsers
+//	public String renameToMatchingFileExt( HashMap<String, String> contentTypeExtensions,String contentType, String originalFilename  ) throws Throwable {
+//		//	   System.out.println( file.getName());// upfile
+//		TraceLogger.infoLog("original file name "+originalFilename, UploadDecManagerImpl.class); //x.xml
+//
+//		String nameToUpload= originalFilename;
+//		//     System.out.println(se.lastIndexOf("."));
+//		int extIndex=nameToUpload.lastIndexOf(".");
+//
+//		String ext= contentTypeExtensions.get(contentType);
+//		TraceLogger.infoLog("contentType:"+contentType+"  extension: " + ext,UploadDecManagerImpl.class);
+//		// file con estensione cambiata
+//		nameToUpload=ext==null?originalFilename:nameToUpload.substring(0, extIndex)+ext;
+//		TraceLogger.infoLog("nameToUpload "+nameToUpload, UploadDecManagerImpl.class);
+//		return nameToUpload;
+//	}
+	
+	
+	@Override 
+	public ResponseDEMBILClient uploadDocumento(DocumentTO  to,AnagAmminDemTO amm,FascicoliTO fascicoloTO, String tipoOperazione ) throws Throwable{
+		
+		ParametriInput parametri = leggiParametriInputDemBil();
+		InterfacciaAttoDecretoDEMBILClient interfaccia=new InterfacciaAttoDecretoDEMBILClient();
+		
+				
+		RequestDEMBILClient request =new RequestDEMBILClient(parametri, to,null);
+		request.setIdDocumentoOperazione(UtilRequestClient.createGuid().getGuid());
+		request.setTipoOperazioneDocumento(tipoOperazione);
+//		request.setTipoOperazioneDocumento(TipoOperazione_type._CONVERSIONE);
+		Hashtable<String, String> par = new Hashtable<String, String>();
+		request.setParametriOperazione(par);
+		ResponseDEMBILClient resp= interfaccia.addDocumentoFascicoloAttoDecreto(request);
+		
+		// TEST
+		//resp.getEsitoTo().setCodice("OK");
+		
+		if (resp.getEsitoTo().getCodice().equals(DEMBILConstants.ESITO_OK)){
+
+			DocumentTO outObj = (DocumentTO)resp.getOutputTO();
+			outObj.setDocumentoFileOperazione(new DocumentFileTO());
+			outObj.getDocumentoFileOperazione().setIdDocumento(request.getIdDocumentoOperazione());
+
+			saveDocumento ( outObj,  to, amm, fascicoloTO);
+		}
+		
+		return resp;
+	}
+	
+	@Override 
+	public ResponseDEMBILClient uploadDocumentoAttoDecreto(DocumentTO  to,AnagAmminDemTO amm,FascicoliTO fascicoloTO,FascicoliTO fascicoloTODelete, String tipoOperazione ) throws Throwable{
+		
+		EsitoTO esito = deleteDocumento(fascicoloTODelete);
+		
+		// PER TEST
+//		esito.setCodice("OK");
+		
+		ResponseDEMBILClient resp = null;
+		
+		if (esito.getCodice().equals(DEMBILConstants.ESITO_OK)){
+			ParametriInput parametri = leggiParametriInputDemBil();
+			InterfacciaAttoDecretoDEMBILClient interfaccia=new InterfacciaAttoDecretoDEMBILClient();
+					
+			RequestDEMBILClient request =new RequestDEMBILClient(parametri, to,null);
+			request.setIdDocumentoOperazione(UtilRequestClient.createGuid().getGuid());
+			
+			request.setTipoOperazioneDocumento(tipoOperazione);			
+//			request.setTipoOperazioneDocumento(TipoOperazione_type._CONVERSIONE);
+			Hashtable<String, String> par = new Hashtable<String, String>();
+			request.setParametriOperazione(par);
+			resp = interfaccia.addDocumentoFascicoloAttoDecreto(request);
+			
+			// TEST
+//			resp.getEsitoTo().setCodice("OK");
+			
+			if (resp.getEsitoTo().getCodice().equals(DEMBILConstants.ESITO_OK)){
+	
+				DocumentTO outObj=(DocumentTO) resp.getOutputTO();
+				outObj.setDocumentoFileOperazione(new DocumentFileTO());
+				outObj.getDocumentoFileOperazione().setIdDocumento(request.getIdDocumentoOperazione());
+				
+				saveDocumento ( outObj,  to, amm, fascicoloTO);
+			}
+		}
+		
+		return resp;
+	}
+	
+	@Override 
+	public List<FascicoliTO> findFascicoliFadStatusZero()	throws Throwable {
+		
+		
+		List<FascicoliBO>boList=fascicoloDao.findFascicoliFadStatusZero();
+		
+		return getDozerDriver().mapList(boList, FascicoliTO.class, "FascicoliFad");
+		
+	}
+	
+	@Override 
+	public FascicoliTO findFascicoliById(Long id ) throws Throwable {
+		
+		return getDozerDriver().map(fascicoloDao.loadById(id), FascicoliTO.class, "FascicoliFad");
+		
+	}
+	
+	@Override 
+	public TipoDocumentoTO loadTipoDocById(String id ) throws Throwable {
+		
+		return getDozerDriver().map(tipoDocumentoDao.loadbyTipoDocumento(id), TipoDocumentoTO.class, "TipoDocumento");
+		
+	}
+	
+	@Override 
+	public List<DocumentiTO> findDocumentiByTipoFascicolo(String tipo , Long idFascicolo ) throws Throwable {
+		
+		return getDozerDriver().mapList( documentiDao.findDocumentiByTipoFascicolo(tipo, idFascicolo),DocumentiTO.class,"Documenti");
+		
+	}
+	
+	
+	public void saveDocumento (DocumentTO outObj,DocumentTO  to,AnagAmminDemTO amm,FascicoliTO fascicoloTO) throws Throwable{
+		TraceLogger.infoLog("Begin saveDocumento", UploadDecManagerImpl.class);
+		DocumentiBO bo= new DocumentiBO();
+		DocumentiBOId boId= new DocumentiBOId();
+		boId.setNumeIdDocumento((Long)documentiDao.createNextIdDocumento(fascicoloTO.getId()));//documentiDao.generaId(DocumentiBO.class));
+		boId.setFkNumeIdFascicolo(fascicoloTO.getId());
+		bo.setId(boId);
+		
+		bo.setCodiGuidDocumentoOrig(outObj.getDocumentoContent().getIdDocumento());	
+		bo.setCodiGuidDocumento(outObj.getDocumentoFileOperazione()!=null?outObj.getDocumentoFileOperazione().getIdDocumento():outObj.getDocumentoContent().getIdDocumento());	
+		String codeAsString=outObj.getTipoDocumento().getCode();
+		TipoDocumentoBO tipo= tipoDocumentoDao.loadbyTipoDocumento(codeAsString);//new TipoDocumentoBO();
+		bo.setTipoDocumento(tipo);
+		bo.setStatDocumento(Constants.STATO_DOCUMENTO_INSERIMENTO);
+		bo.setStatConversione("0");// TODO non c'è sul servizio
+		bo.setStatEsitoConversione(outObj.getEsitoOperazione()!=null?outObj.getEsitoOperazione():EsitoOperazione_type.INSERITA.getValue());
+		bo.setCodiGuidFascicolo(to.getIdFascicolo());
+		
+		bo.setDescFilename(to.getDocumentoContent().getFileName());
+//		bo.setFlagVisibilitaCdc01(Constants.VISIBILE_CDC_NON_VISIBILE);
+		bo.setFlagVisibilitaCdc01(new Integer(1));
+		bo.setDataDocumento(Calendar.getInstance().getTime());
+		
+		if(amm != null){
+			AnagAmminDemBO ammBo=getDozerDriver().map(amm, AnagAmminDemBO.class, "AnagAmmin");
+			bo.setAnagAmminDem(ammBo);
+			AmminRagDemTO ragTo= getDozerDriver().map(amminRagDemDao.findAmminRagDemByAnagAmminDemTO(amm), AmminRagDemTO.class, "AmmRag");
+			
+			AnagRagionerieDemBOId ragBoId= new AnagRagionerieDemBOId();
+			ragBoId.setFkAnnoEse(ragTo.getId().getAnnoEse());
+			ragBoId.setNumeRag(Short.parseShort(ragTo.getId().getNumeRag()));
+			AnagRagionerieDemBO ragBo= anagRagionerieDemDao.loadById(AnagRagionerieDemBO.class, ragBoId);
+			bo.setAnagRagionerieDem(ragBo );
+		}
+		// Set campo descrizione documento
+//		bo.setTextDescrizione(to.getDocumentoContent().getDescrizione());
+		bo.setTextDescrizione(to.getDescrizione());
+		
+		DescDocumentoBO descDocBO = new DescDocumentoBO();
+		descDocBO.setId(to.getDescDocumento().getCode());
+		descDocBO.setTextDescrizione(to.getDescDocumento().getDescription());
+		bo.setDescDocumento(descDocBO);
+		
+		
+		bo.setRowCreatedDttm(to.getRowCreatedDttm());
+		bo.setRowCreatedForm(to.getRowCreatedForm());
+		bo.setRowCreatedUser(to.getRowCreatedUser());
+		TraceLogger.infoLog("prima del  saveOrUpdate", UploadDecManagerImpl.class);
+		documentiDao.saveOrUpdate(bo);
+		TraceLogger.infoLog("dopo del  saveOrUpdate", UploadDecManagerImpl.class);
+		
+		//*********************
+		/* PER IL CRONOLOGICO */
+					
+		List<CronoValoriTO> listCronoValori=new ArrayList<CronoValoriTO>();
+		
+		// Richiamo cronologico
+		cronologicoManager.salvaCronologico(
+								null,//old
+								bo,//new
+								null,
+								listCronoValori,
+								CroTransTO.CRO_TRANS_UPLOAD_DOCUMENTO_FAD,
+								to.getRowUpdatedForm(), 
+								to.getRowUpdatedUser());		
+		
+		//*********************
+		
+	}
+	
+	
+	public EsitoTO deleteDocumento (FascicoliTO to) throws Throwable{
+		
+		// TODO Gestione base dati
+		ParametriInput parametri = leggiParametriInputDemBil();
+		InterfacciaAttoDecretoDEMBILClient interfaccia=new InterfacciaAttoDecretoDEMBILClient();
+		RequestDEMBILClient requestDEMBILClient = new RequestDEMBILClient(parametri);
+		requestDEMBILClient.setIdFascicolo(to.getCodiGuidFascicolo());
+		EsitoTO esitoTo=null;
+		
+		if(to.getDocumentiList()!=null&&to.getDocumentiList().size()>0){
+			for(DocumentiTO doc:to.getDocumentiList()){
+				requestDEMBILClient.setIdDocumento(doc.getCodiGuidDocumentoOrig());
+				ResponseDEMBILClient resp= interfaccia.removeDocumentoFascicoloAttoDecreto(requestDEMBILClient);
+				esitoTo=resp.getEsitoTo();
+				
+				// PER TEST
+//				esitoTo.setCodice("OK");
+				
+				if (esitoTo.getCodice().equals(DEMBILConstants.ESITO_OK)){
+					// CANCELLAZIONE D_DOCUMENTI
+					DocumentiBOId boId = new DocumentiBOId();
+					boId.setFkNumeIdFascicolo(doc.getId().getFkNumeIdFascicolo());
+					boId.setNumeIdDocumento(doc.getId().getNumeIdDocumento());
+					DocumentiBO bo = fascicoloDao.loadById(DocumentiBO.class, boId);
+					fascicoloDao.delete(bo);
+				}
+			}
+		}
+		
+		return esitoTo;
+		
+	}
+	
+	
+}

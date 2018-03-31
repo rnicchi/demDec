@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 27-ago-2015 11.40.16 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="it.almavivaitalia.bilancio.commons.bo.AnagAmminUfficiBO" table="D_ANAG_AMMIN_UFFICI">
+        <meta attribute="extends" inherit="false">AbstractSbfjBO</meta>
+        <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+        <comment>Indica le ragionerie abilitate ad operare su una amministrazione</comment>
+        <composite-id name="id" class="it.almavivaitalia.bilancio.commons.bo.AnagAmminUfficiBOId">
+            <key-property name="fkAnnoEse" type="java.lang.Short">
+                <column name="FK_ANNO_ESE" precision="4" scale="0" />
+            </key-property>
+            <key-property name="fkNumeStp" type="java.lang.Integer">
+                <column name="FK_NUME_STP" precision="2" scale="0" />
+            </key-property>
+            <key-property name="fkNumeApp" type="java.lang.Integer">
+                <column name="FK_NUME_APP" precision="1" scale="0" />
+            </key-property>
+            <key-property name="fkCodiUfficio" type="string">
+                <column name="FK_CODI_UFFICIO" length="12" />
+            </key-property>
+        </composite-id>
+         <!-- CAMPI DI AUDIT START -->
+		   <property name="rowCreatedDttm" type="timestamp">
+		    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+		   </property>
+		   <property name="rowCreatedUser" type="string">
+		    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+		   </property>
+		   <property name="rowUpdatedDttm" type="timestamp">
+		    <column name="ROW_UPDATED_DTTM" length="7" />
+		   </property>
+		   <property name="rowUpdatedUser" type="string">
+		    <column name="ROW_UPDATED_USER" length="50" />
+		   </property>
+		   <property name="rowCreatedForm" type="string">
+		    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+		   </property>
+		   <property name="rowUpdatedForm" type="string">
+		    <column name="ROW_UPDATED_FORM" length="50" />
+		   </property>
+		   <!-- CAMPI DI AUDIT END -->
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+  <class name="it.almavivaitalia.bilancio.commons.bo.IterFirmaDecretoBO" table="D_ITER_FIRMA_DECRETO">
+   <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+   <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+   <composite-id class="it.almavivaitalia.bilancio.commons.bo.IterFirmaDecretoBOId" name="id">
+    <key-property name="fkNumeIdFascicolo" type="java.lang.Long">
+     <column name="FK_NUME_ID_FASCICOLO" precision="10" scale="0"/>
+    </key-property>
+    <key-property name="numeOrdineFirma" type="java.lang.Integer">
+     <column name="NUME_ORDINE_FIRMA" precision="2" scale="0"/>
+    </key-property>
+   </composite-id>
+   <!-- CAMPI DI AUDIT START -->
+   <property name="rowCreatedDttm" type="timestamp">
+    <column name="ROW_CREATED_DTTM" length="7" not-null="true" />
+   </property>
+   <property name="rowCreatedUser" type="string">
+    <column name="ROW_CREATED_USER" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedDttm" type="timestamp">
+    <column name="ROW_UPDATED_DTTM" length="7" />
+   </property>
+   <property name="rowUpdatedUser" type="string">
+    <column name="ROW_UPDATED_USER" length="50" />
+   </property>
+   <property name="rowCreatedForm" type="string">
+    <column name="ROW_CREATED_FORM" length="50" not-null="true" />
+   </property>
+   <property name="rowUpdatedForm" type="string">
+    <column name="ROW_UPDATED_FORM" length="50" />
+   </property>
+   <!-- CAMPI DI AUDIT END -->
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagUfficiBO" fetch="select" name="anagUffici">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="12" name="FK_CODI_UFFICIO"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagAmminDemBO" fetch="select" name="anagAmminDem">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_ANNO_ESE" precision="4" scale="0"/>
+    <column name="FK_NUME_STP" precision="2" scale="0"/>
+    <column name="FK_NUME_APP" precision="1" scale="0"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagModelliIterBO" fetch="select" name="anagModelliIter">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_SEQU_ID_ITER" not-null="true" precision="3" scale="0"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.FascicoliBO" fetch="select" insert="false" name="fascicoli" update="false">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_NUME_ID_FASCICOLO" not-null="true" precision="10" scale="0"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagCdrDemBO" fetch="select" insert="false" name="anagCdrDem" update="false">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="FK_ANNO_ESE" precision="4" scale="0"/>
+    <column name="FK_NUME_STP" precision="2" scale="0"/>
+    <column name="FK_NUME_APP" precision="1" scale="0"/>
+    <column name="FK_NUME_CDR" precision="4" scale="0"/>
+   </many-to-one>
+   <many-to-one class="it.almavivaitalia.bilancio.commons.bo.AnagFirmatariBO" fetch="select" name="anagFirmatari">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="12" name="FK_CODI_FIRMATARIO" not-null="true"/>
+   </many-to-one>
+   <property name="numeVersion" type="int">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_VERSION" precision="6" scale="0">
+     <comment>Numero intero che serve per gestire l'accesso concorrente con i DAO</comment>
+    </column>
+   </property>
+   <property name="numeOrdineIter" type="java.lang.Integer">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column name="NUME_ORDINE_ITER" not-null="true" precision="2" scale="0"/>
+   </property>
+   <property name="codiTipoFirma" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="4" name="CODI_TIPO_FIRMA">
+     <comment>Codice del tipo firma F=Firma S=Sigla B=Bollinatura V=Verifica</comment>
+    </column>
+   </property>
+   <property name="statFirma" type="string">
+    <meta attribute="use-in-equals" inherit="false">true</meta>
+    <meta attribute="use-in-tostring" inherit="false">true</meta>
+    <column length="2" name="STAT_FIRMA">
+     <comment>Stato firma per lo step iter/firmatario 0= da firmare,1= in firma, 2= firmato</comment>
+    </column>
+   </property>
+  </class>
+ </hibernate-mapping>

@@ -1,0 +1,26 @@
+package it.mef.bilancio.demdec.web.spring.form;
+
+import it.almavivaitalia.web.sh.form.AbstractForm;
+
+public class CreaPinForm extends AbstractForm{
+
+	private String codiceFiscale;
+	private String pin;
+	
+	public String getCodiceFiscale() {
+		return codiceFiscale;
+	}
+	public void setCodiceFiscale(String codiceFiscale) {
+		this.codiceFiscale = codiceFiscale;
+	}
+	public String getPin() {
+		return pin;
+	}
+	public void setPin(String pin) {
+		this.pin = pin;
+	}
+	
+	
+	
+	
+}

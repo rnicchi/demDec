@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xmlns:jee="http://www.springframework.org/schema/jee"
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+">
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true"/>
+		<property name="locations">
+			<value>classpath:config.properties</value>
+		</property>
+	</bean>
+
+		
+		
+	<!-- JBDC Datasource -->
+	<bean id="oracleDataSourceJDBC" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" lazy-init="true">
+		<property name="driverClassName" value="${jdbc.oracle.driverClassName}" />
+		<property name="url" value="${jdbc.oracle.url}" />
+		<property name="username" value="${jdbc.oracle.username}" />
+		<property name="password" value="${jdbc.oracle.password}" />
+	</bean>
+	
+	<bean id="oracleDataSourceJNDI" class="org.springframework.jndi.JndiObjectFactoryBean" lazy-init="true">
+        <property name="jndiName"        value="${datasource.oracle.jndiName}"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="proxyInterface"  value="javax.sql.DataSource"/>
+    </bean>
+    
+	<bean id="db2DataSourceJDBC" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" lazy-init="true">
+		<property name="driverClassName" value="${jdbc.db2.driverClassName}" />
+		<property name="url" value="${jdbc.db2.url}" />
+		<property name="username" value="${jdbc.db2.username}" />
+		<property name="password" value="${jdbc.db2.password}" />
+	</bean>	    
+
+	<bean id="db2DataSourceJNDI" class="org.springframework.jndi.JndiObjectFactoryBean" lazy-init="true">
+        <property name="jndiName"        value="${datasource.db2.jndiName}"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="proxyInterface"  value="javax.sql.DataSource"/>
+    </bean>
+
+</beans>

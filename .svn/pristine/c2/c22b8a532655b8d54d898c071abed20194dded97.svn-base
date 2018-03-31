@@ -1,0 +1,303 @@
+#TEST LOGIN
+testLoginView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+testLoginView.url=testLogin.main
+
+#CAMBIO PROFILO
+cambioProfiloView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+cambioProfiloView.url=cambioProfilo.main
+
+#ERROR
+errorView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+errorView.url=error.main
+
+#MENU
+menuView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+menuView.url=menu.main
+
+#ITEM
+itemSelectorView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+itemSelectorView.url=itemSelector.main
+
+#MESSAGE
+messageView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+messageView.url=message.main
+
+
+#GESTIONE MENU
+gestioneMenuView.(class)=org.springframework.web.servlet.view.InternalResourceView
+gestioneMenuView.url=/private/menu.do
+
+
+#MULTI ITEM SELECTOR
+multiItemSelectorView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+multiItemSelectorView.url=multiItemSelector.main
+
+#######################################################################################
+###                                  HELP - BEGIN                                  ####
+#######################################################################################
+#NUOVO HELP - BEGIN
+helpView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+helpView.url=help.main
+
+helpManualView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+helpManualView.url=helpManual.main
+
+#NUOVO HELP - END
+#######################################################################################
+###                                     HELP - END                                 ####
+#######################################################################################
+
+
+
+
+#######################################################################################
+###                                     DEMDEC HOME                            ####
+#######################################################################################
+
+
+
+#TEST LOGIN
+indexView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+indexView.url=index.main
+
+
+
+#######################################################################################
+###                                     DEMDEC FUNZIONI                            ####
+#######################################################################################
+
+#RICERCA_RED
+ricercaRedView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+ricercaRedView.url=ricercaRed.main
+
+#RACCOLTE_PROVVISORIE
+raccolteProvvisorieView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+raccolteProvvisorieView.url=raccolteProvvisorie.main
+
+#DOCUMENTI_FASCICOLO
+documentiFascicoloView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+documentiFascicoloView.url=documentiFascicolo.main
+
+#UPLOAD
+uploadDecSeleFileView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+uploadDecSeleFileView.url=uploadDecSeleFile.main
+
+#MAIL
+mailView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+mailView.url=mail.main
+listaView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+listaView.url=listMsg.main
+
+#FIRMA
+firmaDocumentiView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+firmaDocumentiView.url=firmaDocumenti.main
+
+mieiDocumentiFirmatiView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+mieiDocumentiFirmatiView.url=documentiFirmati.main
+
+#SIGLA
+siglaDocumentiView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+siglaDocumentiView.url=siglaDocumenti.main
+
+mieiDocumentiSiglatiView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+mieiDocumentiSiglatiView.url=documentiSiglati.main
+
+#BOLLINA
+bollinaDocumentiView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+bollinaDocumentiView.url=bollinaDocumenti.main
+
+mieiDocumentiBollinatiView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+mieiDocumentiBollinatiView.url=documentiBollinati.main
+
+#VERIFICA
+verificaDocumentiView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+verificaDocumentiView.url=verificaDocumenti.main
+
+mieiDocumentiVerificatiView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+mieiDocumentiVerificatiView.url=documentiVerificati.main
+
+#CONSULTAZIONE FASCICOLI FAD
+ricercaFadView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+ricercaFadView.url=ricercaFad.main
+
+afterRicercaFadView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+afterRicercaFadView.url=afterRicercaFad.main
+
+fascicoloFadView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+fascicoloFadView.url=fascicoloFad.main
+
+documentiFadView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+documentiFadView.url=documentiFad.main
+
+documentiRedView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+documentiRedView.url=documentiRed.main
+
+documentiPatView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+documentiPatView.url=documentiPat.main
+
+#GESTIONE FASCICOLI FAD
+gestRicercaFadView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestRicercaFadView.url=gestRicercaFad.main
+
+gestAfterRicercaFadView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestAfterRicercaFadView.url=gestAfterRicercaFad.main
+
+gestFascicoloFadView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestFascicoloFadView.url=gestFascicoloFad.main
+
+gestDocumentiFadView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestDocumentiFadView.url=gestDocumentiFad.main
+
+gestDocumentiRedView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestDocumentiRedView.url=gestDocumentiRed.main
+
+gestDocumentiPatView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestDocumentiPatView.url=gestDocumentiPat.main
+
+gestSelezioneAmmFadView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestSelezioneAmmFadView.url=gestSelezioneAmm.main
+
+#CREA FAD
+creaFadView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+creaFadView.url=creaFad.main
+
+selezioneAmmFadView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+selezioneAmmFadView.url=selezioneAmm.main
+
+selezioneCdrFadView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+selezioneCdrFadView.url=selezioneCdr.main
+
+
+
+
+#RICERCA SOSPESI RED
+ricercaSospesiRedView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+ricercaSospesiRedView.url=ricercaSospesiRed.main
+listaSospesiRedView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+listaSospesiRedView.url=listaSospesiRed.main
+documentiFascicoloApertiView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+documentiFascicoloApertiView.url=documentiFascicoloAperti.main
+
+#INVIO ALLE FIRME
+invioAlleFirmeView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+invioAlleFirmeView.url=invioAlleFirme.main
+
+listaFirmatari.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+listaFirmatari.url=listaFirmatari.main
+
+listaFirmatariInvio.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+listaFirmatariInvio.url=listaFirmatariInvio.main
+
+listaFirmatariInvioReadOnly.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+listaFirmatariInvioReadOnly.url=listaFirmatariInvioReadOnly.main
+
+#GESTIONE TIPOLOGIA DECRETO
+gestioneTipologiaDecretoView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestioneTipologiaDecretoView.url=gestioneTipologiaDecreto.main
+gestioneCreazioneDecretoView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestioneCreazioneDecretoView.url=gestioneCreazioneDecreto.main
+gestioneModificaDecretoView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestioneModificaDecretoView.url=gestioneModificaDecreto.main
+
+#SOSPENSIONE FIRME
+sospensioneFirmeView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+sospensioneFirmeView.url=sospensioneFirme.main
+
+#REVOCA SOSPENSIONE FIRME
+revocaSospensioneFirmeView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+revocaSospensioneFirmeView.url=revocaSospensioneFirme.main
+
+#CREA PIN
+creaPinView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+creaPinView.url=creaPin.main
+
+#GESTIONE WORKFLOW FIRME
+gestioneWorkflowFirmeView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestioneWorkflowFirmeView.url=gestioneWorkflowFirme.main
+creazioneWorkflowFirmeView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+creazioneWorkflowFirmeView.url=creazioneWorkflowFirme.main
+dettaglioWorkflowFirmeView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+dettaglioWorkflowFirmeView.url=dettaglioWorkflowFirme.main
+modificaDettaglioWorkflowFirmeView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+modificaDettaglioWorkflowFirmeView.url=modificaDettaglioWorkflowFirme.main
+
+#CONSULTAZIONE FAD CDC
+ricercaFadCdcView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+ricercaFadCdcView.url=ricercaFadCdc.main
+fascicoliFadCdcView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+fascicoliFadCdcView.url=fascicoliFadCdc.main
+gestFascicoloFadCdcView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestFascicoloFadCdcView.url=gestFascicoloFadCdc.main
+documentiFadCdcView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+documentiFadCdcView.url=documentiFadCdc.main
+documentiRedCdcView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+documentiRedCdcView.url=documentiRedCdc.main
+documentiPatCdcView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+documentiPatCdcView.url=documentiPatCdc.main
+
+
+#######################################################################################
+###                                CRONOLOGICO - BEGIN                             ####
+#######################################################################################
+intCronologicoView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+intCronologicoView.url=intCronologico.main
+#######################################################################################
+###                                CRONOLOGICO - END                             ####
+#######################################################################################
+
+#######################################################################################
+###                           RIELABORAZIONE FASCICOLO - BEGIN                     ####
+#######################################################################################
+rielaborazioneFascicoloView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+rielaborazioneFascicoloView.url=rielaborazioneFascicolo.main
+#######################################################################################
+###                            RIELABORAZIONE FASCICOLO - END                      ####
+#######################################################################################
+
+#GESTIONE UTENTI
+gestioneUtenteView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestioneUtenteView.url=gestioneUtente.main
+gestioneListaUtentiView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestioneListaUtentiView.url=gestioneListaUtenti.main
+
+
+#GESTIONE PROFILI
+gestioneProfiloView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestioneProfiloView.url=gestioneProfilo.main
+gestioneListaProfiliView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+gestioneListaProfiliView.url=gestioneListaProfili.main
+
+
+# Monitoraggio firma
+monitoraggioFirmaView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+monitoraggioFirmaView.url=monitoraggioFirma.main
+
+dettaglioMonitoraggioFirmaView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+dettaglioMonitoraggioFirmaView.url=dettaglioMonitoraggioFirma.main
+
+dettaglioFascicoloMonitoraggioFirmaView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+dettaglioFascicoloMonitoraggioFirmaView.url=dettaglioFascicoloMonitoraggioFirma.main
+
+#abilita Invio Mail
+abilitaInvioMailView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+abilitaInvioMailView.url=abilitaInvioMail.main
+
+#Lettere di preregistrazione
+predLetterePreRegView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+predLetterePreRegView.url=predLetterePreReg.main
+
+predLettereListaDecretiView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+predLettereListaDecretiView.url=predLettereListaDecreti.main
+
+predLettereListaLettereView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+predLettereListaLettereView.url=predLettereListaLettere.main
+
+#Predisposizione Tagliatella
+predTagliatellaView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+predTagliatellaView.url=predisposizioneTagliatella.main
+
+predTagliatellaListaDecretiView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+predTagliatellaListaDecretiView.url=predTagliatellaListaDecreti.main
+
+predDecretoPerTagliatellaView.(class)=org.springframework.web.servlet.view.tiles2.TilesView
+predDecretoPerTagliatellaView.url=predDecretoPerTagliatella.main

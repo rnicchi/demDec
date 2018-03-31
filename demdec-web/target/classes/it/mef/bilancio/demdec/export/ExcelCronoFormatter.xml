@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fieldFormatterMap >
+<FieldFormatterMap>
+  <entry>
+    <Property value="dataOprazFormatted"/>
+    <FieldFormatter width="100.0" cssClass="w100" type="0" label="label.dataOperazione"/>
+  </entry>
+  <entry>
+    <Property value="orarOperaz"/>
+    <FieldFormatter width="100.0" cssClass="w100" type="0" label="label.oraOperazione"/>
+  </entry>  
+  <entry>
+    <Property value="codiNome"/>
+    <FieldFormatter width="100.0" cssClass="w100" type="0" label="label.cronologicoFunzione"/>
+  </entry>
+  <entry>
+    <Property value="descDescr"/>
+    <FieldFormatter width="100.0" cssClass="w100" type="0" label="label.descrizione"/>
+  </entry>  
+  <entry>
+    <Property value="descUtente"/>
+    <FieldFormatter width="100.0" cssClass="w100" type="0" label="label.cronologicoUtente"/>
+  </entry>  
+  <entry>
+    <Property value="descDescrTrans"/>
+    <FieldFormatter width="100.0" cssClass="w100" type="0" label="label.transazione"/>
+  </entry>
+  <entry>
+    <Property value="campo"/>
+    <FieldFormatter width="100.0" cssClass="w100" type="0" label="label.campo"/>
+  </entry>
+  <entry>
+    <Property value="textOldVal"/>
+    <FieldFormatter width="100.0" cssClass="w100" type="0" label="label.oldVal"/>
+  </entry>
+  <entry>
+    <Property value="textNewVal"/>
+    <FieldFormatter width="100.0" cssClass="w100" type="0" label="label.newVal"/>
+  </entry>
+  <entry>
+    <Property value="modificato"/>
+    <FieldFormatter width="100.0" cssClass="w100" type="0" label="label.modificato"/>
+  </entry>
+</FieldFormatterMap>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<sql-query name="VociMenuBO.loadByFrmCodiNome">
+		<return alias="v"
+			class="it.almavivaitalia.bilancio.commons.bo.VociMenuBO" />
+		SELECT {v.*} FROM D_VOCI_MENU v WHERE v.FRM_CODI_NOME =:frmCodiNome
+	</sql-query>
+	
+	<sql-query name="VociMenuBO.loadByFrmCodiId">
+		<return alias="v"
+			class="it.almavivaitalia.bilancio.commons.bo.VociMenuBO" />
+		SELECT {v.*} FROM D_VOCI_MENU v WHERE v.codi_id =:frmCodiId
+	</sql-query>
+	
+</hibernate-mapping>

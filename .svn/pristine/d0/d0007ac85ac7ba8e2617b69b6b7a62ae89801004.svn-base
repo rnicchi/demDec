@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form id="__FORM__" action="/sbfj-gestione/caratteristicheDecretoDmtDim.do?_APP_CODE_=gestione&amp;_REQUEST_URI_SRC_=/sbfj-gestione/menu.do" method="post">
+
+			<!-- selezioneDecreto.jsp -->
+<div class="box">
+	
+	<div class="commonDivDecretiDmtDim">
+		<div class="testo11tit marginBottom10px">
+			Strumento
+		</div>
+		
+		<!-- TIPO -->
+		<label for="strumentoTipo" class="testo11 bold margin2px">
+			Tipo
+		</label>
+		<select id="strumentoTipo" name="strumentoTipo">
+			
+				<option title="DMT" value="22">
+					DMT
+				</option>
+			
+				<option title="DIM" value="23" selected="selected">
+					DIM
+				</option>
+			
+		</select>	
+		<!-- NUMERO -->	
+		<label for="strumentoNumero" class="testo11 bold margin2px">
+			Numero
+		</label>
+		<input id="strumentoNumero" name="strumentoNumero" type="text" value="" size="10"/>	
+		<!-- ANNO -->	
+		<label for="strumentoAnno" class="testo11 bold margin2px">
+			Anno
+		</label>
+		
+		
+		<input id="strumentoAnno" name="strumentoAnno" type="text" value="" size="4"/>				
+		<div class="commonDivDecretiDmtDim">
+			<div class="divtabella">
+<table id="listStrumenti" summary="Lista dei decreti" cellpadding="1" class="tabella" cellspacing="1">
+<caption>
+					<span class="nascosto">Decreti</span>
+				</caption>
+<thead>
+<tr>
+<th scope="col"><abbr title="Seleziona">Seleziona</abbr></th>
+<th scope="col"><abbr title="Seleziona">Tipo</abbr></th>
+<th scope="col"><abbr title="Numero strumento">Numero</abbr></th>
+<th scope="col"><abbr title="Esercizio Finanziario">Anno</abbr></th>
+<th scope="col"><abbr title="Data apertura">Data Apertura</abbr></th>
+<th scope="col"><abbr title="Descrizione strumento">Descrizione</abbr></th>
+<tbody>
+<tr class="odd">
+<td class="normal"></td>
+  <td><a href="#"><img src="img/ico_folder.png" alt="Fascicolo"></a></td>
+<td class="normal">14211</td>
+<td class="normal">2015</td>
+<td class="normal">26/02/2015</td>
+<td class="normal">DIM DI ISTITUZIONE CAP. 1243 PG 25 - DIPARTIM. AFFARI INTERNI E TERRITORIALI - MIN. INTERNO</td>
+</tr>
+<tr class="even">
+<td class="normal"></td>
+  <td><a href="#"><img src="img/ico_folder.png" alt="Fascicolo"></a></td>
+<td class="normal">16289</td>
+<td class="normal">2015</td>
+<td class="normal">04/03/2015</td>
+<td class="normal">ISTITUZIONE PIANO GESTIONALE E MODIFICA DENOMINAZIONE</td>
+</tr>
+<tr class="odd">
+<td class="normal"></td>
+ <td><a href="#"><img src="img/ico_folder.png" alt="Fascicolo"></a></td>
+<td class="normal">18066</td>
+<td class="normal">2015</td>
+<td class="normal">01/03/2015</td>
+<td class="normal">ISTITUZIONE NUOVI PIANI GESTIONALI E MODIFICA DENOMINAZIONE</td>
+</tr>
+<tr class="even">
+<td class="normal"></td>
+ <td><a href="#"><img src="img/ico_folder.png" alt="Fascicolo"></a></td>
+<td class="normal">29755</td>
+<td class="normal">2015</td>
+<td class="normal">16/04/2015</td>
+<td class="normal">DIM - ISTITUZIONE PPGG 9 E 10 DEL CAP. 1511 - GESTIONE ALBO SEGRETARI COMUNALI  E PROVINCIALI - DAIT</td>
+</tr>
+<tr class="odd">
+<td class="normal"></td>
+<td><a href="#"><img src="img/ico_folder.png" alt="Fascicolo"></a></td>
+<td class="normal">92415</td>
+<td class="normal">2015</td>
+<td class="normal">20/12/2015</td>
+<td class="normal">ISTITUZIONE NUOVI PIANI GESTIONALI E MODIFICA DENOMINAZIONE</td>
+</tr>
+<tr class="even">
+<td class="normal"></td>  <td><a href="#"><img src="img/ico_folder.png" alt="Fascicolo"></a></td>
+<td class="normal">32078</td>
+<td class="normal">2015</td>
+<td class="normal">03/04/2015</td>
+<td class="normal">ISTITUZIONE PIANO GESTIONALE N. 3 - CAP. 1284 MEF</td>
+</tr>
+<tr class="odd">
+<td class="normal"></td>  <td><a href="#"><img src="img/ico_folder.png" alt="Fascicolo"></a></td>
+<td class="normal">38010</td>
+<td class="normal">2015</td>
+<td class="normal">07/05/2015</td>
+<td class="normal">CAP. 2213</td>
+</tr>
+<tr class="even">
+<td class="normal"></td>  <td><a href="#"><img src="img/ico_folder.png" alt="Fascicolo"></a></td>
+<td class="normal">38011</td>
+<td class="normal">2015</td>
+<td class="normal">24/04/2015</td>
+<td class="normal">ISTITUZIONE PG 2 CAPITOLO 7077</td>
+</tr>
+<tr class="odd">
+<td class="normal"></td>  <td><a href="#"><img src="img/ico_folder.png" alt="Fascicolo"></a></td>
+<td class="normal">48934</td>
+<td class="normal">2015</td>
+<td class="normal">11/06/2015</td>
+<td class="normal">ISTITUZIONE PIANO GESTIONALE N. 2 - CAP. 2752 MEF</td>
+</tr>
+</tbody></table></div>
+</div>
+		</div>
+	
+
+
+	<!-- BOTTONI -->
+	<div class="bottoni">
+		<input type="submit" name="cmdPOST___eseguiRicerca" value="Seleziona" class="pulsante"/>
+
+		<input type="submit" name="cmdPOST___eseguiRicerca" value="Ricerca" class="pulsante"/>
+		
+		<input type="submit" name="cmdPOST___pulisciAll" value="Pulisci" class="pulsante"/>
+					
+	</div>
+	<!-- END BOTTONI -->
+
+</div>
+		</div>
+	</form>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 23-dic-2015 15.03.23 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="it.almavivaitalia.bilancio.commons.bo.LettereTestiBO" table="D_LETTERE_TESTI">
+        <meta attribute="extends" inherit="false">AbstractCommonBO</meta>
+        <meta attribute="class-code" inherit="false">private static final long serialVersionUID = 1L;</meta>
+        <comment>Testi standard delle lettere relative ai decreti</comment>
+        <id name="id" type="big_decimal">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="SEQU_ID_LETTERE_TESTI" scale="0" />
+            <generator class="sequence">
+                <param name="sequence">S_LETTERE_TESTI</param>
+            </generator>
+        </id>
+        <property name="numeVersion" type="java.lang.Integer">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="NUME_VERSION" precision="6" scale="0">
+                <comment>Versione del record</comment>
+            </column>
+        </property>
+        <property name="codiTipoLettera" type="string">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="CODI_TIPO_LETTERA" length="20" not-null="true">
+                <comment>Codice del tipo di lettera. Valori ammessi: L-UCB = lettera di trasmissione fascicoli da UCB a IGB; L-IGB = lettera informativa decreto da IGB ad
+                amministrazioni</comment>
+            </column>
+        </property>
+        <property name="codiSezione" type="string">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="CODI_SEZIONE" length="24" not-null="true">
+                <comment>Codice della sezione della lettera</comment>
+            </column>
+        </property>
+        <property name="numeRiga" type="java.lang.Short">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="NUME_RIGA" precision="3" scale="0">
+                <comment>Numero della riga nell'ambito della sezione</comment>
+            </column>
+        </property>
+        <property name="textContenuto" type="string">
+            <meta attribute="use-in-equals" inherit="false">true</meta>
+            <meta attribute="use-in-tostring" inherit="false">true</meta>
+            <column name="TEXT_CONTENUTO" length="4000">
+                <comment>Contenuto della sezione</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,35 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import it.almavivaitalia.bilancio.commons.dao.ActionDao;
+import it.almavivaitalia.bilancio.commons.to.ActionTO;
+import it.almavivaitalia.bilancio.commons.to.AnagTipologiaTagliaTO;
+import it.almavivaitalia.bilancio.commons.to.AnagUfficiTO;
+import it.mef.bilancio.demdec.dao.AnagTipologiaTagliaDao;
+import it.mef.bilancio.demdec.manager.ListManager;
+
+public abstract class  AbstractParentListManagerImpl extends StaticListManagerImpl implements ListManager {
+	
+	@Autowired
+	private ActionDao actionDao;
+
+	@Autowired
+	private AnagTipologiaTagliaDao anagTipologiaTagliaDao;
+	
+	//@Override
+	public List<ActionTO> findAllAction() throws Throwable {
+		return getDozerDriver().mapList(actionDao.findAll(),ActionTO.class,"Action");
+	}
+
+	public List<ActionTO> findAllActionByProfilo(Integer sequIdProfilo) throws Throwable {
+		return getDozerDriver().mapList(actionDao.loadByProfilo(sequIdProfilo),ActionTO.class,"Action");
+	}
+	
+	
+	@Override
+	public List<AnagTipologiaTagliaTO> loadAnagTipologiaTaglia() throws Throwable{
+		return getDozerDriver().mapList(anagTipologiaTagliaDao.loadAnagTipologiaTaglia(),AnagTipologiaTagliaTO.class,"AnagTipologiaTaglia");
+	}
+	
+}

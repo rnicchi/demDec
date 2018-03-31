@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd 
+">
+
+	<bean id="dozerDriver" lazy-init="true"
+		class="it.almavivaitalia.bsn.sh.utils.DozerDriverImpl" init-method="init">
+		<property name="defaultPath" value="it/mef/bilancio/demdec/dozer/" />
+		<property name="defaults">
+			<list>
+				<value>minimalUser.xml</value>
+			</list>
+		</property>
+	</bean>
+ 
+	<bean id="abstractDemManager" lazy-init="true" abstract="true"
+		class="it.mef.bilancio.demdec.manager.impl.AbstractDemManagerImpl" parent="abstractCommonManager">
+	</bean>
+	
+	<bean id="staticListManager" class="it.mef.bilancio.demdec.manager.impl.StaticListManagerImpl"
+		parent="abstractDemManager" lazy-init="false" />
+
+	<bean 
+		id="listManager" 
+		class="it.mef.bilancio.demdec.manager.impl.ListManagerImpl"
+		parent="staticListManager" 
+		lazy-init="false" >
+	</bean>
+
+	<bean id="crossDaoManager" class="it.mef.bilancio.demdec.manager.impl.CrossDaoManager">
+		<property name="eserciziDao" ref="eserciziDao"/>
+	</bean>
+	
+	<bean id="initManager" class="it.mef.bilancio.demdec.manager.impl.InitManagerImpl"
+		parent="abstractCommonManager" lazy-init="false">
+		<property name="eserciziDao" ref="eserciziDao"/>
+	</bean>
+
+	<bean 
+			id="redirectManager" 
+			class="it.almavivaitalia.bilancio.commons.manager.impl.RedirectManagerImpl" 
+			lazy-init="false">
+	</bean>
+	
+	<!-- CRONOLOGICO -->
+	<bean id="cronologicoManager" 
+			class="it.almavivaitalia.bilancio.commons.manager.impl.CronologicoManagerImpl" 
+				parent="abstractCommonManager" 
+					lazy-init="false">
+		<property name="dozerDriver" 		ref="dozerDriver" />
+		<property name="croDatiDao" 		ref="croDatiDao"/>
+		<property name="croTransDao" 		ref="croTransDao"/>
+		<property name="croCodiciDao" 		ref="croCodiciDao"/>
+		<property name="croValoriDao" 		ref="croValoriDao"/> 	
+		<property name="croFunzCampiDao" 	ref="croFunzCampiDao"/> 	
+		<property name="actionDao" 			ref="actionDao"/> 				
+	</bean>
+	<!-- FINE CRONOLOGICO -->	
+	
+	<!-- INTERROGAZIONE CRONOLOGICO -->
+	<bean id="intCronologicoManager" 
+			class="it.mef.bilancio.demdec.manager.impl.IntCronologicoManagerImpl" 
+				parent="abstractDemManager" 
+					lazy-init="false">
+	</bean>
+	<!-- FINE INTERROGAZIONE CRONOLOGICO -->	
+	
+	<!-- Application Managers -->
+	
+	
+	<bean 
+			id="uploadDecManager" 
+			class="it.mef.bilancio.demdec.manager.impl.UploadDecManagerImpl" 
+			parent="abstractDemManager"
+			lazy-init="false">
+		
+	</bean>
+	
+	<bean 
+			id="ricercaRedManager" 
+			class="it.mef.bilancio.demdec.manager.impl.RicercaRedManagerImpl" 
+			parent="abstractDemManager"
+			lazy-init="false">
+		
+	</bean>
+	
+	<bean 
+			id="ricercaRedSospesiManager" 
+			class="it.mef.bilancio.demdec.manager.impl.RicercaRedSospesiManagerImpl" 
+			parent="abstractDemManager"
+			lazy-init="false">
+		
+	</bean>
+	
+	<bean id="mailManager" class="it.mef.bilancio.demdec.manager.impl.MailManagerImpl" parent="abstractCommonManager"  lazy-init="true"/>
+		
+	<bean 
+			id="gestioneFadManager" 
+			class="it.mef.bilancio.demdec.manager.impl.GestioneFadManagerImpl" 
+			parent="abstractDemManager"
+			lazy-init="false" >
+	 <!-- 	<property name="fascicoloDao" ref="fascicoloDao"/>
+		<property name="strumentoDemDao" ref="strumentoDemDao"/> -->
+	</bean>	
+	
+	<bean 
+			id="invioAlleFirmeManager" 
+			class="it.mef.bilancio.demdec.manager.impl.InvioAlleFirmeManagerImpl" 
+			parent="abstractDemManager"
+			lazy-init="false">
+		
+	</bean>
+	
+	<bean 
+			id="sospensioneFirmeManager" 
+			class="it.mef.bilancio.demdec.manager.impl.SospensioneFirmeManagerImpl" 
+			parent="abstractDemManager"
+			lazy-init="false">
+		
+	</bean>
+	
+	<bean 
+			id="revocaSospensioneFirmeManager" 
+			class="it.mef.bilancio.demdec.manager.impl.RevocaSospensioneFirmeManagerImpl" 
+			parent="abstractDemManager"
+			lazy-init="false">
+		
+	</bean>
+	
+	<bean 
+			id="consFADCdcManager" 
+			class="it.mef.bilancio.demdec.manager.impl.ConsFADCdcManagerImpl" 
+			parent="abstractDemManager"
+			lazy-init="false">
+	</bean>
+	
+	<bean 
+			id="vBilDecretiManagerImpl" 
+			class="it.mef.bilancio.demdec.manager.impl.VBilDecretiManagerImpl" 
+			parent="abstractDemManager"
+			lazy-init="false">
+	</bean>
+	
+	
+	<bean id="iterFirmaManager" class="it.mef.bilancio.demdec.manager.impl.IterFirmaManagerImpl" parent="abstractDemManager" lazy-init="true"/>
+	<bean id="iterFirmaDecretoManager" class="it.mef.bilancio.demdec.manager.impl.IterFirmaDecretoManagerImpl" parent="abstractDemManager" lazy-init="true"/>
+	<bean id="documentiManager" class="it.mef.bilancio.demdec.manager.impl.DocumentiManagerImpl" parent="abstractDemManager" lazy-init="true"/>
+
+	<bean id="gestioneTipologiaDecretoManager" class="it.mef.bilancio.demdec.manager.impl.GestioneTipologiaDecretoManagerImpl" parent="abstractDemManager" lazy-init="false"/>
+	<bean id="gestioneWorkflowFirmeManager" class="it.mef.bilancio.demdec.manager.impl.GestioneWorkflowFirmeManagerImpl" parent="abstractDemManager" lazy-init="false"/>
+	<bean id="gestioneUtentiManager" class="it.mef.bilancio.demdec.manager.impl.GestioneUtentiManagerImpl" parent="abstractDemManager" lazy-init="false"/>
+
+	
+</beans>

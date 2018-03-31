@@ -1,0 +1,215 @@
+/**
+ * 
+ */
+package it.mef.bilancio.demdec.web.spring.validator;
+
+import java.util.List;
+
+import it.almavivaitalia.bilancio.commons.to.UtenteProfiloTO;
+import static it.almavivaitalia.bsn.sh.utils.StringUtil.*;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.web.spring.form.GestioneProfiliForm;
+import it.mef.bilancio.demdec.web.spring.form.GestioneUtentiForm;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+import it.almavivaitalia.bsn.sh.utils.StringUtil;
+
+
+
+public class GestioneProfiliValidator extends AbstractDemValidator {
+
+	public boolean onCreaProfilo(Context context) throws Throwable {
+
+		GestioneProfiliForm form = (GestioneProfiliForm) context.getForm();
+		
+		String codiProfilo = form.getCodiProfilo();
+		
+		String descProfilo = form.getDescProfilo();
+
+		checkEmpty(context, form.getCodiProfilo(), "label.codiProfilo");
+		if (codiProfilo!=null && !codiProfilo.equals(""))
+		{
+			checkMaxLength(context, codiProfilo, 3, "label.codiProfilo");
+			checkInteger(context, codiProfilo, "label.codiProfilo");
+		}
+		
+		checkEmpty(context, form.getDescProfilo(), "label.descProfilo");
+		if (descProfilo!=null && !descProfilo.equals(""))
+			checkMaxLength(context, descProfilo, 180, "label.descProfilo");
+		
+		
+		
+			//checkFixedLength(context, codiProfilo, 2, "label.codiProfilo");
+	/*	List<UtenteProfiloTO> listaUtProf = context.getModel(WebConstants.LIST_PROF_UFF_AMM);
+		if (listaUtProf == null || listaUtProf.size() == 0)
+			context.addError("errore.profilo.utente.mancante");*/
+
+		return !context.hasErrors();
+	}
+	
+	public boolean onGestioneModificaProfilo(Context context) throws Throwable {
+		
+		
+		
+		
+		GestioneProfiliForm form = (GestioneProfiliForm) context.getForm();
+
+		if(StringUtil.isEmpty(form.getSelectedProfilo()))
+			context.addError("errore.profilo.null");
+
+	/*	GestioneProfiliForm form = (GestioneProfiliForm) context.getForm();
+		
+		String codiProfilo = form.getCodiProfilo();
+		
+	
+		checkEmpty(context, form.getCodiProfilo(), "label.codiProfilo");
+		if (codiProfilo!=null && !codiProfilo.equals(""))
+			checkFixedLength(context, codiProfilo, 2, "label.codiProfilo");*/
+	
+		return !context.hasErrors();
+	}
+	
+	public boolean onModificaProfilo(Context context) throws Throwable {
+
+	/*	GestioneProfiliForm form = (GestioneProfiliForm) context.getForm();
+		
+		String codiProfilo = form.getCodiProfilo();
+		
+	
+		checkEmpty(context, form.getCodiProfilo(), "label.codiProfilo");
+		if (codiProfilo!=null && !codiProfilo.equals(""))
+			checkFixedLength(context, codiProfilo, 2, "label.codiProfilo");*/
+	
+		return !context.hasErrors();
+	}
+	
+	
+	public boolean onEliminaProfilo(Context context) throws Throwable {
+
+		GestioneProfiliForm form = (GestioneProfiliForm) context.getForm();
+
+		if(StringUtil.isEmpty(form.getSelectedProfilo()))
+			context.addError("errore.profilo.null");
+
+		return !context.hasErrors();
+	}
+	
+	
+	
+
+	public boolean onConfermaAction(Context context) throws Throwable {
+
+		GestioneProfiliForm form = (GestioneProfiliForm) context.getForm();
+
+		checkEmpty(context, form.getCodiProfilo(), "label.codiProfilo");
+		if (!context.hasErrors()) checkDatiMancantiAlProfilo(context);
+		if (!context.hasErrors()) checkCombinazioneDatiProfilo(context);
+		if (!context.hasErrors()) checkValoriDatiProfilo(context);
+
+		return !context.hasErrors();
+	}
+
+	private boolean checkDatiMancantiAlProfilo(Context context) throws Throwable {
+
+		boolean empty = false;
+		GestioneUtentiForm form = (GestioneUtentiForm) context.getForm();
+		String idProfiloSelected = form.getProfilo().split("-")[0];
+		switch (Integer.parseInt(idProfiloSelected)) {
+			case  1:			//Direttore
+			case  8:			//Ministro
+			case 10:			//Ministro Proponente
+				//abilitare solo Amministrazione
+				empty = checkEmpty(context, form.getAmministrazione(), "label.raccolteProvvisorie.amministrazione");
+				break;
+			case  2:			//Dirigente Ufficio
+			case  3:			//Coordinamento Bilancisti
+			case  9:			//Bilancista
+				//abilitare solo Ufficio
+				empty = checkEmpty(context, form.getUfficio(), "label.ufficio");
+				break;
+			case  5:			//Ispettore Generale
+			case  6:			//Segreteria Ragioniere
+			case  7:			//Ragioniere Generale 
+				//disabilitare tutto
+				break;
+		}
+
+		return empty;
+	}
+
+	private boolean checkCombinazioneDatiProfilo(Context context) throws Throwable {
+
+		boolean wrongCombination = false;
+		GestioneUtentiForm form = (GestioneUtentiForm) context.getForm();
+		String message = "";
+		String idProfiloSelected = form.getProfilo().split("-")[0];
+		switch (Integer.parseInt(idProfiloSelected)) {
+
+			case  1:			//Direttore
+			case  8:			//Ministro
+			case 10:			//Ministro Proponente
+				//abilitare solo Amministrazione
+				wrongCombination = !isEmpty(form.getUfficio()) || isEmpty(form.getAmministrazione());
+				message = "errore.utente.profilo.ammin.only";
+				break;
+			case  2:			//Dirigente Ufficio
+			case  3:			//Coordinamento Bilancisti
+			case  9:			//Bilancista
+				//abilitare solo Ufficio
+				wrongCombination = isEmpty(form.getUfficio()) || !isEmpty(form.getAmministrazione());
+				message = "errore.utente.profilo.ufficio.only";
+				break;
+			case  5:			//Ispettore Generale
+			case  6:			//Segreteria Ragioniere
+			case  7:			//Ragioniere Generale 
+				//disabilitare tutto
+				wrongCombination = !isEmpty(form.getUfficio()) || !isEmpty(form.getAmministrazione());
+				message = "errore.utente.profilo.nothing";
+				break;
+		}
+		if (wrongCombination)
+			context.addError(message);
+		return wrongCombination;
+	}
+
+	private boolean checkValoriDatiProfilo(Context context) throws Throwable {
+
+		boolean wrongValue = false;
+		GestioneUtentiForm form = (GestioneUtentiForm) context.getForm();
+		String message = "";
+		String idProfiloSelected = form.getProfilo().split("-")[0];
+		switch (Integer.parseInt(idProfiloSelected)) {
+
+			case  3:			//Coordinamento Bilancisti
+				//solo Ufficio I
+				wrongValue = isEmpty(form.getUfficio()) || !form.getUfficio().split("-")[0].equals("1");
+				message = "errore.utente.profilo.ufficio.coorBilancisti";
+				break;
+			case  8:			//Ministro
+				//solo MINISTERO DELL'ECONOMIA E DELLE FINANZE
+				wrongValue = //isEmpty(form.getAnnoEse()) || !form.getAnnoEse().equals("2014") ||
+						isEmpty(form.getAmministrazione()) ||
+						!form.getAmministrazione().startsWith("2014-02-0-")	//annoEse = 2014; STP=2; APP=0
+						;
+				message = "errore.utente.profilo.ufficio.ministro";
+				break;
+			case 10:			//Ministro Proponente
+				//eccetto MINISTERO DELL'ECONOMIA E DELLE FINANZE
+				wrongValue = //isEmpty(form.getAnnoEse()) || !form.getAnnoEse().equals("2014") ||
+						isEmpty(form.getAmministrazione()) ||
+						form.getAmministrazione().startsWith("2014-02-0-")	//annoEse = 2014; STP=2; APP=0
+						;
+				message = "errore.utente.profilo.ufficio.ministro.proponente";
+				break;
+			case  1:			//Direttore
+			case  2:			//Dirigente Ufficio
+			case  5:			//Ispettore Generale
+			case  6:			//Segreteria Ragioniere
+			case  7:			//Ragioniere Generale 
+			case  9:			//Bilancista
+		}
+		if (wrongValue)
+			context.addError(message);
+		return wrongValue;
+	}
+		
+}

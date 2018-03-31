@@ -1,0 +1,91 @@
+package it.mef.bilancio.demdec.web.spring.controller.modali;
+
+import it.almavivaitalia.bilancio.commons.to.DescDocumentoTO;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.manager.DocumentiManager;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.to.DocumentiTO;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.GestioneFascicoloFadForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@RequestMapping(value = ConstantsRequestMapping.MODALI_DOCUMENTI_FAD)
+public class DocumentiFadModaliController extends AbstractDemFormController implements WebConstants, SessionAttributes {
+
+	
+	private String startView;	
+	
+	
+	@Autowired
+	private ServletContext servletContext;
+	
+	@Autowired
+	private ListManager listManager;
+	
+	@Autowired
+	private DocumentiManager documentiManager;
+	
+	public ServletContext getServletContext() {
+		return servletContext;
+	}
+	
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+	
+	@Override
+	public String startController(Context context) throws Throwable {
+		// TODO Auto-generated method stub
+		return startView;
+	}
+	
+	@SuppressWarnings("unused")
+	public void modaleMetadatiDocumentiFad(Context context) throws Throwable {
+		
+		// Form
+		GestioneFascicoloFadForm form = (GestioneFascicoloFadForm) context.getForm();
+		
+		List<DocumentiTO> toList = context.getModel(SessionAttributes.LIST_DOCUMENTI_FAD);
+		List<DocumentiTO> toListNew = new ArrayList<DocumentiTO>();
+		
+		// Reperimento indice docuemento selezionato
+		String idFad = context.getRequest().getParameter("idFad");		
+		
+		if (toList!=null){			
+			
+			// Set del form per informazioni da visualizzare
+			DocumentiTO docSelezionato = (DocumentiTO)toList.get(Integer.valueOf(idFad));
+			
+			List<DescDocumentoTO> listaDescDocumenti = getGestioneFadManager().findDescDocumentoByTipoDocumento(docSelezionato.getTipoDocumento().getId());
+//			context.removeDataModel(WebConstants.LIST_DESC_DOCUMENTI);
+			docSelezionato.setListaDescDocumenti(listaDescDocumenti);
+			
+			toListNew.add((DocumentiTO)toList.get(Integer.valueOf(idFad)));
+			
+//			context.setDataModel(WebConstants.LIST_DESC_DOCUMENTI, listaDescDocumenti);
+			form.setListaDescDocumenti(listaDescDocumenti);
+			context.setDataModel(SessionAttributes.DOCUMENTO_FAD, docSelezionato);
+		}
+		
+		context.getResponse().setContentType("application/json");  
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.writeValue(context.getResponse().getOutputStream(), toListNew);
+		   
+		context.getResponse().getOutputStream().flush();
+		context.getResponse().getOutputStream().close();
+		
+	}
+
+}

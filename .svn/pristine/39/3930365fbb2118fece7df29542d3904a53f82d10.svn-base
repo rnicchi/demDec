@@ -1,0 +1,53 @@
+package it.mef.bilancio.demdec.dao.impl;
+import java.math.BigDecimal;
+
+import it.mef.bilancio.demdec.dao.StrumentoDemDao;
+import it.mef.bilancio.demdec.to.StrumentoTO;
+
+import org.hibernate.Query;
+public class StrumentoDemDaoImpl extends AbstractDemDaoImpl<StrumentoTO> implements StrumentoDemDao {
+	
+	
+	
+
+	@Override
+	public StrumentoTO findDecretoByAnnoTipoNum(Integer annoEse, Integer tipo,Integer num ) {
+		//TODO rivedi campi
+		String q=" Select ese_anno_ese as annoEse , att_nume_tipo as attNumeTipo , nume_num as numeNum , stat_status as statStatus, nume_pat as numePatr  "+
+				 " from D_STRUMENTI_DEM where ese_anno_ese = :annoEse  "+
+				" and att_nume_tipo = :tipo  "+
+				" and  nume_num = :num ";
+		
+		Query query = createSQLQuery(q);
+		query.setParameter("annoEse", annoEse)
+		.setParameter("tipo", tipo)
+		.setParameter("num", num);
+		
+//		StrumentoTO strum = (StrumentoTO) query.setResultTransformer(Transformers.aliasToBean(StrumentoTO.class)).uniqueResult();
+		Object[] res= (Object[])query.uniqueResult();
+		StrumentoTO strum = new StrumentoTO();
+		strum.setAnnoEse(res != null && res[0] != null ? ((BigDecimal)res[0]).intValue():null);
+		strum.setAttNumeTipo(res != null && res[1] != null ? ((BigDecimal)res[1]).intValue():null);
+		strum.setNumeNum(res != null && res[2] != null ? ((BigDecimal)res[2]).intValue():null);
+		strum.setStatStatus(res != null && res[3] != null ? ((String)res[3]):null);
+		strum.setNumePatr(res != null && res[4] != null ? ((BigDecimal)res[4]).toString():null);
+		return strum;
+		
+	}
+	
+	
+	@SuppressWarnings("unused")
+	private void foo(){
+	}
+	@SuppressWarnings("unused")
+	private void foo2(){
+	}
+	@SuppressWarnings("unused")
+	private void foo3(){
+	}
+	@SuppressWarnings("unused")
+	private void foo4(){
+	}
+	
+	
+}

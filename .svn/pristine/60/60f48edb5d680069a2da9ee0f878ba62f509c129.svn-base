@@ -1,0 +1,144 @@
+
+  <!-- INIZIO MODALE Selezione Decreto -->
+<%@page import="it.mef.bilancio.demdec.web.spring.utils.WebConstants"%>
+<%@taglib uri="http://almavivaitalia.web.sh/tags" prefix="demdec"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+ <script type="application/javascript">
+
+
+ 
+function caricaModaleMetadatiDocPatCdc(toOpenDett, rowNum){
+	size=$("#dettaglioDocumento").length ;	
+	if( size>0  ) {	
+		$("#dettaglioDocumento").empty();
+	}
+
+	size2=$("#title_modal_0").length ;
+	if( size2>0  ) {	
+		$("#title_modal_0").empty();
+	}
+
+	$("#divErrore").empty();	
+
+	$.ajax({
+		
+		url: "<%=request.getContextPath() %>/private/consultaFascicoloCdcModali.do?cmdPOST___modaleDocumentiPatCdc=modaleDocumentiPatCdc&rowNum="+rowNum ,
+		
+	    type: 'POST',
+	    data: {
+	        json: jsonData
+	    },
+	    success: function (response) { 
+	        var trHTMLdett = '';
+	        var trHTMLdettTit = '';
+
+
+	  	  $.each(response, function (i, articleDett) {
+
+	  		if(articleDett.warningCode=='ERRORE'){
+
+	  			 
+	  			 trHTMLdett='';
+	  			 trHTMLdettTit = '';
+				$("#dettaglioDocumento").append("<div class=rowD  align=center><strong>Errore nel recupero dei dati  </strong></div>");
+			}else {
+		
+		  		trHTMLdettTit='<div id=title_modal_2 class=bg-tono0><strong>Documento: '+ (articleDett.descrizione==null?'':articleDett.descrizione) + '</strong></div>';
+		  		
+		  		trHTMLdett = 
+
+			  		
+			  		'<div class=rowD><strong>Amministrazione: </strong>' + (articleDett.amministrazione==null?'':articleDett.amministrazione.description) + '</div>'+	
+			  		'<div class=rowD><strong>Protocollo: </strong>' + (articleDett.protocollo==null?'':articleDett.protocollo.numeroProtocollo) + '</div>'+			  		
+			  		/* '<div class=rowD><strong>Ucb/Rts: </strong>' + (articleDett.ucbRts==null?'':articleDett.ucbRts.description) + '</div>'+ */
+			  		'<div class=rowD><strong>Data Documento: </strong>' + (articleDett.dataDocumento==null?'':articleDett.dataDocumento) + '</div>'+
+				  	'<div class=rowD><strong>Tipo Documento: </strong>' +(articleDett.tipoDocumento==null?'':articleDett.tipoDocumento.description) + '</div>'+	
+			  	 	'<div class=rowD><strong>Descrizione Documento:  </strong>'+(articleDett.descDocumento==null?'':articleDett.descDocumento.description )+  '</div>';	 
+	   
+	  				$("#title_modal_0").append(trHTMLdettTit);	
+	  				$("#dettaglioDocumento").append(trHTMLdett);
+			}
+	  		
+	 
+	  	});
+
+	  	apriPopUpModale(toOpenDett);
+		
+	},
+
+	
+    error: function(){
+			$("#dettaglioDocumento").append("<div class=rowD align=center><strong>Errore nel recupero dei dati</strong></div>");		 
+			apriPopUpModale(toOpenDett);
+    } 
+
+	});
+
+
+}
+
+
+
+function confermaModaleDett() {
+
+	$('.overlay').fadeOut('fast');
+    $('.box').hide();
+	$('.box_meta').hide();
+}
+
+
+
+</script>
+
+ 
+ 
+ <demdec:useAttribute id="titoloModaleDett" name="<%=WebConstants.TITOLO_MODALE_DETTAGLIO%>"/>
+ 
+ <%--**INIZIO MODALE--%>
+    <div>
+    
+   
+
+    <div id="contModal_6" class="box_meta">
+    
+    
+     
+     
+        <div  id="title_modal_0" > </div>
+        <%-- <div id="title_modal_2" class="bg-tono0"> </div>
+         --%>
+        <div>
+        
+                                                          <!-- MODAL TABLE-->    
+           
+          <%--    <form id="documentoForm2" method="post" action="#" name="documentoForm2">  --%>
+            
+   
+                    
+               <div id="contentD">
+                 <div class="portletContentD" id="dettaglioDocumento">
+          			<%--<div class=rowD>&nbsp;</div>--%>
+                     
+                 </div>
+               </div> 
+                 
+       <%--     </form>  --%>
+        <div class="spacer_sm">&nbsp;</div>
+       
+</div>
+
+    <div class="text-center">
+    
+     <button type="button" class="button small " onClick="javascript:confermaModaleDett();">Torna alla lista</button>
+	
+    </div>
+
+<p class="chiudi">Chiudi X</p>
+
+</div>
+      
+    </div>
+    
+<!-- END MODALE DETT FASCICOLO-->  
+      
+

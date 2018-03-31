@@ -1,0 +1,104 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+
+
+
+
+
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Sistema Bilancio Finanziario Java Gestione - rev. 1504210001 (21/04/2015)</title>
+<link rel="stylesheet" href="/sbfj-gestione/css/style.css" type="text/css"/>
+</head>
+ 
+
+
+ 
+ 
+<body>
+		
+	<h2>Selezione Decreto</h2>
+		
+	<form id="__FORM__" action="/sbfj-gestione/caratteristicheDecretoDmtDim.do?_APP_CODE_=gestione&amp;_REQUEST_URI_SRC_=/sbfj-gestione/menu.do" method="post">
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="headsfondo">
+	    
+
+
+
+
+
+<div class="box">
+	
+	<div class="commonDivDecretiDmtDim">
+
+		<!-- TIPO -->
+		<label for="strumentoTipo" class="testo11 bold margin2px">
+			Tipo
+		</label>
+		<select id="strumentoTipo" name="strumentoTipo">
+			
+				<option title="DMT" value="22">
+					DMT
+				</option>
+			
+				<option title="DIM" value="23">
+					DIM
+				</option>
+			
+		</select>	
+		<!-- NUMERO -->	
+		<label for="strumentoNumero" class="testo11 bold margin2px">
+			Numero
+		</label>
+		<input id="strumentoNumero" name="strumentoNumero" type="text" value="" size="10"/>	
+		<!-- ANNO -->	
+		<label for="strumentoAnno" class="testo11 bold margin2px">
+			Anno
+		</label>
+		
+		
+			<input id="strumentoAnno" name="strumentoAnno" type="text" value="" size="4"/>				
+				
+
+
+
+	<!-- BOTTONI -->
+	<div class="bottoni">
+		<input type="submit" name="cmdPOST___eseguiRicerca" value="Ricerca" class="pulsante"/>
+		
+		<input type="submit" name="cmdPOST___pulisciAll" value="Pulisci" class="pulsante"/>
+					
+	</div>
+	<!-- END BOTTONI -->
+
+</div>
+		</div>
+</div>
+	</form>
+</body>
+
+</html>
+

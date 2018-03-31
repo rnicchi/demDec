@@ -1,0 +1,356 @@
+package it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import it.almavivaitalia.bilancio.commons.dao.UtenteProfiloDao;
+import it.almavivaitalia.bilancio.commons.manager.UtenteManager;
+import it.almavivaitalia.bilancio.commons.to.DelegaTO;
+import it.almavivaitalia.bilancio.commons.to.UtenteProfiloTO;
+import it.almavivaitalia.bilancio.commons.to.UtenteProfiloTOId;
+import it.almavivaitalia.bilancio.commons.to.UtenteTO;
+import it.almavivaitalia.bilancio.commons.utils.CroConstants;
+import it.almavivaitalia.bsn.sh.utils.StringUtil;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.manager.DelegaManager;
+import it.mef.bilancio.demdec.utils.Constants;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.DelegaForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.NomeFunzioneConstants;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+
+@RequestMapping(value = ConstantsRequestMapping.DELEGA)
+public class DelegaController extends AbstractDemFormController {
+	
+	@Autowired
+	DelegaManager delegaManager;
+	
+	@Autowired
+	UtenteManager utenteManager;
+	
+	@Autowired
+	UtenteProfiloDao utenteProfiloDao;
+	
+	
+	private String startView;
+	
+	public String getStartView() {
+		return startView;
+	}
+
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+
+	@Override
+	public String startController(Context context) throws Throwable {
+		context.setCurrentNode("DemDec.menu.Delega");
+		
+		Map<String,String> tipoFirma = new LinkedHashMap<String,String>();
+		tipoFirma.put(Constants.FIRMA, getMessageSource().getMessage("label.firma"));
+		tipoFirma.put(Constants.SIGLA, getMessageSource().getMessage("label.sigla"));
+		tipoFirma.put(Constants.BOLLINATURA, getMessageSource().getMessage("label.bollinatura"));
+		context.setDataModel(SessionAttributes.LIST_TIPI_FIRMA, tipoFirma);
+		
+		Map<Integer,String> delegatiAttivi = delegaManager.findDelegatiAttivi();
+		context.setDataModel(SessionAttributes.LIST_DELEGATI_ATTIVI, delegatiAttivi);
+		
+		List<UtenteProfiloTO> deleghe = delegaManager.findAllDeleghe();
+		List<DelegaTO> listaDeleghe=null;
+		listaDeleghe=new ArrayList<DelegaTO>();
+		DelegaTO delTo=null;
+		if(!deleghe.isEmpty()) {
+			for (UtenteProfiloTO utenteProfiloTO : deleghe) {
+				delTo=new DelegaTO();
+				delTo.setDelegato(utenteProfiloTO.getUtente().getPersCognome()+" "+utenteProfiloTO.getUtente().getPersNome());
+				//List<UtenteProfiloTO> deleganti=delegaManager.findByProfiloUfficioFlagDelega( utenteProfiloTO.getId().getSequIdProfilo(), utenteProfiloTO.getAnagUffici()!=null?utenteProfiloTO.getAnagUffici().getId():null, 0);
+				//delTo.setDelegante(deleganti.get(0).getUtente().getPersCognome()+" "+deleganti.get(0).getUtente().getPersNome());
+				
+				delTo.setDelegante(utenteProfiloTO.getPersCognomeDelegante()+" "+ utenteProfiloTO.getPerNomeDelegante()); 
+				
+				delTo.setDescProfiloDelegato(utenteProfiloTO.getProfilo().getDescProfilo());
+				delTo.setIdUtente(utenteProfiloTO.getId().getSequIdUtente().toString());
+				delTo.setIdProfilo(utenteProfiloTO.getId().getSequIdProfilo().toString());
+				delTo.setProgressivo(utenteProfiloTO.getId().getProgressivo().toString());
+				delTo.setAnagUffici(utenteProfiloTO.getAnagUffici());
+				delTo.setAnagAmminDem(utenteProfiloTO.getAnagAmminDem());
+				listaDeleghe.add(delTo);
+			}
+			context.setDataModel(SessionAttributes.LIST_DELEGHE, listaDeleghe);
+		}
+			
+		return startView;
+	}
+	
+//	public String onLoadDeleganti(Context context) throws Throwable {
+//		
+//		DelegaForm delegaForm = (DelegaForm) context.getForm();
+//		
+//		if(delegaForm.isValid()){
+//			Map<Integer,String> deleganti = delegaManager.findDeleganti(delegaForm.getTipoFirma());
+//			context.setDataModel(SessionAttributes.LIST_DELEGANTI, deleganti);
+//		}
+//		
+//		return startView;
+//		
+//	}
+	
+	public String onLoadDeleganti(Context context) throws Throwable {
+		
+		DelegaForm delegaForm = (DelegaForm) context.getForm();
+		
+		if(delegaForm.isValid()){
+			List<UtenteProfiloTO> deleganti = delegaManager.findDeleganti(delegaForm.getTipoFirma()); 
+			context.setDataModel(SessionAttributes.LIST_DELEGANTI, deleganti);
+		}
+		
+		return startView;
+		
+	}
+
+/*	public String onLoadDelegati(Context context) throws Throwable {
+		
+		DelegaForm delegaForm = (DelegaForm) context.getForm();
+		
+		if(delegaForm.isValid()){
+			Map<Integer,String> delegati = delegaManager.findDelegati(delegaForm.getTipoFirma());
+			delegati.remove(Integer.parseInt(delegaForm.getDelegante()));
+			context.setDataModel(SessionAttributes.LIST_DELEGATI, delegati);
+		}
+		
+		return startView;
+		
+	}*/
+	
+public String onLoadDelegati(Context context) throws Throwable {
+		
+		DelegaForm delegaForm = (DelegaForm) context.getForm();
+		
+		if(delegaForm.isValid()){
+			String delegante=delegaForm.getDelegante();
+			int indiceSeparatore=delegante.indexOf('-');
+			Map<Integer,String> delegati = delegaManager.findDelegati(delegaForm.getTipoFirma());
+			delegati.remove(Integer.parseInt(delegante.substring(0,indiceSeparatore)));
+			context.setDataModel(SessionAttributes.LIST_DELEGATI, delegati);
+		}
+		
+		return startView;
+		
+	}
+	
+
+/*	public String onDelegaOld(Context context) throws Throwable {
+		
+		DelegaForm delegaForm = (DelegaForm) context.getForm();
+		
+		if(delegaForm.isValid()){
+			
+			UtenteTO delegante = utenteManager.loadById(Integer.parseInt(delegaForm.getDelegante()));
+			UtenteTO delegato = utenteManager.loadById(Integer.parseInt(delegaForm.getDelegato()));
+			
+			BigDecimal maxProgressivo = delegato.getUtenteProfiloList().get(delegato.getUtenteProfiloList().size()-1).getId().getProgressivo();
+			
+			UtenteProfiloTO up = delegante.getUtenteProfiloPrincipale();
+			up.setUtente(delegato);
+			up.getId().setSequIdUtente(new BigDecimal(delegato.getId()));
+			up.getId().setProgressivo(maxProgressivo.add(BigDecimal.ONE));
+			up.setFlagDelega01(1);
+			
+			List<UtenteProfiloTO> utenteProfiloList = delegato.getUtenteProfiloList();
+			
+			if(!utenteProfiloList.isEmpty() && !utenteProfiloList.contains(up)){
+				context.valorizeAudit(up, NomeFunzioneConstants.DELEGA);
+				delegaManager.saveDelega(up, CroConstants.CRO_TRANS_DELEGA); //TODO CRONOLOGICO DA FINIRE
+				context.addInfo("info.delega.success");
+			}else{
+				context.addError("error.delega", up.getUtente().getPersCognome()+ " " + up.getUtente().getPersNome());
+			}
+			Map<Integer,String> delegatiAttivi = delegaManager.findDelegatiAttivi();
+			context.setDataModel(SessionAttributes.LIST_DELEGATI_ATTIVI, delegatiAttivi);
+		}
+		delegaForm.clear();
+		return startView;
+		
+	}*/
+	
+	
+	
+public String onDelega(Context context) throws Throwable {
+		
+		DelegaForm delegaForm = (DelegaForm) context.getForm();
+		
+		if(delegaForm.isValid()){
+			
+			//il delegante che prendo dalla form contiene idUtente e idProfilo
+			String del=delegaForm.getDelegante();
+			int indiceSeparatore=del.indexOf('-');
+			String idUtente=del.substring(0, indiceSeparatore);
+			String idProfilo=del.substring(indiceSeparatore+1);
+			
+			UtenteTO delegante = utenteManager.loadById(Integer.parseInt(idUtente));
+			UtenteTO delegato = utenteManager.loadById(Integer.parseInt(delegaForm.getDelegato()));
+			
+			BigDecimal maxProgressivo = delegato.getUtenteProfiloList().get(delegato.getUtenteProfiloList().size()-1).getId().getProgressivo();
+			
+			List<UtenteProfiloTO> listaUtProfTo=delegaManager.findByUtenteProfiloFlagDelega(Integer.parseInt(idUtente), Integer.parseInt(idProfilo), 0);
+			//UtenteProfiloTO up = delegante.getUtenteProfiloPrincipale();
+			
+			for (UtenteProfiloTO up : listaUtProfTo) {
+					up.setUtente(delegato);
+					up.getId().setSequIdUtente(new BigDecimal(delegato.getId()));
+					up.getId().setProgressivo(maxProgressivo.add(BigDecimal.ONE));
+					up.setFlagDelega01(1);
+					up.setPersCognomeDelegante(delegante.getPersCognome());
+					up.setPerNomeDelegante(delegante.getPersNome());
+					
+					List<UtenteProfiloTO> utenteProfiloList = delegato.getUtenteProfiloList();
+					
+					if(!utenteProfiloList.isEmpty() && !utenteProfiloList.contains(up)){
+						context.valorizeAudit(up, NomeFunzioneConstants.DELEGA);
+						delegaManager.saveDelega(up, CroConstants.CRO_TRANS_DELEGA); //TODO CRONOLOGICO DA FINIRE
+						context.addInfo("info.delega.success");
+					}else{
+						context.addError("error.delega", up.getUtente().getPersCognome()+ " " + up.getUtente().getPersNome());
+					}
+			}
+			
+			
+			
+
+			List<UtenteProfiloTO> deleghe = new ArrayList<UtenteProfiloTO>();
+			//if(delegaForm.getDelegatoFind() != null && delegaForm.getDelegatoFind() != ""){
+			if(!StringUtil.isEmpty(delegaForm.getDelegatoFind()) ){
+				deleghe = delegaManager.findDelegheByIdUtente(Integer.parseInt(delegaForm.getDelegatoFind()));
+			}else{
+				deleghe = delegaManager.findAllDeleghe();
+			}
+			
+			List<DelegaTO> listaDeleghe=new ArrayList<DelegaTO>();
+			DelegaTO delTo=null;
+			for (UtenteProfiloTO utenteProfiloTO : deleghe) {
+				delTo=new DelegaTO();
+				delTo.setDelegato(utenteProfiloTO.getUtente().getPersCognome()+" "+utenteProfiloTO.getUtente().getPersNome());
+				//List<UtenteProfiloTO> deleganti=delegaManager.findByProfiloUfficioFlagDelega( utenteProfiloTO.getId().getSequIdProfilo(), utenteProfiloTO.getAnagUffici()!=null?utenteProfiloTO.getAnagUffici().getId():null, 0);
+				
+				//delTo.setDelegante(deleganti.get(0).getUtente().getPersCognome()+" "+deleganti.get(0).getUtente().getPersNome());
+				delTo.setDelegante(utenteProfiloTO.getPersCognomeDelegante()+" "+ utenteProfiloTO.getPerNomeDelegante()); 
+				
+				delTo.setDescProfiloDelegato(utenteProfiloTO.getProfilo().getDescProfilo());
+				delTo.setIdUtente(utenteProfiloTO.getId().getSequIdUtente().toString());
+				delTo.setIdProfilo(utenteProfiloTO.getId().getSequIdProfilo().toString());
+				delTo.setProgressivo(utenteProfiloTO.getId().getProgressivo().toString());
+				listaDeleghe.add(delTo);
+			}
+			
+			Map<Integer,String> delegatiAttivi = delegaManager.findDelegatiAttivi();
+			context.setDataModel(SessionAttributes.LIST_DELEGATI_ATTIVI, delegatiAttivi);
+			context.setDataModel(SessionAttributes.LIST_DELEGHE, listaDeleghe);
+			
+			
+		
+		}
+		//delegaForm.clear();
+		return startView;
+		
+	}
+
+	
+	
+
+	public String onLoadDelegheByDelegato(Context context) throws Throwable {
+		DelegaForm delegaForm = (DelegaForm) context.getForm();
+		List<UtenteProfiloTO> deleghe = new ArrayList<UtenteProfiloTO>();
+		if(!StringUtil.isEmpty(delegaForm.getDelegatoFind()) ){
+			deleghe = delegaManager.findDelegheByIdUtente(Integer.parseInt(delegaForm.getDelegatoFind()));
+		}else{
+			deleghe = delegaManager.findAllDeleghe();
+		}
+		
+		List<DelegaTO> listaDeleghe=null;
+		if(deleghe.isEmpty()){
+			context.addInfo("info.noDataFound");
+		}else {
+			 listaDeleghe=new ArrayList<DelegaTO>();
+			DelegaTO delTo=null;
+			for (UtenteProfiloTO utenteProfiloTO : deleghe) {
+				delTo=new DelegaTO();
+				delTo.setDelegato(utenteProfiloTO.getUtente().getPersCognome()+" "+utenteProfiloTO.getUtente().getPersNome());
+				
+				//List<UtenteProfiloTO> deleganti=delegaManager.findByProfiloUfficioFlagDelega( utenteProfiloTO.getId().getSequIdProfilo(), utenteProfiloTO.getAnagUffici()!=null?utenteProfiloTO.getAnagUffici().getId():null, 0);
+				//delTo.setDelegante(deleganti.get(0).getUtente().getPersCognome()+" "+deleganti.get(0).getUtente().getPersNome());
+			 
+				delTo.setDelegante(utenteProfiloTO.getPersCognomeDelegante()+" "+ utenteProfiloTO.getPerNomeDelegante()); 
+				
+				
+				delTo.setDescProfiloDelegato(utenteProfiloTO.getProfilo().getDescProfilo());
+				delTo.setIdUtente(utenteProfiloTO.getId().getSequIdUtente().toString());
+				delTo.setIdProfilo(utenteProfiloTO.getId().getSequIdProfilo().toString());
+				delTo.setProgressivo(utenteProfiloTO.getId().getProgressivo().toString());
+				delTo.setAnagUffici(utenteProfiloTO.getAnagUffici());
+				delTo.setAnagAmminDem(utenteProfiloTO.getAnagAmminDem());
+				listaDeleghe.add(delTo);
+			}
+			
+		}
+		
+//		context.setDataModel(SessionAttributes.LIST_DELEGHE, deleghe);
+		context.setDataModel(SessionAttributes.LIST_DELEGHE, listaDeleghe);
+		return startView;
+		
+	}
+	
+	public String onDeleteDelega(Context context)  throws Throwable {
+		
+		DelegaForm delegaForm = (DelegaForm) context.getForm();
+		
+		StringTokenizer st =  new StringTokenizer(getParameter(context, "id"), ";");
+		String idUtente = st.nextToken();
+		String idProfilo = st.nextToken();
+		String progressivo = st.nextToken();
+		
+		UtenteProfiloTOId toId = new UtenteProfiloTOId(new BigDecimal(idUtente), new BigDecimal(idProfilo), new BigDecimal(progressivo)); 
+		delegaManager.deleteDelega(toId);
+		// TODO INSERIRE CRONOLOGICO
+		List<UtenteProfiloTO> deleghe = new ArrayList<UtenteProfiloTO>();
+		//if(delegaForm.getDelegatoFind() != null && delegaForm.getDelegatoFind() != ""){
+		if(!StringUtil.isEmpty(delegaForm.getDelegatoFind()) ){
+			deleghe = delegaManager.findDelegheByIdUtente(Integer.parseInt(delegaForm.getDelegatoFind()));
+		}else{
+			deleghe = delegaManager.findAllDeleghe();
+		}
+		
+		List<DelegaTO> listaDeleghe=new ArrayList<DelegaTO>();
+		DelegaTO delTo=null;
+		for (UtenteProfiloTO utenteProfiloTO : deleghe) {
+			delTo=new DelegaTO();
+			delTo.setDelegato(utenteProfiloTO.getUtente().getPersCognome()+" "+utenteProfiloTO.getUtente().getPersNome());
+			//List<UtenteProfiloTO> deleganti=delegaManager.findByProfiloUfficioFlagDelega( utenteProfiloTO.getId().getSequIdProfilo(), utenteProfiloTO.getAnagUffici()!=null?utenteProfiloTO.getAnagUffici().getId():null, 0);
+			
+			//delTo.setDelegante(deleganti.get(0).getUtente().getPersCognome()+" "+deleganti.get(0).getUtente().getPersNome());
+			delTo.setDelegante(utenteProfiloTO.getPersCognomeDelegante()+" "+ utenteProfiloTO.getPerNomeDelegante()); 
+			
+			delTo.setDescProfiloDelegato(utenteProfiloTO.getProfilo().getDescProfilo());
+			delTo.setIdUtente(utenteProfiloTO.getId().getSequIdUtente().toString());
+			delTo.setIdProfilo(utenteProfiloTO.getId().getSequIdProfilo().toString());
+			delTo.setProgressivo(utenteProfiloTO.getId().getProgressivo().toString());
+			listaDeleghe.add(delTo);
+		}
+		
+		Map<Integer,String> delegatiAttivi = delegaManager.findDelegatiAttivi();
+		context.setDataModel(SessionAttributes.LIST_DELEGATI_ATTIVI, delegatiAttivi);
+		context.setDataModel(SessionAttributes.LIST_DELEGHE, listaDeleghe);
+		context.addInfo("info.delete.success");
+		delegaForm.clear();
+		return startView;
+		
+	}
+
+}

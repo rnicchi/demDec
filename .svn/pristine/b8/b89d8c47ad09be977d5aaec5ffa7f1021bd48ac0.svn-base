@@ -1,0 +1,25 @@
+package it.almavivaitalia.bilancio.commons.manager;
+
+
+
+import java.util.List;
+
+import it.almavivaitalia.bilancio.commons.to.EmailUtenteTO;
+import it.almavivaitalia.bilancio.commons.to.UserInfoTO;
+import it.almavivaitalia.bilancio.commons.to.UtenteTO;
+import it.almavivaitalia.bsn.sh.manager.AbstractManager;
+
+public interface UtenteManager extends AbstractManager{
+
+	public UserInfoTO loadUserInfo(UserInfoTO userInfoTO) throws Throwable;
+    public String getSystemDate() throws Throwable;
+    public Short loadAnnoEse(String statTipoEse) throws Throwable ;
+    public UtenteTO loadByCodiUtente(String codi) throws Throwable;
+    public String findEmailSignatoryNextByStatFirmaAndIdFascicolo(String statFirma, Long idFascicolo) throws Throwable;
+	public UtenteTO loadByCodiUtenteNsbf(String codi) throws Throwable;
+	public void saveUserPin(Integer id, String cf, String pin) throws Throwable;
+	public String findDeencryptedPinbyId(Integer id) throws Throwable;
+	public Boolean checkCodFiscaleUtente(Integer id, String cf) throws Throwable;
+	public List<EmailUtenteTO> findEmailUserFlgPecStatIdFasc(String statFirma, Long idFascicolo) throws Throwable;
+	
+}

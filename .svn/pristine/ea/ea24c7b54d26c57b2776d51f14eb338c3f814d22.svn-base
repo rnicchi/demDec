@@ -1,0 +1,137 @@
+package it.mef.bilancio.demdec.web.spring.controller.modali;
+
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.manager.DocumentiManager;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.servizi.to.DocumentTO;
+import it.mef.bilancio.demdec.servizi.to.DocumentoSipatrTO;
+import it.mef.bilancio.demdec.servizi.to.FascicoloSipatrTO;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.GestioneFascicoloFadForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@RequestMapping(value = ConstantsRequestMapping.MODALI_DOCUMENTI_PAT)
+public class DocumentiPatModaliController extends AbstractDemFormController implements WebConstants, SessionAttributes {
+
+	
+	private String startView;	
+	
+	
+	@Autowired
+	private ServletContext servletContext;
+	
+	@Autowired
+	private ListManager listManager;
+	
+	@Autowired
+	private DocumentiManager documentiManager;
+	
+	public ServletContext getServletContext() {
+		return servletContext;
+	}
+	
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+	
+	@Override
+	public String startController(Context context) throws Throwable {
+		// TODO Auto-generated method stub
+		return startView;
+	}
+	
+	@SuppressWarnings("unused")
+	public void modaleMetadatiDocumentiPat(Context context) throws Throwable {
+		
+		// Form
+		GestioneFascicoloFadForm form = (GestioneFascicoloFadForm) context.getForm();
+		
+		List<DocumentTO> toList = context.getModel(SessionAttributes.LIST_DOCUMENTI_PAT);
+		
+		//FascicoliTO fascicoloSelezionato= context.getModel(SessionAttributes.so);
+		FascicoloSipatrTO sottoFascSipatrSelezionato=null;
+		List<FascicoloSipatrTO>listaSottoFascPatr=(List<FascicoloSipatrTO>)context.getModel(SessionAttributes.LIST_SOTTO_FASCICOLI_PAT);
+		
+		
+		List<DocumentoSipatrTO> toListNew = new ArrayList<DocumentoSipatrTO>();
+		
+		// Reperimento indice docuemento selezionato
+		String idPat = context.getRequest().getParameter("idPat");		
+		
+		if (toList!=null){			
+			
+			// Set del form per informazioni da visualizzare
+			DocumentTO docSelezionato = (DocumentTO)toList.get(Integer.valueOf(idPat));
+			
+			for (FascicoloSipatrTO fascicoloSipatrTO : listaSottoFascPatr) {
+				if(fascicoloSipatrTO.getIdFascicoloSipatr().equalsIgnoreCase(docSelezionato.getIdSottoFascicolo())) {
+					sottoFascSipatrSelezionato=fascicoloSipatrTO;
+					break;
+				}
+			}
+			
+			DocumentoSipatrTO docSipatrTo=new DocumentoSipatrTO();
+			docSipatrTo.setAmministrazione(sottoFascSipatrSelezionato.getAmministrazione());
+			docSipatrTo.setUcbRts(sottoFascSipatrSelezionato.getRagioneria());
+			docSipatrTo.setTitolo(sottoFascSipatrSelezionato.getTitolo());
+			
+			
+			docSipatrTo.setAttivo(docSelezionato.getAttivo());
+			docSipatrTo.setCondivisibile(docSelezionato.getCondivisibile());
+			docSipatrTo.setDataAnnullamento(docSelezionato.getDataAnnullamento());
+			docSipatrTo.setDataChiusura(docSelezionato.getDataChiusura());
+			docSipatrTo.setDataCreazione(docSelezionato.getDataCreazione());
+			docSipatrTo.setDataDocumento(docSelezionato.getDataDocumento());
+			docSipatrTo.setDescDocumento(docSelezionato.getDescDocumento());
+			docSipatrTo.setDescrizione(docSelezionato.getDescrizione().substring(docSelezionato.getDescrizione().indexOf("-")+1));
+			docSipatrTo.setDocumentoContent(docSelezionato.getDocumentoContent());
+			docSipatrTo.setDocumentoFileOperazione(docSelezionato.getDocumentoFileOperazione());
+			docSipatrTo.setDocumentoFileOrigine(docSelezionato.getDocumentoFileOrigine());
+			docSipatrTo.setEsitoOperazione(docSelezionato.getEsitoOperazione());
+			docSipatrTo.setIdDocumento(docSelezionato.getIdDocumento());
+			
+			docSipatrTo.setIdFascicolo(docSelezionato.getIdFascicolo());
+			docSipatrTo.setIdSottoFascicolo(docSelezionato.getIdSottoFascicolo());
+			docSipatrTo.setNote(docSelezionato.getNote());
+			docSipatrTo.setProtocollo(docSelezionato.getProtocollo());
+			docSipatrTo.setSistemaProduttore(docSelezionato.getSistemaProduttore());
+			docSipatrTo.setStatDocumento(docSelezionato.getStatDocumento());
+			docSipatrTo.setTipoDocumento(docSelezionato.getTipoDocumento());
+			docSipatrTo.setTipoFlusso(docSelezionato.getTipoFlusso());
+			docSipatrTo.setTipoOperazione(docSelezionato.getTipoOperazione());
+			docSipatrTo.setUfficioCreatore(docSelezionato.getUfficioCreatoreRed());
+			docSipatrTo.setUtenteCreatore(docSelezionato.getUtenteCreatore());
+			//List<DescDocumentoTO> listaDescDocumenti = getGestioneFadManager().findDescDocumentoByTipoDocumento(docSelezionato.getTipoDocumento().getId());TODO verificare
+//			context.removeDataModel(WebConstants.LIST_DESC_DOCUMENTI);
+		//	docSelezionato.setListaDescDocumenti(listaDescDocumenti);//TODO verificare
+			
+		//	toListNew.add((DocumentTO)toList.get(Integer.valueOf(idPat)));
+			toListNew.add(docSipatrTo);
+			
+//			context.setDataModel(WebConstants.LIST_DESC_DOCUMENTI, listaDescDocumenti);
+		//	form.setListaDescDocumenti(listaDescDocumenti);  TODO verificare
+			context.setDataModel(SessionAttributes.DOCUMENTO_PAT, docSelezionato);
+		}
+		
+		context.getResponse().setContentType("application/json");  
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.writeValue(context.getResponse().getOutputStream(), toListNew);
+		   
+		context.getResponse().getOutputStream().flush();
+		context.getResponse().getOutputStream().close();
+		
+	}
+
+}

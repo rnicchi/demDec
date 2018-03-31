@@ -1,0 +1,262 @@
+package it.mef.bilancio.demdec.web.spring.controller.verifica;
+
+import it.almavivaitalia.bilancio.commons.manager.UtenteManager;
+import it.almavivaitalia.bsn.sh.manager.exception.ObjectNotFoundException;
+import it.almavivaitalia.bsn.sh.paginator.Paginator;
+import it.almavivaitalia.bsn.sh.utils.PaginatorUtil;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.almavivaitalia.web.sh.utils.ContextHelper;
+import it.mef.bilancio.demdec.manager.DocumentiManager;
+import it.mef.bilancio.demdec.manager.GestioneFadManager;
+import it.mef.bilancio.demdec.manager.MailManager;
+import it.mef.bilancio.demdec.servizi.client.ResponseDEMBILClient;
+import it.mef.bilancio.demdec.to.DocumentiViewTO;
+import it.mef.bilancio.demdec.to.FascicoliTO;
+import it.mef.bilancio.demdec.to.IterFirmaDecretoTO;
+import it.mef.bilancio.demdec.to.PecMessaggiInviatiTO;
+import it.mef.bilancio.demdec.utils.Constants;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.FirmaDocumentiForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.FileUtil;
+import it.mef.bilancio.demdec.web.spring.utils.NomeFunzioneConstants;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(value = ConstantsRequestMapping.VERIFICA_DOCUMENTI)
+public class VerificaDocumentiController extends AbstractDemFormController {
+	
+	@Autowired
+	private DocumentiManager documentiManager;
+	
+	@Autowired
+	private UtenteManager utenteManager;
+	
+	@Autowired
+	private MailManager mailManager;
+	
+	@Autowired
+	private GestioneFadManager gestioneFadManager;
+	
+	private Boolean first = true;
+	
+	private String listView;
+	private String mySignedDocuments;
+	
+	public Boolean isFirst() {
+		return first;
+	}
+
+	public void setFirst(Boolean first) {
+		this.first = first;
+	}
+	
+	public String getListView() {
+		return listView;
+	}
+
+	public void setListView(String listView) {
+		this.listView = listView;
+	}
+	
+	public void setMySignedDocuments(String mySignedDocuments) {
+		this.mySignedDocuments = mySignedDocuments;
+	}
+
+	public String getMySignedDocuments() {
+		return mySignedDocuments;
+	}
+
+
+	@Override
+	public String startController(Context context) throws Throwable {
+		context.setCurrentNode("DemDec.menu.Verifica");
+		
+		List<DocumentiViewTO> listAttoDecretoToSign = this.documentiManager.listADToSignOrVerifyByLoggedUser(getUtenteInSessione(), Constants.VERIFICA);
+		
+		if(isFirst()){
+			List<DocumentiViewTO> signedDocuments = new ArrayList<DocumentiViewTO>();
+			context.setDataModel(SessionAttributes.LIST_AD_SIGNED, signedDocuments);
+		}
+		
+		for (DocumentiViewTO documentiViewTO : listAttoDecretoToSign) {
+			FascicoliTO fascicoliTO = gestioneFadManager.getFascicoloFad(documentiViewTO.getNumeIdFascicolo());
+			documentiViewTO.setFascicoli(fascicoliTO);
+		}
+		if(listAttoDecretoToSign.size() > 0){
+			PaginatorUtil.addPaginator(listAttoDecretoToSign, SessionAttributes.LIST_AD_TO_SIGN, Paginator.PAGE_RANGE_15, context);
+		}else{
+			PaginatorUtil.removePaginator(context, SessionAttributes.LIST_AD_TO_SIGN);
+			if (isFirst()){
+				ContextHelper.addWarning(context.getRequest(),"warning.noRecord.trovati");
+			}
+		}
+		setFirst(true);
+		return listView;
+	}
+
+	/**
+	 * Cicla la lista dei documenti selezionati per ognuno dei quali:
+	 * 	- chiama il metodo verifica di documentiManager che esegue la verifica effettiva dei documenti e torna un ogggetto IterFirmaDecretoTO (sarebbe il firmatario successivo).
+	 * 		Se l'oggetto di tipo IterFirmaDecretoTO è valorizzato viene mandata una e-mail al firmatario successivo.		
+	 * 		Se il metodo del manager solleva una eccezione di tipo ObjectNotFoundException significa che il messaggio da inviare non ha valorizzato il destinatario e 
+	 * 		setta un msg nel context (code:100 = manca il destinatario nella e-mail).
+	 * 		
+	 * 		
+	 * @param context
+	 * @return startController(context)
+	 * @throws Throwable
+	 */
+	public String verifica(Context context) throws Throwable{
+		
+		FirmaDocumentiForm form = (FirmaDocumentiForm)context.getForm();
+		
+		if(form.isValid()){
+			List<DocumentiViewTO> list = context.getModel(SessionAttributes.LIST_AD_TO_SIGN);
+			List<DocumentiViewTO> signedDocuments = context.getModel(SessionAttributes.LIST_AD_SIGNED);
+			for (int i = 0; i < form.getSelezioni().length; i++) {
+				String selezione = form.getSelezioni()[i];
+				
+				DocumentiViewTO selectedDocument = null; //list.get(Integer.valueOf(selezione));
+				
+				for (Iterator<DocumentiViewTO> iterator = list.iterator(); iterator.hasNext();) {
+					DocumentiViewTO documentiViewTO = (DocumentiViewTO) iterator.next();
+					if(documentiViewTO.getCodiGuidDocumento().equalsIgnoreCase(selezione)){
+						selectedDocument = documentiViewTO;
+					}
+				}
+				
+				context.valorizeAudit(selectedDocument, NomeFunzioneConstants.VERIFICA_DOCUMENTI);
+				try {
+					IterFirmaDecretoTO ifd = documentiManager.verifica(selectedDocument, getUtenteInSessione());
+					
+					if(ifd != null){
+						List<String> address = utenteManager.findEmailSignatoryNextByStatFirmaAndIdFascicolo(ifd.getStatFirma(), ifd.getFascicoli().getId());
+						//email = "entrate_test2@pec.almaviva.it"; // per testare invio email
+						String email = "";
+						
+						if(address != null && !address.isEmpty()){
+							if(address.size() > 1){
+								for (String string : address) {
+									email=email+string.concat(",");
+								}
+								email= email.substring(0, email.length()-1);
+							}else{
+								email = address.get(0);
+							}
+						}
+						
+						MimeMessage message = null;
+						if(ifd.getAnagFirmatari().getFlagAbilitaMail01() != Constants.DESTINATARIO_MAIL_DISABILITATO){
+							if((ifd.getAnagFirmatari().getFlagPec01() == HAVE_PEC)){
+								message = mailManager.invioPecDaFunzione(NomeFunzioneConstants.VERIFICA_DOCUMENTI, getUtenteInSessione(), email);
+							}else{
+								message = mailManager.invioPeoDaFunzione(NomeFunzioneConstants.VERIFICA_DOCUMENTI, getUtenteInSessione(), email);
+							}
+						}
+						if(message != null){
+							PecMessaggiInviatiTO messageToSave = mailManager.createMessageToSave(message, NomeFunzioneConstants.VERIFICA_DOCUMENTI);
+							context.valorizeAuditCreated(messageToSave, NomeFunzioneConstants.VERIFICA_DOCUMENTI);
+							context.valorizeAuditUpdated(messageToSave, NomeFunzioneConstants.VERIFICA_DOCUMENTI);
+							mailManager.salvaMessaggioInviato(messageToSave, getUtenteInSessione());
+							context.addInfo("info.doc.verified.and.msg.sent", selectedDocument.getDescNomeDocumento(), mailManager.recipientsToString( message.getAllRecipients()));
+							
+						}else{
+							context.addInfo("info.doc.verified", selectedDocument.getDescNomeDocumento());
+							context.addWarning("warning.email.not.sent");
+							
+						}
+					}else{
+						context.addInfo("info.doc.verified", selectedDocument.getDescNomeDocumento());
+						
+					}
+					signedDocuments.add(selectedDocument);
+					
+				} catch ( ObjectNotFoundException onfe) {
+					switch (onfe.getCode()) {
+						case 100:
+							context.addError("error.empty.recipient.to");
+							break;
+						default:
+							context.addError("error.generic", onfe.getObject().toString());
+							break;
+					}
+					setFirst(false);
+					return startController(context);
+				}
+			}
+			
+		}else{
+			setFirst(false);
+			return startController(context);
+		}
+		setFirst(false);
+		form.clear();
+		return startController(context);
+		
+	}
+	
+	/**
+	 * Metodo utilizzato nelle pagine dei documenti da (siglare, bollinare, firmare, verificare) nel link che mostra la lista di tutti i documenti
+	 * bollinati dall'utente.
+	 * @return
+	 * @throws Throwable
+	 */
+	public String findMySignedDocuments(Context context) throws Throwable{
+		
+		List<DocumentiViewTO> listMySignedDocuments = documentiManager.listSignedADByLoggedUser(getUtenteInSessione(), Constants.VERIFICA);
+		
+		if(listMySignedDocuments != null && !listMySignedDocuments.isEmpty()){
+			for (DocumentiViewTO documentiViewTO : listMySignedDocuments) {
+				FascicoliTO fascicoliTO = gestioneFadManager.getFascicoloFad(documentiViewTO.getNumeIdFascicolo());
+				documentiViewTO.setFascicoli(fascicoliTO);
+			}
+			context.setDataModel(SessionAttributes.LIST_MY_SIGNED_AD, listMySignedDocuments);
+			PaginatorUtil.addPaginator(listMySignedDocuments, SessionAttributes.LIST_MY_SIGNED_AD, Paginator.PAGE_RANGE_15, context);
+		}else{
+			PaginatorUtil.removePaginator(context, SessionAttributes.LIST_MY_SIGNED_AD);
+			ContextHelper.addWarning(context.getRequest(),"warning.noRecord.trovati");
+		}
+		
+		
+		return mySignedDocuments;
+	}
+	
+	public String downloadMySignedAD(Context context) throws Throwable {
+		
+		DocumentiViewTO doc = null;
+		ResponseDEMBILClient res = null;
+		
+		String rigaDoc = context.getCommandParameter("downloadMyAD");
+//		List<DocumentiViewTO> listADSigned = documentiManager.listSignedADByLoggedUser(getUtenteInSessione(), Constants.VERIFICA);
+		List<DocumentiViewTO> listADSigned = context.getModel(SessionAttributes.LIST_MY_SIGNED_AD);
+		
+		if(!listADSigned.isEmpty() && rigaDoc != null && rigaDoc != "" ){
+			doc = listADSigned.get(Integer.parseInt(rigaDoc));
+		}
+		res = documentiManager.wsDownloadDocumentoFascicoloAttoDecreto(doc.getCodiGuidFascicolo(), doc.getCodiGuidDocumento());
+		
+		if(res.getEsitoTo().getCodice().equalsIgnoreCase("OK")){
+			FileUtil.downloadFromResponseWs(res, context);
+			
+		}else{
+			context.addError("error.ws.download.fascicolo.atto.decreto", res.getEsitoTo().getDescrizione());
+			return startController(context);
+		}
+		return null;
+	}
+	
+	
+	
+	public String onBack(Context context) throws Throwable {
+		return startController(context);
+	}
+}

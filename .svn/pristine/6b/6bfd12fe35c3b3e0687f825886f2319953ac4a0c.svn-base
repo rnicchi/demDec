@@ -1,0 +1,333 @@
+package it.mef.bilancio.demdec.web.spring.controller.funzionidiservizio;
+
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTOId;
+import it.almavivaitalia.bilancio.commons.to.AnagUfficiTO;
+import it.almavivaitalia.bilancio.commons.to.EserciziTO;
+import it.almavivaitalia.bilancio.commons.to.ProfiloTO;
+import it.almavivaitalia.bilancio.commons.to.UtenteProfiloTO;
+import it.almavivaitalia.bilancio.commons.to.UtenteTO;
+import it.almavivaitalia.web.sh.utils.Context;
+import it.mef.bilancio.demdec.enums.TipoResponse;
+import it.mef.bilancio.demdec.manager.GestioneUtentiManager;
+import it.mef.bilancio.demdec.manager.ListManager;
+import it.mef.bilancio.demdec.to.ManagerResponseTO;
+import it.mef.bilancio.demdec.web.spring.controller.AbstractDemFormController;
+import it.mef.bilancio.demdec.web.spring.form.GestioneUtentiForm;
+import it.mef.bilancio.demdec.web.spring.utils.ConstantsRequestMapping;
+import it.mef.bilancio.demdec.web.spring.utils.NomeFunzioneConstants;
+import it.mef.bilancio.demdec.web.spring.utils.SessionAttributes;
+import it.mef.bilancio.demdec.web.spring.utils.WebConstants;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(value = ConstantsRequestMapping.GESTIONE_UTENTI)
+public class GestioneUtentiController extends AbstractDemFormController implements WebConstants, SessionAttributes {
+
+	private String startView;
+	private String utenteView;
+	public void setStartView(String startView) {
+		this.startView = startView;
+	}
+	public void setUtenteView(String utenteView) {
+		this.utenteView = utenteView;
+	}
+
+	@Autowired
+	private ListManager listManager;
+	@Autowired
+	private GestioneUtentiManager gestioneUtentiManager;
+
+	@Override
+	public String startController(Context context) throws Throwable {
+
+		List<UtenteTO> listUtenti = gestioneUtentiManager.caricaTuttiUtenti();
+		context.setDataModel(SessionAttributes.LIST_UTENTI, listUtenti);
+		return startView;
+	}
+
+	public String onGestioneNuovoUtente(Context context) throws Throwable {
+
+		context.setDataModel(WebConstants.LIST_PROF_UFF_AMM, new ArrayList<UtenteProfiloTO>());
+		loadElenchiRicerca(context);
+		return utenteView;
+	}
+
+
+	public String onCreaUtente(Context context) throws Throwable {
+
+		GestioneUtentiForm form = (GestioneUtentiForm) context.getForm();
+		if (!form.isValid()) return utenteView;
+
+		List<UtenteProfiloTO> listaUtProf = context.getModel(WebConstants.LIST_PROF_UFF_AMM);
+		UtenteTO utenteTO = form.getTransferObject();
+
+		utenteTO.setUtenteProfiloList(new ArrayList<UtenteProfiloTO>());
+		for (UtenteProfiloTO utenteProfiloTo: listaUtProf)
+			addProfilo(utenteTO, utenteProfiloTo);
+
+		//imposta valori di Audit
+		context.valorizeAuditCreated(utenteTO, NomeFunzioneConstants.GESTIONE_UTENTI);
+		for (UtenteProfiloTO utenteProfiloTo: utenteTO.getUtenteProfiloList())
+			context.valorizeAuditCreated(utenteProfiloTo, NomeFunzioneConstants.GESTIONE_UTENTI);
+
+		ManagerResponseTO<UtenteTO> risposta = gestioneUtentiManager.creaUtente(utenteTO);
+
+		responseManager.predisponiStartView(context, risposta);
+		return startView;
+	}
+
+	public String onGestioneModificaUtente(Context context) throws Throwable {
+
+		GestioneUtentiForm form = (GestioneUtentiForm) context.getForm();
+		if(!form.isValid()) return startView;
+
+		String selectedCodiUtente = form.getSelectedCodiUtente();
+
+		ManagerResponseTO<UtenteTO> risposta = gestioneUtentiManager.caricaUtenteByCodiceUtente(selectedCodiUtente);
+		if (risposta.getCodice() == TipoResponse.INFO) {
+			UtenteTO utenteTO = (UtenteTO) risposta.getListaTo().get(0);
+			fillFormByTo(form, utenteTO);
+			context.setDataModel(WebConstants.LIST_PROF_UFF_AMM, utenteTO.getUtenteProfiloList());
+		}
+		loadElenchiRicerca(context);
+		return utenteView;
+	}
+
+
+	public String onModificaUtente(Context context) throws Throwable {
+
+		GestioneUtentiForm form = (GestioneUtentiForm) context.getForm();
+		if (!form.isValid()) return utenteView;
+
+		List<UtenteProfiloTO> listaUtProf = context.getModel(WebConstants.LIST_PROF_UFF_AMM);
+		UtenteTO utenteTO = form.getTransferObject();
+
+		utenteTO.setUtenteProfiloList(new ArrayList<UtenteProfiloTO>());
+		for (UtenteProfiloTO utenteProfiloTo: listaUtProf)
+			addProfilo(utenteTO, utenteProfiloTo);
+
+		//imposta valori di Audit
+		context.valorizeAuditUpdated(utenteTO, NomeFunzioneConstants.GESTIONE_UTENTI);
+		for (UtenteProfiloTO utenteProfiloTo: utenteTO.getUtenteProfiloList())
+			context.valorizeAuditCreated(utenteProfiloTo, NomeFunzioneConstants.GESTIONE_UTENTI);
+
+		ManagerResponseTO<UtenteTO> risposta = gestioneUtentiManager.salvaUtente(utenteTO);
+
+		responseManager.predisponiStartView(context, risposta);
+		return startView;
+	}
+
+	public String onEliminaUtente(Context context) throws Throwable {
+
+		GestioneUtentiForm form = (GestioneUtentiForm) context.getForm();
+		if(!form.isValid()) return startView;
+		String selectedCodiUtente = form.getSelectedCodiUtente();
+
+		ManagerResponseTO<UtenteTO> risposta = gestioneUtentiManager.eliminaUtente(selectedCodiUtente);
+		responseManager.predisponiStartView(context, risposta);
+		return startView;
+	}
+
+
+	public String onConfermaProfilo(Context context) throws Throwable {
+
+		GestioneUtentiForm form = (GestioneUtentiForm) context.getForm();
+		List<UtenteProfiloTO> listProfiliUfficiAmm = context.getModel(WebConstants.LIST_PROF_UFF_AMM);
+
+		if (form.isValid() && !isProfileChange(context, listProfiliUfficiAmm, Integer.valueOf(form.getProfilo().split("-")[0]))){
+
+			UtenteProfiloTO utProfTo = new UtenteProfiloTO();
+
+			String[] token = null;
+			if (form.getProfilo() != null && !form.getProfilo().equals("")) {
+				token = form.getProfilo().split("-");
+
+				ProfiloTO profTo = new ProfiloTO();
+				profTo.setId(Integer.valueOf(token[0]));
+				profTo.setDescProfilo(token[1]);
+				utProfTo.setProfilo(profTo);
+			}
+
+			if (form.getUfficio() != null && !form.getUfficio().equals("")) {
+				token = form.getUfficio().split("-");
+
+				AnagUfficiTO uffTo = new AnagUfficiTO();
+				uffTo.setId(token[0]);
+				uffTo.setDescUfficio(token[1]);
+				utProfTo.setAnagUffici(uffTo);
+			}
+
+			if (form.getAmministrazione() != null && !form.getAmministrazione().equals("")) {
+				token = form.getAmministrazione().split("-");
+
+				AnagAmminDemTO ammTo = new AnagAmminDemTO();
+				AnagAmminDemTOId ammId = new AnagAmminDemTOId();
+
+				ammId.setFkAnnoEse(Short.valueOf(token[0]));
+				ammId.setNumeStp(Integer.valueOf(token[1]));
+				ammId.setNumeApp(Integer.valueOf(token[2]));
+				ammTo.setId(ammId);
+				ammTo.setDescAmm(token[3]);
+				utProfTo.setAnagAmminDem(ammTo);
+
+			}
+
+			if (!listProfiliUfficiAmm.contains(utProfTo))
+					listProfiliUfficiAmm.add(utProfTo);
+			else
+				context.addError("warning.utente.profilo.exists");
+			setDefaultCampiAmministrazione(context, form);
+			context.setDataModel(WebConstants.LIST_PROF_UFF_AMM, listProfiliUfficiAmm);
+		}
+
+		return utenteView;
+	}
+
+	public String onPulisci(Context context) throws Throwable {
+
+		GestioneUtentiForm form = (GestioneUtentiForm) context.getForm();
+		String selectedCodiUtente = form.getSelectedCodiUtente();
+
+		form.clean();
+		setDefaultCampiAmministrazione(context, form);
+
+		if (selectedCodiUtente != null && !selectedCodiUtente.equals("")) {
+				form.setCodiUtente(selectedCodiUtente);
+				form.setSelectedCodiUtente(selectedCodiUtente);
+		}
+		context.setDataModel(WebConstants.LIST_PROF_UFF_AMM, new ArrayList<UtenteProfiloTO>());
+
+		return utenteView;
+	}
+
+
+	//
+	//Metodi private
+	//
+	private void fillFormByTo(GestioneUtentiForm form, UtenteTO utenteTO){
+
+		form.setCodiUtente(utenteTO.getCodiUtente());
+		form.setPersCognome(utenteTO.getPersCognome());
+		form.setPersNome(utenteTO.getPersNome());
+		form.setIndiEmail(utenteTO.getIndiEmail());
+		form.setCodiUtenteNsbf(utenteTO.getCodiUtenteNsbf());
+		form.setCodiCodiceFiscale(utenteTO.getCodiCodiceFiscale());
+		form.setCodiCodiceFisFirma(utenteTO.getCodiCodiceFisFirma());
+		form.setCodiPinFirma(utenteTO.getCodiPinFirma());
+//		form.setProfilo(utenteTO.getUtenteProfiloList());
+//		form.setAnnoEse(utenteTO.get);
+//		form.setUfficio(utenteTO.get);
+//		form.setAmministrazione(utenteTO.get);
+//		form.setSelectedCodiUtente(utenteTO.get);
+
+	}
+
+	private void addProfilo(UtenteTO utenteTO, UtenteProfiloTO utenteProfiloTO) {
+
+		ProfiloTO profiloTo = new ProfiloTO();
+		profiloTo.setId(utenteProfiloTO.getProfilo().getId());
+
+		UtenteProfiloTO utProfTo = new UtenteProfiloTO();
+		utProfTo.setUtente(utenteTO);
+		utProfTo.setProfilo(profiloTo);
+		utProfTo.setAnagAmminDem(utenteProfiloTO.getAnagAmminDem());
+		utProfTo.setAnagUffici(utenteProfiloTO.getAnagUffici());
+		utProfTo.setFlagFirma01(new Integer(1));
+		utProfTo.setFlagModifica01(new Integer(1));
+
+		utenteTO.getUtenteProfiloList().add(utProfTo);
+	}
+
+	private void loadElenchiRicerca(Context context) throws Throwable {
+
+		List<ProfiloTO> listProfili = listManager.findAllProfili();
+		context.setDataModel(WebConstants.LIST_PROFILI, listProfili);
+
+		//filtering ... deleting Direttore e Ministro Proponente (codice 99)
+		Iterator<ProfiloTO> itProfili = listProfili.iterator();
+		while (itProfili.hasNext()) {
+			ProfiloTO to = itProfili.next();
+			if (to.getCodiProfilo().equals("1") || to.getCodiProfilo().equals("99"))
+				itProfili.remove();
+		}
+
+		List<AnagUfficiTO> listUffici = listManager.loadAnagUffici();
+		context.setDataModel(WebConstants.LIST_UFFICI, listUffici);
+
+//		List<EserciziTO> listaAnniEsercizio = listManager.loadEserciziDemCG();
+//		context.setDataModel(WebConstants.LIST_ANNO_ESE, listaAnniEsercizio);
+
+//		List<AnagAmminDemTO> listAmm = getListaAmministrazioniOdierna();
+		List<AnagAmminDemTO> listAmm = getListaAmministrazioniUltimoAnno();
+		context.setDataModel(WebConstants.LIST_AMMIN_DEM, listAmm);
+
+//		List<UtenteProfiloTO> listProfiliUfficiAmm = new ArrayList<UtenteProfiloTO>();
+//		context.setDataModel(WebConstants.LIST_PROF_UFF_AMM, listProfiliUfficiAmm);
+	}
+
+//	private List<AnagAmminDemTO> getListaAmministrazioniOdierna() throws Throwable {
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+//		return listManager.getAmminDemByAnnoEse(sdf.format(new Date()));
+//	}
+	private List<AnagAmminDemTO> getListaAmministrazioniUltimoAnno() throws Throwable {
+		List<EserciziTO> listaEsercizi = listManager.loadEserciziDemCG();	//order by id (AnnoEse)
+		int dimensioneLista = listaEsercizi.size();
+		EserciziTO ultimoEsercizio = listaEsercizi.get(dimensioneLista-1);
+		return listManager.getAmminDemByAnnoEse(ultimoEsercizio.getId().toString());
+	}
+
+	private void setDefaultCampiAmministrazione(Context context, GestioneUtentiForm form) throws Throwable {
+		form.setProfilo("");
+		form.setUfficio("");
+		form.setAnnoEse("");
+		form.setAmministrazione("");
+		List<AnagAmminDemTO> listAmm = getListaAmministrazioniUltimoAnno();
+		context.setDataModel(WebConstants.LIST_AMMIN_DEM, listAmm);
+	}
+
+	private boolean isProfileChange(Context context, List<UtenteProfiloTO> listaProfili, Integer newProfilo) throws Exception {
+		boolean esito = false;
+
+		if (newProfilo == null) throw new Exception("Profilo null");	//impossibile!!! Il validator controlla prima
+		if (listaProfili == null || listaProfili.size() == 0) return false;
+		if (!listaProfili.get(0).getProfilo().getId().equals(newProfilo)) {
+			esito = true;
+			context.addError("errore.profilo.utente.cambio");
+		}
+
+		return esito;
+	}
+
+	//
+	//gestione della response
+	//
+	private ResponseManager responseManager = new ResponseManager();
+	private class ResponseManager {
+		//set dati per la pagina startView
+		private void predisponiStartView(Context context, ManagerResponseTO<UtenteTO> risposta) throws Throwable {
+
+			List<UtenteTO> listUtenti = gestioneUtentiManager.caricaTuttiUtenti();
+			context.setDataModel(SessionAttributes.LIST_UTENTI, listUtenti);
+			responseManager.addMessage(context, risposta.getCodice(), risposta.getDescrizione());
+		}
+//		private void predisponiUtenteView(Context context, ManagerResponseTO<UtenteTO> risposta) throws Throwable {
+//
+//			loadElenchiRicerca(context);
+//			responseManager.addMessage(context, risposta.getCodice(), risposta.getDescrizione());
+//		}
+		private void addMessage(Context context, TipoResponse tipoMessaggio, String info) {
+			if (info != null && !info.equals(""))
+				switch (tipoMessaggio) {
+					case INFO: context.addInfo(info); break;
+					case WARN: context.addWarning(info); break;
+					case ERROR: context.addError(info); break;
+				}
+		}
+	}
+}

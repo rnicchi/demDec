@@ -1,0 +1,274 @@
+package it.mef.bilancio.demdec.manager.impl;
+
+import it.almavivaitalia.bilancio.commons.bo.LettereIgbBO;
+import it.almavivaitalia.bilancio.commons.to.AnagAmminDemTO;
+import it.mef.bilancio.demdec.dao.AnagAmminDemDao;
+import it.mef.bilancio.demdec.dao.LettereIgbDao;
+import it.mef.bilancio.demdec.dao.LettereTestiDao;
+import it.mef.bilancio.demdec.manager.LetterePreRegManager;
+import it.mef.bilancio.demdec.to.LettereIgbTO;
+
+import java.math.BigDecimal;
+import java.sql.Blob;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class LetterePreRegManagerImpl extends AbstractDemManagerImpl implements LetterePreRegManager{
+
+	
+	@Autowired
+	AnagAmminDemDao anagAmminDemDao;
+	
+	@Autowired
+	LettereTestiDao lettereTestiDao;
+	
+	@Autowired
+	LettereIgbDao lettereIgbDao;
+	
+	@Override
+	public List<AnagAmminDemTO> findAmministrazioniByIdFascicolo(Long idFascicolo)  throws Throwable{
+		List<AnagAmminDemTO> listBO=anagAmminDemDao.findAmministrazioniByIdFascicolo(idFascicolo);
+		return listBO;
+		
+	}
+
+	@Override
+	public String[] getLettereTestiByTipo(String tipoLettera) throws Throwable {
+		// TODO Auto-generated method stub
+		return lettereTestiDao.getLettereTestiByTipo(tipoLettera);
+	}
+
+	@Override
+	public String[] getLettereTestiByTipoBalanced(String tipoLettera) throws Throwable {
+		return lettereTestiDao.getLettereTestiByTipoBalanced(tipoLettera);
+	}
+	
+	@Override
+	public void aggiornaLettere(LettereIgbTO lettera, Blob binaIntLettera) throws Throwable {			
+		// TODO Auto-generated method stub
+		LettereIgbBO bo=getDozerDriver().map(lettera, LettereIgbBO.class, "LettereIgb");
+		
+		LettereIgbBO old = lettereIgbDao.findByUK(bo.getFascicoli().getId(), bo.getAnagAmminDem().getId().getFkAnnoEse(), bo.getAnagAmminDem().getId().getNumeStp(), bo.getAnagAmminDem().getId().getNumeApp());
+		
+		if(old == null){
+		
+			/**la funzione generaId torna null se si sta facendo il primo inserimento, quindi in quel caso  inserisco manualmente il valore 1**/
+			bo.setId((BigDecimal) lettereIgbDao.generaId(LettereIgbBO.class));
+			if(bo.getId()==null){
+				bo.setId(new BigDecimal(1));
+			}
+			
+			bo.setBinaIntLettera(binaIntLettera);
+			copyAllAudit(lettera, bo);
+			lettereIgbDao.saveOrUpdate(bo);
+		
+		}else{
+			
+			old.setBinaIntLettera(binaIntLettera);
+			copyAllAudit(lettera, old);
+			lettereIgbDao.update(old);
+			
+		}
+	}
+	 
+	/*
+	    @Autowired
+	    private PredispLettereDao predLetterePreRegDao;
+	    
+		List<LetteraPreRegBO> findLettereByIdDecreto(Long idDecreto)  throws Throwable {
+		 	return getDozerDriver().mapList(predLetterePreRegDao.findLettereByIdDecreto(idDecreto), LetteraPreRegTO.class, "LetteraPreReg");
+		    
+	    }
+	    
+	     //Se già esiste un record con id amministrazione e id decreto in input, l'operazione sarà una update, altrimenti una insert
+		@Override
+		public void aggiornaLettere(LetteraIgb lettera, PatUser user, String funzione) throws ParseException {
+			// TODO Auto-generated method stub
+			
+//			Long maxProgr=predLettereDao.getMaxProgressivoLettera(new Long(lettera.getAnnoEsercizio()),  lettera.getAmministrazione().getNewId(), lettera.getDataLettera());
+//			
+//			if(maxProgr==null)
+//				lettera.setNumeroProgLettera(new Long(1));
+//			else
+//				lettera.setNumeroProgLettera(++maxProgr);
+		
+			//lettIgb.setDataLettera(lettera.getDataLettera());
+			
+			//boolean flag=predLettereDao.existsLetteraByAmmDecr(lettera.getAmministrazione().getNewId(),lettera.getDecreto().getId());
+			Long idLettera=predLettereDao.getIdLetteraByAmmDecr(lettera.getAmministrazione().getNewId(), lettera.getDecreto().getId());
+			
+			//if(flag) {	
+			if(idLettera!=null) {
+//				if(lettera.getId()==null){
+//					lettera.setNewId(idLettera);
+//				}
+				//predLettereDao.update(lettera, user, funzione);
+				predLettereDao.modificaLettera(lettera, user, funzione);
+			}else{
+				predLettereDao.save(lettera, user, funzione);
+			//	predLettereDao.inserisciLettera(lettera, user, funzione);
+			}
+		}
+		
+	    
+		
+		//public List<Decreto> findDecretiByAnnoEseTitNumPrelDataNumBilDataDef(String annoEse, String titolo, Long numPrel, Date data, Long numBil, Date dataDef) {
+	    @Override
+	    public List<FascicoliTO> findDecreti(FascicoliTO decreto) {
+			// TODO Auto-generated method stub
+		//	return predLettereDao.findDecretiByAnnoEseTitNumPrelDataNumBilDataDef(annoEse, titolo, numPrel, data, numBil, dataDef);
+
+			return predLettereDao.findDecreti( decreto);
+		}
+
+
+	    @Override
+	    public List<FascicoliTO> findByDecreto(FascicoliTO decreto) {
+			// TODO Auto-generated method stub
+		//	return predLettereDao.findDecretiByAnnoEseTitNumPrelDataNumBilDataDef(annoEse, titolo, numPrel, data, numBil, dataDef);
+			
+			return predLettereDao.findByDecreto( decreto);
+		}
+		
+	    
+	    @Override
+	    public List<DecretoAmministrazione> findAmministrazioniByIdDecreto(Long idDecreto) {
+			// TODO Auto-generated method stub
+		//	return predLettereDao.findDecretiByAnnoEseTitNumPrelDataNumBilDataDef(annoEse, titolo, numPrel, data, numBil, dataDef);
+			
+			return predLettereDao.findAmministrazioniByIdDecreto( idDecreto);
+		}
+	    
+	    
+	    @Override
+	    public List<CentroResponsabilita> findCentriResponsabilita(Long idDecrAmm, Long annoEse) {
+			
+			return predLettereDao.findCentriResponsabilita(idDecrAmm, annoEse);
+		}
+	    
+	    public Long[] findNumeriFascicoli(Long idDecreto) {
+	    	return predLettereDao.findNumeriFascicoli(idDecreto);
+	    }
+	    
+	    
+	    public String[] getTestiLettere(String tipoLettera){
+	    	return predLettereDao.getTestiLettere(tipoLettera);
+	    }
+
+
+//		@Override
+//		public boolean inserisciLettera(Long annoEse, Long idAmm,
+//				Date dataLettera, Long numeProgLettera, char statusLettera,
+//				byte[] pdf) {
+//
+//			 return predLettereDao.inserisciLettera( annoEse,  idAmm, dataLettera,  numeProgLettera,  statusLettera, pdf) ;
+//			
+//		}
+
+	    //Se già esiste un record con id amministrazione e id decreto in input, l'operazione sarà una update, altrimenti una insert
+		@Override
+		public void aggiornaLettere(LetteraIgb lettera, PatUser user, String funzione) throws ParseException {
+			// TODO Auto-generated method stub
+			
+//			Long maxProgr=predLettereDao.getMaxProgressivoLettera(new Long(lettera.getAnnoEsercizio()),  lettera.getAmministrazione().getNewId(), lettera.getDataLettera());
+//			
+//			if(maxProgr==null)
+//				lettera.setNumeroProgLettera(new Long(1));
+//			else
+//				lettera.setNumeroProgLettera(++maxProgr);
+		
+			//lettIgb.setDataLettera(lettera.getDataLettera());
+			
+			//boolean flag=predLettereDao.existsLetteraByAmmDecr(lettera.getAmministrazione().getNewId(),lettera.getDecreto().getId());
+			Long idLettera=predLettereDao.getIdLetteraByAmmDecr(lettera.getAmministrazione().getNewId(), lettera.getDecreto().getId());
+			
+			//if(flag) {	
+			if(idLettera!=null) {
+//				if(lettera.getId()==null){
+//					lettera.setNewId(idLettera);
+//				}
+				//predLettereDao.update(lettera, user, funzione);
+				predLettereDao.modificaLettera(lettera, user, funzione);
+			}else{
+				predLettereDao.save(lettera, user, funzione);
+			//	predLettereDao.inserisciLettera(lettera, user, funzione);
+			}
+		}
+		
+	   
+		@Override
+	    public List<LetteraIgb> getLettere() throws ParseException{
+	    	return predLettereDao.findAllLettere();
+	    }
+		*/
+		
+	
+		@Override
+	    public List<LettereIgbTO> findByLettera(LettereIgbTO lettera) throws Throwable{
+			
+			LettereIgbBO bo=getDozerDriver().map(lettera, LettereIgbBO.class, "LettereIgb");
+			List<LettereIgbBO> listBo=lettereIgbDao.findByLettera(bo);
+			//il dozer va in errore a causa del campo blob
+			List<LettereIgbTO>  toList=getDozerDriver().mapList(listBo, LettereIgbTO.class, "LettereIgb");
+			//List<LettereIgbTO>  toList=new ArrayList<LettereIgbTO>();
+//			LettereIgbTO to=null;
+//			for (int i = 0; i < listBo.size(); i++) {
+//				to=new LettereIgbTO();
+//				to.setAnagAmminDem(getDozerDriver().map(listBo.get(i).getAnagAmminDem(), AnagAmminDemTO.class, "AnagAmminDem"));
+//				to.setFascicoli(getDozerDriver().map(listBo.get(i).getFascicoli(), FascicoliTO.class, "FascicoliFad"));
+//				to.setId(listBo.get(i).getId());
+//				to.setDataLettera(listBo.get(i).getDataLettera());
+//				to.setStatusLettera(listBo.get(i).getStatusLettera());
+//				toList.add(to);
+//			}
+//			
+			return toList;
+	    }
+/*
+		@Override
+		public List<Amministrazione> findAmmInDecByAnnoEse(String annoEsercizio) {
+			// TODO Auto-generated method stub
+			return predLettereDao.findAmmInDecByAnnoEse(annoEsercizio);
+		}
+*/
+
+	
+		@Override
+		public LettereIgbTO getLetteraById(Long idLettera)  throws Throwable {
+			
+//			LettereIgbBO bo=lettereIgbDao.getLetteraById(idLettera);
+			LettereIgbBO bo=lettereIgbDao.loadById(idLettera);
+			LettereIgbTO to=getDozerDriver().map(bo, LettereIgbTO.class, "LettereIgb");
+			return to;
+		}
+/*
+
+		@Override
+		public List<String> getAnnoEseLettereIgb(PatUser utenteInSessione, String minRangeAnno) {
+			// TODO Auto-generated method stub
+			return predLettereDao.getAnnoEseLettereIgb();
+		}
+		
+		
+		@Override
+		public Long getIdLetteraByAmmDecr(Long idAmm, Long idDecr){
+			return predLettereDao.getIdLetteraByAmmDecr(idAmm, idDecr);
+		}
+		*/
+
+		@Override
+		public Blob getBlobByIdLettera(BigDecimal id) throws Throwable {
+			// TODO Auto-generated method stub
+			return lettereIgbDao.getBlobByIdLettera(id);
+		}
+
+		@Override
+		public LettereIgbBO findByUK(LettereIgbTO lettera){
+			LettereIgbBO bo=getDozerDriver().map(lettera, LettereIgbBO.class, "LettereIgb");
+			
+			LettereIgbBO old = lettereIgbDao.findByUK(bo.getFascicoli().getId(), bo.getAnagAmminDem().getId().getFkAnnoEse(), bo.getAnagAmminDem().getId().getNumeStp(), bo.getAnagAmminDem().getId().getNumeApp());
+			
+			return old;
+		}
+}
